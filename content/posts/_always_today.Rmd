@@ -4,8 +4,6 @@ author: Fang Yongchao
 date: "`r Sys.Date()`"
 ---
 
-测试action 第二次
-
 任何做个人博客的人应该都过不了对样式无穷无尽的修改这个坎吧...
 
 # 这是一级标题

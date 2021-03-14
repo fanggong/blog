@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Fang Yongchao</title>
-    <link>http://fanggong.pub/posts/</link>
+    <link>https://fanggong.pub/posts/</link>
     <description>Recent content in Posts on Fang Yongchao</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Sun, 14 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://fanggong.pub/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 14 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>对本主题的样式的测试</title>
-      <link>http://fanggong.pub/posts/_always_today/</link>
+      <link>https://fanggong.pub/posts/_always_today/</link>
       <pubDate>Sun, 14 Mar 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://fanggong.pub/posts/_always_today/</guid>
+      <guid>https://fanggong.pub/posts/_always_today/</guid>
       <description>  任何做个人博客的人应该都过不了对样式无穷无尽的修改这个坎吧…
 这是一级标题 这是二级标题 这是三级标题  无序列表  御田的决心！白胡子的试炼！ 白胡子的弟弟！御田的大冒险 兵刃相接！罗杰与白胡子！   有序列表 新的同盟！？凯多军大集结 决战迫近！草帽一伙进入战斗状态 大新闻！七武海袭击事件   代码块 print(&amp;quot;Hello World!&amp;quot;)  行内代码 用data.frame()创建数据框
  引用  开轩面场圃，把酒话桑麻。
@@ -23,10 +23,10 @@
     
     <item>
       <title>重复测量数据方差分析</title>
-      <link>http://fanggong.pub/posts/20210311_repeat_measure_anova/</link>
+      <link>https://fanggong.pub/posts/20210311_repeat_measure_anova/</link>
       <pubDate>Thu, 11 Mar 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://fanggong.pub/posts/20210311_repeat_measure_anova/</guid>
+      <guid>https://fanggong.pub/posts/20210311_repeat_measure_anova/</guid>
       <description>相关包：car
 在这里仅记录重复测量数据方差分析的R语言实现及结果解释，不涉及其原理说明。
 重复测量数据的方差分析的步骤大致如下图：
@@ -36,10 +36,10 @@ set.seed(2414) dat &amp;lt;- data.frame( ID = gl(50, 1), group = gl(5, 10, label
     
     <item>
       <title>用R绘制流程图</title>
-      <link>http://fanggong.pub/posts/20210310_diagram/</link>
+      <link>https://fanggong.pub/posts/20210310_diagram/</link>
       <pubDate>Wed, 10 Mar 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://fanggong.pub/posts/20210310_diagram/</guid>
+      <guid>https://fanggong.pub/posts/20210310_diagram/</guid>
       <description>相关包：diagram
 原理相当简单，创建一个空的画板，规划坐标，然后在上面插入BOX和ARROR即可。由于是在base R的体系中进行作图，所以有很高的自由度。
 创建空画板 该函数中有一个asp参数TODO
@@ -50,10 +50,10 @@ par(mar = c(0, 0, 0, 0)) openplotmat(asp = 1) box() elpos &amp;lt;- coordinates(
     
     <item>
       <title>新的开始</title>
-      <link>http://fanggong.pub/posts/20210309_new_begin/</link>
+      <link>https://fanggong.pub/posts/20210309_new_begin/</link>
       <pubDate>Tue, 09 Mar 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://fanggong.pub/posts/20210309_new_begin/</guid>
+      <guid>https://fanggong.pub/posts/20210309_new_begin/</guid>
       <description>整个大学过的浑浑噩噩，但是在研究生期间还是学习了不少东西，在此期间接触到了RMarkdown，于是当时无论是python还是R，或者是一些别的笔记都以Rmd的形式记录并保存了下来。
 最近又接触到了blogdown，同时由于工作上需要了解一些运维层面的东西自己入手了一个腾讯云服务器，进一步的于是有了把之前的笔记整理一遍以独立博客形式保存下来的想法。
 我会从现在开始逐步整理之前的笔记，同时把新的笔记也以博客形式记录在这里。</description>
