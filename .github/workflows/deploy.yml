@@ -1,3 +1,32 @@
-# This is a basic workflow to help you get started with Actions
+name: Deploy Blog
 
-name: CI
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest 
+
+    steps:
+      - uses: actions/checkout@v2 
+
+      - name: Deploy to Server
+        uses: AEnterprise/rsync-deploy@v1.0 
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }} 
+          ARGS: -avz --delete --exclude='*.pyc' 
+          SERVER_PORT: "22"
+          FOLDER: ./public/
+          SERVER_IP: ${{ secrets.SSH_HOST }} 
+          USERNAME: ${{ secrets.SSH_USERNAME }} 
+          SERVER_DESTINATION: /srv/blog/
+      - name: Restart nginx
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          script: |
+            systemctl restart nginx.service
