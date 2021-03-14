@@ -1,0 +1,92 @@
+---
+title: "用R绘制流程图"
+author: "Fang Yongchao"
+date: '2021-03-10'
+---
+
+```{r library, echo=FALSE, warning=FALSE, message=FALSE}
+library(diagram)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+相关包：[diagram](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/diagram/index.html)
+
+原理相当简单，创建一个空的画板，规划坐标，然后在上面插入BOX和ARROR即可。由于是在base R的体系中进行作图，所以有很高的自由度。
+
+# 创建空画板
+
+该函数中有一个`asp`参数TODO
+
+```{r eval=FALSE}
+openplotmat()
+```
+
+# 规划坐标
+
+```{r eval=FALSE}
+elpos <- coordinates(pos = c(1, 2, 3, 4), hor = FALSE)
+```
+
+上面的代码将画板划分成了如下形式
+
+```{r echo=FALSE, fig.align="center", out.width="80%"}
+par(mar = c(0, 0, 0, 0))
+openplotmat(asp = 1)
+box()
+elpos <- coordinates(pos = c(1, 2, 3, 4), hor = FALSE)
+text(elpos[1, 1], elpos[1, 2], "一", cex = 3)
+text(elpos[2, 1], elpos[2, 2], "二", cex = 3)
+text(elpos[3, 1], elpos[3, 2], "三", cex = 3)
+text(elpos[4, 1], elpos[4, 2], "四", cex = 3)
+text(elpos[5, 1], elpos[5, 2], "五", cex = 3)
+text(elpos[6, 1], elpos[6, 2], "六", cex = 3)
+text(elpos[7, 1], elpos[7, 2], "七", cex = 3)
+text(elpos[8, 1], elpos[8, 2], "八", cex = 3)
+text(elpos[9, 1], elpos[9, 2], "九", cex = 3)
+text(elpos[10, 1], elpos[10, 2], "十", cex = 3)
+```
+
+# 插入BOX
+
+[diagram](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/diagram/index.html)包共提供了九种BOX
+
+```{r fig.align="center", out.width="80%"}
+par(mar = c(0, 0, 0, 0))
+openplotmat(asp = 1)
+box()
+elpos <- coordinates(pos = rep(3, 6), hor = FALSE)
+textdiamond(elpos[3, ], radx = 0.1, rady = 0.1, lab = "临", cex = 2)
+text(elpos[6, 1], elpos[6, 2], labels = "textdiamond")
+textellipse(elpos[9, ], radx = 0.1, lab = "兵", cex = 2)
+text(elpos[12, 1], elpos[12, 2], labels = "textellipse")
+textempty(elpos[15, ], lab = "斗", box.col = "grey", cex = 2)
+text(elpos[18, 1], elpos[18, 2], labels = "textempty")
+texthexa(elpos[2, ], radx = 0.1, lab = "者", cex = 2)
+text(elpos[5, 1], elpos[5, 2], labels = "texthexa")
+textmulti(elpos[8, ], radx = 0.1, lab = "皆", cex = 2)
+text(elpos[11, 1], elpos[11, 2], labels = "textmulti")
+textparallel(elpos[14, ], radx = 0.1, lab = "阵", cex = 2)
+text(elpos[17, 1], elpos[17, 2], labels = "textparallel")
+textplain(elpos[1, ], lab = "列", cex = 2)
+text(elpos[4, 1], elpos[4, 2], labels = "textplain")
+textrect(elpos[7, ], radx = 0.1, lab = "在", cex = 2)
+text(elpos[10, 1], elpos[10, 2], labels = "textrect")
+textround(elpos[13, ], radx = 0.05, rady = 0.1, rx = 0.1, lab = "前", cex = 2)
+text(elpos[16, 1], elpos[16, 2], labels = "textround")
+```
+
+
+# 插入LINE
+
+[diagram](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/diagram/index.html)包共提供了七种ARROR
+
+```{r fig.align="center", out.width="80%"}
+par(mar = c(0, 0, 0, 0))
+openplotmat(asp = 1)
+box()
+```
+
+
+
+
+

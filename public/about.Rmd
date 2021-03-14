@@ -1,0 +1,29 @@
+---
+title: About Me
+author: Fang Yongchao
+date: "2021-03-06"
+---
+
+Fang Yongchao，男，90后。
+
+2013年本科毕业于[北京理工大学](https://www.bit.edu.cn/)数学系，在即将步入而立之年之际，回想曾经的大学生涯，只能说是~~天天打游戏真的是开心~~浑浑噩噩一事无成。
+
+毕业后进入某传统行业从事~~数据分析~~统计工作，在那各行各业高喊“互联网+”的浪潮袭来之前，离开了职场，前往[筑波大学](https://www.tsukuba.ac.jp/)，开始了我的第二段校园生活。
+
+2019年归国。
+
+一年后，结束了我短暂的咨询顾问 → 项目经理的乙方生涯。
+
+目前在某创业公司从事R语言开发工程师工作。
+
+喜欢UNIQLO，喜欢MUJI，爱好健身，剑道初段。
+
+
+```{r echo=FALSE, fig.height=3, out.width="33%"}
+paths <- c(
+  "/about_files/kendo1.jpg",
+  "/about_files/kendo2.jpg",
+  "/about_files/kendo3.jpg"
+)
+knitr::include_graphics(paths, error = FALSE)
+```

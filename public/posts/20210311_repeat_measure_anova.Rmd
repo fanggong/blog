@@ -1,0 +1,144 @@
+---
+title: 重复测量数据方差分析
+author: Fang Yongchao
+date: "2021-03-11"
+---
+
+相关包：[car](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/car/index.html)
+
+在这里仅记录重复测量数据方差分析的R语言实现及结果解释，不涉及其原理说明。
+
+重复测量数据的方差分析的步骤大致如下图：
+
+```{r echo=FALSE, warning=FALSE, message=FALSE, fig.cap="重复测量数据方差分析流程图"}
+library(diagram)
+par(mar = c(0, 0, 0, 0))
+openplotmat(asp = 1)
+elpos <- coordinates(c(1, 1, 1, 3, 3), hor = FALSE)
+fromto <- matrix(ncol = 2, byrow = TRUE, data = c(
+  1, 2, 2, 3, 3, 5, 5, 7, 5, 9, 9, 7
+))
+nr <- nrow(fromto)
+arrpos <- matrix(ncol = 2, nrow = nr)
+for (i in 1:nr) {
+  arrpos[i, ] <- bentarrow(
+    to = elpos[fromto[i, 2], ], from = elpos[fromto[i, 1], ],
+    lwd = 1, arr.pos = 0.5, arr.length = 0.2, arr.type = "triangle",
+    path = ifelse(i == nr, "H", "V")
+  )
+}
+cex <- 1
+radx <- 0.1
+rady <- 0.05
+textrect(elpos[1, ], radx = radx, rady = rady, shadow.size = 0, lab = "是否正态", cex = cex)
+textrect(elpos[2, ], radx = radx, rady = rady, shadow.size = 0, lab = "是否满足\n方差齐性", cex = cex)
+textrect(elpos[3, ], radx = radx, rady = rady, shadow.size = 0, lab = "进行\n方差分析", cex = cex)
+textrect(elpos[5, ], radx = radx, rady = rady, shadow.size = 0, lab = "是否满足\n球形检验", cex = cex)
+textrect(elpos[9, ], radx = radx, rady = rady, shadow.size = 0, lab = "p值校正", cex = cex)
+textrect(elpos[7, ], radx = radx + 0.04, rady = rady, shadow.size = 0, lab = "多重比较\n单独效应分析等", cex = cex)
+bias <- 0.03
+cex <- 0.7
+text(arrpos[1, 1], arrpos[1, 2] + bias, "YES", cex = cex)
+text(arrpos[2, 1], arrpos[2, 2] + bias, "YES", cex = cex)
+text(arrpos[4, 1], arrpos[4, 2] + bias, "YES", cex = cex)
+text(arrpos[5, 1], arrpos[5, 2] + bias, "NO", cex = cex)
+```
+
+# 数据
+
+使用下面的代码造一份假数据，50个对象，分成5个处理分组（甲乙丙丁戊），对每个对象进行4次重复测量。
+
+```{r}
+set.seed(2414)
+dat <- data.frame(
+  ID = gl(50, 1),
+  group = gl(5, 10, labels = c("甲", "乙", "丙", "丁", "戊")),
+  measure_1 = round(rnorm(50, 50), 2),
+  measure_2 = round(rnorm(50, 30), 2),
+  measure_3 = round(rnorm(50, 20), 2),
+  measure_4 = round(rnorm(50, 40), 2)
+)
+DT::datatable(dat)
+```
+
+# 正态性检验
+
+由于存在5个处理分组，每个分组进行了4次重复测量，故共有20组数据需要做正态性检验。考虑将数据转换成长数据方便使用`lapply`函数一次性完成所有分组的正态性检验。
+
+```{r}
+data.table::setDT(dat)
+long_dat <- data.table::melt(
+  dat, id.vars = c("ID", "group"), measure.vars = paste0("measure_", 1:4),
+  variable.name = "time", value.name = "response" 
+)
+DT::datatable(long_dat)
+```
+
+使用Shapiro-Wilk检验进行正态性检验。该检验零假设为样本来自于正态分布总体，故p值小于0.05时考虑拒绝原假设，即样本来自于非正态总体。
+
+```{r}
+to_test <- split(long_dat$response, list(long_dat$group, long_dat$time))
+norm_result <- lapply(to_test, function(v) data.frame(
+  p_value = shapiro.test(v)$p.value
+))
+norm_result <- data.table::rbindlist(norm_result, idcol = "compare_group")
+norm_result
+```
+
+# 方差齐性检验
+
+使用Levene检验进行方差齐性检验。该检验零假设为样本所在总体方差相等，故p值小于0.05时考虑拒绝原假设，即样本所在总体方差不等。
+
+```{r}
+homo_result <- car::leveneTest(response ~ group*time, data = long_dat)
+homo_result
+```
+
+# 方差分析
+
+若数据满足正态性与方差齐性，则可以进行方差分析（本文中使用的数据其实并没有通过正态性检验，但由于只是为了进行方法的说明，就当作它通过了吧）。
+
+重复测量数据的方差分析关键在于区分组内因子和组间因子，对于这里的数据来说，多次的重复测量为组内因子，而处理分组（甲乙丙丁戊）为组间因子。网上很多文章中将处理分组也当作组内因子看待，如[双因素重复测量方差分析](http://rstudio-pubs-static.s3.amazonaws.com/153245_0efc926bbb10484c841b44220205d910.html#two-way-repeated-measures-anova)，和这里的区别在于作为唯一标识的ID一列。在本文中，数据收集于50个不同的对象，每个处理分组中的对象都是不同的，而在[双因素重复测量方差分析](http://rstudio-pubs-static.s3.amazonaws.com/153245_0efc926bbb10484c841b44220205d910.html#two-way-repeated-measures-anova)中，不同处理组是对相同的对象进行操作（虽然在文字描述中是将42名不同的对象分成两组，但是`id <- factor(rep(1:21, times=2*3))`这一行代码将这42个对象当作了21个对象来看待）。
+
+base R中的`anova`函数可以直接进行重复测量数据方差分析，代码如下：
+
+```{r}
+aov <- aov(response ~ group*time + Error(ID/time), data = long_dat)
+summary(aov)
+```
+结果中的上部Error: ID部分展示了处理分组间差异的自由度、离均差平方和、F值、p值等结果，其中的Residuals部分为组间误差。下部Error: ID:time部分展示了重复测量以及处理分组和重复测量的交互作用的相关结果，其中的Residuals部分为组内误差。
+
+# 球形检验
+
+简单来说，球形检验是为了检验重复测量的不同时间测量值的差值的方差是否相等，其零假设为差值的方差相等。当球形检验的p值大于0.05时，我们可以直接使用上面方差分析的结果，但是当球形检验的p值小于0.05时，则需要对方差分析的自由度和p值进行校正。
+
+通过以下代码进行Mauchly球形检验：
+
+```{r}
+fit <- lm(cbind(measure_1, measure_2, measure_3, measure_4) ~ group + 1, data = dat)
+idata <- data.frame(time = gl(4, 1))
+sph_result <- mauchly.test(fit, X = ~ 1, M = ~ time, idata = idata)
+sph_result
+```
+
+# p值校正
+
+在base R中没有找到对p值进行校正的相关方法实现。而在[car](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/car/index.html)包中有对方差分析、球形检验、p值校正一整套打包实现的方法。
+
+```{r}
+fit <- lm(cbind(measure_1, measure_2, measure_3, measure_4) ~ group + 1, data = dat)
+idata <- data.frame(time = gl(4, 1))
+aov_result <- car::Anova(fit, idata = idata, idesign = ~ time)
+summary(aov_result, multivariate = FALSE, univariate = TRUE)
+```
+结果与上方使用base R进行方差分析和球形检验的结果基本一致，在最后多出了用Greenhouse-Geisser和Huynh-Feldt方法进行校正后的p值。
+
+# 多重比较
+
+
+
+
+
+
+
+
