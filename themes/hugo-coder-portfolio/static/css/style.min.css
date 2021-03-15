@@ -9,7 +9,7 @@ body{
     display:flex;
     color:#323232;
     background-color:#fefefe;
-    font-family:'Fira Mono',monospace;
+    font-family:'Fira Mono';
     font-size:1.6em;
     font-weight:400;
     letter-spacing:.0625em;
@@ -110,7 +110,7 @@ code{
     display:inline-block;
     background-color:#000;
     color:#fefefe;
-    padding:.4rem .8rem .4rem .8rem
+    padding:.2rem .4rem .2rem .4rem
 }
 blockquote{
     border-left:2px solid #dcdcdc;

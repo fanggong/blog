@@ -2,6 +2,7 @@
 title: 对本主题的样式的测试
 author: Fang Yongchao
 date: "`r Sys.Date()`"
+math: true
 ---
 
 任何做个人博客的人应该都过不了对样式无穷无尽的修改这个坎吧...
@@ -41,9 +42,7 @@ print("Hello World!")
 
 ### 公式块
 
-$$
-f(x) = {1 \over {\sqrt{2\pi}\sigma}}exp \left( - {{(x - \mu)^2} \over {2\sigma^2}}  \right)
-$$
+$$f(x) = {1 \over {\sqrt{2\pi}\sigma}}exp \left( - {{(x - \mu)^2} \over {2\sigma^2}}  \right)$$
 
 ### 行内公式
 
