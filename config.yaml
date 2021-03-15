@@ -27,6 +27,7 @@ params:
   itemscentered: yes
   keywords: blog, data science, personal
   langseparator: '|'
+  math: yes
   rtl: no
   snsShare: yes
   # social:

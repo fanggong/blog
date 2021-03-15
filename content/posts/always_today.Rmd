@@ -1,0 +1,85 @@
+---
+title: 对本主题的样式的测试
+author: Fang Yongchao
+date: "`r Sys.Date()`"
+---
+
+任何做个人博客的人应该都过不了对样式无穷无尽的修改这个坎吧...
+
+# 这是一级标题
+
+## 这是二级标题
+
+### 这是三级标题
+
+### 无序列表
+
+- 御田的决心！白胡子的试炼！
+- 白胡子的弟弟！御田的大冒险
+- 兵刃相接！罗杰与白胡子！
+
+### 有序列表
+
+1. 新的同盟！？凯多军大集结
+1. 决战迫近！草帽一伙进入战斗状态
+1. 大新闻！七武海袭击事件
+
+### 嵌套列表
+
+- 元气森林
+  - 0糖
+  - 0脂肪
+  - 0卡路里
+
+### 代码块
+
+```{r eval=FALSE}
+shinyApp(
+  ui = fluidPage(
+    selectInput("state", "Choose a state:",
+      list(`East Coast` = list("NY", "NJ", "CT"),
+           `West Coast` = list("WA", "OR", "CA"),
+           `Midwest` = list("MN", "WI", "IA"))
+    ),
+    textOutput("result")
+  ),
+  server = function(input, output) {
+    output$result <- renderText({
+      paste("You chose", input$state)
+    })
+  }
+)
+```
+
+### 行内代码
+
+用`data.frame()`创建数据框
+
+### 引用
+
+> 故人具鸡黍，邀我至田家  
+> 绿树村边合，青山郭外斜  
+> 开轩面场圃，把酒话桑麻  
+> 待到重阳日，还来就菊花
+
+### 公式块
+
+正态分布的概率密度函数为：
+$$f(x) = {1 \over {\sqrt{2\pi}\sigma}}exp \left( - {{(x - \mu)^2} \over {2\sigma^2}}  \right)$$
+
+### 行内公式
+
+等比数列的求和公式是$a_1(1 - q^n) \over {1-q}$
+
+### 表格
+
+- `pander::pander()`
+```{r echo=FALSE}
+dat <- data.frame(
+  姓名 = c("Fang", "Gong"),
+  性别 = c("male", "female"),
+  年龄 = c(30, 18)
+)
+pander::pander(dat)
+```
+

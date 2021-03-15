@@ -1,0 +1,118 @@
+---
+title: 对本主题的样式的测试
+author: Fang Yongchao
+date: "2021-03-15"
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<p>任何做个人博客的人应该都过不了对样式无穷无尽的修改这个坎吧…</p>
+<div id="这是一级标题" class="section level1">
+<h1>这是一级标题</h1>
+<div id="这是二级标题" class="section level2">
+<h2>这是二级标题</h2>
+<div id="这是三级标题" class="section level3">
+<h3>这是三级标题</h3>
+</div>
+<div id="无序列表" class="section level3">
+<h3>无序列表</h3>
+<ul>
+<li>御田的决心！白胡子的试炼！</li>
+<li>白胡子的弟弟！御田的大冒险</li>
+<li>兵刃相接！罗杰与白胡子！</li>
+</ul>
+</div>
+<div id="有序列表" class="section level3">
+<h3>有序列表</h3>
+<ol style="list-style-type: decimal">
+<li>新的同盟！？凯多军大集结</li>
+<li>决战迫近！草帽一伙进入战斗状态</li>
+<li>大新闻！七武海袭击事件</li>
+</ol>
+</div>
+<div id="嵌套列表" class="section level3">
+<h3>嵌套列表</h3>
+<ul>
+<li>元气森林
+<ul>
+<li>0糖</li>
+<li>0脂肪</li>
+<li>0卡路里</li>
+</ul></li>
+</ul>
+</div>
+<div id="代码块" class="section level3">
+<h3>代码块</h3>
+<pre class="r"><code>shinyApp(
+  ui = fluidPage(
+    selectInput(&quot;state&quot;, &quot;Choose a state:&quot;,
+      list(`East Coast` = list(&quot;NY&quot;, &quot;NJ&quot;, &quot;CT&quot;),
+           `West Coast` = list(&quot;WA&quot;, &quot;OR&quot;, &quot;CA&quot;),
+           `Midwest` = list(&quot;MN&quot;, &quot;WI&quot;, &quot;IA&quot;))
+    ),
+    textOutput(&quot;result&quot;)
+  ),
+  server = function(input, output) {
+    output$result &lt;- renderText({
+      paste(&quot;You chose&quot;, input$state)
+    })
+  }
+)</code></pre>
+</div>
+<div id="行内代码" class="section level3">
+<h3>行内代码</h3>
+<p>用<code>data.frame()</code>创建数据框</p>
+</div>
+<div id="引用" class="section level3">
+<h3>引用</h3>
+<blockquote>
+<p>故人具鸡黍，邀我至田家<br />
+绿树村边合，青山郭外斜<br />
+开轩面场圃，把酒话桑麻<br />
+待到重阳日，还来就菊花</p>
+</blockquote>
+</div>
+<div id="公式块" class="section level3">
+<h3>公式块</h3>
+<p>正态分布的概率密度函数为：
+<span class="math display">\[f(x) = {1 \over {\sqrt{2\pi}\sigma}}exp \left( - {{(x - \mu)^2} \over {2\sigma^2}}  \right)\]</span></p>
+</div>
+<div id="行内公式" class="section level3">
+<h3>行内公式</h3>
+<p>等比数列的求和公式是<span class="math inline">\(a_1(1 - q^n) \over {1-q}\)</span></p>
+</div>
+<div id="表格" class="section level3">
+<h3>表格</h3>
+<ul>
+<li><code>pander::pander()</code></li>
+</ul>
+<table style="width:35%;">
+<colgroup>
+<col width="9%" />
+<col width="12%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">姓名</th>
+<th align="center">性别</th>
+<th align="center">年龄</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Fang</td>
+<td align="center">male</td>
+<td align="center">30</td>
+</tr>
+<tr class="even">
+<td align="center">Gong</td>
+<td align="center">female</td>
+<td align="center">18</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>

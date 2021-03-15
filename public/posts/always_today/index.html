@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta name="author" content="Fang Yongchao">
-    <meta name="description" content="/">
+    <meta name="description" content="https://fanggong.pub">
     <meta name="keywords" content="blog, data science, personal">
 
     <meta property="og:site_name" content="Fang Yongchao">
@@ -15,18 +15,18 @@
 ">
     <meta property="og:description" content="">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="/posts/_always_today/">
-    <meta property="og:image" content="/">
+    <meta property="og:url" content="https://fanggong.pub/posts/always_today/">
+    <meta property="og:image" content="https://fanggong.pub">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="/posts/_always_today/">
-    <meta name="twitter:image" content="/">
+    <meta name="twitter:site" content="https://fanggong.pub/posts/always_today/">
+    <meta name="twitter:image" content="https://fanggong.pub">
 
-    <base href="/posts/_always_today/">
+    <base href="https://fanggong.pub/posts/always_today/">
     <title>
   对本主题的样式的测试 - Fang Yongchao
 </title>
 
-    <link rel="canonical" href="/posts/_always_today/">
+    <link rel="canonical" href="https://fanggong.pub/posts/always_today/">
     
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     
@@ -34,22 +34,30 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Liu+Jian+Mao+Cao:400"> 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono:400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&display=swap">
     <link rel="stylesheet" href="/css/normalize.min.css">
     <link rel="stylesheet" href="/css/style.min.css">
 
     
 
     
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css" integrity="sha384-t5CR+zwDAROtph0PXGte6ia8heboACF9R5l/DiY+WZ3P2lxNgvJkQk5n7GPvLMYw" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.js" integrity="sha384-FaFLTlohFghEIZkw6VGwmf9ISTubWAVYW8tG8+w2LAIftJEULZABrF9PPFv+tVkH" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/contrib/auto-render.min.js" integrity="sha384-bHBqxz8fokvgoJ/sc17HODNxa42TlaEhB+w8ZJXTc2nZf1VgEaFZeZvT4Mznfz0v" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+    
+    
+    
 
     <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
 
     
-      <link rel="alternate" href="/index.xml" type="application/rss+xml" title="Fang Yongchao">
-      <link href="/index.xml" rel="feed" type="application/rss+xml" title="Fang Yongchao" />
+      <link rel="alternate" href="https://fanggong.pub/index.xml" type="application/rss+xml" title="Fang Yongchao">
+      <link href="https://fanggong.pub/index.xml" rel="feed" type="application/rss+xml" title="Fang Yongchao" />
     
 
-    <meta name="generator" content="Hugo 0.78.1" />
+    <meta name="generator" content="Hugo 0.78.2" />
   </head>
 
   <body class="">
@@ -64,15 +72,15 @@
         
           
             <li class="navigation-item  align-center ">
-              <a class="navigation-link" href="/about">About</a>
+              <a class="navigation-link" href="https://fanggong.pub/about">About</a>
             </li>
           
             <li class="navigation-item  align-center ">
-              <a class="navigation-link" href="/posts">Blog</a>
+              <a class="navigation-link" href="https://fanggong.pub/posts">Blog</a>
             </li>
           
             <li class="navigation-item  align-center ">
-              <a class="navigation-link" href="/projects">Projects</a>
+              <a class="navigation-link" href="https://fanggong.pub/projects">Projects</a>
             </li>
           
             <li class="navigation-item  align-center ">
@@ -97,7 +105,7 @@
   <article>
     <header>
       <h1 class="title">对本主题的样式的测试</h1>
-      <h2 class="date">March 14, 2021</h2>
+      <h2 class="date">March 15, 2021</h2>
 
       
     </header>
@@ -130,9 +138,34 @@
 <li>大新闻！七武海袭击事件</li>
 </ol>
 </div>
+<div id="嵌套列表" class="section level3">
+<h3>嵌套列表</h3>
+<ul>
+<li>元气森林
+<ul>
+<li>0糖</li>
+<li>0脂肪</li>
+<li>0卡路里</li>
+</ul></li>
+</ul>
+</div>
 <div id="代码块" class="section level3">
 <h3>代码块</h3>
-<pre class="r"><code>print(&quot;Hello World!&quot;)</code></pre>
+<pre class="r"><code>shinyApp(
+  ui = fluidPage(
+    selectInput(&quot;state&quot;, &quot;Choose a state:&quot;,
+      list(`East Coast` = list(&quot;NY&quot;, &quot;NJ&quot;, &quot;CT&quot;),
+           `West Coast` = list(&quot;WA&quot;, &quot;OR&quot;, &quot;CA&quot;),
+           `Midwest` = list(&quot;MN&quot;, &quot;WI&quot;, &quot;IA&quot;))
+    ),
+    textOutput(&quot;result&quot;)
+  ),
+  server = function(input, output) {
+    output$result &lt;- renderText({
+      paste(&quot;You chose&quot;, input$state)
+    })
+  }
+)</code></pre>
 </div>
 <div id="行内代码" class="section level3">
 <h3>行内代码</h3>
@@ -141,21 +174,52 @@
 <div id="引用" class="section level3">
 <h3>引用</h3>
 <blockquote>
-<p>开轩面场圃，把酒话桑麻。<br />
-待到重阳日，还来就菊花。</p>
+<p>故人具鸡黍，邀我至田家<br />
+绿树村边合，青山郭外斜<br />
+开轩面场圃，把酒话桑麻<br />
+待到重阳日，还来就菊花</p>
 </blockquote>
 </div>
 <div id="公式块" class="section level3">
 <h3>公式块</h3>
-<p><span class="math display">\[
-f(x) = {1 \over {\sqrt{2\pi}\sigma}}exp \left( - {{(x - \mu)^2} \over {2\sigma^2}}  \right)
-\]</span></p>
+<p>正态分布的概率密度函数为：
+<span class="math display">\[f(x) = {1 \over {\sqrt{2\pi}\sigma}}exp \left( - {{(x - \mu)^2} \over {2\sigma^2}}  \right)\]</span></p>
 </div>
 <div id="行内公式" class="section level3">
 <h3>行内公式</h3>
+<p>等比数列的求和公式是<span class="math inline">\(a_1(1 - q^n) \over {1-q}\)</span></p>
 </div>
 <div id="表格" class="section level3">
 <h3>表格</h3>
+<ul>
+<li><code>pander::pander()</code></li>
+</ul>
+<table style="width:35%;">
+<colgroup>
+<col width="9%" />
+<col width="12%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">姓名</th>
+<th align="center">性别</th>
+<th align="center">年龄</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Fang</td>
+<td align="center">male</td>
+<td align="center">30</td>
+</tr>
+<tr class="even">
+<td align="center">Gong</td>
+<td align="center">female</td>
+<td align="center">18</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>

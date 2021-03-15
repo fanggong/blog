@@ -19,7 +19,7 @@ hr{
     overflow:visible
 }
 pre{
-    font-family:monospace,monospace;
+    font-family:'Fira Code';
     font-size:1em
 }
 a{
@@ -34,7 +34,7 @@ b,strong{
     font-weight:bolder
 }
 code,kbd,samp{
-    font-family:monospace,monospace;
+    font-family:'Fira Code';
     font-size:1em
 }
 small{
