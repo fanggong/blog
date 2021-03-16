@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ch">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="Fang Yongchao">
+    <meta name="description" content="https://fanggong.pub">
+    <meta name="keywords" content="blog, data science">
+
+    <meta property="og:site_name" content="Fang Yongchao">
+    <meta property="og:title" content="
+  R的面向对象编程 - Fang Yongchao
+">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fanggong.pub/posts/20210313_object_oriented/">
+    <meta property="og:image" content="https://fanggong.pub">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="https://fanggong.pub/posts/20210313_object_oriented/">
+    <meta name="twitter:image" content="https://fanggong.pub">
+
+    <base href="https://fanggong.pub/posts/20210313_object_oriented/">
+
+    <title>
+  R的面向对象编程 - Fang Yongchao
+</title>
+
+    <link rel="canonical" href="https://fanggong.pub/posts/20210313_object_oriented/">
+    
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    
+    
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Liu+Jian+Mao+Cao:400"> 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono:400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400">
+
+    <link rel="stylesheet" href="/css/normalize.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css" integrity="sha384-t5CR+zwDAROtph0PXGte6ia8heboACF9R5l/DiY+WZ3P2lxNgvJkQk5n7GPvLMYw" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.js" integrity="sha384-FaFLTlohFghEIZkw6VGwmf9ISTubWAVYW8tG8+w2LAIftJEULZABrF9PPFv+tVkH" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/contrib/auto-render.min.js" integrity="sha384-bHBqxz8fokvgoJ/sc17HODNxa42TlaEhB+w8ZJXTc2nZf1VgEaFZeZvT4Mznfz0v" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+    
+    
+    
+
+    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+    
+      <link rel="alternate" href="https://fanggong.pub/index.xml" type="application/rss+xml" title="Fang Yongchao">
+      <link href="https://fanggong.pub/index.xml" rel="feed" type="application/rss+xml" title="Fang Yongchao" />
+    
+
+    <meta name="generator" content="Hugo 0.78.1" />
+  </head>
+
+  <body class="">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">Fang Yongchao</a>
+    <input type="checkbox" id="menu-control"/>
+    <label class="menu-mobile  float-right " for="menu-control">
+      <span class="btn-mobile  float-right ">&#9776;</span>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item  align-center ">
+              <a class="navigation-link" href="https://fanggong.pub/about">About</a>
+            </li>
+          
+            <li class="navigation-item  align-center ">
+              <a class="navigation-link" href="https://fanggong.pub/posts">Blog</a>
+            </li>
+          
+            <li class="navigation-item  align-center ">
+              <a class="navigation-link" href="https://fanggong.pub/projects">Projects</a>
+            </li>
+          
+            <li class="navigation-item  align-center ">
+              <a class="navigation-link" href="mailto:yongchao.fang@outlook.com">Contact me</a>
+            </li>
+          
+        
+        
+      </ul>
+    </label>
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+  <article>
+    <header>
+      <h1 class="title">R的面向对象编程</h1>
+      <h2 class="date">March 12, 2021</h2>
+
+      
+    </header>
+
+    
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<ul>
+<li><code>pryr::otype()</code>：检查对象类型</li>
+<li><code>pryr::ftype()</code>：检查函数类型</li>
+</ul>
+<div id="基础类型" class="section level2">
+<h2>基础类型</h2>
+<hr />
+<ul>
+<li>最常见的基础类型就是<strong>向量</strong>和<strong>列表</strong></li>
+<li>同时基础类型还包括<strong>函数</strong>、<strong>环境</strong>和<strong>其他更独特的对象</strong></li>
+</ul>
+</div>
+<div id="s3" class="section level2">
+<h2>S3</h2>
+<ul>
+<li>目前使用的大部分对象都是S3对象</li>
+<li>在S3中，<strong>方法</strong>属于<strong>泛型函数</strong>，一个<strong>泛型函数</strong>会有多个<strong>方法</strong>，可以用<code>methods()</code>来查看<strong>泛型函数</strong>的<strong>方法</strong></li>
+<li>S3并不需要一个正式的类定义，需要的仅仅是一个构造函数</li>
+</ul>
+<pre class="r"><code># data.frame是一个S3对象
+df &lt;- data.frame(x = 1:3, y = 4:6)
+pryr::otype(df)</code></pre>
+<pre><code>## [1] &quot;S3&quot;</code></pre>
+<pre class="r"><code># mean()是一个泛型函数
+pryr::ftype(mean)</code></pre>
+<pre><code>## [1] &quot;s3&quot;      &quot;generic&quot;</code></pre>
+<pre class="r"><code># mean.Date()是一个方法
+pryr::ftype(mean.Date)</code></pre>
+<pre><code>## [1] &quot;s3&quot;     &quot;method&quot;</code></pre>
+<pre class="r"><code># 查看mean的所有方法
+methods(mean)</code></pre>
+<pre><code>## [1] mean.Date     mean.default  mean.difftime mean.POSIXct  mean.POSIXlt 
+## [6] mean.quosure*
+## see &#39;?methods&#39; for accessing help and source code</code></pre>
+<div id="定义类和创建对象" class="section level3">
+<h3>定义类和创建对象</h3>
+<pre class="r"><code># 构造函数
+student &lt;- function(name, age) {
+  if(!is.character(name)) stop(&quot;name must be character&quot;)
+  if(!is.numeric(age)) stop(&quot;age mest be numeric&quot;)
+  structure(list(name = name, age = age), class = &quot;student&quot;)
+}
+# 创建对象
+me &lt;- student(name = &quot;fang yongchao&quot;, age = 28)</code></pre>
+</div>
+<div id="创建新的泛型函数" class="section level3">
+<h3>创建新的泛型函数</h3>
+<pre class="r"><code>introduce &lt;- function(x) UseMethod(&quot;introduce&quot;)
+pryr::ftype(introduce)</code></pre>
+<pre><code>## [1] &quot;s3&quot;      &quot;generic&quot;</code></pre>
+</div>
+<div id="创建新的方法" class="section level3">
+<h3>创建新的方法</h3>
+<pre class="r"><code># 针对student对象的方法
+introduce.student &lt;- function(student) {
+  return(paste0(
+    &quot;My name is &quot;, student$name, &quot;, I&#39;m &quot;, student$age, &quot;!&quot;
+  ))
+}
+introduce(me)</code></pre>
+<pre><code>## [1] &quot;My name is fang yongchao, I&#39;m 28!&quot;</code></pre>
+<pre class="r"><code># 针对未知类对象的方法
+introduce.default &lt;- function(default) {
+  return(paste0(
+    &quot;Not a student, Can not introduce&quot;
+  ))
+}
+introduce(c(1:3))</code></pre>
+<pre><code>## [1] &quot;Not a student, Can not introduce&quot;</code></pre>
+</div>
+</div>
+<div id="s4" class="section level2">
+<h2>S4</h2>
+<ul>
+<li>与S3相比，S4更加正式和严谨，根据惯例S4的类名使用开头字母大写的驼峰写法</li>
+<li>有描述字段<strong>field</strong>和继承关系结构的正式定义：通过<strong>contains</strong>参数来实现继承</li>
+<li>使用运算符<strong>@</strong>从S4对象中提取字段<strong>slot</strong></li>
+<li>如果一个S4对象继承自一个S3类或一个基础类型，它就包含一个特殊的<strong>.Data</strong>字段，这个字段包含底层基础类型或S3对象</li>
+</ul>
+<div id="定义类和创建对象-1" class="section level3">
+<h3>定义类和创建对象</h3>
+<pre class="r"><code># 定义类，Member继承了Person
+setClass(
+  &quot;Person&quot;,
+  slots = list(name = &quot;character&quot;, age = &quot;numeric&quot;)
+)
+setClass(
+  &quot;Member&quot;,
+  slots = list(group = &quot;numeric&quot;, leader = &quot;Person&quot;),
+  contains = &quot;Person&quot;
+)
+# 创建对象
+my_leader &lt;- new(&quot;Person&quot;, name = &quot;Gong Yufang&quot;, age = 27)
+me &lt;- new(&quot;Member&quot;, leader = my_leader, group = 1,
+          name = &quot;Fang Yongchao&quot;, age = 28)</code></pre>
+</div>
+<div id="创建新的泛型函数-1" class="section level3">
+<h3>创建新的泛型函数</h3>
+<pre class="r"><code>setGeneric(
+  &quot;introduce&quot;,
+  function(x) {
+    standardGeneric(&quot;introduce&quot;)
+  }
+)</code></pre>
+<pre><code>## [1] &quot;introduce&quot;</code></pre>
+</div>
+<div id="创建新的方法-1" class="section level3">
+<h3>创建新的方法</h3>
+<pre class="r"><code>setMethod(
+  &quot;introduce&quot;,
+  c(x = &quot;Person&quot;),
+  function(x) {
+    return(paste0(
+      &quot;My name is &quot;, x@name, &quot;, I&#39;m &quot;, x@age, &quot;!&quot;
+    ))
+  }
+)
+introduce(my_leader)</code></pre>
+<pre><code>## [1] &quot;My name is Gong Yufang, I&#39;m 27!&quot;</code></pre>
+<pre class="r"><code>introduce(me)</code></pre>
+<pre><code>## [1] &quot;My name is Fang Yongchao, I&#39;m 28!&quot;</code></pre>
+</div>
+</div>
+<div id="rc" class="section level2">
+<h2>RC</h2>
+<ul>
+<li>RC的方法是一个对象，而不是一个函数</li>
+<li>RC的对象是可变的，不是通常的复制后修改，感觉比较像指针</li>
+<li>使用运算符<strong>$</strong>从RC对象中提取字段</li>
+<li><strong>下方的例子提供了另一种定义S4类和创建S4对象的语法</strong></li>
+<li>RC跟python很像，但是用<strong>$</strong>代替<strong>.</strong></li>
+</ul>
+<div id="定义类和创建对象-2" class="section level3">
+<h3>定义类和创建对象</h3>
+<pre class="r"><code>newAccount &lt;- setRefClass(
+  &quot;Account&quot;,
+  fields = list(balance = &quot;numeric&quot;)
+)
+my_account &lt;- newAccount$new(balance = 100)
+my_account</code></pre>
+<pre><code>## Reference class object of class &quot;Account&quot;
+## Field &quot;balance&quot;:
+## [1] 100</code></pre>
+<pre class="r"><code># 对象并不是复制后修改
+his_account &lt;- my_account
+my_account$balance &lt;- 200
+his_account$balance</code></pre>
+<pre><code>## [1] 200</code></pre>
+<pre class="r"><code># 通过copy()实现复制后修改
+her_account &lt;- my_account$copy()
+my_account$balance &lt;- 100
+her_account$balance</code></pre>
+<pre><code>## [1] 200</code></pre>
+</div>
+<div id="定义类的方法" class="section level3">
+<h3>定义类的方法</h3>
+<pre class="r"><code>Account &lt;- setRefClass(
+  &quot;Account&quot;,
+  fields = list(balance = &quot;numeric&quot;),
+  methods = list(
+    withdrow = function(x) {
+      balance &lt;&lt;- balance - x
+    },
+    deposit = function(x) {
+      balance &lt;&lt;- balance + x
+    }
+  )
+)
+my_account &lt;- Account$new(balance = 100)
+my_account</code></pre>
+<pre><code>## Reference class object of class &quot;Account&quot;
+## Field &quot;balance&quot;:
+## [1] 100</code></pre>
+<pre class="r"><code># 取100块钱
+my_account$withdrow(100)
+my_account$balance</code></pre>
+<pre><code>## [1] 0</code></pre>
+<pre class="r"><code># 存200块钱
+my_account$deposit(200)
+my_account$balance</code></pre>
+<pre><code>## [1] 200</code></pre>
+</div>
+<div id="类的继承" class="section level3">
+<h3>类的继承</h3>
+<pre class="r"><code>creditAccount &lt;- setRefClass(
+  &quot;creditAccount&quot;,
+  contains = &quot;Account&quot;
+)
+my_credit_account &lt;- creditAccount$new(balance = 200)
+my_credit_account$balance</code></pre>
+<pre><code>## [1] 200</code></pre>
+</div>
+</div>
+<div id="r6" class="section level2">
+<h2>R6</h2>
+<ul>
+<li>简单理解就是另一版的RC</li>
+<li>R6基于S3，但是RC基于S4</li>
+<li>R6比RC更快</li>
+</ul>
+<div id="定义类方法和创建对象" class="section level3">
+<h3>定义类、方法和创建对象</h3>
+<pre class="r"><code>library(R6)</code></pre>
+<pre><code>## Warning: 程辑包&#39;R6&#39;是用R版本4.0.3 来建造的</code></pre>
+<pre class="r"><code>Person &lt;- R6Class(
+  &quot;Person&quot;,
+  public = list(
+    name = NA,
+    initialize = function(name, age) {
+      self$name &lt;- name
+      private$.age &lt;- age
+    },
+    finalize = function() {
+      message(&quot;object Person being deleted&quot;)
+    },
+    print = function() {
+      cat(sprintf(&quot;My name is %s, I am %s\n&quot;, self$name, private$.age))
+    },
+    grow_up = function(n) {
+      private$.age &lt;- private$.age + n 
+    }
+  ),
+  private = list(
+    .age = NA
+  )
+)
+Person</code></pre>
+<pre><code>## &lt;Person&gt; object generator
+##   Public:
+##     name: NA
+##     initialize: function (name, age) 
+##     finalize: function () 
+##     print: function () 
+##     grow_up: function (n) 
+##     clone: function (deep = FALSE) 
+##   Private:
+##     .age: NA
+##   Parent env: &lt;environment: R_GlobalEnv&gt;
+##   Locked objects: TRUE
+##   Locked class: FALSE
+##   Portable: TRUE</code></pre>
+<pre class="r"><code>me &lt;- Person$new(&quot;Fang&quot;, 28)
+me</code></pre>
+<pre><code>## My name is Fang, I am 28</code></pre>
+<pre class="r"><code>me$name</code></pre>
+<pre><code>## [1] &quot;Fang&quot;</code></pre>
+<pre class="r"><code>me$.age</code></pre>
+<pre><code>## NULL</code></pre>
+<pre class="r"><code>me$grow_up(3)
+me</code></pre>
+<pre><code>## My name is Fang, I am 31</code></pre>
+<pre class="r"><code>rm(me)</code></pre>
+</div>
+<div id="active-binding" class="section level3">
+<h3>Active binding</h3>
+<pre class="r"><code>Person$set(&quot;active&quot;, &quot;age&quot;, function(value) {
+  if (missing(value)) {
+    private$.age
+  } else {
+    cat(&quot;age is read only!\n&quot;)
+  }
+})
+me &lt;- Person$new(&quot;Gong&quot;, &quot;26&quot;)
+me</code></pre>
+<pre><code>## My name is Gong, I am 26</code></pre>
+<pre class="r"><code>me$name</code></pre>
+<pre><code>## [1] &quot;Gong&quot;</code></pre>
+<pre class="r"><code>me$age</code></pre>
+<pre><code>## [1] &quot;26&quot;</code></pre>
+<pre class="r"><code>me$age &lt;- 18</code></pre>
+<pre><code>## age is read only!</code></pre>
+</div>
+<div id="类的继承-1" class="section level3">
+<h3>类的继承</h3>
+<pre class="r"><code>Leader &lt;- R6Class(
+  &quot;Leader&quot;,
+  inherit = Person,
+  public = list(
+    print = function() {
+      super$print()
+      cat(&quot;I am a Leader\n&quot;)
+    }
+  )
+)
+me &lt;- Leader$new(&quot;Fang&quot;, 28)
+me</code></pre>
+<pre><code>## My name is Fang, I am 28
+## I am a Leader</code></pre>
+</div>
+</div>
+
+  </article>
+
+  <br/>
+
+  
+  
+</section>
+
+      </div>
+      
+        <footer class="footer">
+  <section class="container">
+    
+      <div class="sns-shares sp-sns-shares">
+        
+        
+        
+        
+        
+      </div>
+    
+    
+      <a href="https://beian.miit.gov.cn/">赣ICP备 2020014401号</a>
+    
+     © 2021    ·  Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/naro143/hugo-coder-portfolio">CoderPortfolio</a>. 
+
+  </section>
+</footer>
+
+
+      
+    </main>
+
+    
+
+  <script src="/js/app.js"></script>
+  
+  </body>
+</html>

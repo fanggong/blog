@@ -1,10 +1,12 @@
 ---
 title: 对本主题的样式的测试
 author: Fang Yongchao
-date: "2021-03-15"
+date: "2021-03-16"
 ---
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 
 <p>任何做个人博客的人应该都过不了对样式无穷无尽的修改这个坎吧…</p>
@@ -44,21 +46,20 @@ date: "2021-03-15"
 </div>
 <div id="代码块" class="section level3">
 <h3>代码块</h3>
-<pre class="r"><code>shinyApp(
-  ui = fluidPage(
-    selectInput(&quot;state&quot;, &quot;Choose a state:&quot;,
-      list(`East Coast` = list(&quot;NY&quot;, &quot;NJ&quot;, &quot;CT&quot;),
-           `West Coast` = list(&quot;WA&quot;, &quot;OR&quot;, &quot;CA&quot;),
-           `Midwest` = list(&quot;MN&quot;, &quot;WI&quot;, &quot;IA&quot;))
-    ),
-    textOutput(&quot;result&quot;)
-  ),
-  server = function(input, output) {
-    output$result &lt;- renderText({
-      paste(&quot;You chose&quot;, input$state)
-    })
-  }
-)</code></pre>
+<pre class="r"><code>height &lt;- rnorm(100, 170, 8)
+weight &lt;- rnorm(100, 70, 12)
+t.test(height, weight)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  height and weight
+## t = 74.617, df = 173.04, p-value &lt; 2.2e-16
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##   97.19522 102.47698
+## sample estimates:
+## mean of x mean of y 
+## 170.78280  70.94669</code></pre>
 </div>
 <div id="行内代码" class="section level3">
 <h3>行内代码</h3>

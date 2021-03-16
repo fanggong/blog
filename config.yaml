@@ -1,13 +1,13 @@
 baseurl: https://fanggong.pub
 title: Fang Yongchao
-theme: hugo-coder-portfolio
+theme:  hugo-coder-portfolio
 DefaultContentLanguage: ch
 paginate: 20
 pygmentsstyle: b2
 pygmentscodefences: yes
 pygmentscodefencesguesssyntax: yes
 pygmentsUseClasses: yes
-disqusShortname: 
+disqusShortname:
 params:
   author: Fang Yongchao
   avatarurl: images/avatar.jpg
@@ -18,23 +18,23 @@ params:
   enableLineShare: no
   enableLinkedInShare: no
   enableTwitterShare: no
-  fixedbarContent: 
-  fixedbarContentAfter: 
+  fixedbarContent: no
+  fixedbarContentAfter: no 
   footercontent: 赣ICP备 2020014401号
   hideCopyright: no
   hideCredits: no
   info: 不要害怕未知的事物
   itemscentered: yes
-  keywords: blog, data science, personal
+  keywords: blog, data science
   langseparator: '|'
   math: yes
   rtl: no
   snsShare: yes
-  # social:
-  #   - icon: fab fa-github
-  #     name: Github
-  #     url: https://github.com/fanggong
-  #     weight: 1
+  social:
+    - icon: fab fa-github
+      name: Github
+      url: https://github.com/fanggong
+      weight: 1
   thumbnail: images/tn.png
 languages:
   ch:
@@ -51,9 +51,6 @@ languages:
         - name: Projects
           url: projects
           weight: 3
-        - name: Github
-          url: https://github.com/fanggong
-          weight: 4
         - name: Contact me
           url: mailto:yongchao.fang@outlook.com
           weight: 5
@@ -61,5 +58,5 @@ languages:
       author: Fang Yongchao
       description: Fang Yongchao's personal website
       info: 不要害怕未知的事物
-      keywords: blog, data science, personal
+      keywords: blog, data science
     title: Fang Yongchao

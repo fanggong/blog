@@ -15,22 +15,26 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ .Permalink }}">
     <meta property="og:image" content="{{ if .IsPage }}{{ .Site.BaseURL }}{{ .Params.thumbnail }}{{ else }}{{ .Site.BaseURL }}{{ .Site.Params.thumbnail }}{{ end }}">
+
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="{{ .Permalink }}">
     <meta name="twitter:image" content="{{ if .IsPage }}{{ .Site.BaseURL }}{{ .Params.thumbnail }}{{ else }}{{ .Site.BaseURL }}{{ .Site.Params.thumbnail }}{{ end }}">
 
     <base href="{{ .Permalink }}">
+
     <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
 
     <link rel="canonical" href="{{ .Permalink }}">
+    
     {{ if or (.Site.Params.snsShare) (.Site.Params.faIcons) }}
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     {{ end }}
-    <!-- <link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono:400,700"> -->
+    
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Liu+Jian+Mao+Cao:400"> 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono:400,700">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400">
+
     <link rel="stylesheet" href="{{ "css/normalize.min.css" | relURL }}">
     <link rel="stylesheet" href="{{ "css/style.min.css" | relURL }}">
 
