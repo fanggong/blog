@@ -12,9 +12,13 @@ date: "`r Sys.Date()`"
 
 ### 这是三级标题
 
+### 页内跳转
+
+[点这里跳到最重要的样式——表格](#表格)
+
 ### 无序列表
 
-- 御田的决心！白胡子的试炼！
+- 御田的决心！白胡子的试炼!
 - 白胡子的弟弟！御田的大冒险
 - 兵刃相接！罗杰与白胡子！
 
@@ -61,13 +65,16 @@ $$f(x) = {1 \over {\sqrt{2\pi}\sigma}}exp \left( - {{(x - \mu)^2} \over {2\sigma
 
 ### 表格
 
+[CRAN](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/available_packages_by_date.html)中提供了相当多的对表格样式进行渲染的包，这里列出了一些对于我来说比较常用的
+
 - `pander::pander()`
 ```{r echo=FALSE}
-dat <- data.frame(
-  姓名 = c("Fang", "Gong"),
-  性别 = c("male", "female"),
-  年龄 = c(30, 18)
-)
-pander::pander(dat)
+pander::pander(mtcars[1:5, 1:5])
 ```
 
+```{r echo=FALSE}
+library(kableExtra)
+mtcars[1:5, 1:5] %>%
+  kbl(caption = "Recreating booktabs style table") %>%
+  kable_classic(full_width = F, html_font = "Cambria")
+```

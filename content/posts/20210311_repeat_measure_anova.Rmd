@@ -10,10 +10,11 @@ date: "2021-03-11"
 
 重复测量数据的方差分析的步骤大致如下图：
 
-```{r echo=FALSE, warning=FALSE, message=FALSE, fig.cap="重复测量数据方差分析流程图"}
+```{r echo=FALSE, warning=FALSE, message=FALSE, fig.cap="重复测量数据方差分析流程图", fig.align="center", out.width="80%", fig.height=4}
 library(diagram)
-par(mar = c(0, 0, 0, 0))
+par(mar = c(0, 0, 0, 0), family = "HannotateSC-W5")
 openplotmat(asp = 1)
+box()
 elpos <- coordinates(c(1, 1, 1, 3, 3), hor = FALSE)
 fromto <- matrix(ncol = 2, byrow = TRUE, data = c(
   1, 2, 2, 3, 3, 5, 5, 7, 5, 9, 9, 7
@@ -35,7 +36,7 @@ textrect(elpos[2, ], radx = radx, rady = rady, shadow.size = 0, lab = "是否满
 textrect(elpos[3, ], radx = radx, rady = rady, shadow.size = 0, lab = "进行\n方差分析", cex = cex)
 textrect(elpos[5, ], radx = radx, rady = rady, shadow.size = 0, lab = "是否满足\n球形检验", cex = cex)
 textrect(elpos[9, ], radx = radx, rady = rady, shadow.size = 0, lab = "p值校正", cex = cex)
-textrect(elpos[7, ], radx = radx + 0.04, rady = rady, shadow.size = 0, lab = "多重比较\n单独效应分析等", cex = cex)
+textrect(elpos[7, ], radx = radx + 0.05, rady = rady, shadow.size = 0, lab = "多重比较\n单独效应分析等", cex = cex)
 bias <- 0.03
 cex <- 0.7
 text(arrpos[1, 1], arrpos[1, 2] + bias, "YES", cex = cex)

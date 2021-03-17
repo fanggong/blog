@@ -5,8 +5,6 @@ date: "2021-03-12"
 ---
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
-<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 
 <ul>
@@ -211,9 +209,8 @@ my_credit_account$balance</code></pre>
 </ul>
 <div id="定义类方法和创建对象" class="section level3">
 <h3>定义类、方法和创建对象</h3>
-<pre class="r"><code>library(R6)</code></pre>
-<pre><code>## Warning: 程辑包&#39;R6&#39;是用R版本4.0.3 来建造的</code></pre>
-<pre class="r"><code>Person &lt;- R6Class(
+<pre class="r"><code>library(R6)
+Person &lt;- R6Class(
   &quot;Person&quot;,
   public = list(
     name = NA,

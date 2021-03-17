@@ -9,7 +9,7 @@ body{
     display:flex;
     color:#323232;
     background-color:#fefefe;
-    font-family:'Fira Mono';
+    font-family:'Fira Mono', monospace;
     font-size:1.6em;
     font-weight:400;
     letter-spacing:.0625em;
@@ -119,14 +119,14 @@ code{
 }
 pre,code {
     background-color: #f8f8f8;
-    font-size: .8em;
+    font-size: .85em;
 }
 blockquote{
     border-left:2px solid #dcdcdc;
     padding-left:1.6rem;
     font-style:italic
 }
-th,td{
+/* th,td{
     padding:.5rem;
     font-size: 0.8em;
 }
@@ -135,7 +135,7 @@ table{
 }
 table td,table th{
     border:2px solid #000
-}
+} */
 img{
     max-width:100%
 }

@@ -8,7 +8,7 @@ date: '2021-03-10'
 
 
 <p>相关包：<a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/diagram/index.html">diagram</a></p>
-<p>原理相当简单，创建一个空的画板，规划坐标，然后在上面插入BOX和ARROR即可。由于是在base R的体系中进行作图，所以有很高的自由度。</p>
+<p>原理相当简单，创建一个空的画板，规划坐标，然后在上面插入BOX和ARROW即可。由于是在base R的体系中进行作图，所以有很高的自由度。</p>
 <div id="创建空画板" class="section level1">
 <h1>创建空画板</h1>
 <p>该函数中有一个<code>asp</code>参数TODO</p>
@@ -23,7 +23,7 @@ date: '2021-03-10'
 <div id="插入box" class="section level1">
 <h1>插入BOX</h1>
 <p><a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/diagram/index.html">diagram</a>包共提供了九种BOX</p>
-<pre class="r"><code>par(mar = c(0, 0, 0, 0))
+<pre class="r"><code>par(mar = c(0, 0, 0, 0), family = &quot;HannotateSC-W5&quot;)
 openplotmat(asp = 1)
 box()
 elpos &lt;- coordinates(pos = rep(3, 6), hor = FALSE)
@@ -47,9 +47,9 @@ textround(elpos[13, ], radx = 0.05, rady = 0.1, rx = 0.1, lab = &quot;前&quot;,
 text(elpos[16, 1], elpos[16, 2], labels = &quot;textround&quot;)</code></pre>
 <p><img src="/posts/20210310_diagram_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="插入line" class="section level1">
-<h1>插入LINE</h1>
-<p><a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/diagram/index.html">diagram</a>包共提供了七种ARROR</p>
+<div id="插入arrow" class="section level1">
+<h1>插入ARROW</h1>
+<p><a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/diagram/index.html">diagram</a>包共提供了七种ARROW</p>
 <pre class="r"><code>par(mar = c(0, 0, 0, 0))
 openplotmat(asp = 1)
 box()</code></pre>

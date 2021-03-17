@@ -11,7 +11,7 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 
 相关包：[diagram](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/diagram/index.html)
 
-原理相当简单，创建一个空的画板，规划坐标，然后在上面插入BOX和ARROR即可。由于是在base R的体系中进行作图，所以有很高的自由度。
+原理相当简单，创建一个空的画板，规划坐标，然后在上面插入BOX和ARROW即可。由于是在base R的体系中进行作图，所以有很高的自由度。
 
 # 创建空画板
 
@@ -29,8 +29,8 @@ elpos <- coordinates(pos = c(1, 2, 3, 4), hor = FALSE)
 
 上面的代码将画板划分成了如下形式
 
-```{r echo=FALSE, fig.align="center", out.width="80%"}
-par(mar = c(0, 0, 0, 0))
+```{r echo=FALSE, fig.align="center", out.width="80%", fig.height=3}
+par(mar = c(0, 0, 0, 0), family = "HannotateSC-W5")
 openplotmat(asp = 1)
 box()
 elpos <- coordinates(pos = c(1, 2, 3, 4), hor = FALSE)
@@ -51,7 +51,7 @@ text(elpos[10, 1], elpos[10, 2], "十", cex = 3)
 [diagram](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/diagram/index.html)包共提供了九种BOX
 
 ```{r fig.align="center", out.width="80%"}
-par(mar = c(0, 0, 0, 0))
+par(mar = c(0, 0, 0, 0), family = "HannotateSC-W5")
 openplotmat(asp = 1)
 box()
 elpos <- coordinates(pos = rep(3, 6), hor = FALSE)
@@ -76,9 +76,9 @@ text(elpos[16, 1], elpos[16, 2], labels = "textround")
 ```
 
 
-# 插入LINE
+# 插入ARROW
 
-[diagram](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/diagram/index.html)包共提供了七种ARROR
+[diagram](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/diagram/index.html)包共提供了七种ARROW
 
 ```{r fig.align="center", out.width="80%"}
 par(mar = c(0, 0, 0, 0))

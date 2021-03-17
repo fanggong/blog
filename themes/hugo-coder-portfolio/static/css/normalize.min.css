@@ -19,7 +19,7 @@ hr{
     overflow:visible
 }
 pre{
-    font-family:'Source Code Pro';
+    font-family:'Source Code Pro', monospace;
     font-size:1em
 }
 a{
@@ -34,7 +34,7 @@ b,strong{
     font-weight:bolder
 }
 code,kbd,samp{
-    font-family:'Source Code Pro';
+    font-family:'Source Code Pro', monospace;
     font-size:1em
 }
 small{
