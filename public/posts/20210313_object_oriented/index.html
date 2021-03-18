@@ -61,7 +61,7 @@
       <link href="https://fanggong.pub/index.xml" rel="feed" type="application/rss+xml" title="Fang Yongchao" />
     
 
-    <meta name="generator" content="Hugo 0.78.2" />
+    <meta name="generator" content="Hugo 0.78.1" />
   </head>
 
   <body class="">
@@ -112,12 +112,10 @@
 
     
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 
-<ul>
-<li><code>pryr::otype()</code>：检查对象类型</li>
-<li><code>pryr::ftype()</code>：检查函数类型</li>
-</ul>
 <div id="基础类型" class="section level2">
 <h2>基础类型</h2>
 <hr />
@@ -128,55 +126,65 @@
 </div>
 <div id="s3" class="section level2">
 <h2>S3</h2>
+<hr />
 <ul>
 <li>目前使用的大部分对象都是S3对象</li>
 <li>在S3中，<strong>方法</strong>属于<strong>泛型函数</strong>，一个<strong>泛型函数</strong>会有多个<strong>方法</strong>，可以用<code>methods()</code>来查看<strong>泛型函数</strong>的<strong>方法</strong></li>
 <li>S3并不需要一个正式的类定义，需要的仅仅是一个构造函数</li>
 </ul>
-<pre class="r"><code># data.frame是一个S3对象
-df &lt;- data.frame(x = 1:3, y = 4:6)
+<p>data.frame是一个S3对象</p>
+<pre class="r"><code>df &lt;- data.frame(x = 1:3, y = 4:6)
 pryr::otype(df)</code></pre>
 <pre><code>## [1] &quot;S3&quot;</code></pre>
-<pre class="r"><code># mean()是一个泛型函数
-pryr::ftype(mean)</code></pre>
+<p><code>mean()</code>是一个泛型函数</p>
+<pre class="r"><code>pryr::ftype(mean)</code></pre>
 <pre><code>## [1] &quot;s3&quot;      &quot;generic&quot;</code></pre>
-<pre class="r"><code># mean.Date()是一个方法
-pryr::ftype(mean.Date)</code></pre>
+<p><code>mean.Date()</code>是一个方法</p>
+<pre class="r"><code>pryr::ftype(mean.Date)</code></pre>
 <pre><code>## [1] &quot;s3&quot;     &quot;method&quot;</code></pre>
-<pre class="r"><code># 查看mean的所有方法
-methods(mean)</code></pre>
+<p>查看mean的所有方法</p>
+<pre class="r"><code>methods(mean)</code></pre>
 <pre><code>## [1] mean.Date     mean.default  mean.difftime mean.POSIXct  mean.POSIXlt 
 ## [6] mean.quosure*
 ## see &#39;?methods&#39; for accessing help and source code</code></pre>
 <div id="定义类和创建对象" class="section level3">
 <h3>定义类和创建对象</h3>
-<pre class="r"><code># 构造函数
-student &lt;- function(name, age) {
+<p>S3通过定义构造函数来定义类</p>
+<pre class="r"><code>student &lt;- function(name, age) {
   if(!is.character(name)) stop(&quot;name must be character&quot;)
   if(!is.numeric(age)) stop(&quot;age mest be numeric&quot;)
   structure(list(name = name, age = age), class = &quot;student&quot;)
-}
-# 创建对象
-me &lt;- student(name = &quot;fang yongchao&quot;, age = 28)</code></pre>
+}</code></pre>
+<p>创建对象</p>
+<pre class="r"><code>me &lt;- student(name = &quot;fang yongchao&quot;, age = 28)
+me</code></pre>
+<pre><code>## $name
+## [1] &quot;fang yongchao&quot;
+## 
+## $age
+## [1] 28
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;student&quot;</code></pre>
 </div>
-<div id="创建新的泛型函数" class="section level3">
-<h3>创建新的泛型函数</h3>
+<div id="定义新的泛型函数" class="section level3">
+<h3>定义新的泛型函数</h3>
 <pre class="r"><code>introduce &lt;- function(x) UseMethod(&quot;introduce&quot;)
 pryr::ftype(introduce)</code></pre>
 <pre><code>## [1] &quot;s3&quot;      &quot;generic&quot;</code></pre>
 </div>
-<div id="创建新的方法" class="section level3">
-<h3>创建新的方法</h3>
-<pre class="r"><code># 针对student对象的方法
-introduce.student &lt;- function(student) {
+<div id="定义新的方法" class="section level3">
+<h3>定义新的方法</h3>
+<p>针对student对象的方法</p>
+<pre class="r"><code>introduce.student &lt;- function(student) {
   return(paste0(
     &quot;My name is &quot;, student$name, &quot;, I&#39;m &quot;, student$age, &quot;!&quot;
   ))
 }
 introduce(me)</code></pre>
 <pre><code>## [1] &quot;My name is fang yongchao, I&#39;m 28!&quot;</code></pre>
-<pre class="r"><code># 针对未知类对象的方法
-introduce.default &lt;- function(default) {
+<p>针对未知类对象的方法</p>
+<pre class="r"><code>introduce.default &lt;- function(default) {
   return(paste0(
     &quot;Not a student, Can not introduce&quot;
   ))
@@ -187,6 +195,7 @@ introduce(c(1:3))</code></pre>
 </div>
 <div id="s4" class="section level2">
 <h2>S4</h2>
+<hr />
 <ul>
 <li>与S3相比，S4更加正式和严谨，根据惯例S4的类名使用开头字母大写的驼峰写法</li>
 <li>有描述字段<strong>field</strong>和继承关系结构的正式定义：通过<strong>contains</strong>参数来实现继承</li>
@@ -195,8 +204,8 @@ introduce(c(1:3))</code></pre>
 </ul>
 <div id="定义类和创建对象-1" class="section level3">
 <h3>定义类和创建对象</h3>
-<pre class="r"><code># 定义类，Member继承了Person
-setClass(
+<p>定义类Member和Person，通过<strong>contains</strong>参数使得类Member继承类Person</p>
+<pre class="r"><code>setClass(
   &quot;Person&quot;,
   slots = list(name = &quot;character&quot;, age = &quot;numeric&quot;)
 )
@@ -204,14 +213,41 @@ setClass(
   &quot;Member&quot;,
   slots = list(group = &quot;numeric&quot;, leader = &quot;Person&quot;),
   contains = &quot;Person&quot;
-)
-# 创建对象
-my_leader &lt;- new(&quot;Person&quot;, name = &quot;Gong Yufang&quot;, age = 27)
+)</code></pre>
+<p>创建对象</p>
+<pre class="r"><code>my_leader &lt;- new(&quot;Person&quot;, name = &quot;Gong Yufang&quot;, age = 27)
 me &lt;- new(&quot;Member&quot;, leader = my_leader, group = 1,
           name = &quot;Fang Yongchao&quot;, age = 28)</code></pre>
+<pre class="r"><code>my_leader</code></pre>
+<pre><code>## An object of class &quot;Person&quot;
+## Slot &quot;name&quot;:
+## [1] &quot;Gong Yufang&quot;
+## 
+## Slot &quot;age&quot;:
+## [1] 27</code></pre>
+<pre class="r"><code>me</code></pre>
+<pre><code>## An object of class &quot;Member&quot;
+## Slot &quot;group&quot;:
+## [1] 1
+## 
+## Slot &quot;leader&quot;:
+## An object of class &quot;Person&quot;
+## Slot &quot;name&quot;:
+## [1] &quot;Gong Yufang&quot;
+## 
+## Slot &quot;age&quot;:
+## [1] 27
+## 
+## 
+## Slot &quot;name&quot;:
+## [1] &quot;Fang Yongchao&quot;
+## 
+## Slot &quot;age&quot;:
+## [1] 28</code></pre>
 </div>
-<div id="创建新的泛型函数-1" class="section level3">
-<h3>创建新的泛型函数</h3>
+<div id="定义新的泛型函数-1" class="section level3">
+<h3>定义新的泛型函数</h3>
+<p>定义S4的泛型函数<code>introduce()</code></p>
 <pre class="r"><code>setGeneric(
   &quot;introduce&quot;,
   function(x) {
@@ -220,8 +256,9 @@ me &lt;- new(&quot;Member&quot;, leader = my_leader, group = 1,
 )</code></pre>
 <pre><code>## [1] &quot;introduce&quot;</code></pre>
 </div>
-<div id="创建新的方法-1" class="section level3">
-<h3>创建新的方法</h3>
+<div id="定义新的方法-1" class="section level3">
+<h3>定义新的方法</h3>
+<p>定义泛型函数<code>introduce()</code>针对类Person的方法</p>
 <pre class="r"><code>setMethod(
   &quot;introduce&quot;,
   c(x = &quot;Person&quot;),
@@ -230,8 +267,8 @@ me &lt;- new(&quot;Member&quot;, leader = my_leader, group = 1,
       &quot;My name is &quot;, x@name, &quot;, I&#39;m &quot;, x@age, &quot;!&quot;
     ))
   }
-)
-introduce(my_leader)</code></pre>
+)</code></pre>
+<pre class="r"><code>introduce(my_leader)</code></pre>
 <pre><code>## [1] &quot;My name is Gong Yufang, I&#39;m 27!&quot;</code></pre>
 <pre class="r"><code>introduce(me)</code></pre>
 <pre><code>## [1] &quot;My name is Fang Yongchao, I&#39;m 28!&quot;</code></pre>
@@ -239,6 +276,7 @@ introduce(my_leader)</code></pre>
 </div>
 <div id="rc" class="section level2">
 <h2>RC</h2>
+<hr />
 <ul>
 <li>RC的方法是一个对象，而不是一个函数</li>
 <li>RC的对象是可变的，不是通常的复制后修改，感觉比较像指针</li>
@@ -248,6 +286,7 @@ introduce(my_leader)</code></pre>
 </ul>
 <div id="定义类和创建对象-2" class="section level3">
 <h3>定义类和创建对象</h3>
+<p>定义RC类Account和类Account的初始化函数<code>newAccount()</code>，并创建一个新对象</p>
 <pre class="r"><code>newAccount &lt;- setRefClass(
   &quot;Account&quot;,
   fields = list(balance = &quot;numeric&quot;)
@@ -257,19 +296,20 @@ my_account</code></pre>
 <pre><code>## Reference class object of class &quot;Account&quot;
 ## Field &quot;balance&quot;:
 ## [1] 100</code></pre>
-<pre class="r"><code># 对象并不是复制后修改
-his_account &lt;- my_account
+<p>对象并不是复制后修改</p>
+<pre class="r"><code>his_account &lt;- my_account
 my_account$balance &lt;- 200
 his_account$balance</code></pre>
 <pre><code>## [1] 200</code></pre>
-<pre class="r"><code># 通过copy()实现复制后修改
-her_account &lt;- my_account$copy()
+<p>通过<code>copy()</code>实现复制后修改</p>
+<pre class="r"><code>her_account &lt;- my_account$copy()
 my_account$balance &lt;- 100
 her_account$balance</code></pre>
 <pre><code>## [1] 200</code></pre>
 </div>
 <div id="定义类的方法" class="section level3">
 <h3>定义类的方法</h3>
+<p>在定义类的同时定义方法</p>
 <pre class="r"><code>Account &lt;- setRefClass(
   &quot;Account&quot;,
   fields = list(balance = &quot;numeric&quot;),
@@ -287,17 +327,18 @@ my_account</code></pre>
 <pre><code>## Reference class object of class &quot;Account&quot;
 ## Field &quot;balance&quot;:
 ## [1] 100</code></pre>
-<pre class="r"><code># 取100块钱
-my_account$withdrow(100)
+<p>withdrow 100 dollars</p>
+<pre class="r"><code>my_account$withdrow(100)
 my_account$balance</code></pre>
 <pre><code>## [1] 0</code></pre>
-<pre class="r"><code># 存200块钱
-my_account$deposit(200)
+<p>deposit 200 dollars</p>
+<pre class="r"><code>my_account$deposit(200)
 my_account$balance</code></pre>
 <pre><code>## [1] 200</code></pre>
 </div>
 <div id="类的继承" class="section level3">
 <h3>类的继承</h3>
+<p>通过<strong>contains</strong>参数实现类的继承</p>
 <pre class="r"><code>creditAccount &lt;- setRefClass(
   &quot;creditAccount&quot;,
   contains = &quot;Account&quot;
@@ -309,6 +350,7 @@ my_credit_account$balance</code></pre>
 </div>
 <div id="r6" class="section level2">
 <h2>R6</h2>
+<hr />
 <ul>
 <li>简单理解就是另一版的RC</li>
 <li>R6基于S3，但是RC基于S4</li>
@@ -316,6 +358,7 @@ my_credit_account$balance</code></pre>
 </ul>
 <div id="定义类方法和创建对象" class="section level3">
 <h3>定义类、方法和创建对象</h3>
+<p>定义R6类Pearson</p>
 <pre class="r"><code>library(R6)
 Person &lt;- R6Class(
   &quot;Person&quot;,
@@ -354,21 +397,26 @@ Person</code></pre>
 ##   Locked objects: TRUE
 ##   Locked class: FALSE
 ##   Portable: TRUE</code></pre>
+<p>创建一个新的类Person的对象</p>
 <pre class="r"><code>me &lt;- Person$new(&quot;Fang&quot;, 28)
 me</code></pre>
 <pre><code>## My name is Fang, I am 28</code></pre>
+<p><strong>public</strong>的属性可以从外部进行访问</p>
 <pre class="r"><code>me$name</code></pre>
 <pre><code>## [1] &quot;Fang&quot;</code></pre>
+<p><strong>private</strong>的属性无法从外部进行访问</p>
 <pre class="r"><code>me$.age</code></pre>
 <pre><code>## NULL</code></pre>
+<p>GETTING OLD…</p>
 <pre class="r"><code>me$grow_up(3)
 me</code></pre>
 <pre><code>## My name is Fang, I am 31</code></pre>
-<pre class="r"><code>rm(me)</code></pre>
 </div>
 <div id="active-binding" class="section level3">
 <h3>Active binding</h3>
-<pre class="r"><code>Person$set(&quot;active&quot;, &quot;age&quot;, function(value) {
+<p>通过<strong>active</strong>实现<strong>private</strong>的属性的READONLY</p>
+<pre class="r"><code>rm(me)
+Person$set(&quot;active&quot;, &quot;age&quot;, function(value) {
   if (missing(value)) {
     private$.age
   } else {
@@ -378,15 +426,16 @@ me</code></pre>
 me &lt;- Person$new(&quot;Gong&quot;, &quot;26&quot;)
 me</code></pre>
 <pre><code>## My name is Gong, I am 26</code></pre>
-<pre class="r"><code>me$name</code></pre>
-<pre><code>## [1] &quot;Gong&quot;</code></pre>
+<p>可以读取age属性，返回<strong>private</strong>下的.age属性</p>
 <pre class="r"><code>me$age</code></pre>
 <pre><code>## [1] &quot;26&quot;</code></pre>
+<p>但是不能进行修改</p>
 <pre class="r"><code>me$age &lt;- 18</code></pre>
 <pre><code>## age is read only!</code></pre>
 </div>
 <div id="类的继承-1" class="section level3">
 <h3>类的继承</h3>
+<p>通过<strong>inherit</strong>参数实现类的继承</p>
 <pre class="r"><code>Leader &lt;- R6Class(
   &quot;Leader&quot;,
   inherit = Person,

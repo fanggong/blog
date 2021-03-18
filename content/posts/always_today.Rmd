@@ -4,6 +4,10 @@ author: Fang Yongchao
 date: "`r Sys.Date()`"
 ---
 
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
 任何做个人博客的人应该都过不了对样式无穷无尽的修改这个坎吧...
 
 # 这是一级标题
@@ -51,7 +55,7 @@ t.test(height, weight)
 
 > 故人具鸡黍，邀我至田家  
 > 绿树村边合，青山郭外斜  
-> 开轩面场圃，把酒话桑麻  
+> **开轩面场圃，把酒话桑麻**  
 > 待到重阳日，还来就菊花
 
 ### 公式块
@@ -67,14 +71,30 @@ $$f(x) = {1 \over {\sqrt{2\pi}\sigma}}exp \left( - {{(x - \mu)^2} \over {2\sigma
 
 [CRAN](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/available_packages_by_date.html)中提供了相当多的对表格样式进行渲染的包，这里列出了一些对于我来说比较常用的
 
-- `pander::pander()`
-```{r echo=FALSE}
-pander::pander(mtcars[1:5, 1:5])
+- [`pander::pander()`](http://rapporter.github.io/pander/)
+```{r}
+library(pander)
+pander(mtcars[1:5, 1:5])
 ```
 
-```{r echo=FALSE}
+- [`kableExtra::kable_classic()`](http://haozhu233.github.io/kableExtra/awesome_table_in_html.html#Alternative_themes)
+```{r}
 library(kableExtra)
-mtcars[1:5, 1:5] %>%
-  kbl(caption = "Recreating booktabs style table") %>%
-  kable_classic(full_width = F, html_font = "Cambria")
+kbl(mtcars[1:5, 1:5]) %>%
+  kable_classic(full_width = FALSE, html_font = "Fira Mono")
+```
+
+- [`kableExtra::add_header_above()`](http://haozhu233.github.io/kableExtra/awesome_table_in_html.html#Add_header_rows_to_group_columns)
+```{r}
+library(kableExtra)
+kbl(mtcars[1:5, 1:5]) %>% 
+kable_classic(full_width = FALSE, html_font = "Fira Mono") %>%
+  add_header_above(c(" " = 1, "Group 1" = 2, "Group 2" = 3))
+```
+
+- [`kableExtra::scroll_box()`](http://haozhu233.github.io/kableExtra/awesome_table_in_html.html#Scroll_box)
+```{r}
+kbl(mtcars) %>%
+  kable_paper(html_font = "Fira Mono") %>%
+  scroll_box(width = "100%", height = "400px")
 ```

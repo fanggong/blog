@@ -4,8 +4,10 @@ author: Fang Yongchao
 date: "2021-03-12"
 ---
 
-- `pryr::otype()`：检查对象类型
-- `pryr::ftype()`：检查函数类型
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
 
 ## 基础类型
 
@@ -16,53 +18,71 @@ date: "2021-03-12"
 
 ## S3
 
+------------------------------
+
 - 目前使用的大部分对象都是S3对象
 - 在S3中，**方法**属于**泛型函数**，一个**泛型函数**会有多个**方法**，可以用`methods()`来查看**泛型函数**的**方法**
 - S3并不需要一个正式的类定义，需要的仅仅是一个构造函数
 
-```{r, message=FALSE}
-# data.frame是一个S3对象
+data.frame是一个S3对象
+```{r}
 df <- data.frame(x = 1:3, y = 4:6)
 pryr::otype(df)
-# mean()是一个泛型函数
+```
+
+`mean()`是一个泛型函数
+```{r}
 pryr::ftype(mean)
-# mean.Date()是一个方法
+```
+
+`mean.Date()`是一个方法
+```{r}
 pryr::ftype(mean.Date)
-# 查看mean的所有方法
+```
+
+查看mean的所有方法
+```{r}
 methods(mean)
 ```
 
 ### 定义类和创建对象
 
+S3通过定义构造函数来定义类
 ```{r}
-# 构造函数
 student <- function(name, age) {
   if(!is.character(name)) stop("name must be character")
   if(!is.numeric(age)) stop("age mest be numeric")
   structure(list(name = name, age = age), class = "student")
 }
-# 创建对象
-me <- student(name = "fang yongchao", age = 28)
 ```
 
-### 创建新的泛型函数
+创建对象
+```{r}
+me <- student(name = "fang yongchao", age = 28)
+me
+```
+
+### 定义新的泛型函数
 
 ```{r}
 introduce <- function(x) UseMethod("introduce")
 pryr::ftype(introduce)
 ```
 
-### 创建新的方法
+### 定义新的方法
 
+针对student对象的方法
 ```{r}
-# 针对student对象的方法
 introduce.student <- function(student) {
   return(paste0(
     "My name is ", student$name, ", I'm ", student$age, "!"
   ))
 }
 introduce(me)
-# 针对未知类对象的方法
+```
+
+针对未知类对象的方法
+```{r}
 introduce.default <- function(default) {
   return(paste0(
     "Not a student, Can not introduce"
@@ -73,6 +93,8 @@ introduce(c(1:3))
 
 ## S4
 
+------------------------------
+
 - 与S3相比，S4更加正式和严谨，根据惯例S4的类名使用开头字母大写的驼峰写法
 - 有描述字段**field**和继承关系结构的正式定义：通过**contains**参数来实现继承
 - 使用运算符**\@**从S4对象中提取字段**slot**
@@ -80,8 +102,8 @@ introduce(c(1:3))
 
 ### 定义类和创建对象
 
+定义类Member和Person，通过**contains**参数使得类Member继承类Person
 ```{r}
-# 定义类，Member继承了Person
 setClass(
   "Person",
   slots = list(name = "character", age = "numeric")
@@ -91,14 +113,23 @@ setClass(
   slots = list(group = "numeric", leader = "Person"),
   contains = "Person"
 )
-# 创建对象
+```
+
+创建对象
+```{r}
 my_leader <- new("Person", name = "Gong Yufang", age = 27)
 me <- new("Member", leader = my_leader, group = 1,
           name = "Fang Yongchao", age = 28)
 ```
 
-### 创建新的泛型函数
+```{r}
+my_leader
+me
+```
 
+### 定义新的泛型函数
+
+定义S4的泛型函数`introduce()`
 ```{r}
 setGeneric(
   "introduce",
@@ -108,8 +139,9 @@ setGeneric(
 )
 ```
 
-### 创建新的方法
+### 定义新的方法
 
+定义泛型函数`introduce()`针对类Person的方法
 ```{r}
 setMethod(
   "introduce",
@@ -120,11 +152,16 @@ setMethod(
     ))
   }
 )
+```
+
+```{r}
 introduce(my_leader)
 introduce(me)
 ```
 
 ## RC
+
+------------------------------
 
 - RC的方法是一个对象，而不是一个函数
 - RC的对象是可变的，不是通常的复制后修改，感觉比较像指针
@@ -134,6 +171,7 @@ introduce(me)
 
 ### 定义类和创建对象
 
+定义RC类Account和类Account的初始化函数`newAccount()`，并创建一个新对象
 ```{r}
 newAccount <- setRefClass(
   "Account",
@@ -143,15 +181,15 @@ my_account <- newAccount$new(balance = 100)
 my_account
 ```
 
+对象并不是复制后修改
 ```{r}
-# 对象并不是复制后修改
 his_account <- my_account
 my_account$balance <- 200
 his_account$balance
 ```
 
+通过`copy()`实现复制后修改
 ```{r}
-# 通过copy()实现复制后修改
 her_account <- my_account$copy()
 my_account$balance <- 100
 her_account$balance
@@ -159,6 +197,7 @@ her_account$balance
 
 ### 定义类的方法
 
+在定义类的同时定义方法
 ```{r}
 Account <- setRefClass(
   "Account",
@@ -175,21 +214,20 @@ Account <- setRefClass(
 my_account <- Account$new(balance = 100)
 my_account
 ```
-
+withdrow 100 dollars
 ```{r}
-# 取100块钱
 my_account$withdrow(100)
 my_account$balance
 ```
-
+deposit 200 dollars
 ```{r}
-# 存200块钱
 my_account$deposit(200)
 my_account$balance
 ```
 
 ### 类的继承
 
+通过**contains**参数实现类的继承
 ```{r}
 creditAccount <- setRefClass(
   "creditAccount",
@@ -201,12 +239,15 @@ my_credit_account$balance
 
 ## R6
 
+------------------------------
+
 - 简单理解就是另一版的RC
 - R6基于S3，但是RC基于S4
 - R6比RC更快
 
 ### 定义类、方法和创建对象
 
+定义R6类Pearson
 ```{r}
 library(R6)
 Person <- R6Class(
@@ -233,26 +274,33 @@ Person <- R6Class(
 )
 Person
 ```
-
+创建一个新的类Person的对象
 ```{r}
 me <- Person$new("Fang", 28)
 me
+```
+
+**public**的属性可以从外部进行访问
+```{r}
 me$name
+```
+
+**private**的属性无法从外部进行访问
+```{r}
 me$.age
 ```
 
+GETTING OLD...
 ```{r}
 me$grow_up(3)
 me
 ```
 
-```{r}
-rm(me)
-```
-
 ### Active binding
 
+通过**active**实现**private**的属性的READONLY
 ```{r}
+rm(me)
 Person$set("active", "age", function(value) {
   if (missing(value)) {
     private$.age
@@ -262,13 +310,21 @@ Person$set("active", "age", function(value) {
 })
 me <- Person$new("Gong", "26")
 me
-me$name
+```
+
+可以读取age属性，返回**private**下的.age属性
+```{r}
 me$age
+```
+
+但是不能进行修改
+```{r}
 me$age <- 18
 ```
 
 ### 类的继承
 
+通过**inherit**参数实现类的继承
 ```{r}
 Leader <- R6Class(
   "Leader",
