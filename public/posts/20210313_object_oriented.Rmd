@@ -2,6 +2,9 @@
 title: R的面向对象编程
 author: Fang Yongchao
 date: "2021-03-12"
+output:
+  blogdown::html_page:
+    toc: yes
 ---
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
@@ -40,7 +43,7 @@ pryr::ftype(mean)
 pryr::ftype(mean.Date)
 ```
 
-查看mean的所有方法
+查看`mean()`的所有方法
 ```{r}
 methods(mean)
 ```

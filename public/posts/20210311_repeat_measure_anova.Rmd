@@ -2,7 +2,17 @@
 title: 重复测量数据方差分析
 author: Fang Yongchao
 date: "2021-03-11"
+output:
+  blogdown::html_page:
+    toc: yes
 ---
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+library(diagram)
+library(kableExtra)
+library(pander)
+```
 
 相关包：[car](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/car/index.html)
 
@@ -10,11 +20,10 @@ date: "2021-03-11"
 
 重复测量数据的方差分析的步骤大致如下图：
 
-```{r echo=FALSE, warning=FALSE, message=FALSE, fig.cap="重复测量数据方差分析流程图", fig.align="center", out.width="80%", fig.height=4}
-library(diagram)
+```{r echo=FALSE, fig.cap="重复测量数据方差分析流程", fig.align="center", out.width="80%", fig.height=4}
 par(mar = c(0, 0, 0, 0), family = "HannotateSC-W5")
 openplotmat(asp = 1)
-box()
+box(col = "#dcdcdc")
 elpos <- coordinates(c(1, 1, 1, 3, 3), hor = FALSE)
 fromto <- matrix(ncol = 2, byrow = TRUE, data = c(
   1, 2, 2, 3, 3, 5, 5, 7, 5, 9, 9, 7
@@ -45,7 +54,9 @@ text(arrpos[4, 1], arrpos[4, 2] + bias, "YES", cex = cex)
 text(arrpos[5, 1], arrpos[5, 2] + bias, "NO", cex = cex)
 ```
 
-# 数据
+## 数据
+
+------------------------------
 
 使用下面的代码造一份假数据，50个对象，分成5个处理分组（甲乙丙丁戊），对每个对象进行4次重复测量。
 
@@ -59,10 +70,17 @@ dat <- data.frame(
   measure_3 = round(rnorm(50, 20), 2),
   measure_4 = round(rnorm(50, 40), 2)
 )
-DT::datatable(dat)
 ```
 
-# 正态性检验
+```{r echo=FALSE}
+kbl(dat) %>%
+  kable_paper(html_font = "Fira Mono") %>%
+  scroll_box(width = "100%", height = "400px")
+```
+
+## 正态性检验
+
+------------------------------
 
 由于存在5个处理分组，每个分组进行了4次重复测量，故共有20组数据需要做正态性检验。考虑将数据转换成长数据方便使用`lapply`函数一次性完成所有分组的正态性检验。
 
@@ -72,7 +90,12 @@ long_dat <- data.table::melt(
   dat, id.vars = c("ID", "group"), measure.vars = paste0("measure_", 1:4),
   variable.name = "time", value.name = "response" 
 )
-DT::datatable(long_dat)
+```
+
+```{r echo=FALSE}
+kbl(long_dat) %>%
+  kable_paper(html_font = "Fira Mono") %>%
+  scroll_box(width = "100%", height = "400px")
 ```
 
 使用Shapiro-Wilk检验进行正态性检验。该检验零假设为样本来自于正态分布总体，故p值小于0.05时考虑拒绝原假设，即样本来自于非正态总体。
@@ -86,7 +109,9 @@ norm_result <- data.table::rbindlist(norm_result, idcol = "compare_group")
 norm_result
 ```
 
-# 方差齐性检验
+## 方差齐性检验
+
+------------------------------
 
 使用Levene检验进行方差齐性检验。该检验零假设为样本所在总体方差相等，故p值小于0.05时考虑拒绝原假设，即样本所在总体方差不等。
 
@@ -95,7 +120,9 @@ homo_result <- car::leveneTest(response ~ group*time, data = long_dat)
 homo_result
 ```
 
-# 方差分析
+## 方差分析
+
+------------------------------
 
 若数据满足正态性与方差齐性，则可以进行方差分析（本文中使用的数据其实并没有通过正态性检验，但由于只是为了进行方法的说明，就当作它通过了吧）。
 
@@ -109,7 +136,9 @@ summary(aov)
 ```
 结果中的上部Error: ID部分展示了处理分组间差异的自由度、离均差平方和、F值、p值等结果，其中的Residuals部分为组间误差。下部Error: ID:time部分展示了重复测量以及处理分组和重复测量的交互作用的相关结果，其中的Residuals部分为组内误差。
 
-# 球形检验
+## 球形检验
+
+------------------------------
 
 简单来说，球形检验是为了检验重复测量的不同时间测量值的差值的方差是否相等，其零假设为差值的方差相等。当球形检验的p值大于0.05时，我们可以直接使用上面方差分析的结果，但是当球形检验的p值小于0.05时，则需要对方差分析的自由度和p值进行校正。
 
@@ -122,7 +151,9 @@ sph_result <- mauchly.test(fit, X = ~ 1, M = ~ time, idata = idata)
 sph_result
 ```
 
-# p值校正
+## p值校正
+
+------------------------------
 
 在base R中没有找到对p值进行校正的相关方法实现。而在[car](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/car/index.html)包中有对方差分析、球形检验、p值校正一整套打包实现的方法。
 
@@ -132,10 +163,13 @@ idata <- data.frame(time = gl(4, 1))
 aov_result <- car::Anova(fit, idata = idata, idesign = ~ time)
 summary(aov_result, multivariate = FALSE, univariate = TRUE)
 ```
-结果与上方使用base R进行方差分析和球形检验的结果基本一致，在最后多出了用Greenhouse-Geisser和Huynh-Feldt方法进行校正后的p值。
+结果与上方使用base R进行方差分析和球形检验的结果基本一致，并且在最后给出了用Greenhouse-Geisser和Huynh-Feldt方法进行校正后的p值。
 
-# 多重比较
+## 多重比较、单独效应分析等
 
+------------------------------
+
+这里的做法与常见的多因素方差分析没有区别。
 
 
 

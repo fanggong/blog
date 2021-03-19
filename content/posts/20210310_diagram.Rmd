@@ -16,7 +16,9 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 
 原理相当简单，创建一个空的画板，规划坐标，然后在上面插入BOX和ARROW即可。由于是在base R的体系中进行作图，所以有很高的自由度。
 
-# 创建空画板
+## 创建空画板
+
+------------------------------
 
 该函数中有一个`asp`参数TODO
 
@@ -24,7 +26,9 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 openplotmat()
 ```
 
-# 规划坐标
+## 规划坐标
+
+------------------------------
 
 ```{r eval=FALSE}
 elpos <- coordinates(pos = c(1, 2, 3, 4), hor = FALSE)
@@ -49,7 +53,9 @@ text(elpos[9, 1], elpos[9, 2], "九", cex = 3)
 text(elpos[10, 1], elpos[10, 2], "十", cex = 3)
 ```
 
-# 插入BOX
+## 插入BOX
+
+------------------------------
 
 [diagram](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/diagram/index.html)包共提供了九种BOX
 
@@ -88,7 +94,9 @@ text(elpos[16, 1], elpos[16, 2], labels = "textround")
 ```
 
 
-# 插入ARROW
+## 插入ARROW
+
+------------------------------
 
 [diagram](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/diagram/index.html)包共提供了七种ARROW
 

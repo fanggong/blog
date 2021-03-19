@@ -61,7 +61,7 @@
       <link href="https://fanggong.pub/index.xml" rel="feed" type="application/rss+xml" title="Fang Yongchao" />
     
 
-    <meta name="generator" content="Hugo 0.78.1" />
+    <meta name="generator" content="Hugo 0.78.2" />
   </head>
 
   <body class="">
@@ -102,18 +102,34 @@
       <div class="content">
         
   <section class="container post">
+  
   <article>
+    <button onclick="goTop()" id="go-top">
+      <i class="fas fa-chevron-up"></i>
+    </button> 
+    <script>
+    mybutton = document.getElementById("go-top");
+    window.onscroll = function() {scrollFunction()};
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        mybutton.style.display = "block";
+      } else {
+        mybutton.style.display = "none";
+      }
+    }
+    function goTop() {
+      document.body.scrollTop = 0; 
+      document.documentElement.scrollTop = 0; 
+    } 
+    </script>  
+
     <header>
       <h1 class="title">对本主题的样式的测试</h1>
-      <h2 class="date">March 18, 2021</h2>
-
-      
+      <h2 class="date">March 19, 2021</h2>
     </header>
 
     
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
-<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 <script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
 <link href="/rmarkdown-libs/lightable/lightable.css" rel="stylesheet" />
 
@@ -128,7 +144,10 @@
 </div>
 <div id="页内跳转" class="section level3">
 <h3>页内跳转</h3>
-<p><a href="#表格">点这里跳到最重要的样式——表格</a></p>
+<ul>
+<li><a href="#表格">点这里跳到样式——表格</a></li>
+<li><a href="#iframe">点着里跳到样式——iframe</a></li>
+</ul>
 </div>
 <div id="无序列表" class="section level3">
 <h3>无序列表</h3>
@@ -166,13 +185,13 @@ t.test(height, weight)</code></pre>
 ##  Welch Two Sample t-test
 ## 
 ## data:  height and weight
-## t = 74.419, df = 180.49, p-value &lt; 2.2e-16
+## t = 72.757, df = 169.56, p-value &lt; 2.2e-16
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##   98.4216 103.7830
+##  100.1000 105.6833
 ## sample estimates:
 ## mean of x mean of y 
-## 170.44838  69.34609</code></pre>
+## 169.98535  67.09373</code></pre>
 </div>
 <div id="行内代码" class="section level3">
 <h3>行内代码</h3>
@@ -1810,6 +1829,9 @@ Volvo 142E
 </tbody>
 </table>
 </div>
+</div>
+<div id="iframe" class="section level3">
+<h3>iframe</h3>
 </div>
 </div>
 </div>

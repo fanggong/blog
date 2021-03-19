@@ -1,7 +1,10 @@
 ---
 title: "用R绘制流程图"
 author: "Fang Yongchao"
-date: '2021-03-10'
+date: "2021-03-10"
+output:
+  blogdown::html_page:
+    toc: yes
 ---
 
 ```{r library, echo=FALSE, warning=FALSE, message=FALSE}
@@ -13,7 +16,9 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 
 原理相当简单，创建一个空的画板，规划坐标，然后在上面插入BOX和ARROW即可。由于是在base R的体系中进行作图，所以有很高的自由度。
 
-# 创建空画板
+## 创建空画板
+
+------------------------------
 
 该函数中有一个`asp`参数TODO
 
@@ -21,7 +26,9 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 openplotmat()
 ```
 
-# 规划坐标
+## 规划坐标
+
+------------------------------
 
 ```{r eval=FALSE}
 elpos <- coordinates(pos = c(1, 2, 3, 4), hor = FALSE)
@@ -32,7 +39,7 @@ elpos <- coordinates(pos = c(1, 2, 3, 4), hor = FALSE)
 ```{r echo=FALSE, fig.align="center", out.width="80%", fig.height=3}
 par(mar = c(0, 0, 0, 0), family = "HannotateSC-W5")
 openplotmat(asp = 1)
-box()
+box(col = "#dcdcdc")
 elpos <- coordinates(pos = c(1, 2, 3, 4), hor = FALSE)
 text(elpos[1, 1], elpos[1, 2], "一", cex = 3)
 text(elpos[2, 1], elpos[2, 2], "二", cex = 3)
@@ -46,44 +53,82 @@ text(elpos[9, 1], elpos[9, 2], "九", cex = 3)
 text(elpos[10, 1], elpos[10, 2], "十", cex = 3)
 ```
 
-# 插入BOX
+## 插入BOX
+
+------------------------------
 
 [diagram](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/diagram/index.html)包共提供了九种BOX
 
 ```{r fig.align="center", out.width="80%"}
 par(mar = c(0, 0, 0, 0), family = "HannotateSC-W5")
 openplotmat(asp = 1)
-box()
+box(col = "#dcdcdc")
 elpos <- coordinates(pos = rep(3, 6), hor = FALSE)
+
 textdiamond(elpos[3, ], radx = 0.1, rady = 0.1, lab = "临", cex = 2)
 text(elpos[6, 1], elpos[6, 2], labels = "textdiamond")
+
 textellipse(elpos[9, ], radx = 0.1, lab = "兵", cex = 2)
 text(elpos[12, 1], elpos[12, 2], labels = "textellipse")
+
 textempty(elpos[15, ], lab = "斗", box.col = "grey", cex = 2)
 text(elpos[18, 1], elpos[18, 2], labels = "textempty")
+
 texthexa(elpos[2, ], radx = 0.1, lab = "者", cex = 2)
 text(elpos[5, 1], elpos[5, 2], labels = "texthexa")
-textmulti(elpos[8, ], radx = 0.1, lab = "皆", cex = 2)
+
+textmulti(elpos[8, ], radx = 0.1, lab = "皆", cex = 2, nr = 8)
 text(elpos[11, 1], elpos[11, 2], labels = "textmulti")
-textparallel(elpos[14, ], radx = 0.1, lab = "阵", cex = 2)
+
+textparallel(elpos[14, ], radx = 0.1, lab = "阵", cex = 2, theta = 75)
 text(elpos[17, 1], elpos[17, 2], labels = "textparallel")
+
 textplain(elpos[1, ], lab = "列", cex = 2)
 text(elpos[4, 1], elpos[4, 2], labels = "textplain")
+
 textrect(elpos[7, ], radx = 0.1, lab = "在", cex = 2)
 text(elpos[10, 1], elpos[10, 2], labels = "textrect")
+
 textround(elpos[13, ], radx = 0.05, rady = 0.1, rx = 0.1, lab = "前", cex = 2)
 text(elpos[16, 1], elpos[16, 2], labels = "textround")
 ```
 
 
-# 插入ARROW
+## 插入ARROW
+
+------------------------------
 
 [diagram](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/diagram/index.html)包共提供了七种ARROW
 
 ```{r fig.align="center", out.width="80%"}
-par(mar = c(0, 0, 0, 0))
+par(mar = c(0, 0, 0, 0), family = "HannotateSC-W5")
 openplotmat(asp = 1)
-box()
+box(col = "#dcdcdc")
+pos <- coordinates(pos = rep(5, 5), hor = TRUE)
+
+bentarrow(pos[1, ], pos[3, ])
+text(pos[2, 1], pos[2, 2] + 0.03, labels = "bentarrow")
+
+curvedarrow(pos[3, ], pos[13, ], curve = 0.5)
+text(pos[7, 1], pos[7, 2], labels = "curvedarrow\n(curve = 0.5)")
+
+curvedarrow(pos[3, ], pos[13, ], curve = 0)
+text(pos[8, 1] + 0.11, pos[8, 2], labels = "curvedarrow\n(curve = 0)")
+
+segmentarrow(pos[12, ], pos[17, ], path = "LVR", dd = 0.2)
+text(pos[17, 1], pos[17, 2] - 0.05, labels = "segmentarrow\n(path = \"LVR\")")
+
+selfarrow(pos[19, ], path = "L")
+text(pos[19, 1] + 0.11, pos[19, 2], labels = "selfarrow\n(path = \"L\")")
+
+splitarrow(pos[21, ], pos[25, ], dd = 0.1)
+text(pos[23, 1], pos[23, 2] - 0.05, labels = "splitarrow\n(dd = 0.1)")
+
+straightarrow(pos[1, ], pos[21, ], segment = c(0.1, 0.9))
+text(pos[11, 1] - 0.05, pos[11, 2], labels = "splitarrow\n(segment = c(0.1, 0.9))", srt = 90)
+
+treearrow(pos[4, ], pos[25, ], path = "H")
+text(pos[15, 1], pos[15, 2] + 0.05, labels = "treearrow\n(path = \"H\")")
 ```
 
 
