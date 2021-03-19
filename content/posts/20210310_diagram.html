@@ -1,11 +1,24 @@
 ---
 title: "用R绘制流程图"
 author: "Fang Yongchao"
-date: '2021-03-10'
+date: "2021-03-10"
+output:
+  blogdown::html_page:
+    toc: yes
 ---
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#创建空画板">创建空画板</a></li>
+<li><a href="#规划坐标">规划坐标</a></li>
+<li><a href="#插入box">插入BOX</a></li>
+<li><a href="#插入arrow">插入ARROW</a></li>
+</ul>
+</div>
 
 <p>相关包：<a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/diagram/index.html">diagram</a></p>
 <p>原理相当简单，创建一个空的画板，规划坐标，然后在上面插入BOX和ARROW即可。由于是在base R的体系中进行作图，所以有很高的自由度。</p>
@@ -25,24 +38,33 @@ date: '2021-03-10'
 <p><a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/diagram/index.html">diagram</a>包共提供了九种BOX</p>
 <pre class="r"><code>par(mar = c(0, 0, 0, 0), family = &quot;HannotateSC-W5&quot;)
 openplotmat(asp = 1)
-box()
+box(col = &quot;#dcdcdc&quot;)
 elpos &lt;- coordinates(pos = rep(3, 6), hor = FALSE)
+
 textdiamond(elpos[3, ], radx = 0.1, rady = 0.1, lab = &quot;临&quot;, cex = 2)
 text(elpos[6, 1], elpos[6, 2], labels = &quot;textdiamond&quot;)
+
 textellipse(elpos[9, ], radx = 0.1, lab = &quot;兵&quot;, cex = 2)
 text(elpos[12, 1], elpos[12, 2], labels = &quot;textellipse&quot;)
+
 textempty(elpos[15, ], lab = &quot;斗&quot;, box.col = &quot;grey&quot;, cex = 2)
 text(elpos[18, 1], elpos[18, 2], labels = &quot;textempty&quot;)
+
 texthexa(elpos[2, ], radx = 0.1, lab = &quot;者&quot;, cex = 2)
 text(elpos[5, 1], elpos[5, 2], labels = &quot;texthexa&quot;)
-textmulti(elpos[8, ], radx = 0.1, lab = &quot;皆&quot;, cex = 2)
+
+textmulti(elpos[8, ], radx = 0.1, lab = &quot;皆&quot;, cex = 2, nr = 8)
 text(elpos[11, 1], elpos[11, 2], labels = &quot;textmulti&quot;)
-textparallel(elpos[14, ], radx = 0.1, lab = &quot;阵&quot;, cex = 2)
+
+textparallel(elpos[14, ], radx = 0.1, lab = &quot;阵&quot;, cex = 2, theta = 75)
 text(elpos[17, 1], elpos[17, 2], labels = &quot;textparallel&quot;)
+
 textplain(elpos[1, ], lab = &quot;列&quot;, cex = 2)
 text(elpos[4, 1], elpos[4, 2], labels = &quot;textplain&quot;)
+
 textrect(elpos[7, ], radx = 0.1, lab = &quot;在&quot;, cex = 2)
 text(elpos[10, 1], elpos[10, 2], labels = &quot;textrect&quot;)
+
 textround(elpos[13, ], radx = 0.05, rady = 0.1, rx = 0.1, lab = &quot;前&quot;, cex = 2)
 text(elpos[16, 1], elpos[16, 2], labels = &quot;textround&quot;)</code></pre>
 <p><img src="/posts/20210310_diagram_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" /></p>
@@ -50,8 +72,33 @@ text(elpos[16, 1], elpos[16, 2], labels = &quot;textround&quot;)</code></pre>
 <div id="插入arrow" class="section level1">
 <h1>插入ARROW</h1>
 <p><a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/diagram/index.html">diagram</a>包共提供了七种ARROW</p>
-<pre class="r"><code>par(mar = c(0, 0, 0, 0))
+<pre class="r"><code>par(mar = c(0, 0, 0, 0), family = &quot;HannotateSC-W5&quot;)
 openplotmat(asp = 1)
-box()</code></pre>
+box(col = &quot;#dcdcdc&quot;)
+pos &lt;- coordinates(pos = rep(5, 5), hor = TRUE)
+
+bentarrow(pos[1, ], pos[3, ])
+text(pos[2, 1], pos[2, 2] + 0.03, labels = &quot;bentarrow&quot;)
+
+curvedarrow(pos[3, ], pos[13, ], curve = 0.5)
+text(pos[7, 1], pos[7, 2], labels = &quot;curvedarrow\n(curve = 0.5)&quot;)
+
+curvedarrow(pos[3, ], pos[13, ], curve = 0)
+text(pos[8, 1] + 0.11, pos[8, 2], labels = &quot;curvedarrow\n(curve = 0)&quot;)
+
+segmentarrow(pos[12, ], pos[17, ], path = &quot;LVR&quot;, dd = 0.2)
+text(pos[17, 1], pos[17, 2] - 0.05, labels = &quot;segmentarrow\n(path = \&quot;LVR\&quot;)&quot;)
+
+selfarrow(pos[19, ], path = &quot;L&quot;)
+text(pos[19, 1] + 0.11, pos[19, 2], labels = &quot;selfarrow\n(path = \&quot;L\&quot;)&quot;)
+
+splitarrow(pos[21, ], pos[25, ], dd = 0.1)
+text(pos[23, 1], pos[23, 2] - 0.05, labels = &quot;splitarrow\n(dd = 0.1)&quot;)
+
+straightarrow(pos[1, ], pos[21, ], segment = c(0.1, 0.9))
+text(pos[11, 1] - 0.05, pos[11, 2], labels = &quot;splitarrow\n(segment = c(0.1, 0.9))&quot;, srt = 90)
+
+treearrow(pos[4, ], pos[25, ], path = &quot;H&quot;)
+text(pos[15, 1], pos[15, 2] + 0.05, labels = &quot;treearrow\n(path = \&quot;H\&quot;)&quot;)</code></pre>
 <p><img src="/posts/20210310_diagram_files/figure-html/unnamed-chunk-5-1.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>

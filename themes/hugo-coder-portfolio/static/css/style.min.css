@@ -101,6 +101,26 @@ h6{
     font-size:1.4rem;
     line-height:1.4rem
 }
+#TOC{
+    background-color: #f8f8f8;
+    border-radius: 10px;
+}
+#go-top {
+    position: fixed;
+    bottom: 1em; 
+    right: 2em; 
+    background-color: #f8f8f8;
+    border-color: #dcdcdc;
+    width: 4em;
+    height: 3em;
+    text-align: center;
+    border-radius: 8px;
+    z-index: 1000; 
+    box-shadow: none;
+}
+#go-top:hover {
+    background-color: #dcdcdc; 
+}
 pre {
     box-shadow: 5px 5px 0 #DDD;
     margin-bottom: 16px;

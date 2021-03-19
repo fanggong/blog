@@ -1,0 +1,408 @@
+---
+title: R语言的字符串处理
+author: Fang Yongchao
+date: "2021-03-19"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#对单个字符串进行操作">对单个字符串进行操作</a></li>
+<li><a href="#对空格进行操作">对空格进行操作</a></li>
+<li><a href="#locale-sensitive">locale sensitive</a></li>
+<li><a href="#pattern匹配">pattern匹配</a></li>
+<li><a href="#base-r与stringr的性能比较">base R与<span>stringr</span>的性能比较</a></li>
+</ul>
+</div>
+
+<p>相关包：<a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/stringr/index.html">stringr</a></p>
+<p>根据<a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/stringr/vignettes/stringr.html">Introduction to stringr</a>，该包主要包含四种类型的函数：</p>
+<ul>
+<li>对字符串进行操作</li>
+<li>对空格的增加、删除或其他操作</li>
+<li>locale sensitive：可以理解为针对不同语言输出会不一样的函数</li>
+<li>pattern匹配函数：支持四种不同的匹配模式，最常用的还是正则表达式</li>
+</ul>
+<p>对应地，base R中也有相对应的函数达到同样的效果。在我的本地环境下，发现base R中字符串操作函数的性能在数据较大情况下普遍不如<a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/stringr/index.html">stringr</a>。</p>
+<div id="对单个字符串进行操作" class="section level2">
+<h2>对单个字符串进行操作</h2>
+<hr />
+<p>此类函数对字符串进行操作，由于每个函数都已被向量化，故可以直接以字符串向量为参数</p>
+<div id="str_length" class="section level3">
+<h3><code>str_length()</code></h3>
+<p>返回字符串长度</p>
+<pre class="r"><code>str_length(c(&quot;fang&quot;, &quot;方&quot;, NA_character_))</code></pre>
+<pre><code>## [1]  4  1 NA</code></pre>
+<p>base R中使用<code>nchar()</code>函数</p>
+<pre class="r"><code>nchar(c(&quot;fang&quot;, &quot;方&quot;, NA_character_))</code></pre>
+<pre><code>## [1]  4  1 NA</code></pre>
+</div>
+<div id="str_sub" class="section level3">
+<h3><code>str_sub()</code></h3>
+<p>返回和替换字符串子串</p>
+<pre class="r"><code>string &lt;- c(&quot;fang yongchao&quot;, &quot;stringr&quot;)
+str_sub(string, start = 1, end = 4)</code></pre>
+<pre><code>## [1] &quot;fang&quot; &quot;stri&quot;</code></pre>
+<pre class="r"><code>str_sub(string, start = 1, end = 4) &lt;- &quot;????&quot;
+string</code></pre>
+<pre><code>## [1] &quot;???? yongchao&quot; &quot;????ngr&quot;</code></pre>
+<p>base R中使用<code>substr()</code>或<code>substring()</code>函数</p>
+<pre class="r"><code>string &lt;- c(&quot;fang yongchao&quot;, &quot;stringr&quot;)
+substr(string, start = 1, stop = 4)</code></pre>
+<pre><code>## [1] &quot;fang&quot; &quot;stri&quot;</code></pre>
+<pre class="r"><code>substring(string, first = 1, last = 4)</code></pre>
+<pre><code>## [1] &quot;fang&quot; &quot;stri&quot;</code></pre>
+<pre class="r"><code>substring(string, first = 1, last = 4) &lt;- &quot;????&quot;
+string</code></pre>
+<pre><code>## [1] &quot;???? yongchao&quot; &quot;????ngr&quot;</code></pre>
+</div>
+<div id="str_dup" class="section level3">
+<h3><code>str_dup()</code></h3>
+<p>复制字符串</p>
+<pre class="r"><code>str_dup(c(&quot;fang&quot;, &quot;yong&quot;, &quot;chao&quot;), 3)</code></pre>
+<pre><code>## [1] &quot;fangfangfang&quot; &quot;yongyongyong&quot; &quot;chaochaochao&quot;</code></pre>
+<p>base R中可以使用<code>strrep()</code>函数</p>
+<pre class="r"><code>strrep(c(&quot;fang&quot;, &quot;yong&quot;, &quot;chao&quot;), 3)</code></pre>
+<pre><code>## [1] &quot;fangfangfang&quot; &quot;yongyongyong&quot; &quot;chaochaochao&quot;</code></pre>
+</div>
+<div id="str_c和str_flatten" class="section level3">
+<h3><code>str_c()</code>和<code>str_flatten()</code></h3>
+<p>连接字符串</p>
+<pre class="r"><code>str_c(&quot;fang&quot;, &quot; &quot;, &quot;yong&quot;, &quot;chao&quot;)</code></pre>
+<pre><code>## [1] &quot;fang yongchao&quot;</code></pre>
+<pre class="r"><code>str_flatten(c(&quot;fang&quot;, &quot;yong&quot;, &quot;chao&quot;), collapse = &quot; &quot;)</code></pre>
+<pre><code>## [1] &quot;fang yong chao&quot;</code></pre>
+<p>base R中使用<code>paste()</code>函数，<code>str_c()</code>与<code>paste()</code>具有完全一样的功能，区别在于<code>str_c()</code>中<strong>sep</strong>参数的默认值为空字符串，<code>paste()</code>中<strong>sep</strong>参数的默认值为空格。<code>str_flatten()</code>是一个没有<strong>sep</strong>参数的<code>paste()</code></p>
+<pre class="r"><code>paste(&quot;fang&quot;, &quot; &quot;, &quot;yong&quot;, &quot;chao&quot;, sep = &quot;&quot;)</code></pre>
+<pre><code>## [1] &quot;fang yongchao&quot;</code></pre>
+<pre class="r"><code>paste(c(&quot;fang&quot;, &quot;yong&quot;, &quot;chao&quot;), collapse = &quot; &quot;)</code></pre>
+<pre><code>## [1] &quot;fang yong chao&quot;</code></pre>
+</div>
+</div>
+<div id="对空格进行操作" class="section level2">
+<h2>对空格进行操作</h2>
+<hr />
+<p>此类函数包含增加、删除、修改空格三个函数</p>
+<div id="str_pad" class="section level3">
+<h3><code>str_pad()</code></h3>
+<p>通过添加字符改变字符串长度，添加空格的方向可为left、right或both</p>
+<pre class="r"><code>str_pad(&quot;fang yongchao&quot;, 20, &quot;right&quot;)</code></pre>
+<pre><code>## [1] &quot;fang yongchao       &quot;</code></pre>
+<p>base R中可以使用<code>format()</code>函数</p>
+<pre class="r"><code>format(&quot;fang yongchao&quot;, width = 20, justify = &quot;left&quot;)</code></pre>
+<pre><code>## [1] &quot;fang yongchao       &quot;</code></pre>
+</div>
+<div id="str_trunc" class="section level3">
+<h3><code>str_trunc()</code></h3>
+<p>将字符串变短，用…代替删除部分，变短方向可为left、right、center。base R中不确认是否有相同功能函数</p>
+<pre class="r"><code>str_trunc(&quot;fang yongchao&quot;, 10, &quot;right&quot;)</code></pre>
+<pre><code>## [1] &quot;fang yo...&quot;</code></pre>
+</div>
+<div id="str_trim" class="section level3">
+<h3><code>str_trim()</code></h3>
+<p>删除字符串两侧多余空格，删除方向left、right或both。base R中不确认是否有相同功能函数</p>
+<pre class="r"><code>str_trim(&quot;fang yongchao    &quot;, &quot;right&quot;)</code></pre>
+<pre><code>## [1] &quot;fang yongchao&quot;</code></pre>
+</div>
+</div>
+<div id="locale-sensitive" class="section level2">
+<h2>locale sensitive</h2>
+<hr />
+<p>此类函数都包含一个<strong>locale</strong>参数，对于不同的语言返回结果不同，默认是英语</p>
+<div id="str_to_title" class="section level3">
+<h3><code>str_to_title()</code></h3>
+<p>转换成标题，即单词首字母大写</p>
+<pre class="r"><code>str_to_title(&quot;fang yongchao&quot;)</code></pre>
+<pre><code>## [1] &quot;Fang Yongchao&quot;</code></pre>
+</div>
+<div id="str_to_upper" class="section level3">
+<h3><code>str_to_upper()</code></h3>
+<p>转换成大写</p>
+<pre class="r"><code>str_to_upper(&quot;I like fang yongchao&quot;)</code></pre>
+<pre><code>## [1] &quot;I LIKE FANG YONGCHAO&quot;</code></pre>
+<p>base R中使用<code>toupper()</code></p>
+<pre class="r"><code>toupper(&quot;fang yongchao&quot;)</code></pre>
+<pre><code>## [1] &quot;FANG YONGCHAO&quot;</code></pre>
+</div>
+<div id="str_to_lower" class="section level3">
+<h3><code>str_to_lower()</code></h3>
+<p>转换成小写</p>
+<pre class="r"><code>str_to_lower(&quot;I like horses&quot;)</code></pre>
+<pre><code>## [1] &quot;i like horses&quot;</code></pre>
+<p>换一种语言，小写不一样了</p>
+<pre class="r"><code>str_to_lower(&quot;I like horses&quot;, locale = &quot;tr&quot;)</code></pre>
+<pre><code>## [1] &quot;&lt;U+0131&gt; like horses&quot;</code></pre>
+<p>base R中使用<code>tolower()</code></p>
+<pre class="r"><code>tolower(&quot;FANG YONGCHAO&quot;)</code></pre>
+<pre><code>## [1] &quot;fang yongchao&quot;</code></pre>
+</div>
+<div id="str_order和str_sort" class="section level3">
+<h3><code>str_order()</code>和<code>str_sort()</code></h3>
+<p>排序，逻辑和功能都等同于base R中的<code>order()</code>和<code>sort()</code></p>
+<pre class="r"><code>str_order(c(&quot;y&quot;, &quot;i&quot;, &quot;k&quot;))</code></pre>
+<pre><code>## [1] 2 3 1</code></pre>
+<pre class="r"><code>str_sort(c(&quot;y&quot;, &quot;i&quot;, &quot;k&quot;))</code></pre>
+<pre><code>## [1] &quot;i&quot; &quot;k&quot; &quot;y&quot;</code></pre>
+<p><a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/stringr/index.html">stringr</a>和base R的排序函数的区别在于，<a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/stringr/index.html">stringr</a>可以换成不同语言下的排序</p>
+<pre class="r"><code>str_sort(c(&quot;y&quot;, &quot;i&quot;, &quot;k&quot;), locale = &quot;lt&quot;)</code></pre>
+<pre><code>## [1] &quot;i&quot; &quot;y&quot; &quot;k&quot;</code></pre>
+</div>
+</div>
+<div id="pattern匹配" class="section level2">
+<h2>pattern匹配</h2>
+<hr />
+<p>此类函数包含<code>detect()</code>、<code>locate()</code>、<code>extract()</code>、<code>match()</code>、<code>replace()</code>、<code>split()</code>六个函数，这六个函数的前两个参数均为要进行操作的<strong>string</strong>和进行匹配用的<strong>pattern</strong></p>
+<pre class="r"><code>string &lt;- c(
+  &quot;apple&quot;,
+  &quot;219 733 8965&quot;,
+  &quot;329-293-8753&quot;,
+  &quot;Word: 579-499-7527; Home:543.355.3679&quot;
+)
+phone &lt;- &quot;([2-9][0-9]{2})[- .]([0-9]{3})[- .]([0-9]{4})&quot;</code></pre>
+<div id="str_detect" class="section level3">
+<h3><code>str_detect()</code></h3>
+<p>判断字符串中是否存在<strong>pattern</strong>，返回bool值</p>
+<pre class="r"><code>str_detect(string, phone)</code></pre>
+<pre><code>## [1] FALSE  TRUE  TRUE  TRUE</code></pre>
+<p>base R中可以用<code>grepl()</code>函数</p>
+<pre class="r"><code>grepl(phone, string)</code></pre>
+<pre><code>## [1] FALSE  TRUE  TRUE  TRUE</code></pre>
+</div>
+<div id="str_subset" class="section level3">
+<h3><code>str_subset()</code></h3>
+<p>返回<strong>string</strong>中包含<strong>pattern</strong>的字符串，返回vector</p>
+<pre class="r"><code>str_subset(string, phone)</code></pre>
+<pre><code>## [1] &quot;219 733 8965&quot;                         
+## [2] &quot;329-293-8753&quot;                         
+## [3] &quot;Word: 579-499-7527; Home:543.355.3679&quot;</code></pre>
+<p>base R中使用<code>grep()</code>函数</p>
+<pre class="r"><code>grep(phone, string, value = TRUE)</code></pre>
+<pre><code>## [1] &quot;219 733 8965&quot;                         
+## [2] &quot;329-293-8753&quot;                         
+## [3] &quot;Word: 579-499-7527; Home:543.355.3679&quot;</code></pre>
+</div>
+<div id="str_which" class="section level3">
+<h3><code>str_which()</code></h3>
+<p>返回<strong>string</strong>中存在<strong>pattern</strong>的字符串的下标，返回vector</p>
+<pre class="r"><code>str_which(string, phone)</code></pre>
+<pre><code>## [1] 2 3 4</code></pre>
+<p>base R中同样使用<code>grep()</code>函数</p>
+<pre class="r"><code>grep(phone, string, value = FALSE)</code></pre>
+<pre><code>## [1] 2 3 4</code></pre>
+</div>
+<div id="str_count" class="section level3">
+<h3><code>str_count()</code></h3>
+<p>返回字符串中<strong>pattern</strong>的数量</p>
+<pre class="r"><code>str_count(string, phone)</code></pre>
+<pre><code>## [1] 0 1 1 2</code></pre>
+<p>特别地，当pattern为空时，就是str_length()</p>
+<pre class="r"><code>str_count(string, &quot;&quot;)</code></pre>
+<pre><code>## [1]  5 12 12 37</code></pre>
+</div>
+<div id="str_locate" class="section level3">
+<h3><code>str_locate()</code></h3>
+<p>返回<strong>pattern</strong>在字符串中的位置, <code>str_locate()</code>仅返回第一个，返回matrix</p>
+<pre class="r"><code>str_locate(string, phone)</code></pre>
+<pre><code>##      start end
+## [1,]    NA  NA
+## [2,]     1  12
+## [3,]     1  12
+## [4,]     7  18</code></pre>
+<p>base R中使用<code>regexpr()</code>函数，其返回的值为匹配的起始位置以及匹配长度，匹配的起始位置在返回值中</p>
+<pre class="r"><code>regexpr(phone, string)</code></pre>
+<pre><code>## [1] -1  1  1  7
+## attr(,&quot;match.length&quot;)
+## [1] -1 12 12 12
+## attr(,&quot;index.type&quot;)
+## [1] &quot;chars&quot;
+## attr(,&quot;useBytes&quot;)
+## [1] TRUE</code></pre>
+<p>匹配长度在返回值的attributes中</p>
+<pre class="r"><code>value &lt;- regexpr(phone, string)
+attributes(value)$match.length</code></pre>
+<pre><code>## [1] -1 12 12 12</code></pre>
+<p><code>str_locate_all()</code>返回所有，返回的是一个list</p>
+<pre class="r"><code>str_locate_all(string, phone)</code></pre>
+<pre><code>## [[1]]
+##      start end
+## 
+## [[2]]
+##      start end
+## [1,]     1  12
+## 
+## [[3]]
+##      start end
+## [1,]     1  12
+## 
+## [[4]]
+##      start end
+## [1,]     7  18
+## [2,]    26  37</code></pre>
+<p>对应地，base R中使用<code>gregexpr()</code>返回一个list</p>
+<pre class="r"><code>gregexpr(phone, string)</code></pre>
+<pre><code>## [[1]]
+## [1] -1
+## attr(,&quot;match.length&quot;)
+## [1] -1
+## attr(,&quot;index.type&quot;)
+## [1] &quot;chars&quot;
+## attr(,&quot;useBytes&quot;)
+## [1] TRUE
+## 
+## [[2]]
+## [1] 1
+## attr(,&quot;match.length&quot;)
+## [1] 12
+## attr(,&quot;index.type&quot;)
+## [1] &quot;chars&quot;
+## attr(,&quot;useBytes&quot;)
+## [1] TRUE
+## 
+## [[3]]
+## [1] 1
+## attr(,&quot;match.length&quot;)
+## [1] 12
+## attr(,&quot;index.type&quot;)
+## [1] &quot;chars&quot;
+## attr(,&quot;useBytes&quot;)
+## [1] TRUE
+## 
+## [[4]]
+## [1]  7 26
+## attr(,&quot;match.length&quot;)
+## [1] 12 12
+## attr(,&quot;index.type&quot;)
+## [1] &quot;chars&quot;
+## attr(,&quot;useBytes&quot;)
+## [1] TRUE</code></pre>
+</div>
+<div id="str_extract" class="section level3">
+<h3><code>str_extract()</code></h3>
+<p>提取字符串中满足<strong>pattern</strong>的部分，<code>str_extract()</code>仅返回第一个，返回vector</p>
+<pre class="r"><code>str_extract(string, phone)</code></pre>
+<pre><code>## [1] NA             &quot;219 733 8965&quot; &quot;329-293-8753&quot; &quot;579-499-7527&quot;</code></pre>
+<p><code>str_extract_all()</code>返回全部，默认返回一个list</p>
+<pre class="r"><code>str_extract_all(string, phone)</code></pre>
+<pre><code>## [[1]]
+## character(0)
+## 
+## [[2]]
+## [1] &quot;219 733 8965&quot;
+## 
+## [[3]]
+## [1] &quot;329-293-8753&quot;
+## 
+## [[4]]
+## [1] &quot;579-499-7527&quot; &quot;543.355.3679&quot;</code></pre>
+<p>base R中需要将<code>regexpr()</code>和<code>gregexpr()</code>配合<code>rematches()</code>使用</p>
+<pre class="r"><code>regmatches(string, regexpr(phone, string))</code></pre>
+<pre><code>## [1] &quot;219 733 8965&quot; &quot;329-293-8753&quot; &quot;579-499-7527&quot;</code></pre>
+<pre class="r"><code>regmatches(string, gregexpr(phone, string))</code></pre>
+<pre><code>## [[1]]
+## character(0)
+## 
+## [[2]]
+## [1] &quot;219 733 8965&quot;
+## 
+## [[3]]
+## [1] &quot;329-293-8753&quot;
+## 
+## [[4]]
+## [1] &quot;579-499-7527&quot; &quot;543.355.3679&quot;</code></pre>
+</div>
+<div id="str_match" class="section level3">
+<h3><code>str_match()</code></h3>
+<p>在extract的基础上，提取<strong>pattern</strong>中用小括号选取的部分</p>
+<pre class="r"><code>str_match(string, phone)</code></pre>
+<pre><code>##      [,1]           [,2]  [,3]  [,4]  
+## [1,] NA             NA    NA    NA    
+## [2,] &quot;219 733 8965&quot; &quot;219&quot; &quot;733&quot; &quot;8965&quot;
+## [3,] &quot;329-293-8753&quot; &quot;329&quot; &quot;293&quot; &quot;8753&quot;
+## [4,] &quot;579-499-7527&quot; &quot;579&quot; &quot;499&quot; &quot;7527&quot;</code></pre>
+<pre class="r"><code>str_match_all(string, phone)</code></pre>
+<pre><code>## [[1]]
+##      [,1] [,2] [,3] [,4]
+## 
+## [[2]]
+##      [,1]           [,2]  [,3]  [,4]  
+## [1,] &quot;219 733 8965&quot; &quot;219&quot; &quot;733&quot; &quot;8965&quot;
+## 
+## [[3]]
+##      [,1]           [,2]  [,3]  [,4]  
+## [1,] &quot;329-293-8753&quot; &quot;329&quot; &quot;293&quot; &quot;8753&quot;
+## 
+## [[4]]
+##      [,1]           [,2]  [,3]  [,4]  
+## [1,] &quot;579-499-7527&quot; &quot;579&quot; &quot;499&quot; &quot;7527&quot;
+## [2,] &quot;543.355.3679&quot; &quot;543&quot; &quot;355&quot; &quot;3679&quot;</code></pre>
+<p>base R中使用<code>regexec()</code>配合<code>rematches()</code>使用，但是只能取出第一个匹配的结果，似乎缺少一个对应的<code>gregexec()</code>函数</p>
+<pre class="r"><code>regmatches(string, regexec(phone, string))</code></pre>
+<pre><code>## [[1]]
+## character(0)
+## 
+## [[2]]
+## [1] &quot;219 733 8965&quot; &quot;219&quot;          &quot;733&quot;          &quot;8965&quot;        
+## 
+## [[3]]
+## [1] &quot;329-293-8753&quot; &quot;329&quot;          &quot;293&quot;          &quot;8753&quot;        
+## 
+## [[4]]
+## [1] &quot;579-499-7527&quot; &quot;579&quot;          &quot;499&quot;          &quot;7527&quot;</code></pre>
+</div>
+<div id="str_replace" class="section level3">
+<h3><code>str_replace()</code></h3>
+<p>将字符串中满足<strong>pattern</strong>的部分替换</p>
+<pre class="r"><code>str_replace(string, phone, &quot;XXX-XXX-XXXX&quot;)</code></pre>
+<pre><code>## [1] &quot;apple&quot;                                
+## [2] &quot;XXX-XXX-XXXX&quot;                         
+## [3] &quot;XXX-XXX-XXXX&quot;                         
+## [4] &quot;Word: XXX-XXX-XXXX; Home:543.355.3679&quot;</code></pre>
+<pre class="r"><code>str_replace_all(string, phone, &quot;XXX-XXX-XXXX&quot;)</code></pre>
+<pre><code>## [1] &quot;apple&quot;                                
+## [2] &quot;XXX-XXX-XXXX&quot;                         
+## [3] &quot;XXX-XXX-XXXX&quot;                         
+## [4] &quot;Word: XXX-XXX-XXXX; Home:XXX-XXX-XXXX&quot;</code></pre>
+<p>base R中使用<code>sub()</code>和<code>gsub()</code>函数</p>
+<pre class="r"><code>sub(phone, &quot;XXX-XXX-XXXX&quot;, string)</code></pre>
+<pre><code>## [1] &quot;apple&quot;                                
+## [2] &quot;XXX-XXX-XXXX&quot;                         
+## [3] &quot;XXX-XXX-XXXX&quot;                         
+## [4] &quot;Word: XXX-XXX-XXXX; Home:543.355.3679&quot;</code></pre>
+<pre class="r"><code>gsub(phone, &quot;XXX-XXX-XXXX&quot;, string)</code></pre>
+<pre><code>## [1] &quot;apple&quot;                                
+## [2] &quot;XXX-XXX-XXXX&quot;                         
+## [3] &quot;XXX-XXX-XXXX&quot;                         
+## [4] &quot;Word: XXX-XXX-XXXX; Home:XXX-XXX-XXXX&quot;</code></pre>
+</div>
+<div id="str_split" class="section level3">
+<h3><code>str_split()</code></h3>
+<p>将一个字符串分成几个子串，分隔符为<strong>pattern</strong></p>
+<pre class="r"><code>str_split(c(&quot;a-b.c&quot;, &quot;x-y&quot;), &quot;[-.]&quot;)</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;
+## 
+## [[2]]
+## [1] &quot;x&quot; &quot;y&quot;</code></pre>
+<p>base R中使用<code>strsplit()</code></p>
+<pre class="r"><code>strsplit(c(&quot;a-b.c&quot;, &quot;x-y&quot;), &quot;[-.]&quot;)</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;
+## 
+## [[2]]
+## [1] &quot;x&quot; &quot;y&quot;</code></pre>
+</div>
+</div>
+<div id="base-r与stringr的性能比较" class="section level1">
+<h1>base R与<a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/stringr/index.html">stringr</a>的性能比较</h1>
+<hr />
+<p>base R中的字符串处理函数大部分是在调用R的内部函数，<a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/stringr/index.html">stringr</a>是调用C函数。</p>
+<p>我在Mac、Windows、Centos下分别对<a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/stringr/index.html">stringr</a>和base R的性能进行了测试，发现在不同的环境，不同的数据集下有很大差距。基本可以概括为在使用小数据集时，不同的环境下的结果没有什么规律可循，在使用大数据集时，<a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/stringr/index.html">stringr</a>略胜一筹。</p>
+<p>所以在一个新的环境或数据集下，考虑先使用<a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/microbenchmark/index.html">microbenchmark</a>包做一些简单测试，之后选择在当前环境下性能更优的处理方法。</p>
+</div>

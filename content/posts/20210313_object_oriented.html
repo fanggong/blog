@@ -2,12 +2,44 @@
 title: R的面向对象编程
 author: Fang Yongchao
 date: "2021-03-12"
+output:
+  blogdown::html_page:
+    toc: yes
 ---
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 <link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
 <script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#基础类型">基础类型</a></li>
+<li><a href="#s3">S3</a>
+<ul>
+<li><a href="#定义类和创建对象">定义类和创建对象</a></li>
+<li><a href="#定义新的泛型函数">定义新的泛型函数</a></li>
+<li><a href="#定义新的方法">定义新的方法</a></li>
+</ul></li>
+<li><a href="#s4">S4</a>
+<ul>
+<li><a href="#定义类和创建对象-1">定义类和创建对象</a></li>
+<li><a href="#定义新的泛型函数-1">定义新的泛型函数</a></li>
+<li><a href="#定义新的方法-1">定义新的方法</a></li>
+</ul></li>
+<li><a href="#rc">RC</a>
+<ul>
+<li><a href="#定义类和创建对象-2">定义类和创建对象</a></li>
+<li><a href="#定义类的方法">定义类的方法</a></li>
+<li><a href="#类的继承">类的继承</a></li>
+</ul></li>
+<li><a href="#r6">R6</a>
+<ul>
+<li><a href="#定义类方法和创建对象">定义类、方法和创建对象</a></li>
+<li><a href="#active-binding">Active binding</a></li>
+<li><a href="#类的继承-1">类的继承</a></li>
+</ul></li>
+</ul>
+</div>
 
 <div id="基础类型" class="section level2">
 <h2>基础类型</h2>
@@ -35,7 +67,7 @@ pryr::otype(df)</code></pre>
 <p><code>mean.Date()</code>是一个方法</p>
 <pre class="r"><code>pryr::ftype(mean.Date)</code></pre>
 <pre><code>## [1] &quot;s3&quot;     &quot;method&quot;</code></pre>
-<p>查看mean的所有方法</p>
+<p>查看<code>mean()</code>的所有方法</p>
 <pre class="r"><code>methods(mean)</code></pre>
 <pre><code>## [1] mean.Date     mean.default  mean.difftime mean.POSIXct  mean.POSIXlt 
 ## [6] mean.quosure*

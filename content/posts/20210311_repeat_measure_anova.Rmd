@@ -2,7 +2,17 @@
 title: 重复测量数据方差分析
 author: Fang Yongchao
 date: "2021-03-11"
+output:
+  blogdown::html_page:
+    toc: yes
 ---
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+library(diagram)
+library(kableExtra)
+library(pander)
+```
 
 相关包：[car](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/car/index.html)
 
@@ -10,11 +20,10 @@ date: "2021-03-11"
 
 重复测量数据的方差分析的步骤大致如下图：
 
-```{r echo=FALSE, warning=FALSE, message=FALSE, fig.cap="重复测量数据方差分析流程图", fig.align="center", out.width="80%", fig.height=4}
-library(diagram)
+```{r echo=FALSE, fig.cap="重复测量数据方差分析流程", fig.align="center", out.width="80%", fig.height=4}
 par(mar = c(0, 0, 0, 0), family = "HannotateSC-W5")
 openplotmat(asp = 1)
-box()
+box(col = "#dcdcdc")
 elpos <- coordinates(c(1, 1, 1, 3, 3), hor = FALSE)
 fromto <- matrix(ncol = 2, byrow = TRUE, data = c(
   1, 2, 2, 3, 3, 5, 5, 7, 5, 9, 9, 7
@@ -59,7 +68,12 @@ dat <- data.frame(
   measure_3 = round(rnorm(50, 20), 2),
   measure_4 = round(rnorm(50, 40), 2)
 )
-DT::datatable(dat)
+```
+
+```{r echo=FALSE}
+kbl(dat) %>%
+  kable_paper(html_font = "Fira Mono") %>%
+  scroll_box(width = "100%", height = "400px")
 ```
 
 # 正态性检验
@@ -72,7 +86,12 @@ long_dat <- data.table::melt(
   dat, id.vars = c("ID", "group"), measure.vars = paste0("measure_", 1:4),
   variable.name = "time", value.name = "response" 
 )
-DT::datatable(long_dat)
+```
+
+```{r echo=FALSE}
+kbl(long_dat) %>%
+  kable_paper(html_font = "Fira Mono") %>%
+  scroll_box(width = "100%", height = "400px")
 ```
 
 使用Shapiro-Wilk检验进行正态性检验。该检验零假设为样本来自于正态分布总体，故p值小于0.05时考虑拒绝原假设，即样本来自于非正态总体。
@@ -132,10 +151,11 @@ idata <- data.frame(time = gl(4, 1))
 aov_result <- car::Anova(fit, idata = idata, idesign = ~ time)
 summary(aov_result, multivariate = FALSE, univariate = TRUE)
 ```
-结果与上方使用base R进行方差分析和球形检验的结果基本一致，在最后多出了用Greenhouse-Geisser和Huynh-Feldt方法进行校正后的p值。
+结果与上方使用base R进行方差分析和球形检验的结果基本一致，并且在最后给出了用Greenhouse-Geisser和Huynh-Feldt方法进行校正后的p值。
 
-# 多重比较
+# 多重比较、单独效应分析等
 
+这里的做法与常见的多因素方差分析没有区别。
 
 
 
