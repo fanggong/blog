@@ -6,7 +6,22 @@
     <description>Recent content on Fang Yongchao</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Fri, 19 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 22 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>关于指数族的定义</title>
+      <link>https://fanggong.pub/posts/20210322_exponential_family/</link>
+      <pubDate>Mon, 22 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://fanggong.pub/posts/20210322_exponential_family/</guid>
+      <description>指数分布族 伯努利分布的指数族形式 正态分布的指数族形式 分类分布的指数族形式   指数分布族 指数分布族（exponential family）的分布可以写成如下形式：
+\[ p(x|\eta) = h(x) g(\eta) \exp \left\{\eta^Tu(x)\right\} \]
+ \(\boldsymbol {\eta}\)为自然参数，是决定分布的具体参数 \(\boldsymbol {u(x)}\)称作充分统计量，通常有\(\boldsymbol {u(x) = x}\) \(\boldsymbol {g(\eta)}\)称作分布正规化系数，为确保概率和为1   伯努利分布的指数族形式 伯努利分布的一般形式可以写为：
+\[ p(x|\mu) = \mu^x (1-\mu)^{1-x} \] 这里为了与指数族的参数进行对应写成了这个形式，平常我们在书本中看到的最多的形式是：
+\[ f(x) = \begin{cases} p, &amp;amp; if &amp;amp; x = 1 \\ 1-p, &amp;amp; if &amp;amp; x = 0 \end{cases} \] 很明显是一样的。
+伯努利分布可以转换成指数族的标准形式：
+\[ \begin{aligned} p(x|\mu) &amp;amp; = \exp \left\{ \ln {\mu^x (1-\mu)^{1-x}} \right\} \\ &amp;amp; = \exp \left\{ x \ln\mu + (1-x) \ln{(1-\mu)}\right\} \\ &amp;amp; = \exp \left\{ x \ln\mu - x \ln{(1-\mu)} + \ln{(1-\mu)}\right\} \\ &amp;amp; = \exp \left\{ x \ln{\mu \over {1-\mu}} + \ln{(1-\mu)} \right\} \\ &amp;amp; = (1-\mu) \exp \left\{ x \ln{\mu \over {1-\mu}} \right\} \end{aligned} \] 于是有</description>
+    </item>
+    
     <item>
       <title>R语言的字符串处理</title>
       <link>https://fanggong.pub/posts/20210319_stringr/</link>
