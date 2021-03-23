@@ -1,0 +1,782 @@
+---
+title: ggplot2使用笔记（2）—— Stats和Geom
+author: Fang Yongchao
+date: "2021-03-23"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 3
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#stat-geom">Stat &amp; Geom</a>
+<ul>
+<li><a href="#对连续变量x的各区间数量进行统计作图">对连续变量<strong>x</strong>的各区间数量进行统计作图</a></li>
+<li><a href="#对离散变量x的各类别数量进行统计作图">对离散变量<strong>x</strong>的各类别数量进行统计作图</a></li>
+<li><a href="#对x的密度曲线进行计算作图">对<strong>x</strong>的密度曲线进行计算作图</a></li>
+<li><a href="#对区域中点的数量进行统计作图">对区域中点的数量进行统计作图</a></li>
+<li><a href="#对xy作分位数回归并作图">对<strong>x</strong>，<strong>y</strong>作分位数回归并作图</a></li>
+<li><a href="#计算并绘制xy的拟合曲线">计算并绘制<strong>x</strong>，<strong>y</strong>的拟合曲线</a></li>
+<li><a href="#对离散变量x连续变量y作箱线图">对离散变量<strong>x</strong>，连续变量<strong>y</strong>作箱线图</a></li>
+<li><a href="#对y的密度曲线进行计算作图">对<strong>y</strong>的密度曲线进行计算作图</a></li>
+<li><a href="#对每个点上点的数量进行统计作图">对每个点上点的数量进行统计作图</a></li>
+<li><a href="#计算并绘制等高线">计算并绘制等高线</a></li>
+<li><a href="#在x上对y进行summary作图">在<strong>x</strong>上对<strong>y</strong>进行summary作图</a></li>
+<li><a href="#在xy上对z进行summary作图">在<strong>x</strong>、<strong>y</strong>上对<strong>z</strong>进行summary作图</a></li>
+<li><a href="#通过x和fun计算y并绘制曲线">通过<strong>x</strong>和<strong>fun</strong>计算<strong>y</strong>并绘制曲线</a></li>
+<li><a href="#计算并绘制经验累计分布函数">计算并绘制经验累计分布函数</a></li>
+<li><a href="#计算并绘制q-q图">计算并绘制Q-Q图</a></li>
+<li><a href="#计算二维密度并作图">计算二维密度并作图</a></li>
+<li><a href="#计算并绘制normal-confidence椭圆">计算并绘制normal confidence椭圆(??)</a></li>
+<li><a href="#绘制一个没有图的坐标系">绘制一个没有图的坐标系</a></li>
+<li><a href="#geom_curve和geom_segment绘制连接两点的曲线箭头"><code>geom_curve()</code>和<code>geom_segment()</code>：绘制连接两点的曲线/箭头</a></li>
+<li><a href="#geom_pathgeom_line和geom_step连接各点"><code>geom_path()</code>、<code>geom_line()</code>和<code>geom_step()</code>：连接各点</a></li>
+<li><a href="#geom_polygon绘制多边形"><code>geom_polygon()</code>：绘制多边形</a></li>
+<li><a href="#geom_rectgeom_raster和geom_tile绘制长方形"><code>geom_rect()</code>、<code>geom_raster()</code>和<code>geom_tile()</code>：绘制长方形</a></li>
+<li><a href="#geom_ribbon和geom_area绘制区域"><code>geom_ribbon()</code>和<code>geom_area()</code>：绘制区域</a></li>
+<li><a href="#geom_ablinegeom_hline和geom_vline添加直线"><code>geom_abline()</code>、<code>geom_hline()</code>和<code>geom_vline()</code>：添加直线</a></li>
+<li><a href="#geom_label和geom_text添加标签文本"><code>geom_label()</code>和<code>geom_text()</code>：添加标签、文本</a></li>
+<li><a href="#geom_jitter绘制偏离原位置的点"><code>geom_jitter()</code>：绘制偏离原位置的点</a></li>
+<li><a href="#geom_point绘制散点图"><code>geom_point()</code>：绘制散点图</a></li>
+<li><a href="#geom_rug在图的四周绘制点的一维投影"><code>geom_rug()</code>：在图的四周绘制点的一维投影</a></li>
+<li><a href="#geom_crossbargeom_errorbargeom_linerange和geom_pointrange绘制垂直的区间"><code>geom_crossbar()</code>、<code>geom_errorbar()</code>、<code>geom_linerange()</code>和<code>geom_pointrange()</code>：绘制垂直的区间</a></li>
+<li><a href="#geom_map绘制地图"><code>geom_map()</code>：绘制地图</a></li>
+<li><a href="#geom_spoke"><code>geom_spoke()</code>：</a></li>
+<li><a href="#geom_dotplot点阵图"><code>geom_dotplot()</code>：点阵图</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="stat-geom" class="section level2">
+<h2>Stat &amp; Geom</h2>
+<hr />
+<div id="对连续变量x的各区间数量进行统计作图" class="section level3">
+<h3>对连续变量<strong>x</strong>的各区间数量进行统计作图</h3>
+<ul>
+<li><code>aes()</code>必须参数：<strong>x</strong>，<strong>y(count, density, ncount, ndensity)</strong></li>
+<li><strong>binwidth</strong>：每一个柱的宽度</li>
+<li><strong>bins</strong>：柱的数量</li>
+<li><strong>center</strong>、<strong>boundary</strong>：若<strong>center</strong>设为“t”，则有一根柱以“t”为中线；若<strong>boundary</strong>设为“t”，则有一根柱以“t”为边线</li>
+<li><strong>breaks</strong>：直接设定每一根柱的边线位置，该参数会覆盖以上所有参数</li>
+<li><strong>closed</strong>：若为“right”，处于交界处的值属于右边的柱子；若为“left”，处于交界处的值属于左边的柱子</li>
+<li><strong>pad</strong>：是否在图的左右两侧加空白，若为“TRUE”，最后呈现的图从零开始到零结束</li>
+<li><strong>x</strong>应该是连续的，离散的<strong>x</strong>使用<code>stat_count()</code></li>
+</ul>
+<div id="stat_bin" class="section level4">
+<h4><code>stat_bin()</code></h4>
+<pre class="r"><code>c &lt;- ggplot(mpg, aes(hwy))
+c + stat_bin(aes(y = ..density..), binwidth = 1, boundary = 0, pad = TRUE)</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-2-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_freqpoly" class="section level4">
+<h4><code>geom_freqpoly()</code></h4>
+<pre class="r"><code>c + geom_freqpoly(binwidth = 1)</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-3-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_histogram" class="section level4">
+<h4><code>geom_histogram()</code></h4>
+<pre class="r"><code>c + geom_histogram(binwidth = 1, boundary = 0.5)</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-4-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="对离散变量x的各类别数量进行统计作图" class="section level3">
+<h3>对离散变量<strong>x</strong>的各类别数量进行统计作图</h3>
+<ul>
+<li><code>aes()</code>必须参数：<strong>x</strong>，<strong>y(count,prop)</strong></li>
+<li><strong>width</strong>：柱子的宽度，默认两个柱中线距离的90%</li>
+<li>当<strong>y</strong>取“prop”时需要配合<strong>group</strong>使用，具体结果意义不明</li>
+<li><strong>x</strong>应该是离散的，当然，任何连续的都可以看成是离散的</li>
+</ul>
+<div id="stat_count" class="section level4">
+<h4><code>stat_count()</code></h4>
+<pre class="r"><code>d &lt;- ggplot(mpg, aes(fl))
+d + stat_count(width = 0.9)</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-5-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_bar" class="section level4">
+<h4><code>geom_bar()</code></h4>
+<pre class="r"><code>d + geom_bar()</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-6-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_col" class="section level4">
+<h4><code>geom_col()</code></h4>
+<ul>
+<li><code>aes()</code>必须参数：<strong>x</strong>，<strong>y</strong></li>
+<li>类似<code>geom_bar()</code>，但是柱的高度并不是对<strong>x</strong>的计数，而是<strong>y</strong>的和</li>
+</ul>
+<pre class="r"><code>fyc &lt;- tibble(long = rep(1:5, c(1:5)), lat = 1)
+ggplot(fyc, aes(long, lat)) + geom_col()</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-7-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="对x的密度曲线进行计算作图" class="section level3">
+<h3>对<strong>x</strong>的密度曲线进行计算作图</h3>
+<ul>
+<li><code>aes()</code>必须参数：<strong>x</strong>，<strong>y(density, count, scaled, ndensity)</strong></li>
+<li><strong>bw</strong>：可以为数字，意义类似于<strong>binwidth</strong>；可以为字符串，表示方法</li>
+<li><strong>adjust</strong>：对<strong>bw</strong>进行调整，不知道有什么用</li>
+<li><strong>kernel</strong>：“gaussian”, “epanechnikov”, “rectangular”, “triangular”, “biweight”, “cosine”, “optcosine”</li>
+<li><strong>n</strong>：估计时使用的点的数量，需要为2的n次方</li>
+<li><strong>trim</strong>：TODO</li>
+<li><code>stat_density()</code>的默认作图是<code>geom_area()</code>，所以最终图并不是曲线而是填充的图</li>
+</ul>
+<div id="stat_density" class="section level4">
+<h4><code>stat_density()</code></h4>
+<pre class="r"><code>c &lt;- ggplot(mpg, aes(hwy))
+c + stat_density(kernel = &quot;epanechnikov&quot;)</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-8-1.png" width="50%" style="display: block; margin: auto;" />
+#### <code>geom_density()</code></p>
+<pre class="r"><code>c + geom_density(kernel = &quot;gaussian&quot;)</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-9-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="对区域中点的数量进行统计作图" class="section level3">
+<h3>对区域中点的数量进行统计作图</h3>
+<ul>
+<li><code>aes()</code>必须参数：<strong>x</strong>，<strong>y</strong></li>
+<li><strong>binwidth</strong>：给出每个小区域的c(水平方向长度, 竖直方向长度)</li>
+<li><strong>bins</strong>：给出c(水平方向小区域块的数量, 竖直方向小区域块的数量)</li>
+<li><strong>drop</strong>：是否不显示点的个数为零的区域</li>
+<li>对于连续变量，通过区域填充颜色来体现区域内点的个数，当图中点数过多的时候很有用</li>
+<li>只有<code>stat_bin_2d()</code>中有<strong>drop</strong>参数，<code>stat_bin_hex()</code>默认<strong>drop</strong>是“TRUE”</li>
+</ul>
+<div id="stat_bin_2d" class="section level4">
+<h4><code>stat_bin_2d()</code></h4>
+<pre class="r"><code>e &lt;- ggplot(mpg, aes(cty, hwy))
+e + stat_bin_2d(binwidth = 1, drop = TRUE)</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-10-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="stat_bin_hex" class="section level4">
+<h4><code>stat_bin_hex()</code></h4>
+<pre class="r"><code>e + stat_bin_hex(binwidth = 1)</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-11-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_bin2d" class="section level4">
+<h4><code>geom_bin2d()</code></h4>
+<pre class="r"><code>e + geom_bin2d()</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-12-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_hex" class="section level4">
+<h4><code>geom_hex()</code></h4>
+<pre class="r"><code>e + geom_hex()</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-13-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="对xy作分位数回归并作图" class="section level3">
+<h3>对<strong>x</strong>，<strong>y</strong>作分位数回归并作图</h3>
+<ul>
+<li><code>aes()</code>必须参数：<strong>x</strong>，<strong>y</strong></li>
+<li><strong>quantiles</strong>：<strong>y</strong>的条件分位数</li>
+<li><strong>formula</strong>：拟合的公式</li>
+<li><strong>method</strong>：分位数回归的方法</li>
+<li><strong>method.args</strong>：方法的参数</li>
+<li><strong>lineend</strong>：TODO</li>
+<li><strong>linejoin</strong>：TODO</li>
+<li><strong>linemitre</strong>：TODO</li>
+<li><code>stat_quantile()</code>和<code>geom_quantile()</code>并没什么区别</li>
+</ul>
+<div id="stat_quantile" class="section level4">
+<h4><code>stat_quantile()</code></h4>
+<pre class="r"><code>e &lt;- ggplot(mpg, aes(cty, hwy))
+e + 
+  stat_quantile(quantiles = c(0.1, 0.9), formula = y ~ log(x), method = &quot;rq&quot;) + 
+  geom_point()</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-14-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_quantile" class="section level4">
+<h4><code>geom_quantile()</code></h4>
+<pre class="r"><code>e + 
+  geom_quantile(quantiles = c(0.1, 0.9), formula = y ~ log(x), method = &quot;rq&quot;) +
+  geom_point()</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-15-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="计算并绘制xy的拟合曲线" class="section level3">
+<h3>计算并绘制<strong>x</strong>，<strong>y</strong>的拟合曲线</h3>
+<ul>
+<li><code>aes()</code>必须参数：<strong>x</strong>，<strong>y</strong></li>
+<li><strong>method</strong>：拟合方法</li>
+<li><strong>formula</strong>：拟合公式</li>
+<li><strong>se</strong>：是否在曲线两边绘制置信区间</li>
+<li><strong>n</strong>：用于绘制拟合曲线的点的个数</li>
+<li><strong>span</strong>：TODO</li>
+<li><strong>fullrange</strong>：TODO</li>
+<li><strong>level</strong>：置信区间的置信水平</li>
+<li><strong>method.args</strong>：方法的参数</li>
+<li>当点过多且重叠无法看出点的趋势时使用</li>
+<li><code>stat_smooth()</code>和<code>geom_smooth()</code>没什么区别</li>
+</ul>
+<div id="stat_smooth" class="section level4">
+<h4><code>stat_smooth()</code></h4>
+<pre class="r"><code>e &lt;- ggplot(mpg, aes(cty, hwy))
+e + 
+  stat_smooth(method = &quot;lm&quot;, formula = y ~ x, se = TRUE, level = 0.95) +
+  geom_point()</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-16-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_smooth" class="section level4">
+<h4><code>geom_smooth()</code></h4>
+<pre class="r"><code>e + 
+  geom_smooth(method = &quot;lm&quot;, formula = y ~ x, se = TRUE, level = 0.95) +
+  geom_point()</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-17-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="对离散变量x连续变量y作箱线图" class="section level3">
+<h3>对离散变量<strong>x</strong>，连续变量<strong>y</strong>作箱线图</h3>
+<ul>
+<li><code>aes()</code>必须参数：<strong>x</strong>，<strong>y</strong></li>
+<li><strong>outlier.(colour, fill, shape, size, stroke, alpha)</strong>：离群值的颜色，填充色(??)，形状，大小，大小(??)，透明度</li>
+<li><strong>notch</strong>：是否绘制有缺口的箱，有缺口的箱子可以看出数据间中位数的不同</li>
+<li><strong>notchwidth</strong>：缺口的宽度，为1时其实就是正常的箱了</li>
+<li><strong>varwidth</strong>：数据量的多少是否影响箱的宽度</li>
+<li><strong>coef</strong>：线的长度，直接影响哪些值会被判定为离群值</li>
+<li><code>stat_boxplot()</code>和<code>geom_boxplot()</code>没有区别</li>
+</ul>
+<div id="stat_boxplot" class="section level4">
+<h4><code>stat_boxplot()</code></h4>
+<pre class="r"><code>f &lt;- ggplot(mpg, aes(class, hwy))
+f + stat_boxplot()</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-18-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_boxplot" class="section level4">
+<h4><code>geom_boxplot()</code></h4>
+<pre class="r"><code>f + geom_boxplot()</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-19-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="对y的密度曲线进行计算作图" class="section level3">
+<h3>对<strong>y</strong>的密度曲线进行计算作图</h3>
+<ul>
+<li><code>aes()</code>必须参数：<strong>x</strong>, <strong>y</strong></li>
+<li><strong>bw</strong>：可以为数字，意义类似于<strong>binwidth</strong>；可以为字符串，表示方法</li>
+<li><strong>adjust</strong>：对<strong>bw</strong>进行调整</li>
+<li><strong>kernel</strong>：“gaussian”, “epanechnikov”, “rectangular”, “triangular”, “biweight”, “cosine”, “optcosine”</li>
+<li><strong>scale</strong>：若选择“area”，各个图的面积会一致；若选择“count”，面积会由点的个数决定；若为“width”，会在“count”的基础上强行把宽度一致</li>
+<li><strong>trim</strong>：不明</li>
+<li><code>geom_violin()</code>是<code>geom_density()</code>和<code>geom_boxplot()</code>的合体</li>
+</ul>
+<div id="stat_ydensity" class="section level4">
+<h4><code>stat_ydensity()</code></h4>
+<pre class="r"><code>f &lt;- ggplot(mpg, aes(class, hwy))
+f + stat_ydensity(kernel = &quot;gaussian&quot;, scale = &quot;area&quot;)</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-20-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_violin" class="section level4">
+<h4><code>geom_violin()</code></h4>
+<pre class="r"><code>f + geom_violin(scale = &quot;width&quot;)</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-21-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="对每个点上点的数量进行统计作图" class="section level3">
+<h3>对每个点上点的数量进行统计作图</h3>
+<ul>
+<li><code>aes()</code>必须参数：<strong>x</strong>，<strong>y</strong></li>
+<li>适用于overplot的离散型数据</li>
+</ul>
+<div id="stat_sum" class="section level4">
+<h4><code>stat_sum()</code></h4>
+<pre class="r"><code>e &lt;- ggplot(mpg, aes(cty, hwy))
+e + stat_sum()</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-22-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_count" class="section level4">
+<h4><code>geom_count()</code></h4>
+<pre class="r"><code>e + geom_count()</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-23-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="计算并绘制等高线" class="section level3">
+<h3>计算并绘制等高线</h3>
+<ul>
+<li><code>aes()</code>必须参数：<strong>x</strong>，<strong>y</strong>，<strong>z</strong></li>
+<li><strong>lineend</strong>：TODO</li>
+<li><strong>linejoin</strong>：TODO</li>
+<li><strong>linemitre</strong>：TODO</li>
+</ul>
+<div id="stat_contour" class="section level4">
+<h4><code>stat_contour()</code></h4>
+<pre class="r"><code>seals &lt;- seals %&gt;% 
+  mutate(z = sqrt(delta_long^2 + delta_lat^2))
+l &lt;- ggplot(seals, aes(long, lat))
+l + stat_contour(aes(z = z))</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-24-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_contour" class="section level4">
+<h4><code>geom_contour()</code></h4>
+<pre class="r"><code>l + geom_contour(aes(z = z))</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-25-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="在x上对y进行summary作图" class="section level3">
+<h3>在<strong>x</strong>上对<strong>y</strong>进行summary作图</h3>
+<ul>
+<li><code>aes()</code>必须参数：<strong>x</strong>、<strong>y</strong></li>
+<li><strong>fun.data</strong>：一个函数，输入是<strong>y</strong>，输出y、ymin和ymax</li>
+<li><strong>fun.y</strong>、<strong>fun.ymin</strong>和<strong>fun.ymax</strong>：与<strong>fun.data</strong>同理</li>
+<li><strong>fun.args</strong>：上述函数的参数</li>
+<li><strong>binwidth</strong>：对<strong>x</strong>进行bin的宽度</li>
+<li><strong>bins</strong>：对<strong>x</strong>进行bin的数量</li>
+<li><strong>breaks</strong>：直接设定每次bin的范围，该参数会覆盖以上所有参数</li>
+<li><code>stat_summary()</code>和<code>stat_summary_bin()</code>都是默认<code>geom_pointrange()</code></li>
+<li><code>stat_summary()</code>对每个<strong>x</strong>进行summary，而<code>stat_summary_bin()</code>对binned的<strong>x</strong>进行summary</li>
+</ul>
+<div id="stat_summary" class="section level4">
+<h4><code>stat_summary()</code></h4>
+<pre class="r"><code>e &lt;- ggplot(mpg, aes(cty, hwy))
+e + 
+  stat_summary(fun.data = &quot;mean_cl_boot&quot;) +
+  geom_point(colour = &quot;red&quot;, size = 1)</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-26-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="stat_summary_bin" class="section level4">
+<h4><code>stat_summary_bin()</code></h4>
+<pre class="r"><code>e + 
+  stat_summary_bin(fun.data = &quot;mean_cl_boot&quot;, binwidth = 2) +
+  geom_point(colour = &quot;red&quot;, size = 1)</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-27-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="在xy上对z进行summary作图" class="section level3">
+<h3>在<strong>x</strong>、<strong>y</strong>上对<strong>z</strong>进行summary作图</h3>
+<ul>
+<li><strong>aes()</strong>必须参数：<strong>x</strong>、<strong>y</strong>、<strong>z</strong></li>
+<li><strong>binwidth</strong>：给出每个小区域的c(水平方向长度, 竖直方向长度)</li>
+<li><strong>bins</strong>：给出c(水平方向小区域块的数量, 竖直方向小区域块的数量)</li>
+<li><strong>drop</strong>：是否不显示<strong>fun</strong>的返回值是NA的位置</li>
+<li><strong>fun</strong>：对<strong>z</strong>进行统计的函数</li>
+<li><strong>fun.args</strong>：函数的参数</li>
+<li><code>stat_summary_2d()</code>是三维版的<code>stat_summary()</code>，而<code>stat_summary_hex()</code>又是hex版的<code>stat_summary_2d()</code></li>
+</ul>
+<div id="stat_summary_2d" class="section level4">
+<h4><code>stat_summary_2d()</code></h4>
+<pre class="r"><code>l &lt;- ggplot(seals, aes(long, lat))
+l + stat_summary_2d(aes(z = z), binwidth = c(20, 10),fun = mean)</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-28-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="stat_summary_hex" class="section level4">
+<h4><code>stat_summary_hex()</code></h4>
+<pre class="r"><code>l + stat_summary_hex(aes(z = z), binwidth = c(20, 10), fun = max)</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-29-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="通过x和fun计算y并绘制曲线" class="section level3">
+<h3>通过<strong>x</strong>和<strong>fun</strong>计算<strong>y</strong>并绘制曲线</h3>
+<ul>
+<li><code>aes()</code>必须参数：<strong>x</strong></li>
+<li><strong>fun</strong>：函数名</li>
+<li><strong>xlim</strong>：函数的定义域</li>
+<li><strong>n</strong>：用来绘制曲线的点的个数</li>
+<li><strong>args</strong>：函数的参数</li>
+</ul>
+<div id="stat_function" class="section level4">
+<h4><code>stat_function()</code></h4>
+<pre class="r"><code>ggplot(data.frame(x = -3:3)) + 
+  stat_function(
+    aes(x), n = 99, fun = dnorm, 
+    args = list(sd = 0.5), xlim = c(-1,1)
+  )</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-30-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="计算并绘制经验累计分布函数" class="section level3">
+<h3>计算并绘制经验累计分布函数</h3>
+<ul>
+<li><code>aes()</code>必须参数：<strong>x</strong>、<strong>y</strong></li>
+<li><strong>n</strong>：TODO</li>
+<li><strong>pad</strong>：TODO</li>
+<li>ecdf的geom是step</li>
+</ul>
+<div id="stat_ecdf" class="section level4">
+<h4><code>stat_ecdf()</code></h4>
+<pre class="r"><code>e &lt;- ggplot(mpg, aes(cty, hwy))
+e + stat_ecdf(n = NULL, pad = FALSE)</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-31-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="计算并绘制q-q图" class="section level3">
+<h3>计算并绘制Q-Q图</h3>
+<div id="stat_qq" class="section level4">
+<h4><code>stat_qq()</code></h4>
+<pre class="r"><code>ggplot() + 
+  stat_qq(aes(sample = 1:100), distribution = qt, dparams = list(df = 5))</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-32-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="stat_qq_line" class="section level4">
+<h4><code>stat_qq_line()</code></h4>
+<pre class="r"><code>ggplot() + 
+  stat_qq_line(aes(sample = 1:100), distribution = qt, dparams = list(df = 5))</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-33-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_qq" class="section level4">
+<h4><code>geom_qq()</code></h4>
+<pre class="r"><code>c2 &lt;- ggplot(mpg)
+c2 + geom_qq(aes(sample = hwy))</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-34-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_qq_line" class="section level4">
+<h4><code>geom_qq_line()</code></h4>
+<pre class="r"><code>c2 + geom_qq_line(aes(sample = hwy))</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-35-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="计算二维密度并作图" class="section level3">
+<h3>计算二维密度并作图</h3>
+<ul>
+<li><code>aes()</code>必须参数：<strong>x</strong>，<strong>y</strong></li>
+<li><strong>contour</strong>：</li>
+<li><strong>n</strong>：</li>
+<li><strong>h</strong>：</li>
+<li><strong>lineend</strong>：</li>
+<li><strong>linejoin</strong>：</li>
+<li><strong>linemitre</strong>：</li>
+<li>不是很明白等高线的意义</li>
+</ul>
+<div id="stat_density_2d" class="section level4">
+<h4><code>stat_density_2d()</code></h4>
+<pre class="r"><code>e &lt;- ggplot(mpg, aes(cty, hwy))
+e + 
+  stat_density_2d(contour = TRUE, n = 100) +
+  geom_point()</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-36-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_density2d" class="section level4">
+<h4><code>geom_density2d()</code></h4>
+<pre class="r"><code>e + geom_density2d()</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-37-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="计算并绘制normal-confidence椭圆" class="section level3">
+<h3>计算并绘制normal confidence椭圆(??)</h3>
+<ul>
+<li><code>aes()</code>必须参数：<strong>x</strong>、<strong>y</strong></li>
+<li><strong>type</strong>：</li>
+<li><strong>level</strong>：</li>
+<li><strong>segment</strong>：</li>
+</ul>
+<div id="stat_ellipse" class="section level4">
+<h4><code>stat_ellipse()</code></h4>
+<pre class="r"><code>e &lt;- ggplot(mpg, aes(cty, hwy))
+e + 
+  stat_ellipse(type = &quot;t&quot;, level = 0.95, segments = 51) +
+  geom_point()</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-38-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="绘制一个没有图的坐标系" class="section level3">
+<h3>绘制一个没有图的坐标系</h3>
+<ul>
+<li>无参数</li>
+</ul>
+<div id="geom_blank" class="section level4">
+<h4><code>geom_blank()</code></h4>
+<pre class="r"><code>ggplot(mpg, aes(cty, hwy)) + geom_blank()</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-39-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="geom_curve和geom_segment绘制连接两点的曲线箭头" class="section level3">
+<h3><code>geom_curve()</code>和<code>geom_segment()</code>：绘制连接两点的曲线/箭头</h3>
+<ul>
+<li><code>aes()</code> 必须参数：<strong>x</strong>、<strong>y</strong>、<strong>xend</strong>、<strong>yend</strong></li>
+<li><strong>curvature</strong>：曲线的曲率，正数向右，负数向左，曲率越大曲线弯曲程度越大，必须为一个数字，我也不知道为什么</li>
+<li><strong>angle</strong>：偏度，取值“0”到“180”，越小曲线越偏向起始点，可以为向量</li>
+<li><strong>ncp</strong>：用来画曲线使用的点的个数，越多曲线越平滑</li>
+<li><strong>arrow</strong>：通过<code>arrow()</code>创建一个arrow对象进行赋值
+<ul>
+<li><strong>angle</strong>：为箭头与曲线的夹角</li>
+<li><strong>length</strong>：一个unit对象，通过<code>unit()</code>生成</li>
+<li><strong>ends</strong>为箭头位置，可以为“first”、“last”或“both”</li>
+<li><strong>type</strong>为箭头类型，可以为“open”、“closed”</li>
+</ul></li>
+<li><strong>arrow.fill</strong>：当<strong>arrow</strong>的<strong>type</strong>是“closed”时可选择填充颜色</li>
+<li><strong>lineend</strong>：不明</li>
+<li><strong>linejoin</strong>：不明</li>
+<li><code>geom_segment()</code>其实就是<strong>curvature</strong>为“0”、<strong>angle</strong>为“90”的<code>geom_curve()</code></li>
+</ul>
+<pre class="r"><code>fyc &lt;- tibble(long = c(10, 12), lat = c(10, 12))</code></pre>
+<pre class="r"><code>ggplot(fyc, aes(long, lat)) + 
+  geom_curve(
+    aes(yend = lat + 1, xend = long + 1),
+    curvature = 0.5,
+    angle = c(45, 135),
+    ncp = 5,
+    arrow = arrow(angle = 30, length = unit(0.1, &quot;inches&quot;),
+                  ends = &quot;last&quot;, type = &quot;closed&quot;),
+    arrow.fill = &quot;red&quot;,
+    lineend = &quot;butt&quot;
+  )</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-41-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(fyc, aes(long, lat)) + 
+  geom_segment(
+    aes(yend = lat + 1, xend = long + 1),
+    arrow = arrow(angle = 30, length = unit(0.25, &quot;inches&quot;),
+                  ends = &quot;both&quot;, type = &quot;closed&quot;),
+    arrow.fill = &quot;green&quot;,
+    lineend = &quot;butt&quot;,
+    linejoin = &quot;round&quot;
+  )</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-42-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_pathgeom_line和geom_step连接各点" class="section level3">
+<h3><code>geom_path()</code>、<code>geom_line()</code>和<code>geom_step()</code>：连接各点</h3>
+<ul>
+<li><code>aes()</code>必须参数：<strong>x</strong>、<strong>y</strong></li>
+<li><strong>direction</strong>：阶梯的方向，“hv”为先水平后竖直，“vh”为先竖直后水平</li>
+<li><strong>arrow</strong>：通过<code>arrow()</code>创建一个arrow对象进行赋值</li>
+<li><strong>lineend</strong>：不明</li>
+<li><strong>linejoin</strong>：不明</li>
+<li><strong>linemitre</strong>：不明</li>
+<li><code>geom_path()</code>按照数据顺序连接各点；<code>geom_line()</code>按照从左到右连接各点；<code>geom_step()</code>用阶梯连接各点</li>
+<li>对于NA的处理方式：
+<ul>
+<li>NA出现在数据中间：<code>geom_path()</code>会断开，无论<strong>na.rm</strong>是“TRUE”还是“FALSE”；<code>geom_line()</code>会删除NA并警告；<code>geom_step()</code>会删除NA无警告</li>
+<li>NA出现在数据开始或结束：如果<strong>na.rm</strong>为“TRUE”，删除NA无警告；如果<strong>na.rm</strong>为“FALSE”，删除NA有警告</li>
+</ul></li>
+</ul>
+<pre class="r"><code>fyc &lt;- tibble(
+  long = c(1,5,4,3,2), lat = c(1,1,2,3,2)
+)
+fyc &lt;- ggplot(fyc, aes(long, lat))</code></pre>
+<pre class="r"><code>fyc + geom_path()</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-44-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>fyc + geom_line()</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-45-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>fyc + geom_step(direction = &quot;hv&quot;)</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-46-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_polygon绘制多边形" class="section level3">
+<h3><code>geom_polygon()</code>：绘制多边形</h3>
+<ul>
+<li><code>aes()</code>必须参数：<strong>x</strong>、<strong>y</strong></li>
+<li><strong>rule</strong>：“evenodd”或“winding”，区别不明</li>
+<li><code>geom_polygon()</code>是在<code>geom_path()</code>的基础上，连接第一个点与最后一个点，然后用颜色填充中间围起来的部分，点的数据够多的话能画任意图像</li>
+</ul>
+<pre class="r"><code>ids &lt;- factor(c(&quot;1.1&quot;, &quot;2.1&quot;, &quot;1.2&quot;, &quot;2.2&quot;, &quot;1.3&quot;, &quot;2.3&quot;))
+values &lt;- data.frame(
+  id = ids,
+  value = c(3, 3.1, 3.1, 3.2, 3.15, 3.5)
+)
+positions &lt;- data.frame(
+  id = rep(ids, each = 4),
+  x = c(2, 1, 1.1, 2.2, 1, 0, 0.3, 1.1, 2.2, 1.1, 1.2, 2.5, 1.1,
+        0.3, 0.5, 1.2, 2.5, 1.2, 1.3, 2.7, 1.2, 0.5, 0.6, 1.3),
+  y = c(-0.5, 0, 1, 0.5, 0, 0.5, 1.5, 1, 0.5, 1, 2.1, 1.7, 1, 1.5,
+        2.2, 2.1, 1.7, 2.1, 3.2, 2.8, 2.1, 2.2, 3.3, 3.2)
+)
+datapoly &lt;- merge(values, positions, by = c(&quot;id&quot;))</code></pre>
+<pre class="r"><code>p &lt;- ggplot(datapoly, aes(x = x, y = y)) +
+  geom_polygon(aes(fill = value, group = id))
+p + geom_point(colour = &quot;red&quot;)</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-48-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>holes &lt;- do.call(
+  rbind, 
+  lapply(
+    split(datapoly, datapoly$id),
+    function(df) {
+      df$x &lt;- df$x + 0.5 * (mean(df$x) - df$x)
+      df$y &lt;- df$y + 0.5 * (mean(df$y) - df$y)
+      df
+    }
+  )
+)
+datapoly$subid &lt;- 1L
+holes$subid &lt;- 2L
+datapoly &lt;- rbind(datapoly, holes)</code></pre>
+<pre class="r"><code>p &lt;- ggplot(datapoly, aes(x = x, y = y)) +
+  geom_polygon(aes(fill = value, group = id, subgroup = subid), 
+               rule = &quot;evenodd&quot;)
+p + geom_point(aes(colour = as.factor(subid)))</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-50-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_rectgeom_raster和geom_tile绘制长方形" class="section level3">
+<h3><code>geom_rect()</code>、<code>geom_raster()</code>和<code>geom_tile()</code>：绘制长方形</h3>
+<ul>
+<li><code>aes()</code>必须参数：
+<ul>
+<li><code>geom_rect()</code>：<strong>xmin</strong>、<strong>ymin</strong>、<strong>xmax</strong>、<strong>ymax</strong></li>
+<li><code>geom_raster()</code>：<strong>x</strong>、<strong>y</strong></li>
+<li><code>geom_tile()</code>：<strong>x</strong>、<strong>y</strong></li>
+</ul></li>
+<li><strong>hjust</strong>和<strong>vjust</strong>：在<code>geom_raster()</code>中确定长方形位置，“(0, 0)”为左下角，“(1, 1)”为右上角</li>
+<li><strong>width</strong>和<strong>height</strong>：在<code>geom_tile()</code>中确定长方形的宽(x轴长度)和高(y轴长度)</li>
+<li><strong>linejoin</strong>：不明</li>
+<li><strong>interpolate</strong>：不明</li>
+<li><code>geom_rect()</code>的可操作性最强；<code>geom_raster()</code>适合点距相同的图；<code>geom_tile()</code>的长方形大小一样，且点都在长方形正中间</li>
+<li><code>geom_raster()</code>和<code>geom_tile()</code>可通过<code>aes(fill)</code>在二维平面上描述三维数据</li>
+</ul>
+<pre class="r"><code>fyc &lt;- tibble(long = c(10, 12, 15), lat = c(10, 12, 15))
+seals$z &lt;- sqrt(seals$long^2 + seals$lat^2)
+l &lt;- ggplot(seals, aes(long, lat))</code></pre>
+<pre class="r"><code>ggplot(fyc) + 
+  geom_rect(
+    aes(xmin = long - 2, ymin = lat - 2, 
+        xmax = long + 2, ymax = lat + 2),
+    alpha = 0.5
+  ) +
+  geom_point(aes(long, lat), colour = &quot;red&quot;)</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-52-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(fyc, aes(long, lat)) +
+  geom_raster(hjust = 1, vjust = 1, alpha = 0.5) +
+  geom_point(colour = &quot;red&quot;)</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-53-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(fyc, aes(long, lat)) +
+  geom_tile(width = 4, height = 4, alpha = 0.5) +
+  geom_point(colour = &quot;red&quot;)</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-54-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>l + geom_raster(
+  aes(fill = z), hjust = 0.5, vjust = 0.5, interpolate = TRUE
+)</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-55-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>l + geom_tile(aes(fill = z))</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-56-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_ribbon和geom_area绘制区域" class="section level3">
+<h3><code>geom_ribbon()</code>和<code>geom_area()</code>：绘制区域</h3>
+<ul>
+<li><code>aes()</code>必须参数：
+<ul>
+<li><code>geom_ribbon()</code>：<strong>x</strong>、<strong>ymin</strong>、<strong>ymax</strong></li>
+<li><code>geom_area()</code>：<strong>x</strong>、<strong>y</strong></li>
+</ul></li>
+<li><code>geom_area()</code>就是<strong>ymin</strong>为0，<strong>ymax</strong>为<strong>y</strong>的<code>geom_ribbon()</code></li>
+</ul>
+<pre class="r"><code>a &lt;- ggplot(economics, aes(date, unemploy))</code></pre>
+<pre class="r"><code>a + geom_ribbon(
+  aes(ymin = unemploy - 900, ymax = unemploy + 900)
+)</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-58-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>a + geom_area()</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-59-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_ablinegeom_hline和geom_vline添加直线" class="section level3">
+<h3><code>geom_abline()</code>、<code>geom_hline()</code>和<code>geom_vline()</code>：添加直线</h3>
+<ul>
+<li><code>aes()</code>必须参数：
+<ul>
+<li><code>geom_abline()</code>：<strong>intercept</strong>、<strong>slope</strong></li>
+<li><code>geom_hline()</code>：<strong>yintercept</strong></li>
+<li><code>geom_vline()</code>：<strong>xintercept</strong></li>
+</ul></li>
+</ul>
+<pre class="r"><code>ggplot() + 
+  geom_abline(aes(intercept = 0, slope = 1)) +
+  geom_hline(aes(yintercept = 1)) +
+  geom_vline(aes(xintercept = 1))</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-60-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_label和geom_text添加标签文本" class="section level3">
+<h3><code>geom_label()</code>和<code>geom_text()</code>：添加标签、文本</h3>
+<ul>
+<li><code>aes()</code>必须参数：<strong>x</strong>，<strong>y</strong>，<strong>label</strong></li>
+<li><strong>nudge_x</strong>和<strong>nudge_y</strong>：偏移，向右向上为正，向左向下为负</li>
+<li><strong>label.padding</strong>：<code>geom_label()</code>背景的大小</li>
+<li><strong>label.r</strong>：<code>geom_label()</code>背景四个角的圆滑程度</li>
+<li><strong>label.size</strong>：<code>geom_label()</code>背景边缘线的粗细</li>
+<li><strong>check_overlap</strong>：<code>geom_text()</code>是否删除重叠的文本</li>
+<li><code>geom_label()</code>和<code>geom_text()</code>都是在每一个点上打标签，如果只是某个点的话考虑用<code>annotate()</code></li>
+</ul>
+<pre class="r"><code>fyc &lt;- tibble(
+  long = c(10:13), lat = c(10:13), 
+  lb = c(NA, &quot;FANG&quot;, &quot;GONG&quot;, NA)
+  )</code></pre>
+<pre class="r"><code>ggplot(fyc, aes(long, lat)) + 
+  geom_label(
+    aes(label = lb), nudge_x = 0.3, nudge_y = 0.3,
+    label.padding = unit(0.5, &quot;lines&quot;),
+    label.r = unit(0.5, &quot;lines&quot;),
+    label.size = 0.5
+    ) +
+  geom_point()</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-62-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(fyc, aes(long, lat)) + 
+  geom_text(aes(label = lb))</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-63-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_jitter绘制偏离原位置的点" class="section level3">
+<h3><code>geom_jitter()</code>：绘制偏离原位置的点</h3>
+<ul>
+<li><code>aes()</code>必须参数：<strong>x</strong>，<strong>y</strong></li>
+<li><strong>height</strong>和<strong>width</strong>：偏离的范围，在水平方向可以向左或向右<strong>width</strong>的距离，在竖直方向可以向上或向下<strong>height</strong>的距离</li>
+</ul>
+<pre class="r"><code>e &lt;- ggplot(mpg, aes(cty, hwy))</code></pre>
+<pre class="r"><code>e + geom_jitter(height = 2, width = 2) + 
+  geom_point(colour = &quot;red&quot;)</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-65-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_point绘制散点图" class="section level3">
+<h3><code>geom_point()</code>：绘制散点图</h3>
+<ul>
+<li><code>aes()</code>必须参数：<strong>x</strong>，<strong>y</strong></li>
+</ul>
+<pre class="r"><code>e &lt;- ggplot(mpg, aes(cty, hwy))</code></pre>
+<pre class="r"><code>e + geom_point()</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-67-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_rug在图的四周绘制点的一维投影" class="section level3">
+<h3><code>geom_rug()</code>：在图的四周绘制点的一维投影</h3>
+<ul>
+<li><code>aes()</code>必须参数：<strong>x</strong>，<strong>y</strong></li>
+<li><strong>outside</strong>：是否投射在坐标轴外部</li>
+<li><strong>sides</strong>：投射方向，用“trbl”来代表“top”，“right”，“bottom”，“left”</li>
+<li><strong>length</strong>：描述投射位置的小短线的长度</li>
+</ul>
+<pre class="r"><code>e &lt;- ggplot(mpg, aes(cty, hwy))</code></pre>
+<pre class="r"><code>e + geom_rug(
+  outside = FALSE, sides = &quot;tbl&quot;, length = unit(0.1, &quot;npc&quot;)
+  )</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-69-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_crossbargeom_errorbargeom_linerange和geom_pointrange绘制垂直的区间" class="section level3">
+<h3><code>geom_crossbar()</code>、<code>geom_errorbar()</code>、<code>geom_linerange()</code>和<code>geom_pointrange()</code>：绘制垂直的区间</h3>
+<ul>
+<li><code>aes()</code>必须参数：<strong>x</strong>，<strong>y</strong>，<strong>ymin</strong>，<strong>ymax</strong></li>
+<li><strong>fatten</strong>：中间那根线有多粗，数字越大越粗</li>
+<li><code>geom_crossbar()</code>是个日字，<code>geom_errorbar()</code>是个I字，<code>geom_linerange()</code>是一条线，<code>geom_pointrange()</code>是线中间有个点</li>
+</ul>
+<pre class="r"><code>df &lt;- tibble(grp = c(&quot;A&quot;, &quot;B&quot;), fit = 4:5, se = 1:2)
+j &lt;- ggplot(df, aes(grp, fit, ymin = fit-se, ymax = fit+se))</code></pre>
+<pre class="r"><code>j + geom_crossbar(fatten = 2)</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-71-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>j + geom_errorbar()</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-72-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>j + geom_linerange()</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-73-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>j + geom_pointrange()</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-74-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_map绘制地图" class="section level3">
+<h3><code>geom_map()</code>：绘制地图</h3>
+<pre class="r"><code>data &lt;- data.frame(
+  murder = USArrests$Murder,
+  state = tolower(rownames(USArrests))
+)
+map &lt;- map_data(&quot;state&quot;)
+k &lt;- ggplot(data, aes(fill = murder))</code></pre>
+<pre class="r"><code>k + geom_map(aes(map_id = state), map = map) +
+  expand_limits(x = map$long, y = map$lat)</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-76-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_spoke" class="section level3">
+<h3><code>geom_spoke()</code>：</h3>
+<ul>
+<li><code>aes()</code>必须参数：<strong>x</strong>、<strong>y</strong>、<strong>angle</strong>、<strong>radius</strong></li>
+</ul>
+<pre class="r"><code>b &lt;- ggplot(seals, aes(x = long, y = lat))</code></pre>
+<pre class="r"><code>b + geom_spoke(aes(angle = 1:1155, radius = 1))</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-78-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="geom_dotplot点阵图" class="section level3">
+<h3><code>geom_dotplot()</code>：点阵图</h3>
+<ul>
+<li><code>aes()</code>必须参数：<strong>x</strong>，<strong>y(count, ncount)</strong></li>
+</ul>
+<pre class="r"><code>c &lt;- ggplot(mpg, aes(hwy))</code></pre>
+<pre class="r"><code>c + geom_dotplot()</code></pre>
+<p><img src="/posts/20210323_ggplot2_stats_geom_files/figure-html/unnamed-chunk-80-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+</div>

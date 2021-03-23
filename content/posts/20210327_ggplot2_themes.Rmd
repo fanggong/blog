@@ -1,0 +1,60 @@
+---
+title: ggplot2使用笔记（6）——Themes
+author: Fang Yongchao
+date: "2021-03-27"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+library(ggplot2)
+library(dplyr)
+```
+
+
+## Themes
+
+----------------------------
+
+### `theme_bw()`：
+```{r}
+r + theme_bw()
+```
+
+### `theme_gray()`：
+```{r}
+r + theme_gray()
+```
+
+### `theme_dark()`：
+```{r}
+r + theme_dark()
+```
+
+### `theme_classic()`：
+```{r}
+r + theme_classic()
+```
+
+### `theme_light()`：
+```{r}
+r + theme_light()
+```
+
+### `theme_linedraw()`：
+```{r}
+r + theme_linedraw()
+```
+
+### `theme_minimal()`：
+```{r}
+r + theme_minimal()
+```
+
+### `theme_void()`：
+```{r}
+r + theme_void()
+```

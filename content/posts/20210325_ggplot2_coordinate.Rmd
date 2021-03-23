@@ -1,0 +1,75 @@
+---
+title: ggplot2使用笔记（4）——Coordinate
+author: Fang Yongchao
+date: "2021-03-25"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+library(ggplot2)
+library(dplyr)
+```
+
+
+## Coordinate Systems
+
+-----------------------------
+
+```{r}
+r <- d + geom_bar()
+```
+
+### `coord_cartesian()`：更改笛卡尔坐标系的显示范围
+
+- `coord_cartesian()`的作用是显示图的某一部分，并不会减少使用的数据
+- **xlim**，**ylim**：控制x轴和y轴的范围
+
+```{r}
+r + coord_cartesian(xlim = c(0, 5))
+```
+
+### `coord_fixed()`：更改x轴和y轴的坐标比例
+
+- **ratio**：同样的值在坐标轴上的长度y/x等于**ratio**
+- **xlim**，**ylim**：控制x轴和y轴的范围
+
+```{r}
+r + coord_fixed(ratio = 1/30)
+```
+
+### `coord_flip()`：翻转坐标轴
+
+- **xlim**，**ylim**：控制x轴和y轴的范围
+
+```{r}
+r + coord_flip()
+```
+
+### `coord_polar()`：将笛卡尔坐标转换成极坐标
+
+- **theta**：选择哪个轴变为极坐标的**theta**
+- **start**：弧度，一圆周为2*pi弧度
+- **direction**：1为顺时针，-1为逆时针
+
+```{r}
+fyc <- tibble(long = rep(1:5, c(1:5)), lat = 1)
+ggplot(fyc, aes(long, lat)) +
+  geom_col() +
+  coord_polar(theta = "x", start = pi, direction = -1)
+```
+
+### `coord_trans()`：进行坐标变换
+
+```{r}
+fyc <- data.frame(long = 1:10, lat = (1:10)^2)
+fyc <- ggplot(fyc, aes(long, lat)) + geom_point()
+```
+
+```{r}
+fyc + scale_y_sqrt()
+fyc + coord_trans(y = "sqrt")
+```

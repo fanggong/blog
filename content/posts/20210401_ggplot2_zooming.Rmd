@@ -1,0 +1,35 @@
+---
+title: ggplot2使用笔记（10）——Zooming
+author: Fang Yongchao
+date: "2021-04-01"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+library(ggplot2)
+library(dplyr)
+```
+
+
+## Zooming
+
+---------------------------
+
+### Without Clipping：
+```{r}
+t + coord_cartesian(xlim = c(0, 100), ylim = c(0, 100))
+```
+
+### With Clipping：
+```{r}
+t + xlim(0, 100) + ylim(10, 20)
+```
+
+```{r}
+t + scale_x_continuous(limits = c(0, 100)) +
+  scale_y_continuous(limits = c(10, 20))
+```

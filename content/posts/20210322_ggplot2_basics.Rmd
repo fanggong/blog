@@ -1,0 +1,61 @@
+---
+title: ggplot2使用笔记（1）—— Basics
+author: Fang Yongchao
+date: "2021-03-22"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+library(ggplot2)
+library(dplyr)
+```
+
+这份笔记实际作于好几年前，那时候刚开始接触R语言作图，觉得base R的作图系统实在过于繁琐而且感觉缺少语法上的一致性。接触[ggplot2](https://ggplot2.tidyverse.org/)后完全沉迷于它的简单与一致性，因为[ggplot2](https://ggplot2.tidyverse.org/)没有对应的中文文档，于是学习过程中笔记记得极其详尽，有些地方甚至到了参数的细节。
+
+但是现在再回头看，已经几乎有两年没有用过这个包了，主要还是由于在做研究生毕业设计的时候需要对图进行一些细微处的调整，而[ggplot2](https://ggplot2.tidyverse.org/)由于已经自成一个世界，这种微调操作就变得相当难搞（最近在学习d3，感觉base R作图系统和[ggplot2](https://ggplot2.tidyverse.org/)的区别就类似于d3和echarts）。还有另一个放弃[ggplot2](https://ggplot2.tidyverse.org/)的原因就是，它的主题已经越来越不在我的审美上了...
+
+由于一份超长RMarkdown笔记在生成静态html时需要时间太长，所以被分成了下面10个部分：
+
+- [ggplot2使用笔记（1）——Basics]()
+- [ggplot2使用笔记（2）——Stats和Geom]()
+- [ggplot2使用笔记（3）——Scales]()
+- [ggplot2使用笔记（4）——Coordinate]()
+- [ggplot2使用笔记（5）——Position]()
+- [ggplot2使用笔记（6）——Themes]()
+- [ggplot2使用笔记（7）——Faceting]()
+- [ggplot2使用笔记（8）——Labels]()
+- [ggplot2使用笔记（9）——Legends]()
+- [ggplot2使用笔记（10）——Zooming]()
+
+
+--------------------------
+
+一张图包括最基础的`ggplot()`，统计变换和作图函数`<GEOM_FUNCTION>`，坐标轴函数`<COORDINATE_FUNCTION>`，分面函数`<FACET_FUNCTION>`，标度函数`<SCALE_FUNCTION>`以及主题函数` <THEME_FUNCTION>`
+
+```{r, eval=FALSE}
+# NOT RUN
+ggplot(data = <DATA>) +
+  <GEOM_FUNCTION>(mapping = aes(<MAPPING>), 
+                  stat = <STAT>,
+                  position = <POSITION>) +
+  <COORDINATE_FUNCTION> +
+  <FACET_FUNCTION> +
+  <SCALE_FUNCTION> +
+  <THEME_FUNCTION>
+```
+
+`last_plot()`返回最后一张图
+```{r eval=FALSE}
+# NOT RUN
+last_plot()
+```
+
+`ggsave()`保存图像
+```{r eval=FALSE}
+# NOT RUN
+ggsave("plot.png", width = 5, height = 5)
+```

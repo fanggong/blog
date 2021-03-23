@@ -1,0 +1,47 @@
+---
+title: ggplot2使用笔记（1）—— Basics
+author: Fang Yongchao
+date: "2021-03-22"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<p>这份笔记实际作于好几年前，那时候刚开始接触R语言作图，觉得base R的作图系统实在过于繁琐而且感觉缺少语法上的一致性。接触<a href="https://ggplot2.tidyverse.org/">ggplot2</a>后完全沉迷于它的简单与一致性，因为<a href="https://ggplot2.tidyverse.org/">ggplot2</a>没有对应的中文文档，于是学习过程中笔记记得极其详尽，有些地方甚至到了参数的细节。</p>
+<p>但是现在再回头看，已经几乎有两年没有用过这个包了，主要还是由于在做研究生毕业设计的时候需要对图进行一些细微处的调整，而<a href="https://ggplot2.tidyverse.org/">ggplot2</a>由于已经自成一个世界，这种微调操作就变得相当难搞（最近在学习d3，感觉base R作图系统和<a href="https://ggplot2.tidyverse.org/">ggplot2</a>的区别就类似于d3和echarts）。还有另一个放弃<a href="https://ggplot2.tidyverse.org/">ggplot2</a>的原因就是，它的主题已经越来越不在我的审美上了…</p>
+<p>由于一份超长RMarkdown笔记在生成静态html时需要时间太长，所以被分成了下面10个部分：</p>
+<ul>
+<li><a href="">ggplot2使用笔记（1）——Basics</a></li>
+<li><a href="">ggplot2使用笔记（2）——Stats和Geom</a></li>
+<li><a href="">ggplot2使用笔记（3）——Scales</a></li>
+<li><a href="">ggplot2使用笔记（4）——Coordinate</a></li>
+<li><a href="">ggplot2使用笔记（5）——Position</a></li>
+<li><a href="">ggplot2使用笔记（6）——Themes</a></li>
+<li><a href="">ggplot2使用笔记（7）——Faceting</a></li>
+<li><a href="">ggplot2使用笔记（8）——Labels</a></li>
+<li><a href="">ggplot2使用笔记（9）——Legends</a></li>
+<li><a href="">ggplot2使用笔记（10）——Zooming</a></li>
+</ul>
+<hr />
+<p>一张图包括最基础的<code>ggplot()</code>，统计变换和作图函数<code>&lt;GEOM_FUNCTION&gt;</code>，坐标轴函数<code>&lt;COORDINATE_FUNCTION&gt;</code>，分面函数<code>&lt;FACET_FUNCTION&gt;</code>，标度函数<code>&lt;SCALE_FUNCTION&gt;</code>以及主题函数<code>&lt;THEME_FUNCTION&gt;</code></p>
+<pre class="r"><code># NOT RUN
+ggplot(data = &lt;DATA&gt;) +
+  &lt;GEOM_FUNCTION&gt;(mapping = aes(&lt;MAPPING&gt;), 
+                  stat = &lt;STAT&gt;,
+                  position = &lt;POSITION&gt;) +
+  &lt;COORDINATE_FUNCTION&gt; +
+  &lt;FACET_FUNCTION&gt; +
+  &lt;SCALE_FUNCTION&gt; +
+  &lt;THEME_FUNCTION&gt;</code></pre>
+<p><code>last_plot()</code>返回最后一张图</p>
+<pre class="r"><code># NOT RUN
+last_plot()</code></pre>
+<p><code>ggsave()</code>保存图像</p>
+<pre class="r"><code># NOT RUN
+ggsave(&quot;plot.png&quot;, width = 5, height = 5)</code></pre>
