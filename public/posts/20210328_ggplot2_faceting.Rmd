@@ -1,0 +1,35 @@
+---
+title: ggplot2使用笔记（7）——Faceting
+author: Fang Yongchao
+date: "2021-03-28"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+library(ggplot2)
+library(dplyr)
+```
+
+## Faceting
+
+-----------------------------
+
+```{r}
+t <- ggplot(mpg, aes(cty, hwy)) + geom_point()
+```
+
+### `facet_grid()`：
+```{r}
+t + facet_grid(cols = vars(fl))
+t + facet_grid(rows = vars(year))
+t + facet_grid(rows = vars(year), cols = vars(fl))
+```
+
+### `facet_wrap()`：
+```{r}
+t + facet_wrap(vars(fl))
+```

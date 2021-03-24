@@ -1,0 +1,36 @@
+---
+title: ggplot2使用笔记（8）——Labels
+author: Fang Yongchao
+date: "2021-03-29"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+library(ggplot2)
+library(dplyr)
+```
+
+## Labels
+
+-----------------------------
+
+### `labs()`：
+```{r}
+t + labs(
+  x = "New x axis label", 
+  y = "New y axis label",
+  title = "Add a title above the plot",
+  subtitle = "Add a subtitle below title",
+  caption = "Add a caption below plot"
+)
+```
+
+### `annotate()`：
+```{r}
+t + annotate(geom = "text", x = 12, y = 9,
+             label = "This is annotate")
+```
