@@ -24,7 +24,7 @@ library(shiny)
 - locale sensitive：可以理解为针对不同语言输出会不一样的函数
 - pattern匹配函数：支持四种不同的匹配模式，最常用的还是正则表达式
 
-对应地，base R中也有相对应的函数达到同样的效果。在我的本地环境下，发现base R中字符串操作函数的性能在数据较大情况下普遍不如[stringr](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/stringr/index.html)。
+对应地，base R中也有相对应的函数达到同样的效果。在各种环境下测试，发现base R中字符串操作函数的性能在数据较大情况下普遍不如[stringr](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/stringr/index.html)。
 
 
 ## 对单个字符串进行操作

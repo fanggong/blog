@@ -1,0 +1,98 @@
+---
+title: ggplot2使用笔记（6）—— Themes
+author: Fang Yongchao
+date: "2021-03-27"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+knitr::opts_chunk$set(fig.align = "center", out.width = "50%")
+library(ggplot2)
+library(dplyr)
+```
+
+[ggplot2](https://ggplot2.tidyverse.org/)中自带的一些主题，感觉都有点审美疲劳了..
+
+## `theme_bw()`
+
+--------------------------
+
+```{r}
+ggplot(mpg) + 
+  geom_point(aes(x = class, y = hwy, color = trans)) +
+  theme_bw()
+```
+
+## `theme_gray()`
+
+--------------------------
+
+```{r}
+ggplot(mpg) + 
+  geom_point(aes(x = class, y = hwy, color = trans)) +
+  theme_gray()
+```
+
+## `theme_dark()`
+
+--------------------------
+
+```{r}
+ggplot(mpg) + 
+  geom_point(aes(x = class, y = hwy, color = trans)) +
+  theme_dark()
+```
+
+## `theme_classic()`
+
+--------------------------
+
+```{r}
+ggplot(mpg) + 
+  geom_point(aes(x = class, y = hwy, color = trans)) +
+  theme_classic()
+```
+
+## `theme_light()`
+
+--------------------------
+
+```{r}
+ggplot(mpg) + 
+  geom_point(aes(x = class, y = hwy, color = trans)) +
+  theme_light()
+```
+
+## `theme_linedraw()`
+
+--------------------------
+
+```{r}
+ggplot(mpg) + 
+  geom_point(aes(x = class, y = hwy, color = trans)) +
+  theme_linedraw()
+```
+
+## `theme_minimal()`
+
+--------------------------
+
+```{r}
+ggplot(mpg) + 
+  geom_point(aes(x = class, y = hwy, color = trans)) +
+  theme_minimal()
+```
+
+## `theme_void()`
+
+--------------------------
+
+```{r}
+ggplot(mpg) + 
+  geom_point(aes(x = class, y = hwy, color = trans)) +
+  theme_void()
+```

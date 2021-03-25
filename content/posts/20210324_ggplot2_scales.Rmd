@@ -10,15 +10,17 @@ output:
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+knitr::opts_chunk$set(fig.align = "center", out.width = "50%")
 library(ggplot2)
 library(dplyr)
 ```
 
-`<SCALE_FUNCTION>`不会改变数据，仅仅改变坐标轴的结构，如线的密度、顺序等，或是改变颜色，填充色的配色等。
 
-## `scale_*_continuous()`：对连续型数据的坐标轴进行修改
+## 对连续型数据的坐标轴进行修改
 
 ----------------------
+
+相关函数包括`scale_x_continuous()`和`scale_y_continuous()`
 
 - **name**：坐标轴名称
 - **breaks**：坐标轴主要刻度线，可以为一个向量，也可以是一个函数，函数将**limits**作为输入，输出一个向量作为**breaks**，需要注意如果使用函数输出结果貌似会受到**expand**参数的影响，具体影响不明
@@ -28,7 +30,6 @@ library(dplyr)
 - **expand**：对当前的坐标轴进行一定程度扩充，用`expansion()`对其进行赋值
   - **mult**：上下（左右）各增加当前**limits**的**mult**倍
   - **add**：上下（左右）各增加**add**长度的坐标轴
-- **oob**：不明
 - **trans**：直接对坐标轴进行变换，有"asn", "atanh", "boxcox", "date", "exp", "hms", "identity", "log", "log10", "log1p", "log2", "logit", "modulus", "probability", "probit", "pseudo_log", "reciprocal", "reverse", "sqrt" 和 "time"
 - **position**：坐标轴位置，"left"，"right"，"bottom"或"right"
 - **sec.axis**：增加副坐标轴，用`sec.axis()`对其进行赋值
@@ -40,12 +41,12 @@ library(dplyr)
 - 通过调整数据和**sec.axis**可以实现双坐标轴
 
 ```{r}
-fyc <- tibble(
+dat <- tibble(
   Month = c(1:12), 
   Sales = sample(1:12),
   CumSales = cumsum(Sales)
 )
-ggplot(fyc, aes(Month, Sales)) +
+ggplot(dat, aes(Month, Sales)) +
   geom_col(fill = "blue", alpha = 0.3) +
   geom_path(aes(Month, CumSales/5), colour = "darkgreen") +
   geom_point(aes(Month, CumSales/5), colour = "darkgreen") +
@@ -54,188 +55,76 @@ ggplot(fyc, aes(Month, Sales)) +
     expand = expansion(mult = 0, add = 0.5), limits = c(0, 16),
     sec.axis = sec_axis(trans = ~ 5*., name = "CumSales")
     ) +
-  scale_x_continuous(
-    breaks = c(1:12), minor_breaks = NULL
-  )
+  scale_x_continuous(breaks = c(1:12), minor_breaks = NULL)
 ```
 
 ```{r}
-fyc <- tibble(long = 10^(1:10), lat = 1:10)
-ggplot(fyc, aes(long, lat)) +
+dat <- tibble(long = 10^(1:10), lat = 1:10)
+ggplot(dat, aes(long, lat)) +
   geom_point() +
   scale_x_log10()
 ```
 
 ```{r}
-fyc <- tibble(long = 10:1, lat = 1:10)
-ggplot(fyc, aes(long, lat)) +
+dat <- tibble(long = 10:1, lat = 1:10)
+ggplot(dat, aes(long, lat)) +
   geom_point() +
   scale_y_reverse()
 ```
 
 ```{r}
-fyc <- tibble(long = (1:10)^2, lat = 1:10)
-ggplot(fyc, aes(long, lat)) +
+dat <- tibble(long = (1:10)^2, lat = 1:10)
+ggplot(dat, aes(long, lat)) +
   geom_point() +
   scale_x_sqrt()
 ```
 
-## `scale_*_discrete()`：对离散型数据的坐标轴进行修改
+## 对离散型数据的坐标轴进行修改
 
 ----------------------------
 
-- **palette**：
+相关函数包括`scale_x_discrete()`和`scale_y_discrete()`，这一块蛮费解的，有很多参数要等有空了弄清楚
+
+- **palette**：##TODO
 - **breaks**：用超出数据范围的值来赋值貌似没有意义，当赋的值正好是目前有的值的时候才会显示在坐标轴上
 - **limits**：限定坐标轴上得值以及值的顺序
 - **drop**：离散数据是factor时，是否舍弃不存在数据的因子
+- **aesthetics**：##TODO
+- **scale_name**：##TODO
 - **na.translate**：是否保留NA
-- **na.value**：
-- **aesthetics**：
-- **scale_name**：
+- **na.value**：##TODO
 - **name**：坐标轴名称
 - **labels**：给每个**breaks**设定坐标轴上的**labels**
-- **expand**：对当前的坐标轴进行一定程度扩充，用`expand_scale()`对其进行赋值
+- **expand**：对当前的坐标轴进行一定程度扩充，用`expansion()`对其进行赋值
   - **mult**：上下（左右）各增加当前**limits**的**mult**倍
   - **add**：上下（左右）各增加**add**长度的坐标轴
   
 ```{r}
-fyc <- tibble(
-  Month = rep(c("Q1", "Q2", "Q3", NA), each = 30),
-  Sales = sample(1:120)
+dat <- tibble(
+  Season = rep(c("Q1", "Q2", "Q3", "Q4", NA), each = 30),
+  Sales = c(1:120, sample(1:120, 30))
 )
-ggplot(fyc, aes(Month, Sales)) +
+ggplot(dat, aes(Season, Sales, fill = Season)) +
   geom_boxplot() +
-  scale_x_discrete(drop = FALSE)
+  scale_x_discrete(na.translate = FALSE)
 ```
 
-## `scale_*_date()`、`scale_*_datetime()`和`scale_*_time()`：对时间序列数据的坐标轴进行修改
+## 对时间序列数据的坐标轴进行修改
 
 --------------------------------
 
-- **name**：
-- **breaks**：
-- **date_breaks**：
-- **labels**：
-- **date_labels**：
-- **minor_breaks**：
-- **date_minor_breaks**：
-- **limits**：
-- **expand**：
-- **position**：
-- **sec.axis**：
-- **timezone**：
-- **oob**：
-- **na.value**：
-- 总体上与`scale_*_continuous()`类似，但是每个参数多了一个对应的**data_***参数，可通过一个字符串来表示时间
+相关函数包括`scale_x_date()`、`scale_x_datetime()`、`scale_x_time()`、`scale_y_date()`、`scale_y_datetime()`、`scale_y_time()`。使用方法与[连续型数据的坐标轴的修改](#对连续型数据的坐标轴进行修改)类似，区别在于多了一些以**date_**起始的参数可以通过如"%Y-%m-%d"的字符串改变样式
 
-## `scale_*_brewer()`：离散的颜色或填充
-
------------------------------
-
-- **name**、**limits**、**breaks**、**labels**
-- **type**："seq"(sequential)，"div"(diverging)，"qual"(qualitative)
-- **palette**：调色板，用数字或字符串赋值
-- **direction**：从**palette**中选取颜色1表示正向，-1表示反向
 
 ```{r}
-fyc <- tibble(
-  Season = sample(c("Q1", "Q2", "Q3"), 1000, replace = TRUE),
-  Sales = rnorm(1000)
+dat <- tibble(
+  Date = Sys.Date() + 1:10,
+  Sales = sample(20, 10)
 )
-ggplot(fyc, aes(Sales)) +
-  geom_histogram(aes(fill = Season), binwidth = 0.1) + 
-  scale_fill_brewer(
-    type = "seq",
-    palette = 1,
-    direction = -1
-  )
-```
-
-```{r}
-fyc <- tibble(
-  Area = sample(c("east", "west", "north"), 1000, replace = TRUE),
-  long = rnorm(1000), lat = rnorm(1000)
-)
-ggplot(fyc, aes(long, lat)) +
-  geom_point(aes(colour = Area)) + 
-  scale_color_brewer(
-    type = "div",
-    palette = 1,
-    direction = -1
-  )
-```
-
-## `scale_*_distiller()`：连续的颜色或填充
-
-------------------------------------
-
-- **name**、**limits**、**breaks**、**labels**
-- **type**："seq"(sequential)，"div"(diverging)，"qual"(qualitative)
-- **palette**：调色板，用数字或字符串赋值
-- **direction**：从**palette**中选取颜色1表示正向，-1表示反向
-
-```{r}
-fyc <- tibble(
-  long = rep(1:20, 20), lat = rep(1:20, each = 20),
-  square = sqrt(long^2 + lat^2)
-)
-ggplot(fyc, aes(long, lat)) +
-  geom_tile(aes(fill = square)) +
-  scale_fill_distiller(
-    type = "seq",
-    direction = 1
-  )
-```
-
-### `scale_fill_grey()`：
-```{r}
-n + scale_fill_grey(start = 0.2, end = 0.8, na.value = "red")
+ggplot(dat, aes(x = Date, y = Sales)) + 
+  geom_col() + 
+  scale_x_date(date_labels = "%m- %d")
 ```
 
 
-```{r}
-o <- c + geom_dotplot(aes(fill = ..x..))
-```
-
-### `scale_fill_distiller()`：
-```{r, message=FALSE}
-o + scale_fill_distiller(palette = "Blues")
-```
-
-### `scale_fill_gradient()`：
-```{r, message=FALSE}
-o + scale_fill_gradient(low = "red", high = "yellow")
-```
-
-### `scale_fill_gradient2()`：
-```{r, message=FALSE}
-o + scale_fill_gradient2(
-  low = "red", high = "blue",mid = "white", midpoint = 25
-)
-```
-
-### `scale_fill_gradientn()`：
-```{r, message=FALSE}
-o + scale_fill_gradientn(colours = topo.colors(6))
-```
-
-
-```{r}
-p <- e + geom_point(aes(shape = fl, size = cyl))
-```
-
-### `scale_shape_manual()`：
-```{r}
-p + scale_shape_manual(values = c(3:7))
-```
-
-### `scale_radius()`：
-```{r}
-p + scale_radius(range = c(1, 6))
-```
-
-### `scale_size_area()`：
-```{r}
-p + scale_size_area(max_size = 6)
-```
 

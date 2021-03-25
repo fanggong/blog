@@ -82,8 +82,8 @@ ggplot(mpg, aes(fl)) +
 - 类似`geom_bar()`，但是柱的高度并不是对**x**的计数，而是**y**的和
 
 ```{r}
-fyc <- tibble(long = rep(1:5, c(1:5)), lat = 1)
-ggplot(fyc, aes(long, lat)) + geom_col()
+dat <- tibble(long = rep(1:5, c(1:5)), lat = 1)
+ggplot(dat, aes(long, lat)) + geom_col()
 ```
 
 ## 对**x**的密度曲线进行计算作图
@@ -409,8 +409,8 @@ ggplot(mpg, aes(cty)) +
 
 ### `stat_qq()`和`stat_qq_line()`
 ```{r}
-fyc <- data.frame(x = rnorm(100))
-ggplot(fyc) + 
+dat <- data.frame(x = rnorm(100))
+ggplot(dat) + 
   stat_qq(aes(sample = x), distribution = qnorm, dparams = list()) + 
   stat_qq_line(aes(sample = x), distribution = qnorm, dparams = list()) 
 ```
@@ -484,8 +484,8 @@ ggplot(mpg, aes(cty, hwy)) + geom_blank()
 
 ### `geom_curve()`
 ```{r}
-fyc <- tibble(long = c(10, 12), lat = c(10, 12))
-ggplot(fyc, aes(long, lat)) + 
+dat <- tibble(long = c(10, 12), lat = c(10, 12))
+ggplot(dat, aes(long, lat)) + 
   geom_curve(
     aes(yend = lat + 1, xend = long + 1),
     curvature = 0.5,
@@ -500,7 +500,7 @@ ggplot(fyc, aes(long, lat)) +
 
 ### `geom_segment()`
 ```{r}
-ggplot(fyc, aes(long, lat)) + 
+ggplot(dat, aes(long, lat)) + 
   geom_segment(
     aes(yend = lat + 1, xend = long + 1),
     arrow = arrow(angle = 30, length = unit(0.25, "inches"),
@@ -528,18 +528,18 @@ ggplot(fyc, aes(long, lat)) +
 
 ### `geom_path()`
 ```{r}
-fyc <- tibble(long = c(1,5,4,3,2), lat = c(1,1,2,3,2))
-ggplot(fyc, aes(long, lat)) + geom_path()
+dat <- tibble(long = c(1,5,4,3,2), lat = c(1,1,2,3,2))
+ggplot(dat, aes(long, lat)) + geom_path()
 ```
 
 ### `geom_line()`
 ```{r}
-ggplot(fyc, aes(long, lat)) + geom_line()
+ggplot(dat, aes(long, lat)) + geom_line()
 ```
 
 ### `geom_step()`
 ```{r}
-ggplot(fyc, aes(long, lat)) + geom_step(direction = "hv")
+ggplot(dat, aes(long, lat)) + geom_step(direction = "hv")
 ```
 
 ## 绘制多边形
@@ -609,15 +609,15 @@ ggplot(datapoly, aes(x = x, y = y)) +
 
 ### `geom_rect()`
 ```{r}
-fyc <- tibble(long = c(10, 12, 15), lat = c(10, 12, 15))
-ggplot(fyc) + 
+dat <- tibble(long = c(10, 12, 15), lat = c(10, 12, 15))
+ggplot(dat) + 
   geom_rect(aes(xmin = long - 2, ymin = lat - 2, xmax = long + 2, ymax = lat + 2), alpha = 0.5) +
   geom_point(aes(long, lat), colour = "red")
 ```
 
 ### `geom_raster()`
 ```{r}
-ggplot(fyc, aes(long, lat)) +
+ggplot(dat, aes(long, lat)) +
   geom_raster(hjust = 1, vjust = 1, alpha = 0.5) +
   geom_point(colour = "red")
 ```
@@ -630,7 +630,7 @@ ggplot(seals, aes(long, lat)) +
 
 ### `geom_tile()`
 ```{r}
-ggplot(fyc, aes(long, lat)) +
+ggplot(dat, aes(long, lat)) +
   geom_tile(width = 4, height = 4, alpha = 0.5) +
   geom_point(colour = "red")
 ```
@@ -655,7 +655,7 @@ ggplot(economics, aes(date, unemploy)) +
   geom_ribbon(aes(ymin = unemploy - 900, ymax = unemploy + 900))
 ```
 
-#### `geom_area()`
+### `geom_area()`
 ```{r}
 ggplot(economics, aes(date, unemploy)) + geom_area()
 ```
@@ -691,11 +691,11 @@ ggplot() +
 
 ### `geom_label()`
 ```{r}
-fyc <- tibble(
+dat <- tibble(
   long = c(10:13), lat = c(10:13), 
   lb = c(NA, "FANG", "GONG", NA)
 )
-ggplot(fyc, aes(long, lat)) + 
+ggplot(dat, aes(long, lat)) + 
   geom_label(
     aes(label = lb), nudge_x = 0.3, nudge_y = 0.3,
     label.padding = unit(0.5, "lines"),
@@ -706,7 +706,7 @@ ggplot(fyc, aes(long, lat)) +
 
 ### `geom_text()`
 ```{r}
-ggplot(fyc, aes(long, lat)) + 
+ggplot(dat, aes(long, lat)) + 
   geom_text(aes(label = lb))
 ```
 

@@ -1,5 +1,5 @@
 ---
-title: ggplot2使用笔记（7）——Faceting
+title: ggplot2使用笔记（7）—— Faceting
 author: Fang Yongchao
 date: "2021-03-28"
 output:
@@ -10,13 +10,11 @@ output:
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+knitr::opts_chunk$set(fig.align = "center", out.width = "50%")
 library(ggplot2)
 library(dplyr)
 ```
 
-## Faceting
-
------------------------------
 
 ```{r}
 t <- ggplot(mpg, aes(cty, hwy)) + geom_point()
