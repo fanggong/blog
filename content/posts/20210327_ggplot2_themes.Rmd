@@ -15,11 +15,14 @@ library(ggplot2)
 library(dplyr)
 ```
 
-[ggplot2](https://ggplot2.tidyverse.org/)中自带的一些主题，感觉都有点审美疲劳了..
 
-## `theme_bw()`
+主题函数` <THEME_FUNCTION>`包括[ggplot2](https://ggplot2.tidyverse.org/)中自带的一些完整主题，以及对当前主题进行直接修改的函数。
+
+## 完整主题
 
 --------------------------
+
+### `theme_bw()`
 
 ```{r}
 ggplot(mpg) + 
@@ -27,9 +30,7 @@ ggplot(mpg) +
   theme_bw()
 ```
 
-## `theme_gray()`
-
---------------------------
+### `theme_gray()`
 
 ```{r}
 ggplot(mpg) + 
@@ -37,9 +38,7 @@ ggplot(mpg) +
   theme_gray()
 ```
 
-## `theme_dark()`
-
---------------------------
+### `theme_dark()`
 
 ```{r}
 ggplot(mpg) + 
@@ -47,9 +46,7 @@ ggplot(mpg) +
   theme_dark()
 ```
 
-## `theme_classic()`
-
---------------------------
+### `theme_classic()`
 
 ```{r}
 ggplot(mpg) + 
@@ -57,9 +54,7 @@ ggplot(mpg) +
   theme_classic()
 ```
 
-## `theme_light()`
-
---------------------------
+### `theme_light()`
 
 ```{r}
 ggplot(mpg) + 
@@ -67,9 +62,7 @@ ggplot(mpg) +
   theme_light()
 ```
 
-## `theme_linedraw()`
-
---------------------------
+### `theme_linedraw()`
 
 ```{r}
 ggplot(mpg) + 
@@ -77,9 +70,7 @@ ggplot(mpg) +
   theme_linedraw()
 ```
 
-## `theme_minimal()`
-
---------------------------
+### `theme_minimal()`
 
 ```{r}
 ggplot(mpg) + 
@@ -87,12 +78,25 @@ ggplot(mpg) +
   theme_minimal()
 ```
 
-## `theme_void()`
-
---------------------------
+### `theme_void()`
 
 ```{r}
 ggplot(mpg) + 
   geom_point(aes(x = class, y = hwy, color = trans)) +
   theme_void()
+```
+
+## 直接修改当前主题
+
+--------------------------
+
+```{r}
+set.seed(2414)
+ggplot(tibble(
+  long = rnorm(100), 
+  lat = rnorm(100), 
+  position = sample(c("East", "South", "West", "North"), 100, replace = TRUE)
+)) +
+  geom_point(aes(x = long, y = lat, color = position)) +
+  tgamtheme::theme_tgam()
 ```

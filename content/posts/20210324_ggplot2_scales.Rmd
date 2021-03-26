@@ -15,6 +15,7 @@ library(ggplot2)
 library(dplyr)
 ```
 
+标度函数`<SCALE_FUNCTION>`应该是最麻烦的部分了，可以放进`aes()`函数中的元素都可以通过标度函数进行调整修改，只是所有的调整和修改改变的都是图形展示出来的样子，其背后的数据并没有做出任何改变。
 
 ## 对连续型数据的坐标轴进行修改
 
@@ -126,5 +127,5 @@ ggplot(dat, aes(x = Date, y = Sales)) +
   scale_x_date(date_labels = "%m- %d")
 ```
 
-
+## TODO
 

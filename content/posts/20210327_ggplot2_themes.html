@@ -1,0 +1,86 @@
+---
+title: ggplot2使用笔记（6）—— Themes
+author: Fang Yongchao
+date: "2021-03-27"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#完整主题">完整主题</a></li>
+<li><a href="#直接修改当前主题">直接修改当前主题</a></li>
+</ul>
+</div>
+
+<p>主题函数<code>&lt;THEME_FUNCTION&gt;</code>包括<a href="https://ggplot2.tidyverse.org/">ggplot2</a>中自带的一些完整主题，以及对当前主题进行直接修改的函数。</p>
+<div id="完整主题" class="section level2">
+<h2>完整主题</h2>
+<hr />
+<div id="theme_bw" class="section level3">
+<h3><code>theme_bw()</code></h3>
+<pre class="r"><code>ggplot(mpg) + 
+  geom_point(aes(x = class, y = hwy, color = trans)) +
+  theme_bw()</code></pre>
+<p><img src="/posts/20210327_ggplot2_themes_files/figure-html/unnamed-chunk-2-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="theme_gray" class="section level3">
+<h3><code>theme_gray()</code></h3>
+<pre class="r"><code>ggplot(mpg) + 
+  geom_point(aes(x = class, y = hwy, color = trans)) +
+  theme_gray()</code></pre>
+<p><img src="/posts/20210327_ggplot2_themes_files/figure-html/unnamed-chunk-3-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="theme_dark" class="section level3">
+<h3><code>theme_dark()</code></h3>
+<pre class="r"><code>ggplot(mpg) + 
+  geom_point(aes(x = class, y = hwy, color = trans)) +
+  theme_dark()</code></pre>
+<p><img src="/posts/20210327_ggplot2_themes_files/figure-html/unnamed-chunk-4-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="theme_classic" class="section level3">
+<h3><code>theme_classic()</code></h3>
+<pre class="r"><code>ggplot(mpg) + 
+  geom_point(aes(x = class, y = hwy, color = trans)) +
+  theme_classic()</code></pre>
+<p><img src="/posts/20210327_ggplot2_themes_files/figure-html/unnamed-chunk-5-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="theme_light" class="section level3">
+<h3><code>theme_light()</code></h3>
+<pre class="r"><code>ggplot(mpg) + 
+  geom_point(aes(x = class, y = hwy, color = trans)) +
+  theme_light()</code></pre>
+<p><img src="/posts/20210327_ggplot2_themes_files/figure-html/unnamed-chunk-6-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="theme_linedraw" class="section level3">
+<h3><code>theme_linedraw()</code></h3>
+<pre class="r"><code>ggplot(mpg) + 
+  geom_point(aes(x = class, y = hwy, color = trans)) +
+  theme_linedraw()</code></pre>
+<p><img src="/posts/20210327_ggplot2_themes_files/figure-html/unnamed-chunk-7-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="theme_minimal" class="section level3">
+<h3><code>theme_minimal()</code></h3>
+<pre class="r"><code>ggplot(mpg) + 
+  geom_point(aes(x = class, y = hwy, color = trans)) +
+  theme_minimal()</code></pre>
+<p><img src="/posts/20210327_ggplot2_themes_files/figure-html/unnamed-chunk-8-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="theme_void" class="section level3">
+<h3><code>theme_void()</code></h3>
+<pre class="r"><code>ggplot(mpg) + 
+  geom_point(aes(x = class, y = hwy, color = trans)) +
+  theme_void()</code></pre>
+<p><img src="/posts/20210327_ggplot2_themes_files/figure-html/unnamed-chunk-9-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="直接修改当前主题" class="section level2">
+<h2>直接修改当前主题</h2>
+<hr />
+</div>

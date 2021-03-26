@@ -8,6 +8,8 @@ output:
 ---
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 <script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
 <link href="/rmarkdown-libs/lightable/lightable.css" rel="stylesheet" />
 
@@ -3950,7 +3952,7 @@ homo_result</code></pre>
 <hr />
 <p>若数据满足正态性与方差齐性，则可以进行方差分析（本文中使用的数据其实并没有通过正态性检验，但由于只是为了进行方法的说明，就当作它通过了吧）。</p>
 <p>重复测量数据的方差分析关键在于区分组内因子和组间因子，对于这里的数据来说，多次的重复测量为组内因子，而处理分组（甲乙丙丁戊）为组间因子。网上很多文章中将处理分组也当作组内因子看待，如<a href="http://rstudio-pubs-static.s3.amazonaws.com/153245_0efc926bbb10484c841b44220205d910.html#two-way-repeated-measures-anova">双因素重复测量方差分析</a>，和这里的区别在于作为唯一标识的ID一列。在本文中，数据收集于50个不同的对象，每个处理分组中的对象都是不同的，而在<a href="http://rstudio-pubs-static.s3.amazonaws.com/153245_0efc926bbb10484c841b44220205d910.html#two-way-repeated-measures-anova">双因素重复测量方差分析</a>中，不同处理组是对相同的对象进行操作（虽然在文字描述中是将42名不同的对象分成两组，但是<code>id &lt;- factor(rep(1:21, times=2*3))</code>这一行代码将这42个对象当作了21个对象来看待）。</p>
-<p>base R中的<code>anova</code>函数可以直接进行重复测量数据方差分析，代码如下：</p>
+<p>base R中的<code>anova()</code>函数可以直接进行重复测量数据方差分析，代码如下：</p>
 <pre class="r"><code>aov &lt;- aov(response ~ group*time + Error(ID/time), data = long_dat)
 summary(aov)</code></pre>
 <pre><code>## 

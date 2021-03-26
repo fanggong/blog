@@ -331,6 +331,6 @@ strsplit(c("a-b.c", "x-y"), "[-.]")
 
 base R中的字符串处理函数大部分是在调用R的内部函数，[stringr](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/stringr/index.html)是调用C函数。
 
-我在Mac、Windows、Centos下分别对[stringr](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/stringr/index.html)和base R的性能进行了测试，发现在不同的环境，不同的数据集下有很大差距。基本可以概括为在使用小数据集时，不同的环境下的结果没有什么规律可循，在使用大数据集时，[stringr](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/stringr/index.html)略胜一筹。
+在Mac、Windows、Centos下分别对[stringr](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/stringr/index.html)和base R的性能进行了测试，发现在不同的环境，不同的数据集下有很大差距。基本可以概括为在使用小数据集时，不同的环境下的结果没有什么规律可循，在使用大数据集时，[stringr](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/stringr/index.html)略胜一筹。
 
 所以在一个新的环境或数据集下，考虑先使用[microbenchmark](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/microbenchmark/index.html)包做一些简单测试，之后选择在当前环境下性能更优的处理方法。

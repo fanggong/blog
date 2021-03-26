@@ -58,7 +58,7 @@ h1{
     }
 }
 h2{
-    font-size:2.8rem;
+    font-size:2.4rem;
     line-height:2.8rem
 }
 @media only screen and (min-device-width:320px) and (max-device-width:480px){
@@ -68,7 +68,7 @@ h2{
     }
 }
 h3{
-    font-size:2.4rem;
+    font-size:2.2rem;
     line-height:2.4rem
 }
 @media only screen and (min-device-width:320px) and (max-device-width:480px){
@@ -78,7 +78,7 @@ h3{
     }
 }
 h4{
-    font-size:2.2rem;
+    font-size:2rem;
     line-height:2.2rem
 }
 @media only screen and (min-device-width:320px) and (max-device-width:480px){
@@ -88,7 +88,7 @@ h4{
     }
 }
 h5{
-    font-size:2rem;
+    font-size:1.4rem;
     line-height:2rem
 }
 @media only screen and (min-device-width:320px) and (max-device-width:480px){
@@ -98,28 +98,23 @@ h5{
     }
 }
 h6{
-    font-size:1.4rem;
+    font-size:1.2rem;
     line-height:1.4rem
 }
 #TOC{
-    background-color: #f8f8f8;
-    border-radius: 10px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    max-height: 30rem;
+    overflow: auto;
 }
-#go-top {
-    position: fixed;
-    bottom: 1em; 
-    right: 2em; 
-    background-color: #f8f8f8;
-    border-color: #dcdcdc;
-    width: 4em;
-    height: 3em;
-    text-align: center;
-    border-radius: 8px;
-    z-index: 1000; 
-    box-shadow: none;
+#TOC a{
+    color: #0645AD;
+    font-weight: 700;
 }
-#go-top:hover {
-    background-color: #dcdcdc; 
+#TOC code{
+    background-color: #ffffff;
+    color: #0645AD;
+    font-weight: 700;
 }
 pre {
     box-shadow: 5px 5px 0 #DDD;
@@ -150,12 +145,6 @@ th,td{
     padding:.1rem;
     font-size: 0.8em;
 }
-/* table{
-    border-collapse:collapse;
-}
-table td,table th{
-    border:2px solid #000
-} */
 img{
     max-width:100%
 }
@@ -167,7 +156,7 @@ img{
 }
 .container{
     margin:0 auto;
-    max-width:100rem;
+    max-width:120rem;
     width:100%;
     padding-left:2rem;
     padding-right:2rem
@@ -299,7 +288,7 @@ img{
     }
 }
 .avatar img{
-    width:20rem;
+    width:30rem;
     height:auto;
     border-radius:50%
 }

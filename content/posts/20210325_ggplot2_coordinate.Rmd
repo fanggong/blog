@@ -15,6 +15,7 @@ library(ggplot2)
 library(dplyr)
 ```
 
+坐标轴函数`<COORDINATE_FUNCTION>`很少，个人觉得使用思路也相当清晰。
 
 ## `coord_cartesian()`：更改笛卡尔坐标系的显示范围
 
