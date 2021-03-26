@@ -1,77 +1,53 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
     <loc>https://fanggong.pub/</loc>
-    <lastmod>2021-03-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2021-03-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://fanggong.pub/posts/20210326_ggplot2_position/</loc>
+    <lastmod>2021-03-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://fanggong.pub/posts/</loc>
+    <lastmod>2021-03-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://fanggong.pub/posts/always_today/</loc>
+    <lastmod>2021-03-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://fanggong.pub/posts/20210325_ggplot2_coordinate/</loc>
+    <lastmod>2021-03-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://fanggong.pub/posts/20210324_ggplot2_scales/</loc>
+    <lastmod>2021-03-24T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://fanggong.pub/posts/20210323_ggplot2_stat_geom/</loc>
     <lastmod>2021-03-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://fanggong.pub/posts/</loc>
-    <lastmod>2021-03-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://fanggong.pub/posts/20210322_ggplot2_basics/</loc>
     <lastmod>2021-03-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://fanggong.pub/posts/20210322_exponential_family/</loc>
     <lastmod>2021-03-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://fanggong.pub/posts/20210319_stringr/</loc>
     <lastmod>2021-03-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://fanggong.pub/posts/always_today/</loc>
-    <lastmod>2021-03-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://fanggong.pub/posts/20210313_object_oriented/</loc>
     <lastmod>2021-03-12T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://fanggong.pub/posts/20210311_repeat_measure_anova/</loc>
     <lastmod>2021-03-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://fanggong.pub/posts/20210310_diagram/</loc>
     <lastmod>2021-03-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://fanggong.pub/posts/20210309_new_begin/</loc>
-    <lastmod>2021-03-09T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://fanggong.pub/about/</loc>
     <lastmod>2021-03-06T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://fanggong.pub/categories/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://fanggong.pub/projects/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://fanggong.pub/tags/</loc>
   </url>
-  
 </urlset>

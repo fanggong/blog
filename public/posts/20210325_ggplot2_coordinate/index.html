@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ch">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="Fang Yongchao">
+    <meta name="description" content="https://fanggong.pub">
+    <meta name="keywords" content="blog, data science">
+
+    <meta property="og:site_name" content="Fang Yongchao">
+    <meta property="og:title" content="
+  ggplot2使用笔记（4）—— Coordinate - Fang Yongchao
+">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fanggong.pub/posts/20210325_ggplot2_coordinate/">
+    <meta property="og:image" content="https://fanggong.pub">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="https://fanggong.pub/posts/20210325_ggplot2_coordinate/">
+    <meta name="twitter:image" content="https://fanggong.pub">
+
+    <base href="https://fanggong.pub/posts/20210325_ggplot2_coordinate/">
+
+    <title>
+  ggplot2使用笔记（4）—— Coordinate - Fang Yongchao
+</title>
+
+    <link rel="canonical" href="https://fanggong.pub/posts/20210325_ggplot2_coordinate/">
+    
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    
+    
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Liu+Jian+Mao+Cao:400"> 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono:400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400">
+
+    <link rel="stylesheet" href="/css/normalize.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css" integrity="sha384-t5CR+zwDAROtph0PXGte6ia8heboACF9R5l/DiY+WZ3P2lxNgvJkQk5n7GPvLMYw" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.js" integrity="sha384-FaFLTlohFghEIZkw6VGwmf9ISTubWAVYW8tG8+w2LAIftJEULZABrF9PPFv+tVkH" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/contrib/auto-render.min.js" integrity="sha384-bHBqxz8fokvgoJ/sc17HODNxa42TlaEhB+w8ZJXTc2nZf1VgEaFZeZvT4Mznfz0v" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+    
+    
+    
+
+    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+    
+      <link rel="alternate" href="https://fanggong.pub/index.xml" type="application/rss+xml" title="Fang Yongchao">
+      <link href="https://fanggong.pub/index.xml" rel="feed" type="application/rss+xml" title="Fang Yongchao" />
+    
+
+    <meta name="generator" content="Hugo 0.82.0" />
+  </head>
+
+  <body class="">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">Fang Yongchao</a>
+    <input type="checkbox" id="menu-control"/>
+    <label class="menu-mobile  float-right " for="menu-control">
+      <span class="btn-mobile  float-right ">&#9776;</span>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item  align-center ">
+              <a class="navigation-link" href="https://fanggong.pub/about">About</a>
+            </li>
+          
+            <li class="navigation-item  align-center ">
+              <a class="navigation-link" href="https://fanggong.pub/posts">Blog</a>
+            </li>
+          
+            <li class="navigation-item  align-center ">
+              <a class="navigation-link" href="https://fanggong.pub/projects">Projects</a>
+            </li>
+          
+            <li class="navigation-item  align-center ">
+              <a class="navigation-link" href="mailto:yongchao.fang@outlook.com">Contact me</a>
+            </li>
+          
+        
+        
+      </ul>
+    </label>
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+  
+  <article>
+
+    <header>
+      <h1 class="title">ggplot2使用笔记（4）—— Coordinate</h1>
+      <h2 class="date">March 25, 2021</h2>
+    </header>
+
+    
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#coord_cartesian更改笛卡尔坐标系的显示范围"><code>coord_cartesian()</code>：更改笛卡尔坐标系的显示范围</a></li>
+<li><a href="#coord_fixed更改x轴和y轴的坐标比例"><code>coord_fixed()</code>：更改x轴和y轴的坐标比例</a></li>
+<li><a href="#coord_flip翻转坐标轴"><code>coord_flip()</code>：翻转坐标轴</a></li>
+<li><a href="#coord_polar将笛卡尔坐标转换成极坐标"><code>coord_polar()</code>：将笛卡尔坐标转换成极坐标</a></li>
+<li><a href="#coord_trans进行坐标变换"><code>coord_trans()</code>：进行坐标变换</a></li>
+</ul>
+</div>
+
+<p>坐标轴函数<code>&lt;COORDINATE_FUNCTION&gt;</code>很少，个人觉得使用思路也相当清晰。</p>
+<div id="coord_cartesian更改笛卡尔坐标系的显示范围" class="section level2">
+<h2><code>coord_cartesian()</code>：更改笛卡尔坐标系的显示范围</h2>
+<hr />
+<ul>
+<li><code>coord_cartesian()</code>的作用是显示图的某一部分，并不会减少使用的数据</li>
+<li><strong>xlim</strong>，<strong>ylim</strong>：控制x轴和y轴的范围</li>
+</ul>
+<pre class="r"><code>ggplot(tibble(lat = rnorm(100), long = rnorm(100))) + 
+  geom_point(aes(x = lat, y = long)) +
+  coord_cartesian(xlim = c(0, 5))</code></pre>
+<p><img src="/posts/20210325_ggplot2_coordinate_files/figure-html/unnamed-chunk-2-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="coord_fixed更改x轴和y轴的坐标比例" class="section level2">
+<h2><code>coord_fixed()</code>：更改x轴和y轴的坐标比例</h2>
+<hr />
+<ul>
+<li><strong>ratio</strong>：同样的数值在坐标轴上的长度<strong>y</strong>轴是<strong>x</strong>轴的<strong>ratio</strong>倍</li>
+<li><strong>xlim</strong>，<strong>ylim</strong>：控制x轴和y轴的范围</li>
+</ul>
+<pre class="r"><code>ggplot(tibble(long = 1:10, lat = 1:10*2)) +
+  geom_point(aes(x = long, y = lat)) +
+  coord_fixed(ratio = 1/2)</code></pre>
+<p><img src="/posts/20210325_ggplot2_coordinate_files/figure-html/unnamed-chunk-3-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="coord_flip翻转坐标轴" class="section level2">
+<h2><code>coord_flip()</code>：翻转坐标轴</h2>
+<hr />
+<ul>
+<li><strong>xlim</strong>，<strong>ylim</strong>：控制x轴和y轴的范围</li>
+</ul>
+<pre class="r"><code>ggplot(tibble(letter = sample(LETTERS[1:10], 200, replace = TRUE))) +
+  geom_bar(aes(x = letter)) +
+  coord_flip()</code></pre>
+<p><img src="/posts/20210325_ggplot2_coordinate_files/figure-html/unnamed-chunk-4-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="coord_polar将笛卡尔坐标转换成极坐标" class="section level2">
+<h2><code>coord_polar()</code>：将笛卡尔坐标转换成极坐标</h2>
+<hr />
+<ul>
+<li><strong>theta</strong>：选择哪个轴变为极坐标的<strong>theta</strong></li>
+<li><strong>start</strong>：弧度，一圆周为<span class="math inline">\(2\pi\)</span>弧度</li>
+<li><strong>direction</strong>：1为顺时针，-1为逆时针</li>
+<li>可以通过这个函数完成很多骚操作</li>
+</ul>
+<pre class="r"><code>ggplot(tibble(letter = sample(LETTERS[1:10], 200, replace = TRUE))) +
+  geom_bar(aes(x = letter)) +
+  coord_polar(theta = &quot;x&quot;, start = pi, direction = -1)</code></pre>
+<p><img src="/posts/20210325_ggplot2_coordinate_files/figure-html/unnamed-chunk-5-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="coord_trans进行坐标变换" class="section level2">
+<h2><code>coord_trans()</code>：进行坐标变换</h2>
+<hr />
+<ul>
+<li><strong>xlim</strong>，<strong>ylim</strong>：控制x轴和y轴的范围</li>
+<li>文档中说<code>coord_trans()</code>函数不同于标度变换，但是用起来感觉就是一个东西</li>
+</ul>
+<pre class="r"><code>ggplot(data.frame(long = 1:10, lat = (1:10)^2), aes(long, lat)) + 
+  geom_point(aes(x = long, y = lat)) +
+  scale_y_sqrt()</code></pre>
+<p><img src="/posts/20210325_ggplot2_coordinate_files/figure-html/unnamed-chunk-6-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(data.frame(long = 1:10, lat = (1:10)^2), aes(long, lat)) + 
+  geom_point(aes(x = long, y = lat)) +
+  coord_trans(y = &quot;sqrt&quot;)</code></pre>
+<p><img src="/posts/20210325_ggplot2_coordinate_files/figure-html/unnamed-chunk-7-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+
+  </article>
+
+  <br/>
+
+  
+  
+</section>
+
+      </div>
+      
+        <footer class="footer">
+  <section class="container">
+    
+      <div class="sns-shares sp-sns-shares">
+        
+        
+        
+        
+        
+      </div>
+    
+    
+      <a href="https://beian.miit.gov.cn/">赣ICP备 2020014401号</a>
+    
+     © 2021    ·  Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/naro143/hugo-coder-portfolio">CoderPortfolio</a>. 
+
+  </section>
+</footer>
+
+
+      
+    </main>
+
+    
+
+  <script src="/js/app.js"></script>
+  
+  </body>
+</html>

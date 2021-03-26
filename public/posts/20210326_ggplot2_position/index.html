@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ch">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="Fang Yongchao">
+    <meta name="description" content="https://fanggong.pub">
+    <meta name="keywords" content="blog, data science">
+
+    <meta property="og:site_name" content="Fang Yongchao">
+    <meta property="og:title" content="
+  ggplot2使用笔记（5）—— Position - Fang Yongchao
+">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fanggong.pub/posts/20210326_ggplot2_position/">
+    <meta property="og:image" content="https://fanggong.pub">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="https://fanggong.pub/posts/20210326_ggplot2_position/">
+    <meta name="twitter:image" content="https://fanggong.pub">
+
+    <base href="https://fanggong.pub/posts/20210326_ggplot2_position/">
+
+    <title>
+  ggplot2使用笔记（5）—— Position - Fang Yongchao
+</title>
+
+    <link rel="canonical" href="https://fanggong.pub/posts/20210326_ggplot2_position/">
+    
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    
+    
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Liu+Jian+Mao+Cao:400"> 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono:400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400">
+
+    <link rel="stylesheet" href="/css/normalize.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css" integrity="sha384-t5CR+zwDAROtph0PXGte6ia8heboACF9R5l/DiY+WZ3P2lxNgvJkQk5n7GPvLMYw" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.js" integrity="sha384-FaFLTlohFghEIZkw6VGwmf9ISTubWAVYW8tG8+w2LAIftJEULZABrF9PPFv+tVkH" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/contrib/auto-render.min.js" integrity="sha384-bHBqxz8fokvgoJ/sc17HODNxa42TlaEhB+w8ZJXTc2nZf1VgEaFZeZvT4Mznfz0v" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+    
+    
+    
+
+    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+    
+      <link rel="alternate" href="https://fanggong.pub/index.xml" type="application/rss+xml" title="Fang Yongchao">
+      <link href="https://fanggong.pub/index.xml" rel="feed" type="application/rss+xml" title="Fang Yongchao" />
+    
+
+    <meta name="generator" content="Hugo 0.82.0" />
+  </head>
+
+  <body class="">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">Fang Yongchao</a>
+    <input type="checkbox" id="menu-control"/>
+    <label class="menu-mobile  float-right " for="menu-control">
+      <span class="btn-mobile  float-right ">&#9776;</span>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item  align-center ">
+              <a class="navigation-link" href="https://fanggong.pub/about">About</a>
+            </li>
+          
+            <li class="navigation-item  align-center ">
+              <a class="navigation-link" href="https://fanggong.pub/posts">Blog</a>
+            </li>
+          
+            <li class="navigation-item  align-center ">
+              <a class="navigation-link" href="https://fanggong.pub/projects">Projects</a>
+            </li>
+          
+            <li class="navigation-item  align-center ">
+              <a class="navigation-link" href="mailto:yongchao.fang@outlook.com">Contact me</a>
+            </li>
+          
+        
+        
+      </ul>
+    </label>
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+  
+  <article>
+
+    <header>
+      <h1 class="title">ggplot2使用笔记（5）—— Position</h1>
+      <h2 class="date">March 26, 2021</h2>
+    </header>
+
+    
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#position-dodge并排摆放"><code>position = "dodge"</code>：并排摆放</a></li>
+<li><a href="#position-fill填充摆放"><code>position = "fill"</code>：填充摆放</a></li>
+<li><a href="#position-jitter抖动点"><code>position = "jitter"</code>：抖动点</a></li>
+<li><a href="#position-stack堆栈摆放"><code>position = "stack"</code>：堆栈摆放</a></li>
+<li><a href="#position-jitterdodge不是很明白实际意义"><code>position = "jitterdodge"</code>：不是很明白实际意义</a></li>
+</ul>
+</div>
+
+<p><code>POSITION_FUNCTION</code>函数作为<code>STAT_FUNCTION</code>和<code>GEOM_FUNCTION</code>函数的参数使用。</p>
+<div id="position-dodge并排摆放" class="section level2">
+<h2><code>position = "dodge"</code>：并排摆放</h2>
+<hr />
+<pre class="r"><code>ggplot(mpg, aes(fl, fill = drv)) + 
+  geom_bar(position = position_dodge()) + 
+  scale_fill_brewer(palette = 1)</code></pre>
+<p><img src="/posts/20210326_ggplot2_position_files/figure-html/unnamed-chunk-2-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="position-fill填充摆放" class="section level2">
+<h2><code>position = "fill"</code>：填充摆放</h2>
+<hr />
+<pre class="r"><code>ggplot(mpg, aes(fl, fill = drv)) + 
+  geom_bar(position = position_fill()) + 
+  scale_fill_brewer(palette = 1)</code></pre>
+<p><img src="/posts/20210326_ggplot2_position_files/figure-html/unnamed-chunk-3-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="position-jitter抖动点" class="section level2">
+<h2><code>position = "jitter"</code>：抖动点</h2>
+<hr />
+<pre class="r"><code>ggplot(mpg, aes(cty, hwy)) + 
+  geom_point(position = position_jitter(), size = 1, alpha = 0.5) + 
+  geom_point(color = &quot;red&quot;, size = 1, alpha = 0.5)</code></pre>
+<p><img src="/posts/20210326_ggplot2_position_files/figure-html/unnamed-chunk-4-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="position-stack堆栈摆放" class="section level2">
+<h2><code>position = "stack"</code>：堆栈摆放</h2>
+<hr />
+<pre class="r"><code>ggplot(mpg, aes(fl, fill = drv)) + 
+  geom_bar(position = position_stack()) + 
+  scale_fill_brewer(palette = 1)</code></pre>
+<p><img src="/posts/20210326_ggplot2_position_files/figure-html/unnamed-chunk-5-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="position-jitterdodge不是很明白实际意义" class="section level2">
+<h2><code>position = "jitterdodge"</code>：不是很明白实际意义</h2>
+<hr />
+<pre class="r"><code>ggplot(mpg, aes(class, displ, fill = fl)) +
+  geom_boxplot(alpha = 0.5) +
+  geom_point(pch = 21, position = position_jitterdodge()) +
+  scale_fill_brewer(palette = 1)</code></pre>
+<p><img src="/posts/20210326_ggplot2_position_files/figure-html/unnamed-chunk-6-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+
+  </article>
+
+  <br/>
+
+  
+  
+</section>
+
+      </div>
+      
+        <footer class="footer">
+  <section class="container">
+    
+      <div class="sns-shares sp-sns-shares">
+        
+        
+        
+        
+        
+      </div>
+    
+    
+      <a href="https://beian.miit.gov.cn/">赣ICP备 2020014401号</a>
+    
+     © 2021    ·  Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/naro143/hugo-coder-portfolio">CoderPortfolio</a>. 
+
+  </section>
+</footer>
+
+
+      
+    </main>
+
+    
+
+  <script src="/js/app.js"></script>
+  
+  </body>
+</html>

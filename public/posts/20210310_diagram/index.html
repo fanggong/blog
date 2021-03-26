@@ -61,7 +61,7 @@
       <link href="https://fanggong.pub/index.xml" rel="feed" type="application/rss+xml" title="Fang Yongchao" />
     
 
-    <meta name="generator" content="Hugo 0.78.1" />
+    <meta name="generator" content="Hugo 0.82.0" />
   </head>
 
   <body class="">
@@ -104,24 +104,6 @@
   <section class="container post">
   
   <article>
-    <button onclick="goTop()" id="go-top">
-      <i class="fas fa-chevron-up"></i>
-    </button> 
-    <script>
-    mybutton = document.getElementById("go-top");
-    window.onscroll = function() {scrollFunction()};
-    function scrollFunction() {
-      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        mybutton.style.display = "block";
-      } else {
-        mybutton.style.display = "none";
-      }
-    }
-    function goTop() {
-      document.body.scrollTop = 0; 
-      document.documentElement.scrollTop = 0; 
-    } 
-    </script>  
 
     <header>
       <h1 class="title">用R绘制流程图</h1>
@@ -145,8 +127,8 @@
 <div id="创建空画板" class="section level2">
 <h2>创建空画板</h2>
 <hr />
-<p>该函数中有一个<code>asp</code>参数TODO</p>
-<pre class="r"><code>openplotmat()</code></pre>
+<p>该函数中有一个<strong>asp</strong>参数。个人习惯，至少在绘制流程图的时候，将它设为1，这样可以保证在设定BOX的长宽时得到的是一个稳定的图形。</p>
+<pre class="r"><code>openplotmat(asp = 1)</code></pre>
 </div>
 <div id="规划坐标" class="section level2">
 <h2>规划坐标</h2>

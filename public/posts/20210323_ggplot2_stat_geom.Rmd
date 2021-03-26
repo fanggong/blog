@@ -19,7 +19,7 @@ library(dplyr)
 
 [ggplot2](https://ggplot2.tidyverse.org/)中以geom开头的函数可以理解为作图函数，以stat开头的函数可以理解为统计变换函数。在**大部分的情况**下，作图函数和统计变换函数都是成对出现的，也就是说在geom函数中会有一个**stat**参数，而stat函数中也会有一个**geom**参数，从而可以通过geom或stat函数一次性达到对数据进行统计变换并作图的目的。这也是我在最初很迷这个包的原因，因为在一些很奇葩的搭配下可能会出现一些很有趣的图形，虽然图形并不一定有意义，但是思考这个图形背后形成的过程是一件很有意思的事情。
 
-## 对连续变量**x**的各区间的样本数量进行统计作图
+## 对连续变量x的各区间的样本数量进行统计作图
 
 --------------------------
 
@@ -53,7 +53,7 @@ ggplot(mpg, aes(hwy)) +
   geom_histogram(binwidth = 1, boundary = 0.5)
 ```
 
-## 对离散变量**x**的各类别数量进行统计作图
+## 对离散变量x的各类别数量进行统计作图
 
 --------------------------
 
@@ -82,11 +82,11 @@ ggplot(mpg, aes(fl)) +
 - 类似`geom_bar()`，但是柱的高度并不是对**x**的计数，而是**y**的和
 
 ```{r}
-fyc <- tibble(long = rep(1:5, c(1:5)), lat = 1)
-ggplot(fyc, aes(long, lat)) + geom_col()
+dat <- tibble(long = rep(1:5, c(1:5)), lat = 1)
+ggplot(dat, aes(long, lat)) + geom_col()
 ```
 
-## 对**x**的密度曲线进行计算作图
+## 计算连续变量x的密度曲线并作图
 
 --------------------------
 
@@ -147,7 +147,7 @@ ggplot(mpg, aes(cty, hwy)) +
   geom_hex()
 ```
 
-## 对**x**，**y**作分位数回归并作图
+## 对x，y作分位数回归并作图
 
 --------------------------
 
@@ -178,7 +178,7 @@ ggplot(mpg, aes(cty, hwy)) +
   geom_point()
 ```
 
-## 计算并绘制**x**，**y**的拟合曲线
+## 计算并绘制x，y的拟合曲线
 
 --------------------------
 
@@ -207,7 +207,7 @@ ggplot(mpg, aes(cty, hwy)) +
   geom_point()
 ```
 
-## 对离散变量**x**，连续变量**y**作箱线图
+## 在离散变量x的各类别上对连续变量y进行统计作图
 
 --------------------------
 
@@ -231,7 +231,7 @@ ggplot(mpg, aes(class, hwy)) +
   geom_boxplot()
 ```
 
-## 对**y**的密度曲线进行计算作图
+## 计算连续变量y的密度曲线并作图
 
 --------------------------
 
@@ -311,7 +311,7 @@ ggplot(seals, aes(long, lat)) +
   stat_contour_filled(aes(z = z), bins =  5)
 ```
 
-## 在**x**上对**y**进行summary作图
+## 在x上对y进行summary并作图
 
 --------------------------
 
@@ -346,7 +346,7 @@ ggplot(mpg, aes(cty, hwy)) +
   geom_point(colour = "red", size = 1)
 ```
 
-## 在**x**、**y**上对**z**进行summary作图
+## 在x和y上对z进行summary并作图
 
 --------------------------
 
@@ -370,7 +370,7 @@ ggplot(seals, aes(long, lat)) +
   stat_summary_hex(aes(z = z), binwidth = c(2, 1), fun = max)
 ```
 
-## 通过**x**和**fun**计算**y**并绘制曲线
+## 通过x和函数fun()计算y=fun(x)并绘制曲线
 
 --------------------------
 
@@ -386,7 +386,7 @@ ggplot(data.frame(x = -10:10)) +
   stat_function(aes(x), n = 99, fun = sin, xlim = c(-10,10))
 ```
 
-## 计算并绘制经验累计分布函数
+## 计算并绘制x的经验累计分布函数
 
 --------------------------
 
@@ -402,15 +402,15 @@ ggplot(mpg, aes(cty)) +
 
 ## 计算并绘制Q-Q图
 
+--------------------------
+
 - **distribution**：密度分布函数
 - **dparams**：密度分布函数的参数
 
---------------------------
-
 ### `stat_qq()`和`stat_qq_line()`
 ```{r}
-fyc <- data.frame(x = rnorm(100))
-ggplot(fyc) + 
+dat <- data.frame(x = rnorm(100))
+ggplot(dat) + 
   stat_qq(aes(sample = x), distribution = qnorm, dparams = list()) + 
   stat_qq_line(aes(sample = x), distribution = qnorm, dparams = list()) 
 ```
@@ -484,8 +484,8 @@ ggplot(mpg, aes(cty, hwy)) + geom_blank()
 
 ### `geom_curve()`
 ```{r}
-fyc <- tibble(long = c(10, 12), lat = c(10, 12))
-ggplot(fyc, aes(long, lat)) + 
+dat <- tibble(long = c(10, 12), lat = c(10, 12))
+ggplot(dat, aes(long, lat)) + 
   geom_curve(
     aes(yend = lat + 1, xend = long + 1),
     curvature = 0.5,
@@ -500,7 +500,7 @@ ggplot(fyc, aes(long, lat)) +
 
 ### `geom_segment()`
 ```{r}
-ggplot(fyc, aes(long, lat)) + 
+ggplot(dat, aes(long, lat)) + 
   geom_segment(
     aes(yend = lat + 1, xend = long + 1),
     arrow = arrow(angle = 30, length = unit(0.25, "inches"),
@@ -511,7 +511,7 @@ ggplot(fyc, aes(long, lat)) +
   )
 ```
 
-## 用线段连接各点
+## 绘制折线
 
 --------------------------
 
@@ -528,18 +528,18 @@ ggplot(fyc, aes(long, lat)) +
 
 ### `geom_path()`
 ```{r}
-fyc <- tibble(long = c(1,5,4,3,2), lat = c(1,1,2,3,2))
-ggplot(fyc, aes(long, lat)) + geom_path()
+dat <- tibble(long = c(1,5,4,3,2), lat = c(1,1,2,3,2))
+ggplot(dat, aes(long, lat)) + geom_path()
 ```
 
 ### `geom_line()`
 ```{r}
-ggplot(fyc, aes(long, lat)) + geom_line()
+ggplot(dat, aes(long, lat)) + geom_line()
 ```
 
 ### `geom_step()`
 ```{r}
-ggplot(fyc, aes(long, lat)) + geom_step(direction = "hv")
+ggplot(dat, aes(long, lat)) + geom_step(direction = "hv")
 ```
 
 ## 绘制多边形
@@ -609,15 +609,15 @@ ggplot(datapoly, aes(x = x, y = y)) +
 
 ### `geom_rect()`
 ```{r}
-fyc <- tibble(long = c(10, 12, 15), lat = c(10, 12, 15))
-ggplot(fyc) + 
+dat <- tibble(long = c(10, 12, 15), lat = c(10, 12, 15))
+ggplot(dat) + 
   geom_rect(aes(xmin = long - 2, ymin = lat - 2, xmax = long + 2, ymax = lat + 2), alpha = 0.5) +
   geom_point(aes(long, lat), colour = "red")
 ```
 
 ### `geom_raster()`
 ```{r}
-ggplot(fyc, aes(long, lat)) +
+ggplot(dat, aes(long, lat)) +
   geom_raster(hjust = 1, vjust = 1, alpha = 0.5) +
   geom_point(colour = "red")
 ```
@@ -630,7 +630,7 @@ ggplot(seals, aes(long, lat)) +
 
 ### `geom_tile()`
 ```{r}
-ggplot(fyc, aes(long, lat)) +
+ggplot(dat, aes(long, lat)) +
   geom_tile(width = 4, height = 4, alpha = 0.5) +
   geom_point(colour = "red")
 ```
@@ -655,7 +655,7 @@ ggplot(economics, aes(date, unemploy)) +
   geom_ribbon(aes(ymin = unemploy - 900, ymax = unemploy + 900))
 ```
 
-#### `geom_area()`
+### `geom_area()`
 ```{r}
 ggplot(economics, aes(date, unemploy)) + geom_area()
 ```
@@ -691,11 +691,11 @@ ggplot() +
 
 ### `geom_label()`
 ```{r}
-fyc <- tibble(
+dat <- tibble(
   long = c(10:13), lat = c(10:13), 
   lb = c(NA, "FANG", "GONG", NA)
 )
-ggplot(fyc, aes(long, lat)) + 
+ggplot(dat, aes(long, lat)) + 
   geom_label(
     aes(label = lb), nudge_x = 0.3, nudge_y = 0.3,
     label.padding = unit(0.5, "lines"),
@@ -706,7 +706,7 @@ ggplot(fyc, aes(long, lat)) +
 
 ### `geom_text()`
 ```{r}
-ggplot(fyc, aes(long, lat)) + 
+ggplot(dat, aes(long, lat)) + 
   geom_text(aes(label = lb))
 ```
 
@@ -751,7 +751,7 @@ ggplot(mpg, aes(cty, hwy)) +
   geom_rug(outside = FALSE, sides = "tbl", length = unit(0.1, "npc"))
 ```
 
-## 绘制垂直的区间
+## 绘制区间
 
 --------------------------
 
@@ -808,7 +808,7 @@ ggplot(data, aes(fill = murder)) +
 ggplot(mpg, aes(hwy)) + geom_dotplot()
 ```
 
-## 最后这个不是很明白有啥用
+## 不明白作用的函数
 
 --------------------------
 

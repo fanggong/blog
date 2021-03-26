@@ -1,5 +1,5 @@
 ---
-title: ggplot2使用笔记（5）——Position
+title: ggplot2使用笔记（5）—— Position
 author: Fang Yongchao
 date: "2021-03-26"
 output:
@@ -10,41 +10,61 @@ output:
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+knitr::opts_chunk$set(fig.align = "center", out.width = "50%")
 library(ggplot2)
 library(dplyr)
 ```
 
+`POSITION_FUNCTION`函数作为`STAT_FUNCTION`和`GEOM_FUNCTION`函数的参数使用。
 
-## Position Adjustments
+## `position = "dodge"`：并排摆放
 
------------------------------
+-------------------------------
 
 ```{r}
-s <- ggplot(mpg, aes(fl, fill = drv))
+ggplot(mpg, aes(fl, fill = drv)) + 
+  geom_bar(position = position_dodge()) + 
+  scale_fill_brewer(palette = 1)
 ```
 
-### `position = "dodge"`：
+
+## `position = "fill"`：填充摆放
+
+-------------------------------
+
 ```{r}
-s + geom_bar(position = "dodge")
+ggplot(mpg, aes(fl, fill = drv)) + 
+  geom_bar(position = position_fill()) + 
+  scale_fill_brewer(palette = 1)
 ```
 
-### `position = "fill"`：
+## `position = "jitter"`：抖动点
+
+-------------------------------
+
 ```{r}
-s + geom_bar(position = "fill")
+ggplot(mpg, aes(cty, hwy)) + 
+  geom_point(position = position_jitter(), size = 1, alpha = 0.5) + 
+  geom_point(color = "red", size = 1, alpha = 0.5)
 ```
 
-### `position = "jitter"`：
+## `position = "stack"`：堆栈摆放
+
+-------------------------------
+
 ```{r}
-e + geom_point(position = "jitter")
+ggplot(mpg, aes(fl, fill = drv)) + 
+  geom_bar(position = position_stack()) + 
+  scale_fill_brewer(palette = 1)
 ```
 
-### `position = "nudge"`：
-```{r, eval=FALSE}
-# NOT RUN
-e + geom_label(position = "nudge")
-```
+## `position = "jitterdodge"`：不是很明白实际意义
 
-### `position = "stack"`：
+-------------------------------
+
 ```{r}
-s + geom_bar(position = "stack")
+ggplot(mpg, aes(class, displ, fill = fl)) +
+  geom_boxplot(alpha = 0.5) +
+  geom_point(pch = 21, position = position_jitterdodge()) +
+  scale_fill_brewer(palette = 1)
 ```

@@ -89,14 +89,3 @@ ggplot(mpg) +
 ## 直接修改当前主题
 
 --------------------------
-
-```{r}
-set.seed(2414)
-ggplot(tibble(
-  long = rnorm(100), 
-  lat = rnorm(100), 
-  position = sample(c("East", "South", "West", "North"), 100, replace = TRUE)
-)) +
-  geom_point(aes(x = long, y = lat, color = position)) +
-  tgamtheme::theme_tgam()
-```

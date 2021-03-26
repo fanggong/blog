@@ -9,17 +9,17 @@ output:
 ---
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
-<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 <div id="TOC">
 <ul>
 <li><a href="#对连续型数据的坐标轴进行修改">对连续型数据的坐标轴进行修改</a></li>
 <li><a href="#对离散型数据的坐标轴进行修改">对离散型数据的坐标轴进行修改</a></li>
 <li><a href="#对时间序列数据的坐标轴进行修改">对时间序列数据的坐标轴进行修改</a></li>
+<li><a href="#todo">TODO</a></li>
 </ul>
 </div>
 
+<p>标度函数<code>&lt;SCALE_FUNCTION&gt;</code>应该是最麻烦的部分了，可以放进<code>aes()</code>函数中的元素都可以通过标度函数进行调整修改，只是所有的调整和修改改变的都是图形展示出来的样子，其背后的数据并没有做出任何改变。</p>
 <div id="对连续型数据的坐标轴进行修改" class="section level2">
 <h2>对连续型数据的坐标轴进行修改</h2>
 <hr />
@@ -121,4 +121,7 @@ ggplot(dat, aes(x = Date, y = Sales)) +
   geom_col() + 
   scale_x_date(date_labels = &quot;%m- %d&quot;)</code></pre>
 <p><img src="/posts/20210324_ggplot2_scales_files/figure-html/unnamed-chunk-7-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="todo" class="section level2">
+<h2>TODO</h2>
 </div>

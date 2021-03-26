@@ -61,7 +61,7 @@
       <link href="https://fanggong.pub/index.xml" rel="feed" type="application/rss+xml" title="Fang Yongchao" />
     
 
-    <meta name="generator" content="Hugo 0.78.1" />
+    <meta name="generator" content="Hugo 0.82.0" />
   </head>
 
   <body class="">
@@ -104,24 +104,6 @@
   <section class="container post">
   
   <article>
-    <button onclick="goTop()" id="go-top">
-      <i class="fas fa-chevron-up"></i>
-    </button> 
-    <script>
-    mybutton = document.getElementById("go-top");
-    window.onscroll = function() {scrollFunction()};
-    function scrollFunction() {
-      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        mybutton.style.display = "block";
-      } else {
-        mybutton.style.display = "none";
-      }
-    }
-    function goTop() {
-      document.body.scrollTop = 0; 
-      document.documentElement.scrollTop = 0; 
-    } 
-    </script>  
 
     <header>
       <h1 class="title">R语言的字符串处理</h1>
@@ -149,7 +131,7 @@
 <li>locale sensitive：可以理解为针对不同语言输出会不一样的函数</li>
 <li>pattern匹配函数：支持四种不同的匹配模式，最常用的还是正则表达式</li>
 </ul>
-<p>对应地，base R中也有相对应的函数达到同样的效果。在我的本地环境下，发现base R中字符串操作函数的性能在数据较大情况下普遍不如<a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/stringr/index.html">stringr</a>。</p>
+<p>对应地，base R中也有相对应的函数达到同样的效果。在各种环境下测试，发现base R中字符串操作函数的性能在数据较大情况下普遍不如<a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/stringr/index.html">stringr</a>。</p>
 <div id="对单个字符串进行操作" class="section level2">
 <h2>对单个字符串进行操作</h2>
 <hr />
@@ -522,7 +504,7 @@ attributes(value)$match.length</code></pre>
 <h1>base R与<a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/stringr/index.html">stringr</a>的性能比较</h1>
 <hr />
 <p>base R中的字符串处理函数大部分是在调用R的内部函数，<a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/stringr/index.html">stringr</a>是调用C函数。</p>
-<p>我在Mac、Windows、Centos下分别对<a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/stringr/index.html">stringr</a>和base R的性能进行了测试，发现在不同的环境，不同的数据集下有很大差距。基本可以概括为在使用小数据集时，不同的环境下的结果没有什么规律可循，在使用大数据集时，<a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/stringr/index.html">stringr</a>略胜一筹。</p>
+<p>在Mac、Windows、Centos下分别对<a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/stringr/index.html">stringr</a>和base R的性能进行了测试，发现在不同的环境，不同的数据集下有很大差距。基本可以概括为在使用小数据集时，不同的环境下的结果没有什么规律可循，在使用大数据集时，<a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/stringr/index.html">stringr</a>略胜一筹。</p>
 <p>所以在一个新的环境或数据集下，考虑先使用<a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/microbenchmark/index.html">microbenchmark</a>包做一些简单测试，之后选择在当前环境下性能更优的处理方法。</p>
 </div>
 

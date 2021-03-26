@@ -1,5 +1,5 @@
 ---
-title: ggplot2使用笔记（4）——Coordinate
+title: ggplot2使用笔记（4）—— Coordinate
 author: Fang Yongchao
 date: "2021-03-25"
 output:
@@ -10,66 +10,81 @@ output:
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+knitr::opts_chunk$set(fig.align = "center", out.width = "50%")
 library(ggplot2)
 library(dplyr)
 ```
 
+坐标轴函数`<COORDINATE_FUNCTION>`很少，个人觉得使用思路也相当清晰。
 
-## Coordinate Systems
+## `coord_cartesian()`：更改笛卡尔坐标系的显示范围
 
------------------------------
-
-```{r}
-r <- d + geom_bar()
-```
-
-### `coord_cartesian()`：更改笛卡尔坐标系的显示范围
+--------------------------------
 
 - `coord_cartesian()`的作用是显示图的某一部分，并不会减少使用的数据
 - **xlim**，**ylim**：控制x轴和y轴的范围
 
 ```{r}
-r + coord_cartesian(xlim = c(0, 5))
+ggplot(tibble(lat = rnorm(100), long = rnorm(100))) + 
+  geom_point(aes(x = lat, y = long)) +
+  coord_cartesian(xlim = c(0, 5))
 ```
 
-### `coord_fixed()`：更改x轴和y轴的坐标比例
+## `coord_fixed()`：更改x轴和y轴的坐标比例
 
-- **ratio**：同样的值在坐标轴上的长度y/x等于**ratio**
+--------------------------------
+
+- **ratio**：同样的数值在坐标轴上的长度**y**轴是**x**轴的**ratio**倍
 - **xlim**，**ylim**：控制x轴和y轴的范围
 
 ```{r}
-r + coord_fixed(ratio = 1/30)
+ggplot(tibble(long = 1:10, lat = 1:10*2)) +
+  geom_point(aes(x = long, y = lat)) +
+  coord_fixed(ratio = 1/2)
 ```
 
-### `coord_flip()`：翻转坐标轴
+## `coord_flip()`：翻转坐标轴
+
+--------------------------------
 
 - **xlim**，**ylim**：控制x轴和y轴的范围
 
 ```{r}
-r + coord_flip()
+ggplot(tibble(letter = sample(LETTERS[1:10], 200, replace = TRUE))) +
+  geom_bar(aes(x = letter)) +
+  coord_flip()
 ```
 
-### `coord_polar()`：将笛卡尔坐标转换成极坐标
+## `coord_polar()`：将笛卡尔坐标转换成极坐标
+
+--------------------------------
 
 - **theta**：选择哪个轴变为极坐标的**theta**
-- **start**：弧度，一圆周为2*pi弧度
+- **start**：弧度，一圆周为$2\pi$弧度
 - **direction**：1为顺时针，-1为逆时针
+- 可以通过这个函数完成很多骚操作
 
 ```{r}
-fyc <- tibble(long = rep(1:5, c(1:5)), lat = 1)
-ggplot(fyc, aes(long, lat)) +
-  geom_col() +
+ggplot(tibble(letter = sample(LETTERS[1:10], 200, replace = TRUE))) +
+  geom_bar(aes(x = letter)) +
   coord_polar(theta = "x", start = pi, direction = -1)
 ```
 
-### `coord_trans()`：进行坐标变换
+## `coord_trans()`：进行坐标变换
+
+--------------------------------
+
+- **xlim**，**ylim**：控制x轴和y轴的范围
+- 文档中说`coord_trans()`函数不同于标度变换，但是用起来感觉就是一个东西
 
 ```{r}
-fyc <- data.frame(long = 1:10, lat = (1:10)^2)
-fyc <- ggplot(fyc, aes(long, lat)) + geom_point()
+ggplot(data.frame(long = 1:10, lat = (1:10)^2), aes(long, lat)) + 
+  geom_point(aes(x = long, y = lat)) +
+  scale_y_sqrt()
 ```
 
 ```{r}
-fyc + scale_y_sqrt()
-fyc + coord_trans(y = "sqrt")
+ggplot(data.frame(long = 1:10, lat = (1:10)^2), aes(long, lat)) + 
+  geom_point(aes(x = long, y = lat)) +
+  coord_trans(y = "sqrt")
 ```
