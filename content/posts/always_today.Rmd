@@ -1,7 +1,8 @@
 ---
 title: 对本主题的样式的测试
 author: Fang Yongchao
-date: "`r Sys.Date()`"
+date: "`r Sys.Date() + 1`"
+runtime: shiny
 ---
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
@@ -101,3 +102,5 @@ kbl(mtcars) %>%
 ```
 
 ### iframe
+
+<iframe height="500" width="100%" frameborder="no" src="http://shiny.fanggong.pub/iframe_test/"> </iframe>

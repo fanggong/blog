@@ -1,30 +1,33 @@
 ---
 title: 对本主题的样式的测试
 author: Fang Yongchao
-date: "2021-03-26"
+date: "2021-03-30"
+runtime: shiny
 ---
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 <script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
 <link href="/rmarkdown-libs/lightable/lightable.css" rel="stylesheet" />
 
 
 <p>任何做个人博客的人应该都过不了对样式无穷无尽的修改这个坎吧…</p>
-<div id="这是一级标题" class="section level1">
+<div id="section-这是一级标题" class="section level1">
 <h1>这是一级标题</h1>
-<div id="这是二级标题" class="section level2">
+<div id="section-这是二级标题" class="section level2">
 <h2>这是二级标题</h2>
-<div id="这是三级标题" class="section level3">
+<div id="section-这是三级标题" class="section level3">
 <h3>这是三级标题</h3>
 </div>
-<div id="页内跳转" class="section level3">
+<div id="section-页内跳转" class="section level3">
 <h3>页内跳转</h3>
 <ul>
-<li><a href="#表格">点这里跳到样式——表格</a></li>
-<li><a href="#iframe">点着里跳到样式——iframe</a></li>
+<li><a href="#section-表格">点这里跳到样式——表格</a></li>
+<li><a href="#section-iframe">点着里跳到样式——iframe</a></li>
 </ul>
 </div>
-<div id="无序列表" class="section level3">
+<div id="section-无序列表" class="section level3">
 <h3>无序列表</h3>
 <ul>
 <li>御田的决心！白胡子的试炼!</li>
@@ -32,7 +35,7 @@ date: "2021-03-26"
 <li>兵刃相接！罗杰与白胡子！</li>
 </ul>
 </div>
-<div id="有序列表" class="section level3">
+<div id="section-有序列表" class="section level3">
 <h3>有序列表</h3>
 <ol style="list-style-type: decimal">
 <li>新的同盟！？凯多军大集结</li>
@@ -40,7 +43,7 @@ date: "2021-03-26"
 <li>大新闻！七武海袭击事件</li>
 </ol>
 </div>
-<div id="嵌套列表" class="section level3">
+<div id="section-嵌套列表" class="section level3">
 <h3>嵌套列表</h3>
 <ul>
 <li>元气森林
@@ -51,7 +54,7 @@ date: "2021-03-26"
 </ul></li>
 </ul>
 </div>
-<div id="代码块" class="section level3">
+<div id="section-代码块" class="section level3">
 <h3>代码块</h3>
 <pre class="r"><code>height &lt;- rnorm(100, 170, 8)
 weight &lt;- rnorm(100, 70, 12)
@@ -60,19 +63,19 @@ t.test(height, weight)</code></pre>
 ##  Welch Two Sample t-test
 ## 
 ## data:  height and weight
-## t = 67.43, df = 164.37, p-value &lt; 2.2e-16
+## t = 70.625, df = 174.94, p-value &lt; 2.2e-16
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##   97.66078 103.55274
+##   97.01106 102.58890
 ## sample estimates:
 ## mean of x mean of y 
-## 169.60778  69.00102</code></pre>
+## 170.04896  70.24898</code></pre>
 </div>
-<div id="行内代码" class="section level3">
+<div id="section-行内代码" class="section level3">
 <h3>行内代码</h3>
 <p>用<code>data.frame()</code>创建数据框</p>
 </div>
-<div id="引用" class="section level3">
+<div id="section-引用" class="section level3">
 <h3>引用</h3>
 <blockquote>
 <p>故人具鸡黍，邀我至田家<br />
@@ -81,16 +84,16 @@ t.test(height, weight)</code></pre>
 待到重阳日，还来就菊花</p>
 </blockquote>
 </div>
-<div id="公式块" class="section level3">
+<div id="section-公式块" class="section level3">
 <h3>公式块</h3>
 <p>正态分布的概率密度函数为：
 <span class="math display">\[f(x) = {1 \over {\sqrt{2\pi}\sigma}}exp \left( - {{(x - \mu)^2} \over {2\sigma^2}}  \right)\]</span></p>
 </div>
-<div id="行内公式" class="section level3">
+<div id="section-行内公式" class="section level3">
 <h3>行内公式</h3>
 <p>等比数列的求和公式是<span class="math inline">\(a_1(1 - q^n) \over {1-q}\)</span></p>
 </div>
-<div id="表格" class="section level3">
+<div id="section-表格" class="section level3">
 <h3>表格</h3>
 <p><a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/available_packages_by_date.html">CRAN</a>中提供了相当多的对表格样式进行渲染的包，这里列出了一些对于我来说比较常用的</p>
 <ul>
@@ -1705,8 +1708,10 @@ Volvo 142E
 </table>
 </div>
 </div>
-<div id="iframe" class="section level3">
+<div id="section-iframe" class="section level3">
 <h3>iframe</h3>
+<iframe height="500" width="100%" frameborder="no" src="http://shiny.fanggong.pub/iframe_test/">
+</iframe>
 </div>
 </div>
 </div>

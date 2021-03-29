@@ -1,7 +1,7 @@
 ---
 title: ggplot2使用笔记（7）—— Faceting
 author: Fang Yongchao
-date: "2021-03-28"
+date: "2021-03-29"
 output:
   blogdown::html_page:
     toc: yes
@@ -15,6 +15,7 @@ library(ggplot2)
 library(dplyr)
 ```
 
+分面函数`<FACET_FUNCTION>`
 
 ```{r}
 t <- ggplot(mpg, aes(cty, hwy)) + geom_point()
