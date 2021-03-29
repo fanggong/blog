@@ -161,7 +161,7 @@
 <li><strong>center</strong>、<strong>boundary</strong>：若<strong>center</strong>设为“t”，则有一根柱以“t”为中线；若<strong>boundary</strong>设为“t”，则有一根柱以“t”为边线</li>
 <li><strong>breaks</strong>：直接设定每一根柱的边线位置，该参数会覆盖以上所有参数</li>
 <li><strong>closed</strong>：若为“right”，处于交界处的值属于右边的柱子；若为“left”，处于交界处的值属于左边的柱子</li>
-<li><strong>pad</strong>：是否在图的左右两侧加空白，若为“TRUE”，最后呈现的图从高度为0的柱开始到高度为0的柱结束</li>
+<li><strong>pad</strong>：是否在图的左右两侧加空白，若为TRUE，最后呈现的图从高度为0的柱开始到高度为0的柱结束</li>
 <li><strong>x</strong>应该是连续的，离散的<strong>x</strong>使用<code>stat_count()</code></li>
 </ul>
 <div id="stat_bin" class="section level3">
@@ -249,7 +249,7 @@ ggplot(dat, aes(long, lat)) + geom_col()</code></pre>
 <li><strong>bins</strong>：给出<code>c(水平方向小区域块的数量, 竖直方向小区域块的数量)</code></li>
 <li><strong>drop</strong>：是否不显示点的个数为零的区域</li>
 <li>对于连续变量，通过区域填充颜色来体现区域内点的个数，当图中点数过多的时候很有用</li>
-<li>只有<code>stat_bin_2d()</code>中有<strong>drop</strong>参数，<code>stat_bin_hex()</code>默认<strong>drop</strong>是“TRUE”</li>
+<li>只有<code>stat_bin_2d()</code>中有<strong>drop</strong>参数，<code>stat_bin_hex()</code>默认<strong>drop</strong>是TRUE</li>
 </ul>
 <div id="stat_bin_2d" class="section level3">
 <h3><code>stat_bin_2d()</code></h3>
@@ -667,8 +667,8 @@ ggplot(dat, aes(long, lat)) +
 <li><code>geom_path()</code>按照数据顺序连接各点；<code>geom_line()</code>按照从左到右连接各点；<code>geom_step()</code>用阶梯连接各点</li>
 <li>对于NA的处理方式：
 <ul>
-<li>NA出现在数据中间：<code>geom_path()</code>会断开，无论<strong>na.rm</strong>是“TRUE”还是“FALSE”；<code>geom_line()</code>会删除NA并警告；<code>geom_step()</code>会删除NA无警告</li>
-<li>NA出现在数据开始或结束：如果<strong>na.rm</strong>为“TRUE”，删除NA无警告；如果<strong>na.rm</strong>为“FALSE”，删除NA有警告</li>
+<li>NA出现在数据中间：<code>geom_path()</code>会断开，无论<strong>na.rm</strong>是TRUE还是FALSE；<code>geom_line()</code>会删除NA并警告；<code>geom_step()</code>会删除NA无警告</li>
+<li>NA出现在数据开始或结束：如果<strong>na.rm</strong>为TRUE，删除NA无警告；如果<strong>na.rm</strong>为FALSE，删除NA有警告</li>
 </ul></li>
 </ul>
 <div id="geom_path" class="section level3">

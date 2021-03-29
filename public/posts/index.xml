@@ -6,7 +6,17 @@
     <description>Recent content in Posts on Fang Yongchao</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Fri, 26 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 27 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ggplot2使用笔记（6）—— Themes</title>
+      <link>https://fanggong.pub/posts/20210327_ggplot2_themes/</link>
+      <pubDate>Sat, 27 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://fanggong.pub/posts/20210327_ggplot2_themes/</guid>
+      <description>   完整主题 直接修改当前主题   主题函数&amp;lt;THEME_FUNCTION&amp;gt;包括ggplot2中自带的一些完整主题，以及对当前主题进行直接修改的函数。
+完整主题 theme_bw() ggplot(mpg) + geom_point(aes(x = class, y = hwy, color = trans)) + theme_bw()  theme_gray() ggplot(mpg) + geom_point(aes(x = class, y = hwy, color = trans)) + theme_gray()  theme_dark() ggplot(mpg) + geom_point(aes(x = class, y = hwy, color = trans)) + theme_dark()  theme_classic() ggplot(mpg) + geom_point(aes(x = class, y = hwy, color = trans)) + theme_classic()  theme_light() ggplot(mpg) + geom_point(aes(x = class, y = hwy, color = trans)) + theme_light()  theme_linedraw() ggplot(mpg) + geom_point(aes(x = class, y = hwy, color = trans)) + theme_linedraw()  theme_minimal() ggplot(mpg) + geom_point(aes(x = class, y = hwy, color = trans)) + theme_minimal()  theme_void() ggplot(mpg) + geom_point(aes(x = class, y = hwy, color = trans)) + theme_void()   直接修改当前主题  </description>
+    </item>
+    
     <item>
       <title>ggplot2使用笔记（5）—— Position</title>
       <link>https://fanggong.pub/posts/20210326_ggplot2_position/</link>
@@ -15,16 +25,6 @@
       <guid>https://fanggong.pub/posts/20210326_ggplot2_position/</guid>
       <description>position = &#34;dodge&#34;：并排摆放 position = &#34;fill&#34;：填充摆放 position = &#34;jitter&#34;：抖动点 position = &#34;stack&#34;：堆栈摆放 position = &#34;jitterdodge&#34;：不是很明白实际意义   POSITION_FUNCTION函数作为STAT_FUNCTION和GEOM_FUNCTION函数的参数使用。
 position = &#34;dodge&#34;：并排摆放 ggplot(mpg, aes(fl, fill = drv)) + geom_bar(position = position_dodge()) + scale_fill_brewer(palette = 1)  position = &#34;fill&#34;：填充摆放 ggplot(mpg, aes(fl, fill = drv)) + geom_bar(position = position_fill()) + scale_fill_brewer(palette = 1)  position = &#34;jitter&#34;：抖动点 ggplot(mpg, aes(cty, hwy)) + geom_point(position = position_jitter(), size = 1, alpha = 0.</description>
-    </item>
-    
-    <item>
-      <title>对本主题的样式的测试</title>
-      <link>https://fanggong.pub/posts/always_today/</link>
-      <pubDate>Fri, 26 Mar 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://fanggong.pub/posts/always_today/</guid>
-      <description>任何做个人博客的人应该都过不了对样式无穷无尽的修改这个坎吧…
-这是一级标题 这是二级标题 这是三级标题  页内跳转  点这里跳到样式——表格 点着里跳到样式——iframe   无序列表  御田的决心！白胡子的试炼! 白胡子的弟弟！御田的大冒险 兵刃相接！罗杰与白胡子！   有序列表 新的同盟！？凯多军大集结 决战迫近！草帽一伙进入战斗状态 大新闻！七武海袭击事件   嵌套列表  元气森林  0糖 0脂肪 0卡路里    代码块 height &amp;lt;- rnorm(100, 170, 8) weight &amp;lt;- rnorm(100, 70, 12) t.test(height, weight) ## ## Welch Two Sample t-test ## ## data: height and weight ## t = 67.43, df = 164.37, p-value &amp;lt; 2.</description>
     </item>
     
     <item>
@@ -56,7 +56,7 @@ coord_cartesian()：更改笛卡尔坐标系的显示范围  coord_cartesian()�
       <guid>https://fanggong.pub/posts/20210323_ggplot2_stat_geom/</guid>
       <description>对连续变量x的各区间的样本数量进行统计作图 对离散变量x的各类别数量进行统计作图 计算连续变量x的密度曲线并作图 对区域中点的数量进行统计作图 对x，y作分位数回归并作图 计算并绘制x，y的拟合曲线 在离散变量x的各类别上对连续变量y进行统计作图 计算连续变量y的密度曲线并作图 对每个点上点的数量进行统计作图 计算并绘制等高线 在x上对y进行summary并作图 在x和y上对z进行summary并作图 通过x和函数fun()计算y=fun(x)并绘制曲线 计算并绘制x的经验累计分布函数 计算并绘制Q-Q图 二维核密度估计并作图 绘制空的坐标系 绘制带箭头曲线/直线 绘制折线 绘制多边形 绘制长方形 绘制区域 绘制直线 添加标签/文本 绘制偏离原位置的点 绘制散点图 在图的四周绘制点的一维投影 绘制区间 绘制地图 绘制点阵图 不明白作用的函数   以下是一些个人看法。
 ggplot2中以geom开头的函数可以理解为作图函数，以stat开头的函数可以理解为统计变换函数。在大部分的情况下，作图函数和统计变换函数都是成对出现的，也就是说在geom函数中会有一个stat参数，而stat函数中也会有一个geom参数，从而可以通过geom或stat函数一次性达到对数据进行统计变换并作图的目的。这也是我在最初很迷这个包的原因，因为在一些很奇葩的搭配下可能会出现一些很有趣的图形，虽然图形并不一定有意义，但是思考这个图形背后形成的过程是一件很有意思的事情。
-对连续变量x的各区间的样本数量进行统计作图  aes()必须参数：x，y(count, density, ncount, ndensity) binwidth：每一个柱的宽度 bins：柱的数量 center、boundary：若center设为“t”，则有一根柱以“t”为中线；若boundary设为“t”，则有一根柱以“t”为边线 breaks：直接设定每一根柱的边线位置，该参数会覆盖以上所有参数 closed：若为“right”，处于交界处的值属于右边的柱子；若为“left”，处于交界处的值属于左边的柱子 pad：是否在图的左右两侧加空白，若为“TRUE”，最后呈现的图从高度为0的柱开始到高度为0的柱结束 x应该是连续的，离散的x使用stat_count()  stat_bin() ggplot(mpg, aes(hwy)) + stat_bin(aes(y = ..density..), binwidth = 1, boundary = 0, pad = TRUE)  geom_freqpoly() ggplot(mpg, aes(hwy)) + geom_freqpoly(binwidth = 1)  geom_histogram() ggplot(mpg, aes(hwy)) + geom_histogram(binwidth = 1, boundary = 0.</description>
+对连续变量x的各区间的样本数量进行统计作图  aes()必须参数：x，y(count, density, ncount, ndensity) binwidth：每一个柱的宽度 bins：柱的数量 center、boundary：若center设为“t”，则有一根柱以“t”为中线；若boundary设为“t”，则有一根柱以“t”为边线 breaks：直接设定每一根柱的边线位置，该参数会覆盖以上所有参数 closed：若为“right”，处于交界处的值属于右边的柱子；若为“left”，处于交界处的值属于左边的柱子 pad：是否在图的左右两侧加空白，若为TRUE，最后呈现的图从高度为0的柱开始到高度为0的柱结束 x应该是连续的，离散的x使用stat_count()  stat_bin() ggplot(mpg, aes(hwy)) + stat_bin(aes(y = ..density..), binwidth = 1, boundary = 0, pad = TRUE)  geom_freqpoly() ggplot(mpg, aes(hwy)) + geom_freqpoly(binwidth = 1)  geom_histogram() ggplot(mpg, aes(hwy)) + geom_histogram(binwidth = 1, boundary = 0.</description>
     </item>
     
     <item>

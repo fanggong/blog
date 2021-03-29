@@ -29,7 +29,7 @@ library(dplyr)
 - **center**、**boundary**：若**center**设为"t"，则有一根柱以"t"为中线；若**boundary**设为"t"，则有一根柱以"t"为边线
 - **breaks**：直接设定每一根柱的边线位置，该参数会覆盖以上所有参数
 - **closed**：若为"right"，处于交界处的值属于右边的柱子；若为"left"，处于交界处的值属于左边的柱子
-- **pad**：是否在图的左右两侧加空白，若为"TRUE"，最后呈现的图从高度为0的柱开始到高度为0的柱结束
+- **pad**：是否在图的左右两侧加空白，若为TRUE，最后呈现的图从高度为0的柱开始到高度为0的柱结束
 - **x**应该是连续的，离散的**x**使用`stat_count()`
 
 ### `stat_bin()`
@@ -121,7 +121,7 @@ ggplot(mpg, aes(hwy)) +
 - **bins**：给出`c(水平方向小区域块的数量, 竖直方向小区域块的数量)`
 - **drop**：是否不显示点的个数为零的区域
 - 对于连续变量，通过区域填充颜色来体现区域内点的个数，当图中点数过多的时候很有用
-- 只有`stat_bin_2d()`中有**drop**参数，`stat_bin_hex()`默认**drop**是"TRUE"
+- 只有`stat_bin_2d()`中有**drop**参数，`stat_bin_hex()`默认**drop**是TRUE
 
 ### `stat_bin_2d()`
 ```{r}
@@ -523,8 +523,8 @@ ggplot(dat, aes(long, lat)) +
 - **linemitre**：线的转折/连接处的宽度，这三个参数在正常size的线下几乎没有什么作用
 - `geom_path()`按照数据顺序连接各点；`geom_line()`按照从左到右连接各点；`geom_step()`用阶梯连接各点
 - 对于NA的处理方式：
-  - NA出现在数据中间：`geom_path()`会断开，无论**na.rm**是"TRUE"还是"FALSE"；`geom_line()`会删除NA并警告；`geom_step()`会删除NA无警告
-  - NA出现在数据开始或结束：如果**na.rm**为"TRUE"，删除NA无警告；如果**na.rm**为"FALSE"，删除NA有警告
+  - NA出现在数据中间：`geom_path()`会断开，无论**na.rm**是TRUE还是FALSE；`geom_line()`会删除NA并警告；`geom_step()`会删除NA无警告
+  - NA出现在数据开始或结束：如果**na.rm**为TRUE，删除NA无警告；如果**na.rm**为FALSE，删除NA有警告
 
 ### `geom_path()`
 ```{r}
