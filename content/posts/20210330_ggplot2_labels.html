@@ -1,0 +1,44 @@
+---
+title: ggplot2使用笔记（8）—— Labels
+author: Fang Yongchao
+date: "2021-03-30"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#labs添加各种主副标题"><code>labs()</code>：添加各种主副标题</a></li>
+<li><a href="#annotate添加注释"><code>annotate()</code>：添加注释</a></li>
+</ul>
+</div>
+
+<div id="labs添加各种主副标题" class="section level2">
+<h2><code>labs()</code>：添加各种主副标题</h2>
+<hr />
+<pre class="r"><code>ggplot(tibble(long = rnorm(100), lat = rnorm(100))) + 
+  geom_point(aes(x = long, y = lat)) +
+  labs(
+    x = &quot;This is x-axis label&quot;, 
+    y = &quot;This is y-axis label&quot;,
+    title = &quot;This is the title&quot;,
+    subtitle = &quot;This is the subtitle&quot;,
+    caption = &quot;This is the caption&quot;,
+    tag = &quot;This is tag&quot;
+  )</code></pre>
+<p><img src="/posts/20210330_ggplot2_labels_files/figure-html/unnamed-chunk-2-1.png" width="70%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="annotate添加注释" class="section level2">
+<h2><code>annotate()</code>：添加注释</h2>
+<hr />
+<pre class="r"><code>ggplot(tibble(long = rnorm(100), lat = rnorm(100))) + 
+  geom_point(aes(x = long, y = lat)) +
+  annotate(geom = &quot;text&quot;, x = 0, y = 0, label = &quot;This is the annotation&quot;, color = &quot;blue&quot;)</code></pre>
+<p><img src="/posts/20210330_ggplot2_labels_files/figure-html/unnamed-chunk-3-1.png" width="70%" style="display: block; margin: auto;" /></p>
+</div>

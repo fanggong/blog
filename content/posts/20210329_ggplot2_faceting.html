@@ -1,0 +1,37 @@
+---
+title: ggplot2使用笔记（7）—— Faceting
+author: Fang Yongchao
+date: "2021-03-29"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#facet_grid"><code>facet_grid()</code></a></li>
+<li><a href="#facet_wrap"><code>facet_wrap()</code></a></li>
+</ul>
+</div>
+
+<p>分面函数<code>&lt;FACET_FUNCTION&gt;</code>提供了两种分面方式，第一种是网格式的分面<code>facet_grid()</code>，另一种<code>facet_wrap()</code>可以理解为将多个图按从左至右从上至下的顺序放入设计好的网格中。</p>
+<div id="facet_grid" class="section level2">
+<h2><code>facet_grid()</code></h2>
+<hr />
+<pre class="r"><code>ggplot(mpg, aes(cty, hwy)) + 
+  geom_point() + 
+  facet_grid(rows = vars(year), cols = vars(fl))</code></pre>
+<p><img src="/posts/20210329_ggplot2_faceting_files/figure-html/unnamed-chunk-2-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="facet_wrap" class="section level2">
+<h2><code>facet_wrap()</code></h2>
+<hr />
+<pre class="r"><code>ggplot(mpg, aes(cty, hwy)) + 
+  facet_wrap(vars(fl), nrow = 3)</code></pre>
+<p><img src="/posts/20210329_ggplot2_faceting_files/figure-html/unnamed-chunk-3-1.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
