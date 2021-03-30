@@ -11,24 +11,24 @@
 
     <meta property="og:site_name" content="Fang Yongchao">
     <meta property="og:title" content="
-  新的开始 - Fang Yongchao
+  ggplot2使用笔记（8）—— Labels - Fang Yongchao
 ">
     <meta property="og:description" content="">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://fanggong.pub/posts/20210309_new_begin/">
+    <meta property="og:url" content="https://fanggong.pub/posts/20210330_ggplot2_labels/">
     <meta property="og:image" content="https://fanggong.pub">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="https://fanggong.pub/posts/20210309_new_begin/">
+    <meta name="twitter:site" content="https://fanggong.pub/posts/20210330_ggplot2_labels/">
     <meta name="twitter:image" content="https://fanggong.pub">
 
-    <base href="https://fanggong.pub/posts/20210309_new_begin/">
+    <base href="https://fanggong.pub/posts/20210330_ggplot2_labels/">
 
     <title>
-  新的开始 - Fang Yongchao
+  ggplot2使用笔记（8）—— Labels - Fang Yongchao
 </title>
 
-    <link rel="canonical" href="https://fanggong.pub/posts/20210309_new_begin/">
+    <link rel="canonical" href="https://fanggong.pub/posts/20210330_ggplot2_labels/">
     
     
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
@@ -61,7 +61,7 @@
       <link href="https://fanggong.pub/index.xml" rel="feed" type="application/rss+xml" title="Fang Yongchao" />
     
 
-    <meta name="generator" content="Hugo 0.78.1" />
+    <meta name="generator" content="Hugo 0.82.0" />
   </head>
 
   <body class="">
@@ -104,37 +104,45 @@
   <section class="container post">
   
   <article>
-    <button onclick="goTop()" id="go-top">
-      <i class="fas fa-chevron-up"></i>
-    </button> 
-    <script>
-    mybutton = document.getElementById("go-top");
-    window.onscroll = function() {scrollFunction()};
-    function scrollFunction() {
-      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        mybutton.style.display = "block";
-      } else {
-        mybutton.style.display = "none";
-      }
-    }
-    function goTop() {
-      document.body.scrollTop = 0; 
-      document.documentElement.scrollTop = 0; 
-    } 
-    </script>  
 
     <header>
-      <h1 class="title">新的开始</h1>
-      <h2 class="date">March 9, 2021</h2>
+      <h1 class="title">ggplot2使用笔记（8）—— Labels</h1>
+      <h2 class="date">March 30, 2021</h2>
     </header>
 
     
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#labs添加各种主副标题"><code>labs()</code>：添加各种主副标题</a></li>
+<li><a href="#annotate添加注释"><code>annotate()</code>：添加注释</a></li>
+</ul>
+</div>
 
-<p>整个大学过的浑浑噩噩，但是在研究生期间还是学习了不少东西，在此期间接触到了RMarkdown，于是当时无论是python还是R，或者是一些别的笔记都以Rmd的形式记录并保存了下来。</p>
-<p>最近又接触到了blogdown，同时由于工作上需要了解一些运维层面的东西自己入手了一个腾讯云服务器，进一步的于是有了把之前的笔记整理一遍以独立博客形式保存下来的想法。</p>
-<p>我会从现在开始逐步整理之前的笔记，同时把新的笔记也以博客形式记录在这里。</p>
+<div id="labs添加各种主副标题" class="section level2">
+<h2><code>labs()</code>：添加各种主副标题</h2>
+<hr />
+<pre class="r"><code>ggplot(tibble(long = rnorm(100), lat = rnorm(100))) + 
+  geom_point(aes(x = long, y = lat)) +
+  labs(
+    x = &quot;This is x-axis label&quot;, 
+    y = &quot;This is y-axis label&quot;,
+    title = &quot;This is the title&quot;,
+    subtitle = &quot;This is the subtitle&quot;,
+    caption = &quot;This is the caption&quot;,
+    tag = &quot;This is tag&quot;
+  )</code></pre>
+<p><img src="/posts/20210330_ggplot2_labels_files/figure-html/unnamed-chunk-2-1.png" width="70%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="annotate添加注释" class="section level2">
+<h2><code>annotate()</code>：添加注释</h2>
+<hr />
+<pre class="r"><code>ggplot(tibble(long = rnorm(100), lat = rnorm(100))) + 
+  geom_point(aes(x = long, y = lat)) +
+  annotate(geom = &quot;text&quot;, x = 0, y = 0, label = &quot;This is the annotation&quot;, color = &quot;blue&quot;)</code></pre>
+<p><img src="/posts/20210330_ggplot2_labels_files/figure-html/unnamed-chunk-3-1.png" width="70%" style="display: block; margin: auto;" /></p>
+</div>
 
   </article>
 

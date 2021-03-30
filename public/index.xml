@@ -6,7 +6,36 @@
     <description>Recent content on Fang Yongchao</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Sat, 27 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 30 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ggplot2使用笔记（8）—— Labels</title>
+      <link>https://fanggong.pub/posts/20210330_ggplot2_labels/</link>
+      <pubDate>Tue, 30 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://fanggong.pub/posts/20210330_ggplot2_labels/</guid>
+      <description>   labs()：添加各种主副标题 annotate()：添加注释   labs()：添加各种主副标题 ggplot(tibble(long = rnorm(100), lat = rnorm(100))) + geom_point(aes(x = long, y = lat)) + labs( x = &amp;quot;This is x-axis label&amp;quot;, y = &amp;quot;This is y-axis label&amp;quot;, title = &amp;quot;This is the title&amp;quot;, subtitle = &amp;quot;This is the subtitle&amp;quot;, caption = &amp;quot;This is the caption&amp;quot;, tag = &amp;quot;This is tag&amp;quot; )  annotate()：添加注释 ggplot(tibble(long = rnorm(100), lat = rnorm(100))) + geom_point(aes(x = long, y = lat)) + annotate(geom = &amp;quot;text&amp;quot;, x = 0, y = 0, label = &amp;quot;This is the annotation&amp;quot;, color = &amp;quot;blue&amp;quot;)  </description>
+    </item>
+    
+    <item>
+      <title>对本主题的样式的测试</title>
+      <link>https://fanggong.pub/posts/always_today/</link>
+      <pubDate>Tue, 30 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://fanggong.pub/posts/always_today/</guid>
+      <description>任何做个人博客的人应该都过不了对样式无穷无尽的修改这个坎吧…
+这是一级标题 这是二级标题 这是三级标题  页内跳转  点这里跳到样式——表格 点着里跳到样式——iframe   无序列表  御田的决心！白胡子的试炼! 白胡子的弟弟！御田的大冒险 兵刃相接！罗杰与白胡子！   有序列表 新的同盟！？凯多军大集结 决战迫近！草帽一伙进入战斗状态 大新闻！七武海袭击事件   嵌套列表  元气森林  0糖 0脂肪 0卡路里    代码块 height &amp;lt;- rnorm(100, 170, 8) weight &amp;lt;- rnorm(100, 70, 12) t.test(height, weight) ## ## Welch Two Sample t-test ## ## data: height and weight ## t = 66.959, df = 170.53, p-value &amp;lt; 2.</description>
+    </item>
+    
+    <item>
+      <title>ggplot2使用笔记（7）—— Faceting</title>
+      <link>https://fanggong.pub/posts/20210329_ggplot2_faceting/</link>
+      <pubDate>Mon, 29 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://fanggong.pub/posts/20210329_ggplot2_faceting/</guid>
+      <description>   facet_grid() facet_wrap()   分面函数&amp;lt;FACET_FUNCTION&amp;gt;提供了两种分面方式，第一种是网格式的分面facet_grid()，另一种facet_wrap()可以理解为将多个图按从左至右从上至下的顺序放入设计好的网格中。
+facet_grid() ggplot(mpg, aes(cty, hwy)) + geom_point() + facet_grid(rows = vars(year), cols = vars(fl))  facet_wrap() ggplot(mpg, aes(cty, hwy)) + facet_wrap(vars(fl), nrow = 3)  </description>
+    </item>
+    
     <item>
       <title>ggplot2使用笔记（6）—— Themes</title>
       <link>https://fanggong.pub/posts/20210327_ggplot2_themes/</link>
