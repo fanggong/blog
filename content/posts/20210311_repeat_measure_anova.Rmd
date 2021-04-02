@@ -20,7 +20,7 @@ library(pander)
 
 重复测量数据的方差分析的步骤大致如下图：
 
-```{r echo=FALSE, fig.cap="重复测量数据方差分析流程", fig.align="center", out.width="80%", fig.height=4}
+```{r echo=FALSE, fig.cap="重复测量数据方差分析流程", fig.align="center", fig.width=6, fig.height=4}
 par(mar = c(0, 0, 0, 0), family = "HannotateSC-W5")
 openplotmat(asp = 1)
 box(col = "#dcdcdc")

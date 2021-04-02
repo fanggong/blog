@@ -35,6 +35,14 @@ params:
       name: Github
       url: https://github.com/fanggong
       weight: 1
+    - icon: fas fa-envelope
+      name: Mail
+      url: mailto:yongchao.fang@outlook.com
+      weight: 2
+    - icon: fab fa-weixin
+      name: Wechat
+      url: 
+      weight: 3
   thumbnail: images/tn.png
 languages:
   ch:
@@ -51,9 +59,6 @@ languages:
         - name: Projects
           url: projects
           weight: 3
-        - name: Contact me
-          url: mailto:yongchao.fang@outlook.com
-          weight: 5
     params:
       author: Fang Yongchao
       description: Fang Yongchao's personal website

@@ -10,13 +10,13 @@ output:
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
-knitr::opts_chunk$set(fig.align = "center", out.width = "50%")
+knitr::opts_chunk$set(fig.align = "center", fig.width = 6)
 library(ggplot2)
 library(dplyr)
 ```
 
 
-主题函数` <THEME_FUNCTION>`包括[ggplot2](https://ggplot2.tidyverse.org/)中自带的一些完整主题，以及对当前主题进行直接修改的函数。
+主题函数`<THEME_FUNCTION>`包括[ggplot2](https://ggplot2.tidyverse.org/)中自带的一些完整主题，以及对当前主题进行直接修改的函数。
 
 ## 完整主题
 
