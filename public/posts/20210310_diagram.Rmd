@@ -36,7 +36,7 @@ elpos <- coordinates(pos = c(1, 2, 3, 4), hor = FALSE)
 
 上面的代码将画板划分成了如下形式
 
-```{r echo=FALSE, fig.align="center", out.width="80%", fig.height=3}
+```{r echo=FALSE, fig.align="center", fig.width=6, fig.height=3}
 par(mar = c(0, 0, 0, 0), family = "HannotateSC-W5")
 openplotmat(asp = 1)
 box(col = "#dcdcdc")
@@ -59,7 +59,7 @@ text(elpos[10, 1], elpos[10, 2], "十", cex = 3)
 
 [diagram](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/diagram/index.html)包共提供了九种BOX
 
-```{r fig.align="center", out.width="80%"}
+```{r fig.align="center", fig.width=6}
 par(mar = c(0, 0, 0, 0), family = "HannotateSC-W5")
 openplotmat(asp = 1)
 box(col = "#dcdcdc")
@@ -100,7 +100,7 @@ text(elpos[16, 1], elpos[16, 2], labels = "textround")
 
 [diagram](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/diagram/index.html)包共提供了七种ARROW
 
-```{r fig.align="center", out.width="80%"}
+```{r fig.align="center", fig.width=6}
 par(mar = c(0, 0, 0, 0), family = "HannotateSC-W5")
 openplotmat(asp = 1)
 box(col = "#dcdcdc")

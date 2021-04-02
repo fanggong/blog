@@ -31,7 +31,7 @@
     <link rel="canonical" href="https://fanggong.pub/posts/20210325_ggplot2_coordinate/">
     
     
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     
     
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -87,10 +87,6 @@
               <a class="navigation-link" href="https://fanggong.pub/projects">Projects</a>
             </li>
           
-            <li class="navigation-item  align-center ">
-              <a class="navigation-link" href="mailto:yongchao.fang@outlook.com">Contact me</a>
-            </li>
-          
         
         
       </ul>
@@ -134,7 +130,7 @@
 <pre class="r"><code>ggplot(tibble(lat = rnorm(100), long = rnorm(100))) + 
   geom_point(aes(x = lat, y = long)) +
   coord_cartesian(xlim = c(0, 5))</code></pre>
-<p><img src="/posts/20210325_ggplot2_coordinate_files/figure-html/unnamed-chunk-2-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<p><img src="/posts/20210325_ggplot2_coordinate_files/figure-html/unnamed-chunk-2-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="coord_fixed更改x轴和y轴的坐标比例" class="section level2">
 <h2><code>coord_fixed()</code>：更改x轴和y轴的坐标比例</h2>
@@ -146,7 +142,7 @@
 <pre class="r"><code>ggplot(tibble(long = 1:10, lat = 1:10*2)) +
   geom_point(aes(x = long, y = lat)) +
   coord_fixed(ratio = 1/2)</code></pre>
-<p><img src="/posts/20210325_ggplot2_coordinate_files/figure-html/unnamed-chunk-3-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<p><img src="/posts/20210325_ggplot2_coordinate_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="coord_flip翻转坐标轴" class="section level2">
 <h2><code>coord_flip()</code>：翻转坐标轴</h2>
@@ -157,7 +153,7 @@
 <pre class="r"><code>ggplot(tibble(letter = sample(LETTERS[1:10], 200, replace = TRUE))) +
   geom_bar(aes(x = letter)) +
   coord_flip()</code></pre>
-<p><img src="/posts/20210325_ggplot2_coordinate_files/figure-html/unnamed-chunk-4-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<p><img src="/posts/20210325_ggplot2_coordinate_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="coord_polar将笛卡尔坐标转换成极坐标" class="section level2">
 <h2><code>coord_polar()</code>：将笛卡尔坐标转换成极坐标</h2>
@@ -171,7 +167,7 @@
 <pre class="r"><code>ggplot(tibble(letter = sample(LETTERS[1:10], 200, replace = TRUE))) +
   geom_bar(aes(x = letter)) +
   coord_polar(theta = &quot;x&quot;, start = pi, direction = -1)</code></pre>
-<p><img src="/posts/20210325_ggplot2_coordinate_files/figure-html/unnamed-chunk-5-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<p><img src="/posts/20210325_ggplot2_coordinate_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="coord_trans进行坐标变换" class="section level2">
 <h2><code>coord_trans()</code>：进行坐标变换</h2>
@@ -183,11 +179,11 @@
 <pre class="r"><code>ggplot(data.frame(long = 1:10, lat = (1:10)^2), aes(long, lat)) + 
   geom_point(aes(x = long, y = lat)) +
   scale_y_sqrt()</code></pre>
-<p><img src="/posts/20210325_ggplot2_coordinate_files/figure-html/unnamed-chunk-6-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<p><img src="/posts/20210325_ggplot2_coordinate_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ggplot(data.frame(long = 1:10, lat = (1:10)^2), aes(long, lat)) + 
   geom_point(aes(x = long, y = lat)) +
   coord_trans(y = &quot;sqrt&quot;)</code></pre>
-<p><img src="/posts/20210325_ggplot2_coordinate_files/figure-html/unnamed-chunk-7-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<p><img src="/posts/20210325_ggplot2_coordinate_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 
   </article>

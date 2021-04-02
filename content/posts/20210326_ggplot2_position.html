@@ -20,14 +20,14 @@ output:
 </ul>
 </div>
 
-<p><code>POSITION_FUNCTION</code>函数作为<code>STAT_FUNCTION</code>和<code>GEOM_FUNCTION</code>函数的参数使用。</p>
+<p><code>&lt;POSITION_FUNCTION&gt;</code>函数作为<code>&lt;STAT_FUNCTION&gt;</code>和<code>&lt;GEOM_FUNCTION&gt;</code>函数的参数使用。</p>
 <div id="position-dodge并排摆放" class="section level2">
 <h2><code>position = "dodge"</code>：并排摆放</h2>
 <hr />
 <pre class="r"><code>ggplot(mpg, aes(fl, fill = drv)) + 
   geom_bar(position = position_dodge()) + 
   scale_fill_brewer(palette = 1)</code></pre>
-<p><img src="/posts/20210326_ggplot2_position_files/figure-html/unnamed-chunk-2-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<p><img src="/posts/20210326_ggplot2_position_files/figure-html/unnamed-chunk-2-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="position-fill填充摆放" class="section level2">
 <h2><code>position = "fill"</code>：填充摆放</h2>
@@ -35,7 +35,7 @@ output:
 <pre class="r"><code>ggplot(mpg, aes(fl, fill = drv)) + 
   geom_bar(position = position_fill()) + 
   scale_fill_brewer(palette = 1)</code></pre>
-<p><img src="/posts/20210326_ggplot2_position_files/figure-html/unnamed-chunk-3-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<p><img src="/posts/20210326_ggplot2_position_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="position-jitter抖动点" class="section level2">
 <h2><code>position = "jitter"</code>：抖动点</h2>
@@ -43,7 +43,7 @@ output:
 <pre class="r"><code>ggplot(mpg, aes(cty, hwy)) + 
   geom_point(position = position_jitter(), size = 1, alpha = 0.5) + 
   geom_point(color = &quot;red&quot;, size = 1, alpha = 0.5)</code></pre>
-<p><img src="/posts/20210326_ggplot2_position_files/figure-html/unnamed-chunk-4-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<p><img src="/posts/20210326_ggplot2_position_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="position-stack堆栈摆放" class="section level2">
 <h2><code>position = "stack"</code>：堆栈摆放</h2>
@@ -51,7 +51,7 @@ output:
 <pre class="r"><code>ggplot(mpg, aes(fl, fill = drv)) + 
   geom_bar(position = position_stack()) + 
   scale_fill_brewer(palette = 1)</code></pre>
-<p><img src="/posts/20210326_ggplot2_position_files/figure-html/unnamed-chunk-5-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<p><img src="/posts/20210326_ggplot2_position_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="position-jitterdodge不是很明白实际意义" class="section level2">
 <h2><code>position = "jitterdodge"</code>：不是很明白实际意义</h2>
@@ -60,5 +60,5 @@ output:
   geom_boxplot(alpha = 0.5) +
   geom_point(pch = 21, position = position_jitterdodge()) +
   scale_fill_brewer(palette = 1)</code></pre>
-<p><img src="/posts/20210326_ggplot2_position_files/figure-html/unnamed-chunk-6-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<p><img src="/posts/20210326_ggplot2_position_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>

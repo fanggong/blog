@@ -10,12 +10,12 @@ output:
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
-knitr::opts_chunk$set(fig.align = "center", out.width = "50%")
+knitr::opts_chunk$set(fig.align = "center", fig.width = 6, fig.asp = 0.7)
 library(ggplot2)
 library(dplyr)
 ```
 
-`POSITION_FUNCTION`函数作为`STAT_FUNCTION`和`GEOM_FUNCTION`函数的参数使用。
+`<POSITION_FUNCTION>`函数作为`<STAT_FUNCTION>`和`<GEOM_FUNCTION>`函数的参数使用。
 
 ## `position = "dodge"`：并排摆放
 

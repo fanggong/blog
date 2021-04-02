@@ -31,7 +31,7 @@
     <link rel="canonical" href="https://fanggong.pub/posts/20210330_ggplot2_labels/">
     
     
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     
     
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -87,10 +87,6 @@
               <a class="navigation-link" href="https://fanggong.pub/projects">Projects</a>
             </li>
           
-            <li class="navigation-item  align-center ">
-              <a class="navigation-link" href="mailto:yongchao.fang@outlook.com">Contact me</a>
-            </li>
-          
         
         
       </ul>
@@ -133,7 +129,7 @@
     caption = &quot;This is the caption&quot;,
     tag = &quot;This is tag&quot;
   )</code></pre>
-<p><img src="/posts/20210330_ggplot2_labels_files/figure-html/unnamed-chunk-2-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="/posts/20210330_ggplot2_labels_files/figure-html/unnamed-chunk-2-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="annotate添加注释" class="section level2">
 <h2><code>annotate()</code>：添加注释</h2>
@@ -141,7 +137,7 @@
 <pre class="r"><code>ggplot(tibble(long = rnorm(100), lat = rnorm(100))) + 
   geom_point(aes(x = long, y = lat)) +
   annotate(geom = &quot;text&quot;, x = 0, y = 0, label = &quot;This is the annotation&quot;, color = &quot;blue&quot;)</code></pre>
-<p><img src="/posts/20210330_ggplot2_labels_files/figure-html/unnamed-chunk-3-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="/posts/20210330_ggplot2_labels_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 
   </article>

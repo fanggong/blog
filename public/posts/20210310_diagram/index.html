@@ -31,7 +31,7 @@
     <link rel="canonical" href="https://fanggong.pub/posts/20210310_diagram/">
     
     
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     
     
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -87,10 +87,6 @@
               <a class="navigation-link" href="https://fanggong.pub/projects">Projects</a>
             </li>
           
-            <li class="navigation-item  align-center ">
-              <a class="navigation-link" href="mailto:yongchao.fang@outlook.com">Contact me</a>
-            </li>
-          
         
         
       </ul>
@@ -135,7 +131,7 @@
 <hr />
 <pre class="r"><code>elpos &lt;- coordinates(pos = c(1, 2, 3, 4), hor = FALSE)</code></pre>
 <p>上面的代码将画板划分成了如下形式</p>
-<p><img src="/posts/20210310_diagram_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><img src="/posts/20210310_diagram_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="插入box" class="section level2">
 <h2>插入BOX</h2>
@@ -172,7 +168,7 @@ text(elpos[10, 1], elpos[10, 2], labels = &quot;textrect&quot;)
 
 textround(elpos[13, ], radx = 0.05, rady = 0.1, rx = 0.1, lab = &quot;前&quot;, cex = 2)
 text(elpos[16, 1], elpos[16, 2], labels = &quot;textround&quot;)</code></pre>
-<p><img src="/posts/20210310_diagram_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><img src="/posts/20210310_diagram_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="插入arrow" class="section level2">
 <h2>插入ARROW</h2>
@@ -206,7 +202,7 @@ text(pos[11, 1] - 0.05, pos[11, 2], labels = &quot;splitarrow\n(segment = c(0.1,
 
 treearrow(pos[4, ], pos[25, ], path = &quot;H&quot;)
 text(pos[15, 1], pos[15, 2] + 0.05, labels = &quot;treearrow\n(path = \&quot;H\&quot;)&quot;)</code></pre>
-<p><img src="/posts/20210310_diagram_files/figure-html/unnamed-chunk-5-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><img src="/posts/20210310_diagram_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 
   </article>

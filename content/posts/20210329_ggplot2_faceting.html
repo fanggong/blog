@@ -24,12 +24,12 @@ output:
 <pre class="r"><code>ggplot(mpg, aes(cty, hwy)) + 
   geom_point() + 
   facet_grid(rows = vars(year), cols = vars(fl))</code></pre>
-<p><img src="/posts/20210329_ggplot2_faceting_files/figure-html/unnamed-chunk-2-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<p><img src="/posts/20210329_ggplot2_faceting_files/figure-html/unnamed-chunk-2-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="facet_wrap" class="section level2">
 <h2><code>facet_wrap()</code></h2>
 <hr />
 <pre class="r"><code>ggplot(mpg, aes(cty, hwy)) + 
   facet_wrap(vars(fl), nrow = 3)</code></pre>
-<p><img src="/posts/20210329_ggplot2_faceting_files/figure-html/unnamed-chunk-3-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<p><img src="/posts/20210329_ggplot2_faceting_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>

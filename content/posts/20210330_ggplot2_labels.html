@@ -30,7 +30,7 @@ output:
     caption = &quot;This is the caption&quot;,
     tag = &quot;This is tag&quot;
   )</code></pre>
-<p><img src="/posts/20210330_ggplot2_labels_files/figure-html/unnamed-chunk-2-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="/posts/20210330_ggplot2_labels_files/figure-html/unnamed-chunk-2-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="annotate添加注释" class="section level2">
 <h2><code>annotate()</code>：添加注释</h2>
@@ -38,5 +38,5 @@ output:
 <pre class="r"><code>ggplot(tibble(long = rnorm(100), lat = rnorm(100))) + 
   geom_point(aes(x = long, y = lat)) +
   annotate(geom = &quot;text&quot;, x = 0, y = 0, label = &quot;This is the annotation&quot;, color = &quot;blue&quot;)</code></pre>
-<p><img src="/posts/20210330_ggplot2_labels_files/figure-html/unnamed-chunk-3-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="/posts/20210330_ggplot2_labels_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
