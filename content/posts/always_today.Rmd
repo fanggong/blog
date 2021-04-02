@@ -2,7 +2,6 @@
 title: 对本主题的样式的测试
 author: Fang Yongchao
 date: "`r Sys.Date()`"
-runtime: shiny
 ---
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
