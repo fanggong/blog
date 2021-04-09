@@ -1,0 +1,14 @@
+---
+title: GIT配置及操作
+author: Fang Yongchao
+date: "2021-04-08"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, eval = FALSE)
+knitr::opts_chunk$set(fig.align = "center", fig.width = 6, fig.asp = 0.7)
+```
