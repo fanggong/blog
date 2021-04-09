@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Fang Yongchao</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Tue, 06 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 08 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>git配置及操作</title>
+      <link>https://fanggong.pub/posts/20210408_git/</link>
+      <pubDate>Thu, 08 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://fanggong.pub/posts/20210408_git/</guid>
+      <description>  </description>
+    </item>
+    
     <item>
       <title>生存分析及R语言实现</title>
       <link>https://fanggong.pub/posts/20210406_survival_analysis/</link>
