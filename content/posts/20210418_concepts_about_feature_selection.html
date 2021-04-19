@@ -1,0 +1,93 @@
+---
+title: 特征工程中常用到的几个概念
+author: Fang Yongchao
+date: "2021-04-18"
+output:
+  blogdown::html_page:
+    toc: yes
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#信息熵entropy">信息熵(Entropy)</a></li>
+<li><a href="#条件熵conditional-entropy">条件熵(Conditional Entropy)</a></li>
+<li><a href="#信息增益information-gain-ig">信息增益(Information Gain, IG)</a></li>
+<li><a href="#互信息mutual-infomation-mi">互信息(Mutual Infomation, MI)</a></li>
+<li><a href="#证据权重weight-of-evidence-woe">证据权重(Weight of Evidence, WOE)</a></li>
+<li><a href="#信息值information-value-iv">信息值(Information Value, IV)</a></li>
+<li><a href="#群体稳定性指标population-stability-index-psi">群体稳定性指标(Population Stability Index, PSI)</a></li>
+</ul>
+</div>
+
+<div id="信息熵entropy" class="section level2">
+<h2>信息熵(Entropy)</h2>
+<hr />
+<p>对于系统内的多个事件<span class="math inline">\(\boldsymbol{E} = \{ E_1, E_2, ..., E_n \}\)</span>，其发生的概率为<span class="math inline">\(\boldsymbol{P} = \{ p_1, p_2, ..., p_n \}\)</span>，熵的定义为：
+<span class="math display">\[
+\Eta(X) = -\sum_i p_i\log_b(p_i)
+\]</span>
+根据对数的底<span class="math inline">\(b\)</span>的不同，熵的单位不同。</p>
+<p>熵被认为是不确定性的度量。很显然当系统内只有一个事件且该事件必定发生时，熵取最小值为0。当系统内各事件发生概率相同时，熵取最大值<span class="math inline">\(\log_bn\)</span>，此时系统内的不确定性最高。特别的，当<span class="math inline">\(p_i\)</span>为0时，<span class="math inline">\(p_i \log_b(p_i)\)</span>为0。</p>
+</div>
+<div id="条件熵conditional-entropy" class="section level2">
+<h2>条件熵(Conditional Entropy)</h2>
+<hr />
+<p>条件熵表示基于某条件下的信息熵。定义为：
+<span class="math display">\[
+\Eta(Y|X) = \sum_ip(x_i)\Eta(Y|X = x_i)
+\]</span>
+这里的<span class="math inline">\(\Eta(Y|X = x_i)\)</span>为<span class="math inline">\(X\)</span>取<span class="math inline">\(x_i\)</span>时，<span class="math inline">\(Y\)</span>的信息熵。</p>
+</div>
+<div id="信息增益information-gain-ig" class="section level2">
+<h2>信息增益(Information Gain, IG)</h2>
+<hr />
+<p>信息增益等于信息熵减去条件熵。即：
+<span class="math display">\[
+IG(Y, X) = \Eta(Y) - \Eta(Y|X)
+\]</span>
+可以理解为在知道变量<span class="math inline">\(X\)</span>后，<span class="math inline">\(Y\)</span>的不确定性减少了多少。</p>
+</div>
+<div id="互信息mutual-infomation-mi" class="section level2">
+<h2>互信息(Mutual Infomation, MI)</h2>
+<hr />
+<p>感觉完全不必纠结互信息和信息增益的区别。根据<a href="https://en.wikipedia.org/wiki/Mutual_information">Wiki</a>，Mutual Information is also known as information gain。</p>
+</div>
+<div id="证据权重weight-of-evidence-woe" class="section level2">
+<h2>证据权重(Weight of Evidence, WOE)</h2>
+<hr />
+<p>WOE为“当前分组下正样本占所有正样本比例”与“当前分组下负样本占所有负样本比例”的对数差，即对包含<span class="math inline">\(\{ x_1, x_2, ..., x_n \}\)</span><span class="math inline">\(n\)</span>个类别的变量<span class="math inline">\(X\)</span>，有：
+<span class="math display">\[
+p_{i1} = {N(Y = 1|X = x_i) \over N(Y = 1)}; \quad 
+p_{i0} = {N(Y = 0|X = x_i) \over N(Y = 0)}
+\]</span>
+<span class="math display">\[
+WOE(x_i) = \ln { p_{i1} \over p_{i0} } 
+\]</span></p>
+<p>可以看出：</p>
+<ul>
+<li>当前分组下正负样本比例与总的正负样本比例相同时，WOE的值为0</li>
+<li>当前分组下正样本比例高于总的正样本比例时，WOE值为正</li>
+<li>当前分组下正样本比例低于总的正样本比例时，WOE值为负</li>
+</ul>
+</div>
+<div id="信息值information-value-iv" class="section level2">
+<h2>信息值(Information Value, IV)</h2>
+<hr />
+<p>IV为WOE的加权和，其计算方式为：</p>
+<p><span class="math display">\[
+IV = \sum_i(p_{i1} - p_{i0})*WOE(x_i)
+\]</span></p>
+</div>
+<div id="群体稳定性指标population-stability-index-psi" class="section level2">
+<h2>群体稳定性指标(Population Stability Index, PSI)</h2>
+<hr />
+<p>PSI的作用是判断变量分布的稳定性，令<span class="math inline">\(A_i\)</span>和<span class="math inline">\(E_i\)</span>分别为类别<span class="math inline">\(i\)</span>在变量中的实际占比和预期占比，那么有：
+<span class="math display">\[
+PSI = \sum_i(A_i - E_i)\ln({A_i \over E_i})
+\]</span>
+很显然，PSI的值越小，变量实际和预期的分布差距越小，即变量的分布越稳定。</p>
+</div>
