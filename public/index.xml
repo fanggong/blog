@@ -8,6 +8,16 @@
     <language>ch</language>
     <lastBuildDate>Sun, 18 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Projects</title>
+      <link>https://fanggong.pub/projects/</link>
+      <pubDate>Wed, 21 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://fanggong.pub/projects/</guid>
+      <description>描述性分析和可视化APPdeveloping…
+</description>
+    </item>
+    
+    <item>
       <title>特征工程中常用到的几个概念</title>
       <link>https://fanggong.pub/posts/20210418_concepts_about_feature_selection/</link>
       <pubDate>Sun, 18 Apr 2021 00:00:00 +0000</pubDate>
@@ -227,17 +237,6 @@ par(mar = c(0, 0, 0, 0), family = &amp;quot;HannotateSC-W5&amp;quot;)openplotma
 在研究生入学的准备过程中开始一一捡起曾经丢下的东西，在此期间接触到了RMarkdown，于是各种相关的笔记都以Rmd的形式记录并保存了下来。
 最近又接触到了blogdown，同时由于工作上需要了解一些服务器相关知识入手了一个云服务器，进一步的于是有了把之前的笔记整理一遍和之后的学习一起以独立博客形式保存下来的想法。
 </description>
-    </item>
-    
-    <item>
-      <title>Projects</title>
-      <link>https://fanggong.pub/projects/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://fanggong.pub/projects/</guid>
-      <description>Portfolio Demo Coder Portfolio This theme is created based on hugo-coder.
-I made it possible to tell yourself more by my change.
- </description>
     </item>
     
   </channel>
