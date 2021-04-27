@@ -110,6 +110,8 @@
 
     
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 <div id="TOC">
 <ul>
@@ -117,8 +119,7 @@
 <li><a href="#条件熵conditional-entropy">条件熵(Conditional Entropy)</a></li>
 <li><a href="#信息增益information-gain-ig">信息增益(Information Gain, IG)</a></li>
 <li><a href="#互信息mutual-infomation-mi">互信息(Mutual Infomation, MI)</a></li>
-<li><a href="#证据权重weight-of-evidence-woe">证据权重(Weight of Evidence, WOE)</a></li>
-<li><a href="#信息值information-value-iv">信息值(Information Value, IV)</a></li>
+<li><a href="#woeweight-of-evidence和ivinformation-value">WOE(Weight of Evidence)和IV(Information Value)</a></li>
 <li><a href="#群体稳定性指标population-stability-index-psi">群体稳定性指标(Population Stability Index, PSI)</a></li>
 </ul>
 </div>
@@ -156,8 +157,8 @@ IG(Y, X) = \Eta(Y) - \Eta(Y|X)
 <hr />
 <p>感觉完全不必纠结互信息和信息增益的区别。根据<a href="https://en.wikipedia.org/wiki/Mutual_information">Wiki</a>，Mutual Information is also known as information gain。</p>
 </div>
-<div id="证据权重weight-of-evidence-woe" class="section level2">
-<h2>证据权重(Weight of Evidence, WOE)</h2>
+<div id="woeweight-of-evidence和ivinformation-value" class="section level2">
+<h2>WOE(Weight of Evidence)和IV(Information Value)</h2>
 <hr />
 <p>WOE为“当前分组下正样本占所有正样本比例”与“当前分组下负样本占所有负样本比例”的对数差，即对包含<span class="math inline">\(\{ x_1, x_2, ..., x_n \}\)</span><span class="math inline">\(n\)</span>个类别的变量<span class="math inline">\(X\)</span>，有：
 <span class="math display">\[
@@ -173,10 +174,6 @@ WOE(x_i) = \ln { p_{i1} \over p_{i0} }
 <li>当前分组下正样本比例高于总的正样本比例时，WOE值为正</li>
 <li>当前分组下正样本比例低于总的正样本比例时，WOE值为负</li>
 </ul>
-</div>
-<div id="信息值information-value-iv" class="section level2">
-<h2>信息值(Information Value, IV)</h2>
-<hr />
 <p>IV为WOE的加权和，其计算方式为：</p>
 <p><span class="math display">\[
 IV = \sum_i(p_{i1} - p_{i0})*WOE(x_i)

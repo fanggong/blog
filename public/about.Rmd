@@ -29,6 +29,6 @@ knitr::include_graphics(paths, error = FALSE)
 
 在研究生入学的准备过程中开始一一捡起曾经丢下的东西，在此期间接触到了[RMarkdown](https://github.com/rstudio/rmarkdown)，于是各种相关的笔记都以Rmd的形式记录并保存了下来。
 
-最近又接触到了[blogdown](https://github.com/rstudio/blogdown)，同时由于工作上需要了解一些服务器的相关知识，入手了一个云服务器。进一步的于是有了把之前的笔记整理一遍和之后的学习一起以独立博客形式保存下来的想法。
+最近又接触到了[blogdown](https://github.com/rstudio/blogdown)，同时由于工作上需要了解一些服务器的相关知识，入手了一个云服务器。进一步的于是有了把各种笔记以独立博客的形式保存下来便于查看与分享的想法。
 
 

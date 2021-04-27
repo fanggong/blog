@@ -5,6 +5,7 @@ date: "2021-04-18"
 output:
   blogdown::html_page:
     toc: yes
+    toc_depth: 2
 ---
 
 ## 信息熵(Entropy)
@@ -46,7 +47,7 @@ $$
 
 感觉完全不必纠结互信息和信息增益的区别。根据[Wiki](https://en.wikipedia.org/wiki/Mutual_information)，Mutual Information is also known as information gain。
 
-## 证据权重(Weight of Evidence, WOE)
+## WOE(Weight of Evidence)和IV(Information Value)
 
 --------------------------
 
@@ -64,10 +65,6 @@ $$
 - 当前分组下正负样本比例与总的正负样本比例相同时，WOE的值为0
 - 当前分组下正样本比例高于总的正样本比例时，WOE值为正
 - 当前分组下正样本比例低于总的正样本比例时，WOE值为负
-
-## 信息值(Information Value, IV)
-
---------------------------
 
 IV为WOE的加权和，其计算方式为：
 
