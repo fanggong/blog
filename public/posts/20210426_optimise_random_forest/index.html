@@ -110,8 +110,6 @@
 
     
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
-<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 <div id="TOC">
 <ul>
@@ -195,7 +193,7 @@
 <hr />
 <p>由于bootstrap采用的是有放回的抽样，所以即使抽样数量与样本总量一致，在训练每棵树时使用的数据也是不同的。</p>
 <blockquote>
-<p>在很多地方看到一个理论，袋外数据（Out Of Bag，即进行有放回的抽样时，有大约三分之一多的数据其实是不会被抽到的，这个数据即袋外数据），可以用来作为随机森林的测试集进行误差估计。有点费解，袋外数据应该是相对于每一个决策树存在的，如何作为最终集成的随机森林的测试集。乍一看感觉是有一些反常识的，不知道是我的理解上有误还是这个理论有严格的证明</p>
+<p>袋外数据（Out Of Bag，即进行有放回的抽样时，有大约三分之一多的数据其实是不会被抽到的，这个数据即袋外数据），可以用来作为随机森林的测试集进行误差估计。有点费解，袋外数据应该是相对于每一个决策树存在的，如何作为最终集成的随机森林的测试集。乍一看感觉是有一些反常识的，不知道是否我的理解上有误，或者说这个理论有严格的证明</p>
 </blockquote>
 <p><strong>结论：不需要对使用bootstrap时的抽样数量这个参数进行调整。</strong></p>
 </div>
