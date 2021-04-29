@@ -1,5 +1,5 @@
 ---
-title: 特征工程中常用到的几个概念
+title: WOE，IV和PSI
 author: Fang Yongchao
 date: "2021-04-18"
 output:
@@ -14,48 +14,11 @@ output:
 
 <div id="TOC">
 <ul>
-<li><a href="#信息熵entropy">信息熵(Entropy)</a></li>
-<li><a href="#条件熵conditional-entropy">条件熵(Conditional Entropy)</a></li>
-<li><a href="#信息增益information-gain-ig">信息增益(Information Gain, IG)</a></li>
-<li><a href="#互信息mutual-infomation-mi">互信息(Mutual Infomation, MI)</a></li>
 <li><a href="#woeweight-of-evidence和ivinformation-value">WOE(Weight of Evidence)和IV(Information Value)</a></li>
 <li><a href="#群体稳定性指标population-stability-index-psi">群体稳定性指标(Population Stability Index, PSI)</a></li>
 </ul>
 </div>
 
-<div id="信息熵entropy" class="section level2">
-<h2>信息熵(Entropy)</h2>
-<hr />
-<p>对于系统内的多个事件<span class="math inline">\(\boldsymbol{E} = \{ E_1, E_2, ..., E_n \}\)</span>，其发生的概率为<span class="math inline">\(\boldsymbol{P} = \{ p_1, p_2, ..., p_n \}\)</span>，熵的定义为：
-<span class="math display">\[
-\Eta(X) = -\sum_i p_i\log_b(p_i)
-\]</span>
-根据对数的底<span class="math inline">\(b\)</span>的不同，熵的单位不同。</p>
-<p>熵被认为是不确定性的度量。很显然当系统内只有一个事件且该事件必定发生时，熵取最小值为0。当系统内各事件发生概率相同时，熵取最大值<span class="math inline">\(\log_bn\)</span>，此时系统内的不确定性最高。特别的，当<span class="math inline">\(p_i\)</span>为0时，<span class="math inline">\(p_i \log_b(p_i)\)</span>为0。</p>
-</div>
-<div id="条件熵conditional-entropy" class="section level2">
-<h2>条件熵(Conditional Entropy)</h2>
-<hr />
-<p>条件熵表示基于某条件下的信息熵。定义为：
-<span class="math display">\[
-\Eta(Y|X) = \sum_ip(x_i)\Eta(Y|X = x_i)
-\]</span>
-这里的<span class="math inline">\(\Eta(Y|X = x_i)\)</span>为<span class="math inline">\(X\)</span>取<span class="math inline">\(x_i\)</span>时，<span class="math inline">\(Y\)</span>的信息熵。</p>
-</div>
-<div id="信息增益information-gain-ig" class="section level2">
-<h2>信息增益(Information Gain, IG)</h2>
-<hr />
-<p>信息增益等于信息熵减去条件熵。即：
-<span class="math display">\[
-IG(Y, X) = \Eta(Y) - \Eta(Y|X)
-\]</span>
-可以理解为在知道变量<span class="math inline">\(X\)</span>后，<span class="math inline">\(Y\)</span>的不确定性减少了多少。</p>
-</div>
-<div id="互信息mutual-infomation-mi" class="section level2">
-<h2>互信息(Mutual Infomation, MI)</h2>
-<hr />
-<p>感觉完全不必纠结互信息和信息增益的区别。根据<a href="https://en.wikipedia.org/wiki/Mutual_information">Wiki</a>，Mutual Information is also known as information gain。</p>
-</div>
 <div id="woeweight-of-evidence和ivinformation-value" class="section level2">
 <h2>WOE(Weight of Evidence)和IV(Information Value)</h2>
 <hr />

@@ -1,5 +1,5 @@
 ---
-title: 特征工程中常用到的几个概念
+title: WOE，IV和PSI
 author: Fang Yongchao
 date: "2021-04-18"
 output:
@@ -7,45 +7,6 @@ output:
     toc: yes
     toc_depth: 2
 ---
-
-## 信息熵(Entropy)
-
---------------------------
-
-对于系统内的多个事件$\boldsymbol{E} = \{ E_1, E_2, ..., E_n \}$，其发生的概率为$\boldsymbol{P} = \{ p_1, p_2, ..., p_n \}$，熵的定义为：
-$$
-\Eta(X) = -\sum_i p_i\log_b(p_i)
-$$
-根据对数的底$b$的不同，熵的单位不同。
-
-熵被认为是不确定性的度量。很显然当系统内只有一个事件且该事件必定发生时，熵取最小值为0。当系统内各事件发生概率相同时，熵取最大值$\log_bn$，此时系统内的不确定性最高。特别的，当$p_i$为0时，$p_i \log_b(p_i)$为0。
-
-## 条件熵(Conditional Entropy)
-
---------------------------
-
-条件熵表示基于某条件下的信息熵。定义为：
-$$
-\Eta(Y|X) = \sum_ip(x_i)\Eta(Y|X = x_i)
-$$
-这里的$\Eta(Y|X = x_i)$为$X$取$x_i$时，$Y$的信息熵。
-
-
-## 信息增益(Information Gain, IG)
-
---------------------------
-
-信息增益等于信息熵减去条件熵。即：
-$$
-IG(Y, X) = \Eta(Y) - \Eta(Y|X)
-$$
-可以理解为在知道变量$X$后，$Y$的不确定性减少了多少。
-
-## 互信息(Mutual Infomation, MI)
-
---------------------------
-
-感觉完全不必纠结互信息和信息增益的区别。根据[Wiki](https://en.wikipedia.org/wiki/Mutual_information)，Mutual Information is also known as information gain。
 
 ## WOE(Weight of Evidence)和IV(Information Value)
 

@@ -11,26 +11,26 @@
 
     <meta property="og:site_name" content="Fang Yongchao">
     <meta property="og:title" content="
-  WOE，IV和PSI - Fang Yongchao
+  决策树的特征划分判断标准 - Fang Yongchao
 ">
     <meta property="og:description" content="">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://fanggong.pub/posts/20210418_concepts_about_feature_selection/">
+    <meta property="og:url" content="https://fanggong.pub/posts/20210428_concepts_about_decision_tree/">
     <meta property="og:image" content="https://fanggong.pub">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="https://fanggong.pub/posts/20210418_concepts_about_feature_selection/">
+    <meta name="twitter:site" content="https://fanggong.pub/posts/20210428_concepts_about_decision_tree/">
     <meta name="twitter:image" content="https://fanggong.pub">
     
     <meta name="google-site-verification" content="Rn4HeSdMtsEZ8JGAVqKw6WgCPedwLdcfHofZ_XCAZNc" />
     
-    <base href="https://fanggong.pub/posts/20210418_concepts_about_feature_selection/">
+    <base href="https://fanggong.pub/posts/20210428_concepts_about_decision_tree/">
 
     <title>
-  WOE，IV和PSI - Fang Yongchao
+  决策树的特征划分判断标准 - Fang Yongchao
 </title>
 
-    <link rel="canonical" href="https://fanggong.pub/posts/20210418_concepts_about_feature_selection/">
+    <link rel="canonical" href="https://fanggong.pub/posts/20210428_concepts_about_decision_tree/">
     
     
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
@@ -104,8 +104,8 @@
   <article>
 
     <header>
-      <h1 class="title">WOE，IV和PSI</h1>
-      <h2 class="date">April 18, 2021</h2>
+      <h1 class="title">决策树的特征划分判断标准</h1>
+      <h2 class="date">April 28, 2021</h2>
     </header>
 
     
@@ -115,42 +115,65 @@
 
 <div id="TOC">
 <ul>
-<li><a href="#woeweight-of-evidence和ivinformation-value">WOE(Weight of Evidence)和IV(Information Value)</a></li>
-<li><a href="#群体稳定性指标population-stability-index-psi">群体稳定性指标(Population Stability Index, PSI)</a></li>
+<li><a href="#信息熵entropy">信息熵(Entropy)</a></li>
+<li><a href="#条件熵conditional-entropy">条件熵(Conditional Entropy)</a></li>
+<li><a href="#信息增益information-gain-ig">信息增益(Information Gain, IG)</a></li>
+<li><a href="#信息增益率information-gain-ratio">信息增益率(Information Gain Ratio)</a></li>
+<li><a href="#基尼指数gini">基尼指数(Gini)</a></li>
 </ul>
 </div>
 
-<div id="woeweight-of-evidence和ivinformation-value" class="section level2">
-<h2>WOE(Weight of Evidence)和IV(Information Value)</h2>
+<div id="信息熵entropy" class="section level2">
+<h2>信息熵(Entropy)</h2>
 <hr />
-<p>WOE为“当前分组下正样本占所有正样本比例”与“当前分组下负样本占所有负样本比例”的对数差，即对包含<span class="math inline">\(\{ x_1, x_2, ..., x_n \}\)</span><span class="math inline">\(n\)</span>个类别的变量<span class="math inline">\(X\)</span>，有：
+<p>对于系统内的多个事件<span class="math inline">\(\boldsymbol{E} = \{ E_1, E_2, ..., E_n \}\)</span>，其发生的概率为<span class="math inline">\(\boldsymbol{P} = \{ p_1, p_2, ..., p_n \}\)</span>，熵的定义为：
 <span class="math display">\[
-p_{i1} = {N(Y = 1|X = x_i) \over N(Y = 1)}; \quad 
-p_{i0} = {N(Y = 0|X = x_i) \over N(Y = 0)}
+\Eta(Y) = -\sum_i p_i\log_b(p_i)
 \]</span>
-<span class="math display">\[
-WOE(x_i) = \ln { p_{i1} \over p_{i0} } 
-\]</span></p>
-<p>可以看出：</p>
-<ul>
-<li>当前分组下正负样本比例与总的正负样本比例相同时，WOE的值为0</li>
-<li>当前分组下正样本比例高于总的正样本比例时，WOE值为正</li>
-<li>当前分组下正样本比例低于总的正样本比例时，WOE值为负</li>
-</ul>
-<p>IV为WOE的加权和，其计算方式为：</p>
-<p><span class="math display">\[
-IV = \sum_i(p_{i1} - p_{i0})*WOE(x_i)
-\]</span></p>
+根据对数的底<span class="math inline">\(b\)</span>的不同，熵的单位不同。</p>
+<p>熵被认为是不确定性的度量。很显然当系统内只有一个事件且该事件必定发生时，熵取最小值为0。当系统内各事件发生概率相同时，熵取最大值<span class="math inline">\(\log_bn\)</span>，此时系统内的不确定性最高。特别的，当<span class="math inline">\(p_i\)</span>为0时，<span class="math inline">\(p_i \log_b(p_i)\)</span>为0。</p>
 </div>
-<div id="群体稳定性指标population-stability-index-psi" class="section level2">
-<h2>群体稳定性指标(Population Stability Index, PSI)</h2>
+<div id="条件熵conditional-entropy" class="section level2">
+<h2>条件熵(Conditional Entropy)</h2>
 <hr />
-<p>PSI的作用是判断变量分布的稳定性，令<span class="math inline">\(A_i\)</span>和<span class="math inline">\(E_i\)</span>分别为类别<span class="math inline">\(i\)</span>在变量中的实际占比和预期占比，那么有：
+<p>条件熵表示基于某条件下的信息熵。定义为：
 <span class="math display">\[
-PSI = \sum_i(A_i - E_i)\ln({A_i \over E_i})
+\Eta(Y|X) = \sum_ip(x_i)\Eta(Y|X = x_i)
 \]</span>
-很显然，PSI的值越小，变量实际和预期的分布差距越小，即变量的分布越稳定。</p>
-<p>这里需要使用样本外的数据来计算实际占比，比如跨时间样本等。</p>
+这里的<span class="math inline">\(\Eta(Y|X = x_i)\)</span>为<span class="math inline">\(X\)</span>取<span class="math inline">\(x_i\)</span>时，<span class="math inline">\(Y\)</span>的信息熵。</p>
+</div>
+<div id="信息增益information-gain-ig" class="section level2">
+<h2>信息增益(Information Gain, IG)</h2>
+<hr />
+<p>信息增益等于信息熵减去条件熵。即：
+<span class="math display">\[
+IG(Y, X) = \Eta(Y) - \Eta(Y|X)
+\]</span>
+可以理解为在知道变量<span class="math inline">\(X\)</span>后，<span class="math inline">\(Y\)</span>的不确定性减少了多少。</p>
+<p>决策树的<strong>ID3算法</strong>中采用信息增益作为特征划分的判断标准。</p>
+</div>
+<div id="信息增益率information-gain-ratio" class="section level2">
+<h2>信息增益率(Information Gain Ratio)</h2>
+<hr />
+<p>信息增益的缺点在于会偏向取值数目较多的特征，而信息增益率则可以克服该缺点：
+<span class="math display">\[
+IG_{Ratio}(Y, X) = {IG(Y, X) \over \Eta(X)}
+\]</span>
+即用信息增益除以特征的信息熵（在这里一般把分母部分称作特征<span class="math inline">\(X\)</span>的固有值，但是计算方式和信息熵是一样的）。</p>
+<p>决策树的<strong>C4.5算法</strong>中采用信息增益率作为特征划分的判断标准。</p>
+</div>
+<div id="基尼指数gini" class="section level2">
+<h2>基尼指数(Gini)</h2>
+<hr />
+<p>基尼指数描述的是随机抽取两个样本，其类别不一致的概率，即：
+<span class="math display">\[
+Gini(Y) = \sum_i p_i(1-p_i) = 1 - \sum_ip_i^2
+\]</span>
+从而可以知道：
+<span class="math display">\[
+Gini(Y|X) = \sum_iGini(Y|X = x_i)
+\]</span>
+决策树的<strong>CART算法</strong>中采用基尼指数作为特征划分的判断标准。</p>
 </div>
 
   </article>
