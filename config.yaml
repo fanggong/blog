@@ -56,8 +56,8 @@ languages:
         - name: Blog
           url: posts
           weight: 2
-        - name: Projects
-          url: projects
+        - name: Tools
+          url: tools
           weight: 3
     params:
       author: Fang Yongchao

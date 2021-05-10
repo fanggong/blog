@@ -1,5 +1,5 @@
 ---
-title: 决策树的特征划分判断标准
+title: 决策树的特征选择标准
 author: Fang Yongchao
 date: "2021-04-28"
 output:
@@ -9,68 +9,71 @@ output:
 ---
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
-<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 <div id="TOC">
 <ul>
 <li><a href="#信息熵entropy">信息熵(Entropy)</a></li>
 <li><a href="#条件熵conditional-entropy">条件熵(Conditional Entropy)</a></li>
 <li><a href="#信息增益information-gain-ig">信息增益(Information Gain, IG)</a></li>
-<li><a href="#信息增益率information-gain-ratio">信息增益率(Information Gain Ratio)</a></li>
-<li><a href="#基尼指数gini">基尼指数(Gini)</a></li>
+<li><a href="#信息增益比information-gain-ratio">信息增益比(Information Gain Ratio)</a></li>
+<li><a href="#基尼指数gini-index">基尼指数(Gini Index)</a></li>
 </ul>
 </div>
 
 <div id="信息熵entropy" class="section level2">
 <h2>信息熵(Entropy)</h2>
 <hr />
-<p>对于系统内的多个事件<span class="math inline">\(\boldsymbol{E} = \{ E_1, E_2, ..., E_n \}\)</span>，其发生的概率为<span class="math inline">\(\boldsymbol{P} = \{ p_1, p_2, ..., p_n \}\)</span>，熵的定义为：
+<p>设<span class="math inline">\(Y\)</span>是取有限个值的离散随机变量，其概率分布为：
 <span class="math display">\[
-\Eta(Y) = -\sum_i p_i\log_b(p_i)
+P(Y = y_i) = p_i,\quad i = 1, 2, 3, ..., n
+\]</span></p>
+<p>则随机变量<span class="math inline">\(Y\)</span>的熵的定义为：
+<span class="math display">\[
+H(Y) = -\sum_{i=1}^n p_i\log_bp_i
 \]</span>
-根据对数的底<span class="math inline">\(b\)</span>的不同，熵的单位不同。</p>
-<p>熵被认为是不确定性的度量。很显然当系统内只有一个事件且该事件必定发生时，熵取最小值为0。当系统内各事件发生概率相同时，熵取最大值<span class="math inline">\(\log_bn\)</span>，此时系统内的不确定性最高。特别的，当<span class="math inline">\(p_i\)</span>为0时，<span class="math inline">\(p_i \log_b(p_i)\)</span>为0。</p>
+根据对数的底<span class="math inline">\(b\)</span>的不同，熵的单位不同。当<span class="math inline">\(b\)</span>为2时，单位为比特(bit)，当<span class="math inline">\(b\)</span>为e时，单位为纳特(nat)。</p>
+<p>熵被认为是不确定性的度量。很显然当系统内只有一个事件且该事件必定发生时，熵取最小值为0。当系统内各事件发生概率相同时，熵取最大值<span class="math inline">\(\log_bn\)</span>，此时系统内的不确定性最高。特别的，当<span class="math inline">\(p_i\)</span>为0时，<span class="math inline">\(p_i \log_bp_i\)</span>为0。</p>
 </div>
 <div id="条件熵conditional-entropy" class="section level2">
 <h2>条件熵(Conditional Entropy)</h2>
 <hr />
 <p>条件熵表示基于某条件下的信息熵。定义为：
 <span class="math display">\[
-\Eta(Y|X) = \sum_ip(x_i)\Eta(Y|X = x_i)
+H(Y|X) = \sum_{i=1}^np_iH(Y|X = x_i)
 \]</span>
-这里的<span class="math inline">\(\Eta(Y|X = x_i)\)</span>为<span class="math inline">\(X\)</span>取<span class="math inline">\(x_i\)</span>时，<span class="math inline">\(Y\)</span>的信息熵。</p>
+这里的<span class="math inline">\(p_i=P(X = x_i),\quad i = 1,2,3,...,n\)</span>。<span class="math inline">\(H(Y|X = x_i)\)</span>为<span class="math inline">\(X\)</span>取<span class="math inline">\(x_i\)</span>时，<span class="math inline">\(Y\)</span>的信息熵。</p>
 </div>
 <div id="信息增益information-gain-ig" class="section level2">
 <h2>信息增益(Information Gain, IG)</h2>
 <hr />
 <p>信息增益等于信息熵减去条件熵。即：
 <span class="math display">\[
-IG(Y, X) = \Eta(Y) - \Eta(Y|X)
+IG(Y, X) = H(Y) - H(Y|X)
 \]</span>
 可以理解为在知道变量<span class="math inline">\(X\)</span>后，<span class="math inline">\(Y\)</span>的不确定性减少了多少。</p>
-<p>决策树的<strong>ID3算法</strong>中采用信息增益作为特征划分的判断标准。</p>
+<p>决策树的<strong>ID3算法</strong>中采用信息增益作为特征选择标准。</p>
 </div>
-<div id="信息增益率information-gain-ratio" class="section level2">
-<h2>信息增益率(Information Gain Ratio)</h2>
+<div id="信息增益比information-gain-ratio" class="section level2">
+<h2>信息增益比(Information Gain Ratio)</h2>
 <hr />
-<p>信息增益的缺点在于会偏向取值数目较多的特征，而信息增益率则可以克服该缺点：
+<p>信息增益的缺点在于会偏向取值数目较多的特征，而信息增益比则可以克服该缺点：
 <span class="math display">\[
-IG_{Ratio}(Y, X) = {IG(Y, X) \over \Eta(X)}
+IG_{Ratio}(Y, X) = {IG(Y, X) \over H(X)}
 \]</span>
 即用信息增益除以特征的信息熵（在这里一般把分母部分称作特征<span class="math inline">\(X\)</span>的固有值，但是计算方式和信息熵是一样的）。</p>
-<p>决策树的<strong>C4.5算法</strong>中采用信息增益率作为特征划分的判断标准。</p>
+<p>决策树的<strong>C4.5算法</strong>中采用信息增益比作为特征选择标准。</p>
 </div>
-<div id="基尼指数gini" class="section level2">
-<h2>基尼指数(Gini)</h2>
+<div id="基尼指数gini-index" class="section level2">
+<h2>基尼指数(Gini Index)</h2>
 <hr />
-<p>基尼指数描述的是随机抽取两个样本，其类别不一致的概率，即：
+<p>基尼指数描述的是随机抽取两个样本，其类别不一致的概率（不纯的度量），即：
 <span class="math display">\[
-Gini(Y) = \sum_i p_i(1-p_i) = 1 - \sum_ip_i^2
+Gini(Y) = \sum_{i=1}^n p_i(1-p_i) = 1 - \sum_ip_i^2
 \]</span>
 从而可以知道：
 <span class="math display">\[
-Gini(Y|X) = \sum_iGini(Y|X = x_i)
+Gini(Y|X) = \sum_{i=1}^np_iGini(Y|X = x_i)
 \]</span>
-决策树的<strong>CART算法</strong>中采用基尼指数作为特征划分的判断标准。</p>
+这里，<span class="math inline">\(p_i=P(X = x_i),\quad i = 1,2,3,...,n\)</span>。</p>
+<p>决策树的<strong>CART算法</strong>中的分类树采用基尼指数作为特征选择标准。特别的，<strong>CART算法</strong>生成的是二叉树，故上面的公式中的<span class="math inline">\(n\)</span>为2。</p>
 </div>
