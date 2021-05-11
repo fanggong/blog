@@ -1,0 +1,119 @@
+---
+title: 关于指数族的定义
+author: Fang Yongchao
+date: "2021-03-22"
+output:
+  blogdown::html_page:
+    toc: yes
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#指数分布族">指数分布族</a></li>
+<li><a href="#伯努利分布的指数族形式">伯努利分布的指数族形式</a></li>
+<li><a href="#正态分布的指数族形式">正态分布的指数族形式</a></li>
+<li><a href="#分类分布的指数族形式">分类分布的指数族形式</a></li>
+</ul>
+</div>
+
+<p>指数分布族的概念主要应用于广义线性模型（GLM）。</p>
+<div id="指数分布族" class="section level2">
+<h2>指数分布族</h2>
+<hr />
+<p>指数分布族（exponential family）的分布可以写成如下形式：</p>
+<p><span class="math display">\[
+p(x|\eta) = h(x) g(\eta) \exp \left\{\eta^Tu(x)\right\}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(\boldsymbol {\eta}\)</span>为自然参数，是决定分布的具体参数</li>
+<li><span class="math inline">\(\boldsymbol {u(x)}\)</span>称作充分统计量，通常有<span class="math inline">\(\boldsymbol {u(x) = x}\)</span></li>
+<li><span class="math inline">\(\boldsymbol {g(\eta)}\)</span>称作分布正规化系数，为确保概率和为1</li>
+</ul>
+</div>
+<div id="伯努利分布的指数族形式" class="section level2">
+<h2>伯努利分布的指数族形式</h2>
+<hr />
+<p>伯努利分布的一般形式可以写为：</p>
+<p><span class="math display">\[
+p(x|\mu) = \mu^x (1-\mu)^{1-x}
+\]</span>
+这里为了与指数族的参数进行对应写成了这个形式，平常我们在书本中看到的最多的形式是：</p>
+<p><span class="math display">\[
+f(x) =
+\begin{cases} 
+p,  &amp; if &amp; x = 1 \\
+1-p, &amp; if &amp; x = 0
+\end{cases}
+\]</span>
+很明显是一样的。</p>
+<p>伯努利分布可以转换成指数族的标准形式：</p>
+<p><span class="math display">\[
+\begin{aligned}
+p(x|\mu) &amp; = \exp \left\{ \ln {\mu^x (1-\mu)^{1-x}} \right\} \\
+&amp; = \exp \left\{ x \ln\mu + (1-x) \ln{(1-\mu)}\right\} \\
+&amp; = \exp \left\{ x \ln\mu - x \ln{(1-\mu)} + \ln{(1-\mu)}\right\} \\
+&amp; = \exp \left\{ x \ln{\mu \over {1-\mu}} + \ln{(1-\mu)} \right\} \\
+&amp; = (1-\mu) \exp \left\{ x \ln{\mu \over {1-\mu}} \right\} 
+\end{aligned}
+\]</span>
+于是有</p>
+<p><span class="math display">\[
+\boldsymbol {\eta = \ln{\mu \over {1-\mu}}, \quad
+\mu = {1 \over {1 + e^{-\eta}}}, \quad 
+u(x) = x, \quad 
+h(x) = 1, \quad g(\eta) = 1-\mu}
+\]</span></p>
+</div>
+<div id="正态分布的指数族形式" class="section level2">
+<h2>正态分布的指数族形式</h2>
+<hr />
+<p>正态分布的一般形式可以写为：</p>
+<p><span class="math display">\[
+p(x|\mu, \sigma) = {1 \over \sqrt{2\pi}\sigma} 
+\exp \left\{ -{(x - \mu)^2 \over {2\sigma^2}} \right\}
+\]</span>
+将正态分布转换成指数族的标准形式：</p>
+<p><span class="math display">\[
+p(x|\mu, \sigma) =  {1 \over \sqrt{2\pi}\sigma} 
+\exp \left\{ -{x^2 \over 2\sigma^2} \right\} 
+\exp \left\{ - {\mu^2 \over 2\sigma^2} \right\} 
+\exp \left\{ {x\mu \over \sigma^2} \right\}
+\]</span>
+于是有</p>
+<p><span class="math display">\[
+\boldsymbol {\eta = \mu, \quad 
+u(x) = {x \over \sigma^2}, \quad 
+h(x) = {1 \over \sqrt{2\pi}\sigma} \exp \left\{ -{x^2 \over 2\sigma^2} \right\}, \quad 
+g(\eta) = \exp \left\{ - {\mu^2 \over 2\sigma^2} \right\} }
+\]</span></p>
+</div>
+<div id="分类分布的指数族形式" class="section level2">
+<h2>分类分布的指数族形式</h2>
+<hr />
+<p>分类分布（Categorical Distribution）的一般形式可以写为：</p>
+<p><span class="math display">\[
+p(x|\mu) = \prod_{i=1}^M\mu_i^{x_i}
+\]</span></p>
+<p>将分类分布转换成指数族的标准形式：</p>
+<p><span class="math display">\[
+\begin{aligned}
+p(x|\mu) &amp; = \exp \left\{ \sum_{i=1}^M x_i\ln\mu_i \right\} \\
+&amp; = \exp \left\{ \sum_{i=1}^{M-1}x_i\ln\mu_i + (1-\sum_{i=1}^{M-1}x_i)\ln(1-\sum_{i=1}^{M-1}\mu_i) \right\} \\
+&amp; = \exp \left\{ \sum_{i=1}^{M-1}x_i\ln\mu_i + \ln(1-\sum_{i=1}^{M-1}\mu_i) - \sum_{i=1}^{M-1}x_i\ln(1-\sum_{i=1}^{M-1}\mu_i) \right\} \\
+&amp; = \exp \left\{ \sum_{i=1}^{M-1} x_i\ln{\mu_i \over \ln(1-\sum_{i=1}^{M-1}\mu_i)} + \ln(1-\sum_{i=1}^{M-1}\mu_i) \right\} \\
+&amp; = (1-\sum_{i=1}^{M-1}\mu_i) \exp \left\{ \sum_{i=1}^{M-1} x_i\ln{\mu_i \over \ln(1-\sum_{i=1}^{M-1}\mu_i)} \right\}
+\end{aligned}
+\]</span></p>
+<p>于是有
+<span class="math display">\[
+\boldsymbol {\eta_i = \ln{\mu_i \over \ln(1-\sum_{i=1}^{M-1}\mu_i)}, \quad
+u(x) = \sum_{i=1}^{M-1} x_i, \quad
+h(x) = 1, \quad
+g(\eta) = 1-\sum_{i=1}^{M-1}\mu_i}
+\]</span>
+对比<a href="#伯努利分布的指数族形式">伯努利分布的指数族形式</a>可以发现其只是分类分布在<span class="math inline">\(\boldsymbol{M = 2}\)</span>时的特殊形式。</p>
+</div>

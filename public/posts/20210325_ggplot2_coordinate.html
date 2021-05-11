@@ -1,0 +1,90 @@
+---
+title: ggplot2使用笔记（4）—— Coordinate
+author: Fang Yongchao
+date: "2021-03-25"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#coord_cartesian更改笛卡尔坐标系的显示范围"><code>coord_cartesian()</code>：更改笛卡尔坐标系的显示范围</a></li>
+<li><a href="#coord_fixed更改x轴和y轴的坐标比例"><code>coord_fixed()</code>：更改x轴和y轴的坐标比例</a></li>
+<li><a href="#coord_flip翻转坐标轴"><code>coord_flip()</code>：翻转坐标轴</a></li>
+<li><a href="#coord_polar将笛卡尔坐标转换成极坐标"><code>coord_polar()</code>：将笛卡尔坐标转换成极坐标</a></li>
+<li><a href="#coord_trans进行坐标变换"><code>coord_trans()</code>：进行坐标变换</a></li>
+</ul>
+</div>
+
+<p>坐标轴函数<code>&lt;COORDINATE_FUNCTION&gt;</code>很少，个人觉得使用思路也相当清晰。</p>
+<div id="coord_cartesian更改笛卡尔坐标系的显示范围" class="section level2">
+<h2><code>coord_cartesian()</code>：更改笛卡尔坐标系的显示范围</h2>
+<hr />
+<ul>
+<li><code>coord_cartesian()</code>的作用是显示图的某一部分，并不会减少使用的数据</li>
+<li><strong>xlim</strong>，<strong>ylim</strong>：控制x轴和y轴的范围</li>
+</ul>
+<pre class="r"><code>ggplot(tibble(lat = rnorm(100), long = rnorm(100))) + 
+  geom_point(aes(x = lat, y = long)) +
+  coord_cartesian(xlim = c(0, 5))</code></pre>
+<p><img src="public/posts/20210325_ggplot2_coordinate_files/figure-html/unnamed-chunk-2-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="coord_fixed更改x轴和y轴的坐标比例" class="section level2">
+<h2><code>coord_fixed()</code>：更改x轴和y轴的坐标比例</h2>
+<hr />
+<ul>
+<li><strong>ratio</strong>：同样的数值在坐标轴上的长度<strong>y</strong>轴是<strong>x</strong>轴的<strong>ratio</strong>倍</li>
+<li><strong>xlim</strong>，<strong>ylim</strong>：控制x轴和y轴的范围</li>
+</ul>
+<pre class="r"><code>ggplot(tibble(long = 1:10, lat = 1:10*2)) +
+  geom_point(aes(x = long, y = lat)) +
+  coord_fixed(ratio = 1/2)</code></pre>
+<p><img src="public/posts/20210325_ggplot2_coordinate_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="coord_flip翻转坐标轴" class="section level2">
+<h2><code>coord_flip()</code>：翻转坐标轴</h2>
+<hr />
+<ul>
+<li><strong>xlim</strong>，<strong>ylim</strong>：控制x轴和y轴的范围</li>
+</ul>
+<pre class="r"><code>ggplot(tibble(letter = sample(LETTERS[1:10], 200, replace = TRUE))) +
+  geom_bar(aes(x = letter)) +
+  coord_flip()</code></pre>
+<p><img src="public/posts/20210325_ggplot2_coordinate_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="coord_polar将笛卡尔坐标转换成极坐标" class="section level2">
+<h2><code>coord_polar()</code>：将笛卡尔坐标转换成极坐标</h2>
+<hr />
+<ul>
+<li><strong>theta</strong>：选择哪个轴变为极坐标的<strong>theta</strong></li>
+<li><strong>start</strong>：弧度，一圆周为<span class="math inline">\(2\pi\)</span>弧度</li>
+<li><strong>direction</strong>：1为顺时针，-1为逆时针</li>
+<li>可以通过这个函数完成很多骚操作</li>
+</ul>
+<pre class="r"><code>ggplot(tibble(letter = sample(LETTERS[1:10], 200, replace = TRUE))) +
+  geom_bar(aes(x = letter)) +
+  coord_polar(theta = &quot;x&quot;, start = pi, direction = -1)</code></pre>
+<p><img src="public/posts/20210325_ggplot2_coordinate_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="coord_trans进行坐标变换" class="section level2">
+<h2><code>coord_trans()</code>：进行坐标变换</h2>
+<hr />
+<ul>
+<li><strong>xlim</strong>，<strong>ylim</strong>：控制x轴和y轴的范围</li>
+<li>文档中说<code>coord_trans()</code>函数不同于标度变换，但是用起来感觉就是一个东西</li>
+</ul>
+<pre class="r"><code>ggplot(data.frame(long = 1:10, lat = (1:10)^2), aes(long, lat)) + 
+  geom_point(aes(x = long, y = lat)) +
+  scale_y_sqrt()</code></pre>
+<p><img src="public/posts/20210325_ggplot2_coordinate_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(data.frame(long = 1:10, lat = (1:10)^2), aes(long, lat)) + 
+  geom_point(aes(x = long, y = lat)) +
+  coord_trans(y = &quot;sqrt&quot;)</code></pre>
+<p><img src="public/posts/20210325_ggplot2_coordinate_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>

@@ -1,0 +1,72 @@
+---
+title: 极大似然估计(MLE)和最大后验概率估计(MAP)
+author: Fang Yongchao
+date: "2021-05-10"
+categories:
+  - "统计学"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#频率学派与贝叶斯学派">频率学派与贝叶斯学派</a></li>
+<li><a href="#极大似然估计mle">极大似然估计(MLE)</a></li>
+<li><a href="#最大后验概率估计map">最大后验概率估计(MAP)</a></li>
+</ul>
+</div>
+
+<div id="频率学派与贝叶斯学派" class="section level2">
+<h2>频率学派与贝叶斯学派</h2>
+<hr />
+<p>关于频率学派与贝叶斯学派的标准解释网上有很多，下面是个人的一些理解。</p>
+<div id="频率学派" class="section level3">
+<h3>频率学派</h3>
+<p>频率学派认为世界是确定的，也即某个事件发生的概率是确定的。在一次试验中无论该事件发生还是不发生都只是其发生概率<span class="math inline">\(p\)</span>的一次体现而已。所以当进行多次重复试验时，事件发生的次数占总试验次数的比例就会逐渐接近这个事件的发生概率<span class="math inline">\(p\)</span>。</p>
+<p>在上述的前提下，如果想要知道这个<span class="math inline">\(p\)</span>，那么只需要进行多次试验，然后解出<span class="math inline">\(p\)</span>的最可能的取值即可。这就是从最初开始学习统计学时就接触到的<strong>极大似然估计(MLE)</strong>。很显然，在频率学派的方法下，当进行足够多的试验后即积累足够的数据量时我们可以得到一个很接近<span class="math inline">\(p\)</span>的估计。</p>
+</div>
+<div id="贝叶斯学派" class="section level3">
+<h3>贝叶斯学派</h3>
+<p>与频率学派不同，贝叶斯学派认为世界是不确定的，它是随着我们对世界的认知改变的（就感觉很主观，但是又主观得很有道理…）。因此，在贝叶斯学派下，事件发生的概率<span class="math inline">\(p\)</span>并不是一个确定的数字，根据不同的认知（即先验假设）对<span class="math inline">\(p\)</span>应该作出不一样的估计，即<strong>最大后验概率估计(MAP)</strong>。</p>
+<p>随着试验次数的增加，我们的先验假设的作用被逐渐淡化，数据中体现的信息将会在估计中占据主导作用，因此当数据量足够大时，会发现两种估计方法会得到相同的结论。</p>
+</div>
+</div>
+<div id="极大似然估计mle" class="section level2">
+<h2>极大似然估计(MLE)</h2>
+<hr />
+<p>以丢硬币为例，丢硬币10次，其中正面朝上7次，反面朝上3次，使用极大似然估计求解正面朝上的概率<span class="math inline">\(p\)</span>。</p>
+<p>有似然函数：
+<span class="math display">\[
+f(X, p) = P(X|p) = p^7(1-p)^3
+\]</span>
+取对数：
+<span class="math display">\[
+\ln f(X, p) = 7\ln p + 3\ln(1-p) 
+\]</span>
+求导得到：
+<span class="math display">\[
+(\ln f(X, p))&#39; = {7p + 3p  - 7 \over p(p-1)} = {10p - 7 \over p^2-p}
+\]</span>
+令上式等于0可以得到<span class="math inline">\(p\)</span>等于0.7。即当丢一个硬币10次，其中正面朝上7次，反面朝上3次时，极大似然估计认为正面朝上的概率最可能是0.7。</p>
+<p>我们知道一个均匀的硬币正面朝上的概率应该是0.5，所以当数据量较小时，极大似然估计的结果与我们的先验知识就产生了偏差（在数据量大的情况下并不会有这样的问题，因为如果丢一个硬币10000次，正面朝上7000次，反面朝上3000次，那么应该做的是好好查查这个硬币是不是真的是均匀的了）。</p>
+</div>
+<div id="最大后验概率估计map" class="section level2">
+<h2>最大后验概率估计(MAP)</h2>
+<hr />
+<p>在极大似然估计中我们寻找使得<span class="math inline">\(P(X|p)\)</span>取到最大值的<span class="math inline">\(p\)</span>，而在最大后验概率估计中，我们寻找的是使得<span class="math inline">\(P(X|p)P(p)\)</span>取到最大值的<span class="math inline">\(p\)</span>。</p>
+<p>根据贝叶斯公式有：
+<span class="math display">\[
+P(X|p)P(p) = P(p|X)P(X)
+\]</span>
+这里的<span class="math inline">\(P(X)\)</span>是一个已知的值（7次正面，3次反面），所以我们要求解的实际是使得<span class="math inline">\(P(p|X)\)</span>（即后验概率，故称为最大后验概率估计）取到最大值的<span class="math inline">\(p\)</span>。</p>
+<p>根据过去多年的丢硬币的体验，我们的先验知识是硬币正面朝上的概率是0.5，因此我们可以将<span class="math inline">\(p\)</span>服从一个均值为0.5，方差为<span class="math inline">\(\sigma\)</span>的分布作为先验假设。</p>
+<p><span class="math display">\[
+P(X|p)P(p) = p^7(1-p)^3{1 \over \sqrt{2\pi}\sigma} \exp \left( -{(p-0.5)^2 \over 2\sigma^2}  \right)
+\]</span></p>
+</div>
