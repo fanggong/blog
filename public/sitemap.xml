@@ -2,13 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://fanggong.pub/categories/</loc>
-    <lastmod>2021-05-10T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://fanggong.pub/</loc>
-    <lastmod>2021-05-10T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-12T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://fanggong.pub/posts/</loc>
+    <lastmod>2021-05-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://fanggong.pub/posts/always_today/</loc>
+    <lastmod>2021-05-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://fanggong.pub/categories/</loc>
     <lastmod>2021-05-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://fanggong.pub/posts/20210510_mle_and_map/</loc>
@@ -46,9 +49,6 @@
   </url><url>
     <loc>https://fanggong.pub/posts/20210406_survival_analysis/</loc>
     <lastmod>2021-04-06T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://fanggong.pub/posts/always_today/</loc>
-    <lastmod>2021-04-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://fanggong.pub/posts/20210330_ggplot2_labels/</loc>
     <lastmod>2021-03-30T00:00:00+00:00</lastmod>
