@@ -2,6 +2,8 @@
 title: R的面向对象编程
 author: Fang Yongchao
 date: "2021-03-12"
+categories:
+  - "R语言"
 output:
   blogdown::html_page:
     toc: yes

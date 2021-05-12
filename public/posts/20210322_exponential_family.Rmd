@@ -2,6 +2,8 @@
 title: 关于指数族的定义
 author: Fang Yongchao
 date: "2021-03-22"
+categories:
+  - "统计学"
 output:
   blogdown::html_page:
     toc: yes

@@ -65,8 +65,68 @@ f(X, p) = P(X|p) = p^7(1-p)^3
 P(X|p)P(p) = P(p|X)P(X)
 \]</span>
 这里的<span class="math inline">\(P(X)\)</span>是一个已知的值（7次正面，3次反面），所以我们要求解的实际是使得<span class="math inline">\(P(p|X)\)</span>（即后验概率，故称为最大后验概率估计）取到最大值的<span class="math inline">\(p\)</span>。</p>
-<p>根据过去多年的丢硬币的体验，我们的先验知识是硬币正面朝上的概率是0.5，因此我们可以将<span class="math inline">\(p\)</span>服从一个均值为0.5，方差为<span class="math inline">\(\sigma\)</span>的分布作为先验假设。</p>
+<p>根据过去多年的丢硬币的体验，我们的先验知识是硬币正面朝上的概率是0.5，因此我们可以将<span class="math inline">\(p\)</span>服从一个均值为0.5，标准差为<span class="math inline">\(\sigma\)</span>的分布作为先验假设。</p>
 <p><span class="math display">\[
-P(X|p)P(p) = p^7(1-p)^3{1 \over \sqrt{2\pi}\sigma} \exp \left( -{(p-0.5)^2 \over 2\sigma^2}  \right)
-\]</span></p>
+f(X, p) = P(X|p)P(p) = p^7(1-p)^3{1 \over \sqrt{2\pi}\sigma} \exp \left( -{(p-0.5)^2 \over 2\sigma^2}  \right)
+\]</span>
+取对数并求导：
+<span class="math display">\[
+(\ln f(X, p))&#39; = {7 \over p} + {3 \over p-1} - {p-0.5 \over \sigma^2}
+\]</span>
+求令上式等于0的<span class="math inline">\(p\)</span>，到这里我已经不会了，所以我们用一个比较笨的办法吧…</p>
+<p>先定义上方需要求解的方程</p>
+<pre class="r"><code>ln_map &lt;- function(x, sigma) {
+  item1 &lt;- 7 / x
+  item2 &lt;- 3 / (x -1)
+  item3 &lt;- (x - 0.5) / sigma^2
+  return(item1 + item2 - item3)
+}</code></pre>
+<p>然后定义一个二分法查找方程解的函数</p>
+<pre class="r"><code>binary_search &lt;- function(func, ...) {
+  tolerantion &lt;- 1e-5
+  min &lt;- 0 + tolerantion
+  max &lt;- 1 - tolerantion
+  while (TRUE) {
+    x &lt;- (max + min) / 2
+    LN_MAP &lt;- do.call(func, args = c(list(x = x), ...))
+    if (LN_MAP &gt; 0) {
+      min &lt;- x
+    } else if (LN_MAP &lt; 0) {
+      max &lt;- x
+    } else {
+      break
+    }
+    if (abs(LN_MAP) &lt; tolerantion) {
+      break
+    }
+  }
+  return(x)
+}</code></pre>
+<p>对于不同的标准差<span class="math inline">\(\sigma\)</span>使用二分法查找方程的解</p>
+<pre class="r"><code>for (sigma in seq(0.01, 0.1, 0.01)) {
+  cat(&quot;标准差为&quot;, sigma, &quot;时，&quot;)
+  solution &lt;- binary_search(ln_map, sigma = sigma)
+  cat(&quot;p的最大后验概率估计为&quot;, solution, &quot;\n&quot;)
+}</code></pre>
+<pre><code>## 标准差为 0.01 时，p的最大后验概率估计为 0.5007968 
+## 标准差为 0.02 时，p的最大后验概率估计为 0.5031497 
+## 标准差为 0.03 时，p的最大后验概率估计为 0.5069511 
+## 标准差为 0.04 时，p的最大后验概率估计为 0.5120366 
+## 标准差为 0.05 时，p的最大后验概率估计为 0.5182038 
+## 标准差为 0.06 时，p的最大后验概率估计为 0.525231 
+## 标准差为 0.07 时，p的最大后验概率估计为 0.532895 
+## 标准差为 0.08 时，p的最大后验概率估计为 0.5409836 
+## 标准差为 0.09 时，p的最大后验概率估计为 0.5493047 
+## 标准差为 0.1 时，p的最大后验概率估计为 0.5576915</code></pre>
+<p>可以看到随着<span class="math inline">\(p\)</span>所服从的正态分布的标准差增大，<span class="math inline">\(p\)</span>的最大后验概率逐渐偏离0.5。可以理解为，我们对硬币正面朝上的概率是0.5这个先验假设越没有信心，<span class="math inline">\(p\)</span>的最大后验概率估计越远离0.5。当我们对硬币正面朝上的概率是0.5这个概率完全失去信心时，<span class="math inline">\(p\)</span>的分布退化为均匀分布，<span class="math inline">\((\ln f(X, p))&#39;\)</span>回到了与最大似然估计同样的形式，于是对<span class="math inline">\(p\)</span>的最大后验概率估计也为0.7。</p>
+<p>现在设想另一种情况，我们对硬币正面朝上的概率是0.5这个先验假设非常有信心（即标准差非常小），但是在试验中使用的这个硬币真的是个不均匀的硬币，那我们要如何通过最大后验概率估计去得出一个正确的<span class="math inline">\(p\)</span>的估计呢。这时候需要做的就是增加试验次数，比如，将试验次数增加到10000次，如果是一个不均匀的硬币，那么正面朝上和反面朝上的次数的比例应该约为7：3，于是可以修改我们的<code>ln_map()</code>函数：</p>
+<pre class="r"><code>ln_map &lt;- function(x, sigma) {
+  item1 &lt;- 7000 / x
+  item2 &lt;- 3000 / (x -1)
+  item3 &lt;- (x - 0.5) / sigma^2
+  return(item1 + item2 - item3)
+}</code></pre>
+<p>此时即使给一个非常小的<span class="math inline">\(\sigma\)</span>，我们也能得到一个接近0.7的最大后验概率估计。</p>
+<pre class="r"><code>binary_search(ln_map, sigma = 0.01)</code></pre>
+<pre><code>## [1] 0.6634963</code></pre>
 </div>

@@ -2,6 +2,9 @@
 title: 生存分析及R语言实现
 author: Fang Yongchao
 date: "2021-04-06"
+categories:
+  - "R语言"
+  - "统计学"
 output:
   blogdown::html_page:
     toc: yes

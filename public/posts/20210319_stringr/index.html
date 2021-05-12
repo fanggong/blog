@@ -89,6 +89,10 @@
               <a class="navigation-link" href="https://fanggong.pub/tools">Tools</a>
             </li>
           
+            <li class="navigation-item  align-center ">
+              <a class="navigation-link" href="https://fanggong.pub/categories">Categories</a>
+            </li>
+          
         
         
       </ul>
@@ -110,6 +114,8 @@
 
     
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 <div id="TOC">
 <ul>
@@ -237,7 +243,7 @@ string</code></pre>
 <pre><code>## [1] &quot;i like horses&quot;</code></pre>
 <p>换一种语言，小写不一样了</p>
 <pre class="r"><code>str_to_lower(&quot;I like horses&quot;, locale = &quot;tr&quot;)</code></pre>
-<pre><code>## [1] &quot;ı like horses&quot;</code></pre>
+<pre><code>## [1] &quot;&lt;U+0131&gt; like horses&quot;</code></pre>
 <p>base R中使用<code>tolower()</code></p>
 <pre class="r"><code>tolower(&quot;FANG YONGCHAO&quot;)</code></pre>
 <pre><code>## [1] &quot;fang yongchao&quot;</code></pre>
