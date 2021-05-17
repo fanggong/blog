@@ -12,21 +12,19 @@ output:
 ---
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
-<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 <div id="TOC">
 <ul>
-<li><a href="#单样本">单样本</a></li>
-<li><a href="#两样本">两样本</a></li>
-<li><a href="#多样本">多样本</a></li>
+<li><a href="#单样本的差异显著性分析">单样本的差异显著性分析</a></li>
+<li><a href="#两样本的差异显著性分析">两样本的差异显著性分析</a></li>
+<li><a href="#多样本的差异显著性分析">多样本的差异显著性分析</a></li>
 <li><a href="#各检验方法的r语言实现">各检验方法的R语言实现</a></li>
 </ul>
 </div>
 
 <p>下面记述的各种情况及适用的差异显著性检验的相关方法都是以样本之间相互独立为前提的。对于样本之间不相互独立的情况，应该针对具体情况使用特定的方法，如<a href="../20210311_repeat_measure_anova/">重复测量数据方差分析</a>等。</p>
-<div id="单样本" class="section level2">
-<h2>单样本</h2>
+<div id="单样本的差异显著性分析" class="section level2">
+<h2>单样本的差异显著性分析</h2>
 <hr />
 <div id="连续变量的单样本" class="section level3">
 <h3>连续变量的单样本</h3>
@@ -42,8 +40,8 @@ output:
 <p>对于有序离散变量的单样本，个人认为需要根据实际目的选择检验方法。如果关注的是变量的整体的形态，可以根据变量服从的分布选择如<strong>精确泊松检验</strong>等，或是将有序离散变量当作连续变量，在近似服从正态分布的前提下使用<strong>t检验</strong>或<strong>z检验</strong>。如果关注的变量中类别的比例，那么可以直接将有序离散变量当作无序离散变量做对应的显著性检验。</p>
 </div>
 </div>
-<div id="两样本" class="section level2">
-<h2>两样本</h2>
+<div id="两样本的差异显著性分析" class="section level2">
+<h2>两样本的差异显著性分析</h2>
 <hr />
 <div id="连续变量的两样本" class="section level3">
 <h3>连续变量的两样本</h3>
@@ -80,8 +78,8 @@ output:
 </ul>
 </div>
 </div>
-<div id="多样本" class="section level2">
-<h2>多样本</h2>
+<div id="多样本的差异显著性分析" class="section level2">
+<h2>多样本的差异显著性分析</h2>
 <hr />
 <div id="连续变量的多样本" class="section level3">
 <h3>连续变量的多样本</h3>
