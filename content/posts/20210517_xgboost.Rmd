@@ -1,0 +1,152 @@
+---
+title: xgboost原理
+author: Fang Yongchao
+date: "2021-05-17"
+categories:
+  - "机器学习"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+---
+
+原文地址：[Introduction to Boosted Trees](https://xgboost.readthedocs.io/en/latest/tutorials/model.html)
+
+以下内容主要是对上面文章内容的整理以及一些个人理解。
+
+## 目标函数：损失函数 + 正则项
+
+--------------------------------
+
+在机器学习模型中，目标函数一般由损失函数和正则项组成：
+$$
+obj(\theta) = L(\theta) + \Omega(\theta)
+$$
+
+其中$L(\theta)$为损失函数，在回归模型中，我们常常定义为MSE，即：
+$$
+L(\theta) = \sum_i(y_i - \hat y_i)^2
+$$
+或是在逻辑回归模型中，我们定义为：
+$$
+L(\theta) = \sum_i \left[ y_i\ln(1 + e^{-\hat y_i}) + (1 - y_i)\ln(1 + e^{\hat y_i}) \right]
+$$
+（逻辑回归的损失函数非常直观：当$y_i$为1时，$\hat y_i$越大则$L(\theta)$越小；而当$y_i$为0时，$\hat y_i$越小则$L(\theta)$越小）
+
+## 决策树集成
+
+--------------------------------
+
+由于仅有一棵决策树的模型一般无法运用到实际中，所以我们会选择使用决策树集成模型，即将多个决策树的结果进行汇总来进行预测。
+
+随机森林模型就是由多个决策树的基学习器进行投票来得到集成模型的预测值，它的特点是基学习器之间相互独立，每个基学习器都仅使用部分样本和特征。
+
+与随机森林这样的Bagging集成模型不同，Boosting集成模型中的每个基学习器拟合的是前一个基学习器的预测值与真实值之间的残差，最后将所有基学习器的预测值相加得到集成模型的预测，即：
+$$
+\hat y_i = \sum_{k=1}^Kf_k(x_i)
+$$
+在xgboost中，使用CART(Classification And Regression Tree)作为集成模型的基学习器。
+
+## xgboost的损失函数
+
+--------------------------------
+
+<!-- 优化所有行不通# TODO -->
+
+模型训练的过程即为寻找使得目标函数达到最优的参数的过程。在xgboost中，目标函数可以表示为：
+$$
+\begin{aligned}
+obj^{(t)} & = \sum_{i=1}^nl(y_i,\ \hat y_i^{(t)}) + \sum_{i=1}^t \Omega(f_i) \\
+ & = \sum_{i=1}^nl(y_i,\ \hat y_i^{(t-1)} + f_t(x_i)) + \Omega(f_t) + constant
+\end{aligned}
+$$
+即在前t-1棵树的基础上，寻找使得目标函数最小的第t棵树。这里的$constant$表示的是前t-1棵树对应的正则项。
+
+当使用MSE作为损失函数时，上式可以表示为：
+$$
+\begin{aligned}
+obj^{(t)} & = \sum_{i=1}^nl(y_i,\ \hat y_i^{(t)}) + \sum_{i=1}^t \Omega(f_i) \\
+ & = \sum_{i=1}^n \left[ y_i - (\hat y_i^{(t-1)} + f_t(x_i))\right]^2 + \sum_{i=1}^t \Omega(f_i) \\
+ & = \sum_{i=1}^n \left[ y_i^2 - 2y_i \hat y_i^{(t-1)} - 2y_if_t(x_i) + (\hat y_i^{(t-1)})^2 + 2\hat y_i^{(t-1)}f_t(x_i) + f^2_t(x_i)\right] + \sum_{i=1}^t \Omega(f_i) \quad (1)\\
+ & = \sum_{i=1}^n \left[ 2(\hat y_i^{(t-1)} - y_i)f_t(x_i) + f_t^2(x_i)\right] + \Omega(f_t) + constant
+\end{aligned}
+$$
+
+这里的$constant$包括了前t-1棵树对应的正则项以及(1)式第一项中的常数部分。
+
+在实际情况下，由于损失函数的多种多样，我们需要一个可以通用的展开方式，即下述的泰勒展开式。
+
+- **泰勒定理**：
+设$n$是一个正整数。如果定义在一个包含$a$的区间上的函数$f$在$a$点处$n+1$次可导，那么对于这个区间上的任意$x$，都有：
+$$
+f(x) = f(a) + {f'(a) \over 1!}(x-a) + {f^{(2)}(a) \over 2!}(x-a)^2 +\ ...\ +{f^{(n)}(a) \over n!}(x-a)^n + R_n(x)
+$$
+其中的多项式称为函数在$a$处的泰勒展开式，剩余的$R_{n}(x)$ 是泰勒公式的余项，是$(x-a)^{n}$的高阶无穷小。
+
+于是可以将$obj^{(t)}$作泰勒二阶展开成以下形式：
+$$
+\begin{aligned}
+obj^{(t)} & = \sum_{i=1}^n l\left( y_i,\ \hat y_i^{(t-1)} + f_t(x_i)\right) + \sum_{i=1}^t \Omega(f_i) \\
+ & = \sum_{i=1}^n \left[ l(y_i, \hat y_i^{(t-1)}) + g_if_t(x_i) + {1 \over 2} h_i f_t^2(x_i)\right] + \sum_{i=1}^t \Omega(f_i)
+\end{aligned}
+$$
+**对应到上方的泰勒展开式，$f(x)$就是关于预测值$\hat y$的损失函数$l$，这里令泰勒展开式中左侧的$x = \hat y_i^{(t-1)} + f_t(x_i)$，右侧的$a = \hat y_i^{(t-1)}$。那么$g_i$就是对损失函数$l$求一阶导数后将$\hat y_i^{(t-1)}$带入得到的值，同理，$h_i$为对损失函数$l$求二阶导数后将$\hat y_i^{(t-1)}$带入得到的值。**
+
+将目标函数中的常数移除，就得到了我们对第t棵树进行最优化的目标函数为：
+$$
+\sum_{i=1}^n \left[ g_if_t(x_i) + {1 \over 2} h_i f_t^2(x_i)\right] + \Omega(f_t)
+$$
+将该式与前面以MSE作为损失函数时的目标函数比较，可以发现完美对应上了。同时，从该式中可以看到xgboost的几个优势：
+
+- 可以自定义损失函数，只要该函数满足二次可导即可
+- 支持并行计算，因为对于不同的$i$，$g_i$互不关联可以分开求取
+
+## xgboost的正则项
+
+--------------------------------
+
+这一部分在[Introduction to Boosted Trees](https://xgboost.readthedocs.io/en/latest/tutorials/model.html)中没有详细地说明细节，只是给出了一个结论——this one works well in practice...
+
+首先，我们将CART$f(x)$定义如下：
+$$
+f_t(x) = \omega_{q(x)}
+$$
+这里的$\omega$是由CART的$T$个叶子的值组成的一个向量，$q(x)$是一个映射，该将每一个样本映射到$T$个叶子节点中的某一个。
+
+那么，在xgboost中对正则项的定义为：
+$$
+\Omega(f) = \gamma T + {1 \over 2}\lambda \sum_{j=1}^T \omega_j^2
+$$
+
+## xgboost的目标函数
+
+--------------------------------
+
+在定义了正则项之后，我们可以回到xgboost的目标函数了。第t棵树的目标函数可以写作：
+$$
+\begin{aligned}
+obj^{(t)} & = \sum_{i=1}^n \left[ g_i\omega_{q(x_i)} + {1 \over 2} h_i \omega_{q(x_i)}^2\right] + \gamma T + {1 \over 2}\lambda \sum_{j=1}^T \omega_j^2 \\
+ & = \sum_{j=1}^T \left[ (\sum_{i \in I_j}g_i)\omega_j + {1 \over 2}(\sum_{i \in I_j}h_i +\lambda)\omega_j^2 \right] + \gamma T
+\end{aligned}
+$$
+**写成这种形式很好理解，因为在同一个叶子节点上的样本的预测值是一样的，所以$n$个样本的损失函数之和可以分$T$个叶子节点进行计算。**
+
+令$G_j = \sum_{i \in I_j}g_i$，$H_j = \sum_{i \in I_j}h_i$，那么目标函数可以写作：
+$$
+obj^{(t)} = \sum_{j=1}^T \left[ G_j\omega_j + {1 \over 2}(H_j + \lambda)\omega_j^2 \right] + \gamma T
+$$
+对于任意的$j$，上式是一个关于$\omega_j$的二次多项式，故可以得到当$\omega_j = - {G_j \over H_j + \lambda}$时，目标函数取到最小值，为：
+$$
+- {1 \over 2} \sum_{j=1}^T {G_j^2 \over H_j + \lambda} + \gamma T
+$$
+
+## 寻找最优结构的树
+
+--------------------------------
+
+有了上方的目标函数后，就可以开始寻找最优结构的树了。很显然，我们无法枚举出所有的树结构然后比较目标函数的大小，因此这里的策略仍然是贪心算法，即每一步仅寻找当前最优的分割方法。可以知道每次分割目标函数减少量为：
+$$
+Gain = {1 \over 2}\left[ {G_L^2 \over H_L + \lambda} + {G_R^2 \over H_R + \lambda} + {(G_L + G_R)^2 \over H_L + H_R + \lambda} \right] - \gamma
+$$
+在xgboost中，对于连续变量的特征，会将特征的值按照从小到大排列，然后遍历相邻值的均数作为分割点从而找到该特征下的最优分割。
+
