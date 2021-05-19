@@ -1,9 +1,8 @@
 ---
-title: 重复测量数据方差分析
+title: 重复测量数据方差分析的R语言实现
 author: Fang Yongchao
 date: "2021-03-11"
 categories:
-  - "统计学"
   - "R语言"
 output:
   blogdown::html_page:
@@ -40,7 +39,7 @@ for (i in 1:nr) {
     path = ifelse(i == nr, "H", "V")
   )
 }
-cex <- 1
+cex <- 0.8
 radx <- 0.1
 rady <- 0.05
 textrect(elpos[1, ], radx = radx, rady = rady, shadow.size = 0, lab = "是否正态", cex = cex)
@@ -48,7 +47,7 @@ textrect(elpos[2, ], radx = radx, rady = rady, shadow.size = 0, lab = "是否满
 textrect(elpos[3, ], radx = radx, rady = rady, shadow.size = 0, lab = "进行\n方差分析", cex = cex)
 textrect(elpos[5, ], radx = radx, rady = rady, shadow.size = 0, lab = "是否满足\n球形检验", cex = cex)
 textrect(elpos[9, ], radx = radx, rady = rady, shadow.size = 0, lab = "p值校正", cex = cex)
-textrect(elpos[7, ], radx = radx + 0.05, rady = rady, shadow.size = 0, lab = "多重比较\n单独效应分析等", cex = cex)
+textrect(elpos[7, ], radx = radx + 0.05, rady = rady, shadow.size = 0, lab = "进一步的多重比较\n单独效应分析等", cex = cex)
 bias <- 0.03
 cex <- 0.7
 text(arrpos[1, 1], arrpos[1, 2] + bias, "YES", cex = cex)
@@ -168,11 +167,6 @@ summary(aov_result, multivariate = FALSE, univariate = TRUE)
 ```
 结果与上方使用base R进行方差分析和球形检验的结果基本一致，并且在最后给出了用Greenhouse-Geisser和Huynh-Feldt方法进行校正后的p值。
 
-## 多重比较、单独效应分析等
-
-------------------------------
-
-这里的做法与常见的多因素方差分析没有区别。
 
 
 

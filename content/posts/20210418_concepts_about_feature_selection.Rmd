@@ -10,6 +10,8 @@ output:
     toc_depth: 2
 ---
 
+这三个概念对我来说并不经常用到，但是每次用到的时候具体细节总是记串了，所以特别记下来。
+
 ## WOE(Weight of Evidence)和IV(Information Value)
 
 --------------------------

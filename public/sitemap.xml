@@ -3,13 +3,19 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://fanggong.pub/categories/</loc>
-    <lastmod>2021-05-13T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://fanggong.pub/</loc>
-    <lastmod>2021-05-13T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://fanggong.pub/posts/</loc>
-    <lastmod>2021-05-13T00:00:00+00:00</lastmod>
+    <lastmod>2021-05-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://fanggong.pub/posts/20210517_xgboost/</loc>
+    <lastmod>2021-05-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://fanggong.pub/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2021-05-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://fanggong.pub/categories/r%E8%AF%AD%E8%A8%80/</loc>
     <lastmod>2021-05-13T00:00:00+00:00</lastmod>
@@ -28,12 +34,6 @@
   </url><url>
     <loc>https://fanggong.pub/posts/20210428_concepts_about_decision_tree/</loc>
     <lastmod>2021-04-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://fanggong.pub/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2021-04-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://fanggong.pub/posts/20210427_ensemble_learning_framework/</loc>
-    <lastmod>2021-04-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://fanggong.pub/posts/20210426_optimise_random_forest/</loc>
     <lastmod>2021-04-26T00:00:00+00:00</lastmod>

@@ -6,7 +6,19 @@
     <description>Recent content in 机器学习 on Fang Yongchao</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Wed, 28 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 17 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>xgboost原理</title>
+      <link>https://fanggong.pub/posts/20210517_xgboost/</link>
+      <pubDate>Mon, 17 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://fanggong.pub/posts/20210517_xgboost/</guid>
+      <description>目标函数：损失函数 + 正则项 决策树集成 xgboost的损失函数 xgboost的正则项 xgboost的目标函数 寻找最优结构的树 几个比较纠结的问题   参考文章：
+ Introduction to Boosted Trees XGBoost: A Scalable Tree Boosting System  以下内容主要是对上面文章内容的整理以及一些个人理解。
+目标函数：损失函数 + 正则项 在机器学习模型中，目标函数一般由损失函数和正则项组成： \[ obj(\theta) = L(\theta) + \Omega(\theta) \]
+其中\(L(\theta)\)为损失函数，在回归模型中，我们常常定义为MSE，即： \[ L(\theta) = \sum_i(y_i - \hat y_i)^2 \] 或是在逻辑回归模型中，我们定义为： \[ L(\theta) = \sum_i \left[ y_i\ln(1 + e^{-\hat y_i}) + (1 - y_i)\ln(1 + e^{\hat y_i}) \right] \] （逻辑回归的损失函数非常直观：当\(y_i\)为1时，\(\hat y_i\)越大则\(L(\theta)\)越小；而当\(y_i\)为0时，\(\hat y_i\)越小则\(L(\theta)\)越小）</description>
+    </item>
+    
     <item>
       <title>决策树的特征选择标准</title>
       <link>https://fanggong.pub/posts/20210428_concepts_about_decision_tree/</link>
@@ -21,28 +33,13 @@
     </item>
     
     <item>
-      <title>集成学习框架</title>
-      <link>https://fanggong.pub/posts/20210427_ensemble_learning_framework/</link>
-      <pubDate>Tue, 27 Apr 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://fanggong.pub/posts/20210427_ensemble_learning_framework/</guid>
-      <description>   Bagging Boosting   Bagging Bagging，全称为Bootstrap Aggregating，是对训练集进行有放回的抽样得到其子集，然后每个基学习器使用不同的子集进行训练得到预测结果，最终基于所有的基学习器的预测结果进行投票，从而得到集成模型的预测结果。Bagging中的各个基学习器是相互独立的。
-随机森林模型即为最常见的Bagging模型，它是由多个决策树基学习器集成得到的集成模型。
- Boosting Boosting的训练过程是有序的，每个基学习器会基于前一个基学习器的结果进行学习，最终基于所有的基学习器的预测值计算得到集成模型的预测结果。
-常见的Boosting模型有：
-Adaboost Adaboost，全称为Adaptive boosting，其基本思想为前一个基学习器中分错的样本的权重会得到加强，在权重进行加强后基于所有样本继续训练新的基学习器。循环上述过程直到错误率低于某个值或循环次数达到某个值时停止。
- GBDT GBDT，全称为Gradient Boosting Decision Tree，其基本思想为以决策树作为基学习器，后一个基学习器以前一个基学习器的残差作为目标值进行训练，最终将所有基学习器的预测值相加作为集成学习模型的预测值。
-目前GBDT的主流的工程实现有XGBoost和LightGBM。
-  </description>
-    </item>
-    
-    <item>
       <title>WOE，IV和PSI</title>
       <link>https://fanggong.pub/posts/20210418_concepts_about_feature_selection/</link>
       <pubDate>Sun, 18 Apr 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210418_concepts_about_feature_selection/</guid>
-      <description>WOE(Weight of Evidence)和IV(Information Value) 群体稳定性指标(Population Stability Index, PSI)   WOE(Weight of Evidence)和IV(Information Value) WOE为“当前分组下正样本占所有正样本比例”与“当前分组下负样本占所有负样本比例”的对数差，即对包含\(\{ x_1, x_2, ..., x_n \}\)\(n\)个类别的变量\(X\)，有： \[ p_{i1} = {N(Y = 1|X = x_i) \over N(Y = 1)}; \quad p_{i0} = {N(Y = 0|X = x_i) \over N(Y = 0)} \] \[ WOE(x_i) = \ln { p_{i1} \over p_{i0} } \]
+      <description>WOE(Weight of Evidence)和IV(Information Value) 群体稳定性指标(Population Stability Index, PSI)   这三个概念对我来说并不经常用到，但是每次用到的时候具体细节总是记串了，所以特别记下来。
+WOE(Weight of Evidence)和IV(Information Value) WOE为“当前分组下正样本占所有正样本比例”与“当前分组下负样本占所有负样本比例”的对数差，即对包含\(\{ x_1, x_2, ..., x_n \}\)\(n\)个类别的变量\(X\)，有： \[ p_{i1} = {N(Y = 1|X = x_i) \over N(Y = 1)}; \quad p_{i0} = {N(Y = 0|X = x_i) \over N(Y = 0)} \] \[ WOE(x_i) = \ln { p_{i1} \over p_{i0} } \]
 可以看出：
  当前分组下正负样本比例与总的正负样本比例相同时，WOE的值为0 当前分组下正样本比例高于总的正样本比例时，WOE值为正 当前分组下正样本比例低于总的正样本比例时，WOE值为负  IV为WOE的加权和，其计算方式为：
 \[ IV = \sum_i(p_{i1} - p_{i0})*WOE(x_i) \]</description>

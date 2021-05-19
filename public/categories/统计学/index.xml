@@ -77,18 +77,5 @@
 \[ \begin{aligned} p(x|\mu) &amp;amp; = \exp \left\{ \ln {\mu^x (1-\mu)^{1-x}} \right\} \\ &amp;amp; = \exp \left\{ x \ln\mu + (1-x) \ln{(1-\mu)}\right\} \\ &amp;amp; = \exp \left\{ x \ln\mu - x \ln{(1-\mu)} + \ln{(1-\mu)}\right\} \\ &amp;amp; = \exp \left\{ x \ln{\mu \over {1-\mu}} + \ln{(1-\mu)} \right\} \\ &amp;amp; = (1-\mu) \exp \left\{ x \ln{\mu \over {1-\mu}} \right\} \end{aligned} \] 于是有</description>
     </item>
     
-    <item>
-      <title>重复测量数据方差分析</title>
-      <link>https://fanggong.pub/posts/20210311_repeat_measure_anova/</link>
-      <pubDate>Thu, 11 Mar 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://fanggong.pub/posts/20210311_repeat_measure_anova/</guid>
-      <description>数据 正态性检验 方差齐性检验 方差分析 球形检验 p值校正 多重比较、单独效应分析等   相关包：car
-在这里仅记录重复测量数据方差分析的R语言实现及结果解释，不涉及其原理说明。
-重复测量数据的方差分析的步骤大致如下图：
- Figure 1: 重复测量数据方差分析流程  数据 使用下面的代码造一份假数据，50个对象，分成5个处理分组（甲乙丙丁戊），对每个对象进行4次重复测量。
-set.seed(2414) dat &amp;lt;- data.frame( ID = gl(50, 1), group = gl(5, 10, labels = c(&amp;quot;甲&amp;quot;, &amp;quot;乙&amp;quot;, &amp;quot;丙&amp;quot;, &amp;quot;丁&amp;quot;, &amp;quot;戊&amp;quot;)), measure_1 = round(rnorm(50, 50), 2), measure_2 = round(rnorm(50, 30), 2), measure_3 = round(rnorm(50, 20), 2), measure_4 = round(rnorm(50, 40), 2) )   ID  group  measure_1  measure_2  measure_3  measure_4      1  甲  51.</description>
-    </item>
-    
   </channel>
 </rss>

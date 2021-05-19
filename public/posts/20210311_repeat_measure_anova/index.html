@@ -11,7 +11,7 @@
 
     <meta property="og:site_name" content="Fang Yongchao">
     <meta property="og:title" content="
-  重复测量数据方差分析 - Fang Yongchao
+  重复测量数据方差分析的R语言实现 - Fang Yongchao
 ">
     <meta property="og:description" content="">
     <meta property="og:type" content="website">
@@ -27,7 +27,7 @@
     <base href="https://fanggong.pub/posts/20210311_repeat_measure_anova/">
 
     <title>
-  重复测量数据方差分析 - Fang Yongchao
+  重复测量数据方差分析的R语言实现 - Fang Yongchao
 </title>
 
     <link rel="canonical" href="https://fanggong.pub/posts/20210311_repeat_measure_anova/">
@@ -108,7 +108,7 @@
   <article>
 
     <header>
-      <h1 class="title">重复测量数据方差分析</h1>
+      <h1 class="title">重复测量数据方差分析的R语言实现</h1>
       <h2 class="date">March 11, 2021</h2>
     </header>
 
@@ -125,7 +125,6 @@
 <li><a href="#方差分析">方差分析</a></li>
 <li><a href="#球形检验">球形检验</a></li>
 <li><a href="#p值校正">p值校正</a></li>
-<li><a href="#多重比较单独效应分析等">多重比较、单独效应分析等</a></li>
 </ul>
 </div>
 
@@ -4135,11 +4134,6 @@ summary(aov_result, multivariate = FALSE, univariate = TRUE)</code></pre>
 ## time       1.047255 6.290759e-151
 ## group:time 1.047255  6.583041e-01</code></pre>
 <p>结果与上方使用base R进行方差分析和球形检验的结果基本一致，并且在最后给出了用Greenhouse-Geisser和Huynh-Feldt方法进行校正后的p值。</p>
-</div>
-<div id="多重比较单独效应分析等" class="section level2">
-<h2>多重比较、单独效应分析等</h2>
-<hr />
-<p>这里的做法与常见的多因素方差分析没有区别。</p>
 </div>
 
   </article>

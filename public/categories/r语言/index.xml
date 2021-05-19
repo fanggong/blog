@@ -158,12 +158,12 @@ methods(mean) ## [1] mean.</description>
     </item>
     
     <item>
-      <title>重复测量数据方差分析</title>
+      <title>重复测量数据方差分析的R语言实现</title>
       <link>https://fanggong.pub/posts/20210311_repeat_measure_anova/</link>
       <pubDate>Thu, 11 Mar 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210311_repeat_measure_anova/</guid>
-      <description>数据 正态性检验 方差齐性检验 方差分析 球形检验 p值校正 多重比较、单独效应分析等   相关包：car
+      <description>数据 正态性检验 方差齐性检验 方差分析 球形检验 p值校正   相关包：car
 在这里仅记录重复测量数据方差分析的R语言实现及结果解释，不涉及其原理说明。
 重复测量数据的方差分析的步骤大致如下图：
  Figure 1: 重复测量数据方差分析流程  数据 使用下面的代码造一份假数据，50个对象，分成5个处理分组（甲乙丙丁戊），对每个对象进行4次重复测量。

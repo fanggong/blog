@@ -212,53 +212,19 @@
 <h2>各检验方法的R语言实现</h2>
 <hr />
 <ul>
-<li>z检验：</li>
+<li>z检验：<code>BSDA::z.test()</code></li>
+<li>t检验：<code>t.test(var.equal = TRUE)</code></li>
+<li>近似t检验：<code>t.test()</code></li>
+<li>Pearson卡方检验：<code>chisq.test(correct = FALSE)</code></li>
+<li>连续性校正卡方检验：<code>chisq.test()</code></li>
+<li>Fisher精确检验：<code>fisher.test()</code></li>
+<li>Wilcoxon秩和检验：<code>wilcox.test()</code></li>
+<li>K-W秩和检验：<code>kruskal.test()</code></li>
+<li>Ridit分析：<code>Ridit::ridit()</code></li>
+<li>方差分析：<code>aov()</code></li>
+<li>二项检验：<code>binom.test()</code></li>
+<li>泊松检验：<code>poisson.test()</code></li>
 </ul>
-<pre class="r"><code>BSDA::z.test()</code></pre>
-<ul>
-<li>t检验：</li>
-</ul>
-<pre class="r"><code>t.test(var.equal = TRUE)</code></pre>
-<ul>
-<li>近似t检验：</li>
-</ul>
-<pre class="r"><code>t.test()</code></pre>
-<ul>
-<li>Pearson卡方检验：</li>
-</ul>
-<pre class="r"><code>chisq.test(correct = FALSE)</code></pre>
-<ul>
-<li>连续性校正卡方检验：</li>
-</ul>
-<pre class="r"><code>chisq.test()</code></pre>
-<ul>
-<li>Fisher精确检验：</li>
-</ul>
-<pre class="r"><code>fisher.test()</code></pre>
-<ul>
-<li>Wilcoxon秩和检验：</li>
-</ul>
-<pre class="r"><code>wilcox.test()</code></pre>
-<ul>
-<li>K-W秩和检验：</li>
-</ul>
-<pre class="r"><code>kruskal.test()</code></pre>
-<ul>
-<li>Ridit分析：</li>
-</ul>
-<pre class="r"><code>Ridit::ridit()</code></pre>
-<ul>
-<li>方差分析：</li>
-</ul>
-<pre class="r"><code>aov()</code></pre>
-<ul>
-<li>二项检验：</li>
-</ul>
-<pre class="r"><code>binom.test()</code></pre>
-<ul>
-<li>泊松检验：</li>
-</ul>
-<pre class="r"><code>poisson.test()</code></pre>
 </div>
 
   </article>

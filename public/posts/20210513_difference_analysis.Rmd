@@ -96,53 +96,17 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE, eval = FALSE)
 
 ----------------------------
 
-- z检验：
-```{r}
-BSDA::z.test()
-```
-- t检验：
-```{r}
-t.test(var.equal = TRUE)
-```
-- 近似t检验：
-```{r}
-t.test()
-```
-- Pearson卡方检验：
-```{r}
-chisq.test(correct = FALSE)
-```
-- 连续性校正卡方检验：
-```{r}
-chisq.test()
-```
-- Fisher精确检验：
-```{r}
-fisher.test()
-```
-- Wilcoxon秩和检验：
-```{r}
-wilcox.test()
-```
-- K-W秩和检验：
-```{r}
-kruskal.test()
-```
-- Ridit分析：
-```{r}
-Ridit::ridit()
-```
-- 方差分析：
-```{r}
-aov()
-```
-- 二项检验：
-```{r}
-binom.test()
-```
-- 泊松检验：
-```{r}
-poisson.test()
-```
+- z检验：`BSDA::z.test()`
+- t检验：`t.test(var.equal = TRUE)`
+- 近似t检验：`t.test()`
+- Pearson卡方检验：`chisq.test(correct = FALSE)`
+- 连续性校正卡方检验：`chisq.test()`
+- Fisher精确检验：`fisher.test()`
+- Wilcoxon秩和检验：`wilcox.test()`
+- K-W秩和检验：`kruskal.test()`
+- Ridit分析：`Ridit::ridit()`
+- 方差分析：`aov()`
+- 二项检验：`binom.test()`
+- 泊松检验：`poisson.test()`
 
 
