@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Fang Yongchao</title>
+    <title>Connecting the dots</title>
     <link>https://fanggong.pub/</link>
-    <description>Recent content on Fang Yongchao</description>
+    <description>Recent content on Connecting the dots</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
     <lastBuildDate>Mon, 17 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/index.xml" rel="self" type="application/rss+xml" />
@@ -64,6 +64,16 @@
 我们知道一个均匀的硬币正面朝上的概率应该是0.5，所以当数据量较小时，极大似然估计的结果与我们的先验知识就产生了偏差（在数据量大的情况下并不会有这样的问题，因为如果丢一个硬币10000次，正面朝上7000次，反面朝上3000次，那么应该做的是好好查查这个硬币是不是真的是均匀的了）。
  最大后验概率估计(MAP) 在极大似然估计中我们寻找使得\(P(X|p)\)取到最大值的\(p\)，而在最大后验概率估计中，我们寻找的是使得\(P(X|p)P(p)\)取到最大值的\(p\)。
 根据贝叶斯公式有： \[ P(X|p)P(p) = P(p|X)P(X) \] 这里的\(P(X)\)是一个已知的值（7次正面，3次反面），所以我们要求解的实际是使得\(P(p|X)\)（即后验概率，故称为最大后验概率估计）取到最大值的\(p\)。</description>
+    </item>
+    
+    <item>
+      <title>梯度提升树（GBDT）原理</title>
+      <link>https://fanggong.pub/posts/20210507_gbdt/</link>
+      <pubDate>Fri, 07 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://fanggong.pub/posts/20210507_gbdt/</guid>
+      <description>GBDT算法原理 回归问题下的GDBT 二分类问题下的GBDT 多分类问题下的GBDT   GBDT算法原理 GBDT可以表示为决策树的加法模型，即： \[ \hat y_i = \sum_{k=1}^K f_k(x_i) \] 其中\(f\)表示决策树，\(K\)为决策树的数量。
+通过前向分布算法，第t步得到的决策树模型为\(f_t(x)\)，有： \[ \hat y_i^{(t)} = \hat y_i^{(t-1)} + f_t(x_i) \] 其目标函数为： \[ obj^{(t)} = \sum_{i=1}^N l\left(y_i, \hat y_i^{(t-1)} + f_t(x_i) \right) \] 将目标函数使用泰勒一阶展开，有： \[ obj^{(t)} = \sum_{i=1}^N \left[ l(y_i, \hat y_i^{(t-1)}) + g_i f_t(x_i) \right] \] 这里的\(g_i = \left[ {\partial\ l(y_i, \hat y_i) \over \partial \hat y_i} \right]_{\hat y_i = \hat y_i^{(t-1)}}\)，即损失函数关于\(\hat y_i\)求导后带入\(\hat y_i = \hat y_i^{(t-1)}\)。</description>
     </item>
     
     <item>

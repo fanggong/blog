@@ -11,26 +11,26 @@
 
     <meta property="og:site_name" content="Connecting the dots">
     <meta property="og:title" content="
-  ggplot2使用笔记（7）—— Faceting - Connecting the dots
+  梯度提升树（GBDT）原理 - Connecting the dots
 ">
     <meta property="og:description" content="">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://fanggong.pub/posts/20210329_ggplot2_faceting/">
+    <meta property="og:url" content="https://fanggong.pub/posts/20210507_gbdt/">
     <meta property="og:image" content="https://fanggong.pub">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="https://fanggong.pub/posts/20210329_ggplot2_faceting/">
+    <meta name="twitter:site" content="https://fanggong.pub/posts/20210507_gbdt/">
     <meta name="twitter:image" content="https://fanggong.pub">
     
     <meta name="google-site-verification" content="Rn4HeSdMtsEZ8JGAVqKw6WgCPedwLdcfHofZ_XCAZNc" />
     
-    <base href="https://fanggong.pub/posts/20210329_ggplot2_faceting/">
+    <base href="https://fanggong.pub/posts/20210507_gbdt/">
 
     <title>
-  ggplot2使用笔记（7）—— Faceting - Connecting the dots
+  梯度提升树（GBDT）原理 - Connecting the dots
 </title>
 
-    <link rel="canonical" href="https://fanggong.pub/posts/20210329_ggplot2_faceting/">
+    <link rel="canonical" href="https://fanggong.pub/posts/20210507_gbdt/">
     
     
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
@@ -108,8 +108,8 @@
   <article>
 
     <header>
-      <h1 class="title">ggplot2使用笔记（7）—— Faceting</h1>
-      <h2 class="date">March 29, 2021</h2>
+      <h1 class="title">梯度提升树（GBDT）原理</h1>
+      <h2 class="date">May 7, 2021</h2>
     </header>
 
     
@@ -117,26 +117,79 @@
 
 <div id="TOC">
 <ul>
-<li><a href="#facet_grid"><code>facet_grid()</code></a></li>
-<li><a href="#facet_wrap"><code>facet_wrap()</code></a></li>
+<li><a href="#gbdt算法原理">GBDT算法原理</a></li>
+<li><a href="#回归问题下的gdbt">回归问题下的GDBT</a></li>
+<li><a href="#二分类问题下的gbdt">二分类问题下的GBDT</a></li>
+<li><a href="#多分类问题下的gbdt">多分类问题下的GBDT</a></li>
 </ul>
 </div>
 
-<p>分面函数<code>&lt;FACET_FUNCTION&gt;</code>提供了两种分面方式，第一种是网格式的分面<code>facet_grid()</code>，另一种<code>facet_wrap()</code>可以理解为将多个图按从左至右从上至下的顺序放入设计好的网格中。</p>
-<div id="facet_grid" class="section level2">
-<h2><code>facet_grid()</code></h2>
+<div id="gbdt算法原理" class="section level2">
+<h2>GBDT算法原理</h2>
 <hr />
-<pre class="r"><code>ggplot(mpg, aes(cty, hwy)) + 
-  geom_point() + 
-  facet_grid(rows = vars(year), cols = vars(fl))</code></pre>
-<p><img src="/posts/20210329_ggplot2_faceting_files/figure-html/unnamed-chunk-2-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>GBDT可以表示为决策树的加法模型，即：
+<span class="math display">\[
+\hat y_i = \sum_{k=1}^K f_k(x_i)
+\]</span>
+其中<span class="math inline">\(f\)</span>表示决策树，<span class="math inline">\(K\)</span>为决策树的数量。</p>
+<p>通过前向分布算法，第t步得到的决策树模型为<span class="math inline">\(f_t(x)\)</span>，有：
+<span class="math display">\[
+\hat y_i^{(t)} = \hat y_i^{(t-1)} + f_t(x_i)
+\]</span>
+其目标函数为：
+<span class="math display">\[
+obj^{(t)} = \sum_{i=1}^N l\left(y_i, \hat y_i^{(t-1)} + f_t(x_i) \right)
+\]</span>
+将目标函数使用泰勒一阶展开，有：
+<span class="math display">\[
+obj^{(t)} = \sum_{i=1}^N \left[ l(y_i, \hat y_i^{(t-1)}) + g_i f_t(x_i) \right]
+\]</span>
+这里的<span class="math inline">\(g_i = \left[ {\partial\ l(y_i, \hat y_i) \over \partial \hat y_i} \right]_{\hat y_i = \hat y_i^{(t-1)}}\)</span>，即损失函数关于<span class="math inline">\(\hat y_i\)</span>求导后带入<span class="math inline">\(\hat y_i = \hat y_i^{(t-1)}\)</span>。</p>
+<p>丢掉目标函数中的常数部分，我们要最优化的是下面的部分：
+<span class="math display">\[
+\sum_{i=1}^N g_if_t(x_i)
+\]</span></p>
+<p>于是可以运用梯度下降的思想，沿着负梯度方向拟合第t棵决策树<span class="math inline">\(f_t(x)\)</span>，即对于每个样本，<span class="math inline">\(f_t(x)\)</span>需要拟合的值为：
+<span class="math display">\[
+r_i = - \gamma g_i
+\]</span>
+其中<span class="math inline">\(\gamma\)</span>即为梯度下降的步长，或者可以称作学习率。</p>
 </div>
-<div id="facet_wrap" class="section level2">
-<h2><code>facet_wrap()</code></h2>
+<div id="回归问题下的gdbt" class="section level2">
+<h2>回归问题下的GDBT</h2>
 <hr />
-<pre class="r"><code>ggplot(mpg, aes(cty, hwy)) + 
-  facet_wrap(vars(fl), nrow = 3)</code></pre>
-<p><img src="/posts/20210329_ggplot2_faceting_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>在回归问题下，如果使用二分之一的MSE作为损失函数，即：
+<span class="math display">\[
+l(y, \hat y) = {1 \over 2} (y - \hat y)^2
+\]</span>
+这时候，第t棵决策树<span class="math inline">\(f_t(x)\)</span>需要拟合的值就是：
+<span class="math display">\[
+r_i = \gamma\ (y_i - \hat y_i^{(t-1)})
+\]</span>
+当步长（学习率）为1时，拟合的即为前t-1棵决策树模型之和与真实值的残差。</p>
+</div>
+<div id="二分类问题下的gbdt" class="section level2">
+<h2>二分类问题下的GBDT</h2>
+<hr />
+<p>在二分类问题下，损失函数为：
+<span class="math display">\[
+l(y, \hat y) =  y\ln(1 + e^{-\hat y}) + (1-y)\ln(1 + e^{\hat y})
+\]</span>
+注意这里的<span class="math inline">\(\hat y\)</span>类似逻辑回归中的<span class="math inline">\(\ln{p \over {1-p}}\)</span>。</p>
+<p>这时候，第t棵决策树<span class="math inline">\(f_t(x)\)</span>需要拟合的值就是：
+<span class="math display">\[
+\begin{aligned}
+r_i &amp; = \gamma\ ({y_i \over {1+e^{-\hat y_i^{(t-1)}}}}e^{- \hat y_i^{(t-1)} } - {{1-y_i} \over {1+e^{\hat y_i^{(t-1)}}}} e^{\hat y_i^{(t-1)}}) \\
+ &amp; = \gamma\ (y_i - {1 \over {1 + e^{-\hat y_i^{(t-1)}}}}) \\
+ &amp; = \gamma\ (y - p_i^{(t-1)})
+\end{aligned}
+\]</span>
+也就是说，当步长（学习率）为1时，拟合的是前t-1棵决策树模型预测的概率之和与真实标签之差。</p>
+</div>
+<div id="多分类问题下的gbdt" class="section level2">
+<h2>多分类问题下的GBDT</h2>
+<hr />
+<p>有空再写</p>
 </div>
 
   </article>
