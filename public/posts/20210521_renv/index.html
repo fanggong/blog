@@ -11,26 +11,26 @@
 
     <meta property="og:site_name" content="Connecting the dots">
     <meta property="og:title" content="
-  梯度提升树（GBDT）原理 - Connecting the dots
+  R语言项目环境管理 - Connecting the dots
 ">
     <meta property="og:description" content="">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://fanggong.pub/posts/20210507_gbdt/">
+    <meta property="og:url" content="https://fanggong.pub/posts/20210521_renv/">
     <meta property="og:image" content="https://fanggong.pub">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="https://fanggong.pub/posts/20210507_gbdt/">
+    <meta name="twitter:site" content="https://fanggong.pub/posts/20210521_renv/">
     <meta name="twitter:image" content="https://fanggong.pub">
     
     <meta name="google-site-verification" content="Rn4HeSdMtsEZ8JGAVqKw6WgCPedwLdcfHofZ_XCAZNc" />
     
-    <base href="https://fanggong.pub/posts/20210507_gbdt/">
+    <base href="https://fanggong.pub/posts/20210521_renv/">
 
     <title>
-  梯度提升树（GBDT）原理 - Connecting the dots
+  R语言项目环境管理 - Connecting the dots
 </title>
 
-    <link rel="canonical" href="https://fanggong.pub/posts/20210507_gbdt/">
+    <link rel="canonical" href="https://fanggong.pub/posts/20210521_renv/">
     
     
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
@@ -108,8 +108,8 @@
   <article>
 
     <header>
-      <h1 class="title">梯度提升树（GBDT）原理</h1>
-      <h2 class="date">May 7, 2021</h2>
+      <h1 class="title">R语言项目环境管理</h1>
+      <h2 class="date">May 21, 2021</h2>
     </header>
 
     
@@ -117,79 +117,41 @@
 
 <div id="TOC">
 <ul>
-<li><a href="#gbdt算法原理">GBDT算法原理</a></li>
-<li><a href="#回归问题下的gdbt">回归问题下的GDBT</a></li>
-<li><a href="#二分类问题下的gbdt">二分类问题下的GBDT</a></li>
-<li><a href="#多分类问题下的gbdt">多分类问题下的GBDT</a></li>
+<li><a href="#环境初始化">环境初始化</a></li>
+<li><a href="#对环境管理">对环境管理</a></li>
+<li><a href="#renv的全局缓存">renv的全局缓存</a></li>
+<li><a href="#移除环境">移除环境</a></li>
 </ul>
 </div>
 
-<div id="gbdt算法原理" class="section level2">
-<h2>GBDT算法原理</h2>
-<hr />
-<p>GBDT可以表示为决策树的加法模型，即：
-<span class="math display">\[
-\hat y_i = \sum_{k=1}^K f_k(x_i)
-\]</span>
-其中<span class="math inline">\(f\)</span>表示决策树，<span class="math inline">\(K\)</span>为决策树的数量。</p>
-<p>通过前向分步骤算法，第t步得到的决策树模型为<span class="math inline">\(f_t(x)\)</span>，有：
-<span class="math display">\[
-\hat y_i^{(t)} = \hat y_i^{(t-1)} + f_t(x_i)
-\]</span>
-其目标函数为：
-<span class="math display">\[
-obj^{(t)} = \sum_{i=1}^N l\left(y_i, \hat y_i^{(t-1)} + f_t(x_i) \right)
-\]</span>
-将目标函数使用泰勒一阶展开，有：
-<span class="math display">\[
-obj^{(t)} = \sum_{i=1}^N \left[ l(y_i, \hat y_i^{(t-1)}) + g_i f_t(x_i) \right]
-\]</span>
-这里的<span class="math inline">\(g_i = \left[ {\partial\ l(y_i, \hat y_i) \over \partial \hat y_i} \right]_{\hat y_i = \hat y_i^{(t-1)}}\)</span>，即损失函数关于<span class="math inline">\(\hat y_i\)</span>求导后带入<span class="math inline">\(\hat y_i = \hat y_i^{(t-1)}\)</span>。</p>
-<p>丢掉目标函数中的常数部分，我们要最优化的是下面的部分：
-<span class="math display">\[
-\sum_{i=1}^N g_if_t(x_i)
-\]</span></p>
-<p>于是可以运用梯度下降的思想，沿着负梯度方向拟合第t棵决策树<span class="math inline">\(f_t(x)\)</span>，即对于每个样本，<span class="math inline">\(f_t(x)\)</span>需要拟合的值为：
-<span class="math display">\[
-r_i = - \gamma g_i
-\]</span>
-其中<span class="math inline">\(\gamma\)</span>即为梯度下降的步长，或者可以称作学习率。</p>
+<p>相关包：<a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/renv/index.html">renv</a></p>
+<p>第一次知道这个包是在很早的时候，但是并没有什么使用的动力，毕竟我的电脑很久才会换一次，而公司的服务器，已经很久没有换过了…所有并没有频繁在新环境中运行代码的需求。直到有一天，当我想把docker和R一起使用以解决R的无法并行的问题时，终于体会到了<a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/renv/index.html">renv</a>的真香。</p>
+<div id="环境初始化" class="section level2">
+<h2>环境初始化</h2>
+<p>在一个新的项目中使用<code>renv::init()</code>对环境进行初始化，该操作会生成一个名为<strong>renv</strong>的文件夹和名为<strong>renv.lock</strong>的文件。</p>
+<p><strong>renv</strong>下保存了在环境中已安装的包的文件（准确的说是已安装包的符号链接文件），而<strong>renv.lock</strong>指定了该项目对<strong>renv</strong>下的包的相关依赖。</p>
 </div>
-<div id="回归问题下的gdbt" class="section level2">
-<h2>回归问题下的GDBT</h2>
-<hr />
-<p>在回归问题下，如果使用二分之一的MSE作为损失函数，即：
-<span class="math display">\[
-l(y, \hat y) = {1 \over 2} (y - \hat y)^2
-\]</span>
-这时候，第t棵决策树<span class="math inline">\(f_t(x)\)</span>需要拟合的值就是：
-<span class="math display">\[
-r_i = \gamma\ (y_i - \hat y_i^{(t-1)})
-\]</span>
-当步长（学习率）为1时，拟合的即为前t-1棵决策树模型之和与真实值的残差。</p>
+<div id="对环境管理" class="section level2">
+<h2>对环境管理</h2>
+<p>使用<code>renv::restore()</code>和<code>renv::snapshot()</code>对环境进行管理。</p>
+<p><code>renv::restore()</code>根据<strong>renv.lock</strong>文件安装环境中缺少的包到<strong>renv</strong>文件夹下。</p>
+<p><code>renv::snapshot()</code>根据当前环境下的项目情况将依赖写入<strong>renv.lock</strong>文件中。</p>
+<p>这里的逻辑有点绕但是很合理：如果某个包已经安装在了<strong>renv</strong>中但是在实际项目中没有被使用，那么<code>renv::snapshot()</code>是不会将该包写入<strong>renv.lock</strong>文件中的。这也就是说，我们可以没有什么心理压力地安装各种包了，它只会污染你的开发环境而不会污染生产环境。</p>
 </div>
-<div id="二分类问题下的gbdt" class="section level2">
-<h2>二分类问题下的GBDT</h2>
-<hr />
-<p>在二分类问题下，损失函数为：
-<span class="math display">\[
-l(y, \hat y) =  y\ln(1 + e^{-\hat y}) + (1-y)\ln(1 + e^{\hat y})
-\]</span>
-注意这里的<span class="math inline">\(\hat y\)</span>类似逻辑回归中的<span class="math inline">\(\ln{p \over {1-p}}\)</span>。</p>
-<p>这时候，第t棵决策树<span class="math inline">\(f_t(x)\)</span>需要拟合的值就是：
-<span class="math display">\[
-\begin{aligned}
-r_i &amp; = \gamma\ ({y_i \over {1+e^{-\hat y_i^{(t-1)}}}}e^{- \hat y_i^{(t-1)} } - {{1-y_i} \over {1+e^{\hat y_i^{(t-1)}}}} e^{\hat y_i^{(t-1)}}) \\
- &amp; = \gamma\ (y_i - {1 \over {1 + e^{-\hat y_i^{(t-1)}}}}) \\
- &amp; = \gamma\ (y - p_i^{(t-1)})
-\end{aligned}
-\]</span>
-也就是说，当步长（学习率）为1时，拟合的是前t-1棵决策树模型预测的概率之和与真实标签之差。</p>
+<div id="renv的全局缓存" class="section level2">
+<h2>renv的全局缓存</h2>
+<p>在使用了<code>renv</code>的项目中安装新的包时，包并不会被安装在我们安装R时指定的包存储路径，而是安装在了<code>renv</code>的全局包缓存中（global package cache）。两者之间最大的区别我认为在于后者中可以存在同一个包的不同版本。</p>
+<p>当使用<code>renv::restore()</code>时，如果该包存在于global package cache中，那么在<strong>renv</strong>文件夹下会形成该包的符号链接；如果global package cache中不存在该包，那么会先将该包安装到global package cache中，然后形成符号链接。同时可以使用<code>renv::isolate()</code>将cache中的包复制到<strong>renv</strong>文件夹中从而切断对cache的依赖。</p>
+<p><code>renv</code>的global package cache路径为：</p>
+<ul>
+<li>Mac：<code>~/Library/Application Support/renv</code></li>
+<li>Linux：<code>~/.local/share/renv</code></li>
+<li>Windows：<code>%LOCALAPPDATA%/renv</code></li>
+</ul>
 </div>
-<div id="多分类问题下的gbdt" class="section level2">
-<h2>多分类问题下的GBDT</h2>
-<hr />
-<p>有空再写</p>
+<div id="移除环境" class="section level2">
+<h2>移除环境</h2>
+<p>使用<code>renv::deactivate()</code>使<code>renv</code>无效，即项目回到使用全局环境的状态。该命令只会删除<strong>.Rprofile</strong>文件使得<code>renv</code>相关文件无效，而不会删除<code>renv</code>相关文件以防止需要重新启用<code>renv</code>。但对于我这种轻度强迫症来说，没有用的文件是一定不能留在项目里的，所以我选择手动删除项目中的所有<code>renv</code>相关文件。</p>
 </div>
 
   </article>

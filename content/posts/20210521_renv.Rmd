@@ -9,7 +9,6 @@ output:
   blogdown::html_page:
     toc: yes
     toc_depth: 2
-draft: true
 ---
 
 相关包：[renv](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/renv/index.html)
