@@ -13,10 +13,10 @@
       <pubDate>Mon, 17 May 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210517_xgboost/</guid>
-      <description>目标函数：损失函数 + 正则项 决策树集成 xgboost的损失函数 xgboost的正则项 xgboost的目标函数 寻找最优结构的树 几个比较纠结的问题   参考文章：
- Introduction to Boosted Trees XGBoost: A Scalable Tree Boosting System  以下内容主要是对上面文章内容的整理以及一些个人理解。
-目标函数：损失函数 + 正则项 在机器学习模型中，目标函数一般由损失函数和正则项组成： \[ obj(\theta) = L(\theta) + \Omega(\theta) \]
-其中\(L(\theta)\)为损失函数，在回归模型中，我们常常定义为MSE，即： \[ L(\theta) = \sum_i(y_i - \hat y_i)^2 \] 或是在逻辑回归模型中，我们定义为： \[ L(\theta) = \sum_i \left[ y_i\ln(1 + e^{-\hat y_i}) + (1 - y_i)\ln(1 + e^{\hat y_i}) \right] \] （逻辑回归的损失函数非常直观：当\(y_i\)为1时，\(\hat y_i\)越大则\(L(\theta)\)越小；而当\(y_i\)为0时，\(\hat y_i\)越小则\(L(\theta)\)越小）</description>
+      <description>目标函数：损失函数 + 正则项决策树集成xgboost的损失函数xgboost的正则项xgboost的目标函数寻找最优结构的树几个比较纠结的问题参考文章：
+Introduction to Boosted TreesXGBoost: A Scalable Tree Boosting System以下内容主要是对上面文章内容的整理以及一些个人理解。
+目标函数：损失函数 + 正则项在机器学习模型中，目标函数一般由损失函数和正则项组成：\[obj(\theta) = L(\theta) + \Omega(\theta)\]
+其中\(L(\theta)\)为损失函数，在回归模型中，我们常常定义为MSE，即：\[L(\theta) = \sum_i(y_i - \hat y_i)^2\]或是在逻辑回归模型中，我们定义为：\[L(\theta) = \sum_i \left[ y_i\ln(1 + e^{-\hat y_i}) + (1 - y_i)\ln(1 + e^{\hat y_i}) \right]\]（逻辑回归的损失函数非常直观：当\(y_i\)为1时，\(\hat y_i\)越大则\(L(\theta)\)越小；而当\(y_i\)为0时，\(\hat y_i\)越小则\(L(\theta)\)越小）</description>
     </item>
     
     <item>
@@ -25,8 +25,8 @@
       <pubDate>Fri, 07 May 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210507_gbdt/</guid>
-      <description>GBDT算法原理 回归问题下的GDBT 二分类问题下的GBDT 多分类问题下的GBDT   GBDT算法原理 GBDT可以表示为决策树的加法模型，即： \[ \hat y_i = \sum_{k=1}^K f_k(x_i) \] 其中\(f\)表示决策树，\(K\)为决策树的数量。
-通过前向分布算法，第t步得到的决策树模型为\(f_t(x)\)，有： \[ \hat y_i^{(t)} = \hat y_i^{(t-1)} + f_t(x_i) \] 其目标函数为： \[ obj^{(t)} = \sum_{i=1}^N l\left(y_i, \hat y_i^{(t-1)} + f_t(x_i) \right) \] 将目标函数使用泰勒一阶展开，有： \[ obj^{(t)} = \sum_{i=1}^N \left[ l(y_i, \hat y_i^{(t-1)}) + g_i f_t(x_i) \right] \] 这里的\(g_i = \left[ {\partial\ l(y_i, \hat y_i) \over \partial \hat y_i} \right]_{\hat y_i = \hat y_i^{(t-1)}}\)，即损失函数关于\(\hat y_i\)求导后带入\(\hat y_i = \hat y_i^{(t-1)}\)。</description>
+      <description>GBDT算法原理回归问题下的GDBT二分类问题下的GBDT多分类问题下的GBDTGBDT算法原理GBDT可以表示为决策树的加法模型，即：\[\hat y_i = \sum_{k=1}^K f_k(x_i)\]其中\(f\)表示决策树，\(K\)为决策树的数量。
+通过前向分布算法，第t步得到的决策树模型为\(f_t(x)\)，有：\[\hat y_i^{(t)} = \hat y_i^{(t-1)} + f_t(x_i)\]其目标函数为：\[obj^{(t)} = \sum_{i=1}^N l\left(y_i, \hat y_i^{(t-1)} + f_t(x_i) \right)\]将目标函数使用泰勒一阶展开，有：\[obj^{(t)} = \sum_{i=1}^N \left[ l(y_i, \hat y_i^{(t-1)}) + g_i f_t(x_i) \right]\]这里的\(g_i = \left[ {\partial\ l(y_i, \hat y_i) \over \partial \hat y_i} \right]_{\hat y_i = \hat y_i^{(t-1)}}\)，即损失函数关于\(\hat y_i\)求导后带入\(\hat y_i = \hat y_i^{(t-1)}\)。</description>
     </item>
     
     <item>
@@ -35,11 +35,11 @@
       <pubDate>Wed, 28 Apr 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210428_concepts_about_decision_tree/</guid>
-      <description>信息熵(Entropy) 条件熵(Conditional Entropy) 信息增益(Information Gain, IG) 信息增益比(Information Gain Ratio) 基尼指数(Gini Index)   信息熵(Entropy) 设\(Y\)是取有限个值的离散随机变量，其概率分布为： \[ P(Y = y_i) = p_i,\quad i = 1, 2, 3, ..., n \]
-则随机变量\(Y\)的熵的定义为： \[ H(Y) = -\sum_{i=1}^n p_i\log_bp_i \] 根据对数的底\(b\)的不同，熵的单位不同。当\(b\)为2时，单位为比特(bit)，当\(b\)为e时，单位为纳特(nat)。
+      <description>信息熵(Entropy)条件熵(Conditional Entropy)信息增益(Information Gain, IG)信息增益比(Information Gain Ratio)基尼指数(Gini Index)信息熵(Entropy)设\(Y\)是取有限个值的离散随机变量，其概率分布为：\[P(Y = y_i) = p_i,\quad i = 1, 2, 3, ..., n\]
+则随机变量\(Y\)的熵的定义为：\[H(Y) = -\sum_{i=1}^n p_i\log_bp_i\]根据对数的底\(b\)的不同，熵的单位不同。当\(b\)为2时，单位为比特(bit)，当\(b\)为e时，单位为纳特(nat)。
 熵被认为是不确定性的度量。很显然当系统内只有一个事件且该事件必定发生时，熵取最小值为0。当系统内各事件发生概率相同时，熵取最大值\(\log_bn\)，此时系统内的不确定性最高。特别的，当\(p_i\)为0时，\(p_i \log_bp_i\)为0。
- 条件熵(Conditional Entropy) 条件熵表示基于某条件下的信息熵。定义为： \[ H(Y|X) = \sum_{i=1}^np_iH(Y|X = x_i) \] 这里的\(p_i=P(X = x_i),\quad i = 1,2,3,...,n\)。\(H(Y|X = x_i)\)为\(X\)取\(x_i\)时，\(Y\)的信息熵。
- 信息增益(Information Gain, IG) 信息增益等于信息熵减去条件熵。即： \[ IG(Y, X) = H(Y) - H(Y|X) \] 可以理解为在知道变量\(X\)后，\(Y\)的不确定性减少了多少。</description>
+条件熵(Conditional Entropy)条件熵表示基于某条件下的信息熵。定义为：\[H(Y|X) = \sum_{i=1}^np_iH(Y|X = x_i)\]这里的\(p_i=P(X = x_i),\quad i = 1,2,3,...,n\)。\(H(Y|X = x_i)\)为\(X\)取\(x_i\)时，\(Y\)的信息熵。
+信息增益(Information Gain, IG)信息增益等于信息熵减去条件熵。即：\[IG(Y, X) = H(Y) - H(Y|X)\]可以理解为在知道变量\(X\)后，\(Y\)的不确定性减少了多少。</description>
     </item>
     
     <item>
@@ -48,11 +48,11 @@
       <pubDate>Sun, 18 Apr 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210418_concepts_about_feature_selection/</guid>
-      <description>WOE(Weight of Evidence)和IV(Information Value) 群体稳定性指标(Population Stability Index, PSI)   这三个概念对我来说并不经常用到，但是每次用到的时候具体细节总是记串了，所以特别记下来。
-WOE(Weight of Evidence)和IV(Information Value) WOE为“当前分组下正样本占所有正样本比例”与“当前分组下负样本占所有负样本比例”的对数差，即对包含\(\{ x_1, x_2, ..., x_n \}\)\(n\)个类别的变量\(X\)，有： \[ p_{i1} = {N(Y = 1|X = x_i) \over N(Y = 1)}; \quad p_{i0} = {N(Y = 0|X = x_i) \over N(Y = 0)} \] \[ WOE(x_i) = \ln { p_{i1} \over p_{i0} } \]
+      <description>WOE(Weight of Evidence)和IV(Information Value)群体稳定性指标(Population Stability Index, PSI)这三个概念对我来说并不经常用到，但是每次用到的时候具体细节总是记串了，所以特别记下来。
+WOE(Weight of Evidence)和IV(Information Value)WOE为“当前分组下正样本占所有正样本比例”与“当前分组下负样本占所有负样本比例”的对数差，即对包含\(\{ x_1, x_2, ..., x_n \}\)\(n\)个类别的变量\(X\)，有：\[p_{i1} = {N(Y = 1|X = x_i) \over N(Y = 1)}; \quad p_{i0} = {N(Y = 0|X = x_i) \over N(Y = 0)}\]\[WOE(x_i) = \ln { p_{i1} \over p_{i0} } \]
 可以看出：
- 当前分组下正负样本比例与总的正负样本比例相同时，WOE的值为0 当前分组下正样本比例高于总的正样本比例时，WOE值为正 当前分组下正样本比例低于总的正样本比例时，WOE值为负  IV为WOE的加权和，其计算方式为：
-\[ IV = \sum_i(p_{i1} - p_{i0})*WOE(x_i) \]</description>
+当前分组下正负样本比例与总的正负样本比例相同时，WOE的值为0当前分组下正样本比例高于总的正样本比例时，WOE值为正当前分组下正样本比例低于总的正样本比例时，WOE值为负IV为WOE的加权和，其计算方式为：
+\[IV = \sum_i(p_{i1} - p_{i0})*WOE(x_i)\]</description>
     </item>
     
   </channel>

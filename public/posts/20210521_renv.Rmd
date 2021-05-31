@@ -1,0 +1,33 @@
+---
+title: R语言项目环境管理
+author: Fang Yongchao
+date: "2021-05-21"
+categories:
+  - "模型工程化"
+  - "R语言"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+draft: true
+---
+
+相关包：[renv](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/renv/index.html)
+
+第一次知道这个包是在很早的时候，但是并没有什么使用的动力，毕竟我的电脑很久才会换一次，而公司的服务器，已经很久没有换过了...所有并没有频繁在新环境中运行代码的需求。直到有一天，当我想把docker和R一起使用以解决R的无法并行的问题时，终于体会到了[renv](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/renv/index.html)的真香。
+
+## 环境初始化
+
+在一个新的项目中使用`renv::init()`对环境进行初始化，该操作会生成一个名为**renv**的文件夹和名为**renv.lock**的文件。
+
+**renv**下保存了在环境中已安装的包的文件，而**renv.lock**指定了该项目对**renv**下的包的相关依赖。
+
+## 对环境管理
+
+使用`renv::restore()`和`renv::snapshot()`对环境进行管理。
+
+`renv::restore()`根据**renv.lock**文件安装环境中缺少的包到**renv**文件夹下。
+
+`renv::snapshot()`根据当前环境下的项目情况将依赖写入**renv.lock**文件中。
+
+这里的逻辑有点绕但是很合理：如果某个包已经安装在了**renv**中但是在实际项目中没有被使用，那么`renv::snapshot()`是不会将该包写入**renv.lock**文件中的。这也就是说，我们可以没有什么心理压力地安装各种包了，它只会污染你的开发环境而不会污染生产环境。

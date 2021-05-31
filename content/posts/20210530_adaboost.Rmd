@@ -1,0 +1,74 @@
+---
+title: adaboost原理
+author: Fang Yongchao
+date: "2021-05-30"
+categories:
+  - "机器学习"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+draft: true
+---
+
+## AdaBoost算法原理
+
+-----------------------
+
+AdaBoost可以表示为基分类器的加法模型：
+$$
+\hat y_i = \sum_{k=1}^K \alpha_k G_k(x_i)
+$$
+其中$G_k$为第$k$个基分类器，$\alpha_k$为其系数。
+
+AdaBoost一般适用于二分类模型，并且将目标变量以±1的形式表示。其损失函数定义为指数损失函数，即：
+$$
+l(y, \hat y) = e^{-y \hat y}
+$$
+
+设第t个基分类器为$G_t(x)$，那么有：
+$$
+\hat y^{(t)}_i = \hat y^{(t-1)}_i + \alpha_t G_t(x_i)
+$$
+
+其目标函数可以表示为：
+$$
+\begin{aligned}
+obj^{(t)} & = \sum_{i=1}^N e^{-y_i \hat y^{(t-1)}_i -y_i\alpha_tG_t(x_i)} \\
+ & = \sum_{i=1}^N \omega_i^{(t)} e^{-y_i \alpha_tG_t(x_i)}  
+\end{aligned}
+$$
+其中$\omega_i^{(t)} = e^{-y_i \hat y^{(t-1)}_i}$是一个常数可以理解为前t-1个基分类器的预测值带入损失函数得到的值。
+
+观察上面的目标函数可以发现，对于任意的大于0的$\alpha_t$，当$y_i = G_t(x_i)$时，$\omega_i^{(t)}$会被乘上一个小于1的值（即$e^{-\alpha_t}$），当$y_i \ne G_t(x_i)$时，$\omega_i^{(t)}$会被乘上一个大于1的值（即$e^{\alpha_t}$）。
+
+因此，第t个基分类器$G_t$的目标函数可以转换为：
+$$
+obj^{(t)} = \sum_{y_i \ne G_t(x_i)}\omega_i^{(t)}
+$$
+这个形式通俗的描述出来就是，对于前t-1个基分类器都预测错误的样本（$\omega_i^{(t)}$较大），在第t个基分类器中就不要再预测错了（不要再让该样本进入$y_i \ne G_t(x_i)$这个集合了）。
+
+接下来需要对$G_t$的系数$\alpha_t$进行求解。对$obj^{(t)} = \sum_{i=1}^N \omega_i^{(t)} e^{-y_i \alpha_tG_t(x_i)}$关于$\alpha_t$求导并令其导数等于0，有：
+$$
+\sum_{y_i \ne G_t(x_i)} \omega^{(t)}_i e^{\alpha_t} + \sum_{y_i = G_t(x_i)} \omega^{(t)}_i e^{-\alpha_t} = 0 
+$$
+于是可以得到：
+$$
+\alpha_t = {1 \over 2} \log {{\sum_{y_i = G_t(x_i)} \omega^{(t)}_i} \over {\sum_{y_i \ne G_t(x_i)} \omega^{(t)}_i}}
+$$
+这里令：
+$$
+e_t = {\sum_{y_i \ne G_t(x_i)} \omega^{(t)}_i \over \sum_{i=1}^N \omega_i^{(t)}}
+$$
+则$\alpha_t$可以写成下面很简洁的形式：
+$$
+\alpha_t = {1 \over 2} \log {{ 1- e_t} \over e_t}
+$$
+
+
+
+
+
+
+
+

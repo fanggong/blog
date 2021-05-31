@@ -1,0 +1,68 @@
+---
+title: adaboost原理
+author: Fang Yongchao
+date: "2021-05-30"
+categories:
+  - "机器学习"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+draft: true
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#adaboost算法原理">AdaBoost算法原理</a></li>
+</ul>
+</div>
+
+<div id="adaboost算法原理" class="section level2">
+<h2>AdaBoost算法原理</h2>
+<hr />
+<p>AdaBoost可以表示为基分类器的加法模型：
+<span class="math display">\[
+\hat y_i = \sum_{k=1}^K \alpha_k G_k(x_i)
+\]</span>
+其中<span class="math inline">\(G_k\)</span>为第<span class="math inline">\(k\)</span>个基分类器，<span class="math inline">\(\alpha_k\)</span>为其系数。</p>
+<p>AdaBoost一般适用于二分类模型，并且将目标变量以±1的形式表示。其损失函数定义为指数损失函数，即：
+<span class="math display">\[
+l(y, \hat y) = e^{-y \hat y}
+\]</span></p>
+<p>设第t个基分类器为<span class="math inline">\(G_t(x)\)</span>，那么有：
+<span class="math display">\[
+\hat y^{(t)}_i = \hat y^{(t-1)}_i + \alpha_t G_t(x_i)
+\]</span></p>
+<p>其目标函数可以表示为：
+<span class="math display">\[
+\begin{aligned}
+obj^{(t)} &amp; = \sum_{i=1}^N e^{-y_i \hat y^{(t-1)}_i -y_i\alpha_tG_t(x_i)} \\
+ &amp; = \sum_{i=1}^N \omega_i^{(t)} e^{-y_i \alpha_tG_t(x_i)}  
+\end{aligned}
+\]</span>
+其中<span class="math inline">\(\omega_i^{(t)} = e^{-y_i \hat y^{(t-1)}_i}\)</span>是一个常数可以理解为前t-1个基分类器的预测值带入损失函数得到的值。</p>
+<p>观察上面的目标函数可以发现，对于任意的大于0的<span class="math inline">\(\alpha_t\)</span>，当<span class="math inline">\(y_i = G_t(x_i)\)</span>时，<span class="math inline">\(\omega_i^{(t)}\)</span>会被乘上一个小于1的值（即<span class="math inline">\(e^{-\alpha_t}\)</span>），当<span class="math inline">\(y_i \ne G_t(x_i)\)</span>时，<span class="math inline">\(\omega_i^{(t)}\)</span>会被乘上一个大于1的值（即<span class="math inline">\(e^{\alpha_t}\)</span>）。</p>
+<p>因此，第t个基分类器<span class="math inline">\(G_t\)</span>的目标函数可以转换为：
+<span class="math display">\[
+obj^{(t)} = \sum_{y_i \ne G_t(x_i)}\omega_i^{(t)}
+\]</span>
+这个形式通俗的描述出来就是，对于前t-1个基分类器都预测错误的样本（<span class="math inline">\(\omega_i^{(t)}\)</span>较大），在第t个基分类器中就不要再预测错了（不要再让该样本进入<span class="math inline">\(y_i \ne G_t(x_i)\)</span>这个集合了）。</p>
+<p>接下来需要对<span class="math inline">\(G_t\)</span>的系数<span class="math inline">\(\alpha_t\)</span>进行求解。对<span class="math inline">\(obj^{(t)} = \sum_{i=1}^N \omega_i^{(t)} e^{-y_i \alpha_tG_t(x_i)}\)</span>关于<span class="math inline">\(\alpha_t\)</span>求导并令其导数等于0，有：
+<span class="math display">\[
+\sum_{y_i \ne G_t(x_i)} \omega^{(t)}_i e^{\alpha_t} + \sum_{y_i = G_t(x_i)} \omega^{(t)}_i e^{-\alpha_t} = 0 
+\]</span>
+于是可以得到：
+<span class="math display">\[
+\alpha_t = {1 \over 2} \log {{\sum_{y_i = G_t(x_i)} \omega^{(t)}_i} \over {\sum_{y_i \ne G_t(x_i)} \omega^{(t)}_i}}
+\]</span>
+这里令：
+<span class="math display">\[
+e_t = {\sum_{y_i \ne G_t(x_i)} \omega^{(t)}_i \over \sum_{i=1}^N \omega_i^{(t)}}
+\]</span>
+则<span class="math inline">\(\alpha_t\)</span>可以写成下面很简洁的形式：
+<span class="math display">\[
+\alpha_t = {1 \over 2} \log {{ 1- e_t} \over e_t}
+\]</span></p>
+</div>
