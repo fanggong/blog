@@ -6,29 +6,7 @@
     <description>Recent content in 机器学习 on Connecting the dots</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Mon, 17 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>xgboost原理</title>
-      <link>https://fanggong.pub/posts/20210517_xgboost/</link>
-      <pubDate>Mon, 17 May 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://fanggong.pub/posts/20210517_xgboost/</guid>
-      <description>目标函数：损失函数 + 正则项 决策树集成 xgboost的损失函数 xgboost的正则项 xgboost的目标函数 寻找最优结构的树 几个比较纠结的问题   参考文章：
- Introduction to Boosted Trees XGBoost: A Scalable Tree Boosting System  以下内容主要是对上面文章内容的整理以及一些个人理解。
-目标函数：损失函数 + 正则项 在机器学习模型中，目标函数一般由损失函数和正则项组成： \[ obj(\theta) = L(\theta) + \Omega(\theta) \]
-其中\(L(\theta)\)为损失函数，在回归模型中，我们常常定义为MSE，即： \[ L(\theta) = \sum_i(y_i - \hat y_i)^2 \] 或是在逻辑回归模型中，我们定义为： \[ L(\theta) = \sum_i \left[ y_i\ln(1 + e^{-\hat y_i}) + (1 - y_i)\ln(1 + e^{\hat y_i}) \right] \] （逻辑回归的损失函数非常直观：当\(y_i\)为1时，\(\hat y_i\)越大则\(L(\theta)\)越小；而当\(y_i\)为0时，\(\hat y_i\)越小则\(L(\theta)\)越小）</description>
-    </item>
-    
-    <item>
-      <title>梯度提升树（GBDT）原理</title>
-      <link>https://fanggong.pub/posts/20210507_gbdt/</link>
-      <pubDate>Fri, 07 May 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://fanggong.pub/posts/20210507_gbdt/</guid>
-      <description>GBDT算法原理 回归问题下的GDBT 二分类问题下的GBDT 多分类问题下的GBDT   GBDT算法原理 GBDT可以表示为决策树的加法模型，即： \[ \hat y_i = \sum_{k=1}^K f_k(x_i) \] 其中\(f\)表示决策树，\(K\)为决策树的数量。
-通过前向分步骤算法，第t步得到的决策树模型为\(f_t(x)\)，有： \[ \hat y_i^{(t)} = \hat y_i^{(t-1)} + f_t(x_i) \] 其目标函数为： \[ obj^{(t)} = \sum_{i=1}^N l\left(y_i, \hat y_i^{(t-1)} + f_t(x_i) \right) \] 将目标函数使用泰勒一阶展开，有： \[ obj^{(t)} = \sum_{i=1}^N \left[ l(y_i, \hat y_i^{(t-1)}) + g_i f_t(x_i) \right] \] 这里的\(g_i = \left[ {\partial\ l(y_i, \hat y_i) \over \partial \hat y_i} \right]_{\hat y_i = \hat y_i^{(t-1)}}\)，即损失函数关于\(\hat y_i\)求导后带入\(\hat y_i = \hat y_i^{(t-1)}\)。</description>
-    </item>
-    
+    <lastBuildDate>Wed, 28 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>决策树的特征选择标准</title>
       <link>https://fanggong.pub/posts/20210428_concepts_about_decision_tree/</link>

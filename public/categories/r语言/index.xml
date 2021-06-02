@@ -18,7 +18,7 @@
 环境初始化 在一个新的项目中使用renv::init()对环境进行初始化，该操作会生成一个名为renv的文件夹和名为renv.lock的文件。
 renv下保存了在环境中已安装的包的文件（准确的说是已安装包的符号链接文件），而renv.lock指定了该项目对renv下的包的相关依赖。
  对环境管理 使用renv::restore()和renv::snapshot()对环境进行管理。
-renv::restore()根据renv.lock文件安装环境中缺少的包到renv文件夹下。
+renv::restore()根据renv.lock文件安装环境中缺少的包到renv文件夹下（这个描述不是很准确，包的安装位置实际是global package cache中，renv文件夹下存在的是对应包的符号链接文件）。
 renv::snapshot()根据当前环境下的项目情况将依赖写入renv.lock文件中。
 这里的逻辑有点绕但是很合理：如果某个包已经安装在了renv中但是在实际项目中没有被使用，那么renv::snapshot()是不会将该包写入renv.lock文件中的。这也就是说，我们可以没有什么心理压力地安装各种包了，它只会污染你的开发环境而不会污染生产环境。
  renv的全局缓存 在使用了renv的项目中安装新的包时，包并不会被安装在我们安装R时指定的包存储路径，而是安装在了renv的全局包缓存中（global package cache）。两者之间最大的区别我认为在于后者中可以存在同一个包的不同版本。
@@ -45,23 +45,6 @@ renv的global package cache路径为：
  两组样本的样本量均大于50，使用Ridit分析 存在某组样本的样本量小于等于50，使用Wilcoxon秩和检验    多样本的差异显著性分析 连续变量的多样本 对于连续变量的两样本的差异显著性检验，可以分成下面两种情况：
  样本均取自服从正态分布的总体且满足方差齐性，使用方差分析 样本并非取自服从正态分布的总体或不满足方差齐性，使用K-W秩和检验   无序离散变量的多样本 对于无序离散变量的多样本的差异显著性检验，将数据变换成列联表后进行显著性检验，检验方法可以分成以下两类：
  80%以上的格子期望频数大于等于5且所有格子的期望频数均大于等于1时，使用Pearson卡方检验 20%以上的格子期望频数小于5或存在某个格子的期望频数小于1时，使用Fisher精确检验   有序离散变量的多样本 对于有序离散变量的多样本的差异显著性检验，将数据变换成列联表后进行显著性检验，检验方法可以分成以下两类：</description>
-    </item>
-    
-    <item>
-      <title>生存分析及R语言实现</title>
-      <link>https://fanggong.pub/posts/20210406_survival_analysis/</link>
-      <pubDate>Tue, 06 Apr 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://fanggong.pub/posts/20210406_survival_analysis/</guid>
-      <description>相关概念 Kaplan-Meier方法 Log-rank检验 Cox比例风险回归模型   相关包：survival，survminer
-相关概念 生存分析主要用于分析感兴趣的事件发生所需要的时间以及变量对事件发生的影响。
-有如下几个相关概念：
- 事件（Event）：比如在癌症相关研究中，病人的死亡
- 时间（Time）：当事件没有发生时，时间就是起始时间到当前时间的跨度，当事件发生时，时间为起始时间到事件发生的时间跨度
- 删失（Censoring）：个人认为这个概念没必要过度理解，截止到某时间点事件没有发生，即为删失（这个时间点可能是当前时间，也可能是失去调查对象数据的中间某个时间点）
- 生存函数（Survival Function）：一般写作\(S(t)\)，表示从起始时间到时间t没有发生事件的概率，即： \[ S(t) = P \left( T &amp;gt; t \right) \]
- 寿命分布函数（Lifetime distribution function）：一般写作\(F(t)\)，表示从起始时间到时间t发生了事件的概率，即： \[ F(t) = P \left( T \le t \right) = 1 - S(t) \]
- 危险函数（Harzard Function）：一般写作\(h(t)\)或\(\lambda(t)\)，表示在截止到时间t事件都没有发生的条件下，事件接下来发生的瞬时概率，即： \[ h(t) = \lim_{\Delta t \to 0} {P(t \le T \lt t + \Delta t\,|\, T &amp;gt; t) \over {\Delta t}} = {F&amp;#39;(t) \over S(t)} = - {S&amp;#39;(t) \over S(t)} \]</description>
     </item>
     
     <item>
@@ -163,32 +146,6 @@ str_length() 返回字符串长度
 str_length(c(&amp;quot;fang&amp;quot;, &amp;quot;方&amp;quot;, NA_character_)) ## [1] 4 1 NA base R中使用nchar()函数
 nchar(c(&amp;quot;fang&amp;quot;, &amp;quot;方&amp;quot;, NA_character_)) ## [1] 4 1 NA  str_sub() 返回和替换字符串子串
 string &amp;lt;- c(&amp;quot;fang yongchao&amp;quot;, &amp;quot;stringr&amp;quot;) str_sub(string, start = 1, end = 4) ## [1] &amp;quot;fang&amp;quot; &amp;quot;stri&amp;quot; str_sub(string, start = 1, end = 4) &amp;lt;- &amp;quot;?</description>
-    </item>
-    
-    <item>
-      <title>R的面向对象编程</title>
-      <link>https://fanggong.pub/posts/20210313_object_oriented/</link>
-      <pubDate>Fri, 12 Mar 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://fanggong.pub/posts/20210313_object_oriented/</guid>
-      <description>基础类型 S3  定义类和创建对象 定义新的泛型函数 定义新的方法  S4  定义类和创建对象 定义新的泛型函数 定义新的方法  RC  定义类和创建对象 定义类的方法 类的继承  R6  定义类、方法和创建对象 Active binding 类的继承    基础类型  最常见的基础类型就是向量和列表 同时基础类型还包括函数、环境和其他更独特的对象   S3  目前使用的大部分对象都是S3对象 在S3中，方法属于泛型函数，一个泛型函数会有多个方法，可以用methods()来查看泛型函数的方法 S3并不需要一个正式的类定义，需要的仅仅是一个构造函数  data.frame是一个S3对象
-df &amp;lt;- data.frame(x = 1:3, y = 4:6) pryr::otype(df) ## [1] &amp;quot;S3&amp;quot; mean()是一个泛型函数
-pryr::ftype(mean) ## [1] &amp;quot;s3&amp;quot; &amp;quot;generic&amp;quot; mean.Date()是一个方法
-pryr::ftype(mean.Date) ## [1] &amp;quot;s3&amp;quot; &amp;quot;method&amp;quot; 查看mean()的所有方法
-methods(mean) ## [1] mean.</description>
-    </item>
-    
-    <item>
-      <title>重复测量数据方差分析的R语言实现</title>
-      <link>https://fanggong.pub/posts/20210311_repeat_measure_anova/</link>
-      <pubDate>Thu, 11 Mar 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://fanggong.pub/posts/20210311_repeat_measure_anova/</guid>
-      <description>数据 正态性检验 方差齐性检验 方差分析 球形检验 p值校正   相关包：car
-在这里仅记录重复测量数据方差分析的R语言实现及结果解释，不涉及其原理说明。
-重复测量数据的方差分析的步骤大致如下图：
- Figure 1: 重复测量数据方差分析流程  数据 使用下面的代码造一份假数据，50个对象，分成5个处理分组（甲乙丙丁戊），对每个对象进行4次重复测量。
-set.seed(2414) dat &amp;lt;- data.frame( ID = gl(50, 1), group = gl(5, 10, labels = c(&amp;quot;甲&amp;quot;, &amp;quot;乙&amp;quot;, &amp;quot;丙&amp;quot;, &amp;quot;丁&amp;quot;, &amp;quot;戊&amp;quot;)), measure_1 = round(rnorm(50, 50), 2), measure_2 = round(rnorm(50, 30), 2), measure_3 = round(rnorm(50, 20), 2), measure_4 = round(rnorm(50, 40), 2) )   ID  group  measure_1  measure_2  measure_3  measure_4      1  甲  51.</description>
     </item>
     
     <item>

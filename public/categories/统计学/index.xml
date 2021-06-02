@@ -45,23 +45,6 @@
     </item>
     
     <item>
-      <title>生存分析及R语言实现</title>
-      <link>https://fanggong.pub/posts/20210406_survival_analysis/</link>
-      <pubDate>Tue, 06 Apr 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://fanggong.pub/posts/20210406_survival_analysis/</guid>
-      <description>相关概念 Kaplan-Meier方法 Log-rank检验 Cox比例风险回归模型   相关包：survival，survminer
-相关概念 生存分析主要用于分析感兴趣的事件发生所需要的时间以及变量对事件发生的影响。
-有如下几个相关概念：
- 事件（Event）：比如在癌症相关研究中，病人的死亡
- 时间（Time）：当事件没有发生时，时间就是起始时间到当前时间的跨度，当事件发生时，时间为起始时间到事件发生的时间跨度
- 删失（Censoring）：个人认为这个概念没必要过度理解，截止到某时间点事件没有发生，即为删失（这个时间点可能是当前时间，也可能是失去调查对象数据的中间某个时间点）
- 生存函数（Survival Function）：一般写作\(S(t)\)，表示从起始时间到时间t没有发生事件的概率，即： \[ S(t) = P \left( T &amp;gt; t \right) \]
- 寿命分布函数（Lifetime distribution function）：一般写作\(F(t)\)，表示从起始时间到时间t发生了事件的概率，即： \[ F(t) = P \left( T \le t \right) = 1 - S(t) \]
- 危险函数（Harzard Function）：一般写作\(h(t)\)或\(\lambda(t)\)，表示在截止到时间t事件都没有发生的条件下，事件接下来发生的瞬时概率，即： \[ h(t) = \lim_{\Delta t \to 0} {P(t \le T \lt t + \Delta t\,|\, T &amp;gt; t) \over {\Delta t}} = {F&amp;#39;(t) \over S(t)} = - {S&amp;#39;(t) \over S(t)} \]</description>
-    </item>
-    
-    <item>
       <title>关于指数族的定义</title>
       <link>https://fanggong.pub/posts/20210322_exponential_family/</link>
       <pubDate>Mon, 22 Mar 2021 00:00:00 +0000</pubDate>

@@ -18,7 +18,7 @@
 环境初始化 在一个新的项目中使用renv::init()对环境进行初始化，该操作会生成一个名为renv的文件夹和名为renv.lock的文件。
 renv下保存了在环境中已安装的包的文件（准确的说是已安装包的符号链接文件），而renv.lock指定了该项目对renv下的包的相关依赖。
  对环境管理 使用renv::restore()和renv::snapshot()对环境进行管理。
-renv::restore()根据renv.lock文件安装环境中缺少的包到renv文件夹下。
+renv::restore()根据renv.lock文件安装环境中缺少的包到renv文件夹下（这个描述不是很准确，包的安装位置实际是global package cache中，renv文件夹下存在的是对应包的符号链接文件）。
 renv::snapshot()根据当前环境下的项目情况将依赖写入renv.lock文件中。
 这里的逻辑有点绕但是很合理：如果某个包已经安装在了renv中但是在实际项目中没有被使用，那么renv::snapshot()是不会将该包写入renv.lock文件中的。这也就是说，我们可以没有什么心理压力地安装各种包了，它只会污染你的开发环境而不会污染生产环境。
  renv的全局缓存 在使用了renv的项目中安装新的包时，包并不会被安装在我们安装R时指定的包存储路径，而是安装在了renv的全局包缓存中（global package cache）。两者之间最大的区别我认为在于后者中可以存在同一个包的不同版本。

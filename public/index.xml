@@ -6,7 +6,17 @@
     <description>Recent content on Connecting the dots</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Fri, 21 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 02 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>对本主题的样式的测试</title>
+      <link>https://fanggong.pub/posts/always_today/</link>
+      <pubDate>Wed, 02 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://fanggong.pub/posts/always_today/</guid>
+      <description>任何做个人博客的人应该都过不了对样式无穷无尽的修改这个坎吧…
+这是一级标题 这是二级标题 这是三级标题  页内跳转  点这里跳到样式——表格 点着里跳到样式——iframe   无序列表  御田的决心！白胡子的试炼! 白胡子的弟弟！御田的大冒险 兵刃相接！罗杰与白胡子！   有序列表 新的同盟！？凯多军大集结 决战迫近！草帽一伙进入战斗状态 大新闻！七武海袭击事件   嵌套列表  元气森林  0糖 0脂肪 0卡路里    代码块 height &amp;lt;- rnorm(100, 170, 8) weight &amp;lt;- rnorm(100, 70, 12) t.test(height, weight) ## ## Welch Two Sample t-test ## ## data: height and weight ## t = 70.456, df = 184.02, p-value &amp;lt; 2.</description>
+    </item>
+    
     <item>
       <title>R语言项目环境管理</title>
       <link>https://fanggong.pub/posts/20210521_renv/</link>
@@ -18,7 +28,7 @@
 环境初始化 在一个新的项目中使用renv::init()对环境进行初始化，该操作会生成一个名为renv的文件夹和名为renv.lock的文件。
 renv下保存了在环境中已安装的包的文件（准确的说是已安装包的符号链接文件），而renv.lock指定了该项目对renv下的包的相关依赖。
  对环境管理 使用renv::restore()和renv::snapshot()对环境进行管理。
-renv::restore()根据renv.lock文件安装环境中缺少的包到renv文件夹下。
+renv::restore()根据renv.lock文件安装环境中缺少的包到renv文件夹下（这个描述不是很准确，包的安装位置实际是global package cache中，renv文件夹下存在的是对应包的符号链接文件）。
 renv::snapshot()根据当前环境下的项目情况将依赖写入renv.lock文件中。
 这里的逻辑有点绕但是很合理：如果某个包已经安装在了renv中但是在实际项目中没有被使用，那么renv::snapshot()是不会将该包写入renv.lock文件中的。这也就是说，我们可以没有什么心理压力地安装各种包了，它只会污染你的开发环境而不会污染生产环境。
  renv的全局缓存 在使用了renv的项目中安装新的包时，包并不会被安装在我们安装R时指定的包存储路径，而是安装在了renv的全局包缓存中（global package cache）。两者之间最大的区别我认为在于后者中可以存在同一个包的不同版本。
@@ -26,18 +36,6 @@ renv::snapshot()根据当前环境下的项目情况将依赖写入renv.lock文�
 renv的global package cache路径为：
  Mac：~/Library/Application Support/renv Linux：~/.local/share/renv Windows：%LOCALAPPDATA%/renv   移除环境 使用renv::deactivate()使renv无效，即项目回到使用全局环境的状态。该命令只会删除.Rprofile文件使得renv相关文件无效，而不会删除renv相关文件以防止需要重新启用renv。但对于我这种轻度强迫症来说，没有用的文件是一定不能留在项目里的，所以我选择手动删除项目中的所有renv相关文件。
  </description>
-    </item>
-    
-    <item>
-      <title>xgboost原理</title>
-      <link>https://fanggong.pub/posts/20210517_xgboost/</link>
-      <pubDate>Mon, 17 May 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://fanggong.pub/posts/20210517_xgboost/</guid>
-      <description>目标函数：损失函数 + 正则项 决策树集成 xgboost的损失函数 xgboost的正则项 xgboost的目标函数 寻找最优结构的树 几个比较纠结的问题   参考文章：
- Introduction to Boosted Trees XGBoost: A Scalable Tree Boosting System  以下内容主要是对上面文章内容的整理以及一些个人理解。
-目标函数：损失函数 + 正则项 在机器学习模型中，目标函数一般由损失函数和正则项组成： \[ obj(\theta) = L(\theta) + \Omega(\theta) \]
-其中\(L(\theta)\)为损失函数，在回归模型中，我们常常定义为MSE，即： \[ L(\theta) = \sum_i(y_i - \hat y_i)^2 \] 或是在逻辑回归模型中，我们定义为： \[ L(\theta) = \sum_i \left[ y_i\ln(1 + e^{-\hat y_i}) + (1 - y_i)\ln(1 + e^{\hat y_i}) \right] \] （逻辑回归的损失函数非常直观：当\(y_i\)为1时，\(\hat y_i\)越大则\(L(\theta)\)越小；而当\(y_i\)为0时，\(\hat y_i\)越小则\(L(\theta)\)越小）</description>
     </item>
     
     <item>
@@ -60,16 +58,6 @@ renv的global package cache路径为：
     </item>
     
     <item>
-      <title>对本主题的样式的测试</title>
-      <link>https://fanggong.pub/posts/always_today/</link>
-      <pubDate>Wed, 12 May 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://fanggong.pub/posts/always_today/</guid>
-      <description>任何做个人博客的人应该都过不了对样式无穷无尽的修改这个坎吧…
-这是一级标题 这是二级标题 这是三级标题  页内跳转  点这里跳到样式——表格 点着里跳到样式——iframe   无序列表  御田的决心！白胡子的试炼! 白胡子的弟弟！御田的大冒险 兵刃相接！罗杰与白胡子！   有序列表 新的同盟！？凯多军大集结 决战迫近！草帽一伙进入战斗状态 大新闻！七武海袭击事件   嵌套列表  元气森林  0糖 0脂肪 0卡路里    代码块 height &amp;lt;- rnorm(100, 170, 8) weight &amp;lt;- rnorm(100, 70, 12) t.test(height, weight) ## ## Welch Two Sample t-test ## ## data: height and weight ## t = 73.263, df = 173.3, p-value &amp;lt; 2.</description>
-    </item>
-    
-    <item>
       <title>极大似然估计(MLE)和最大后验概率估计(MAP)</title>
       <link>https://fanggong.pub/posts/20210510_mle_and_map/</link>
       <pubDate>Mon, 10 May 2021 00:00:00 +0000</pubDate>
@@ -85,16 +73,6 @@ renv的global package cache路径为：
 我们知道一个均匀的硬币正面朝上的概率应该是0.5，所以当数据量较小时，极大似然估计的结果与我们的先验知识就产生了偏差（在数据量大的情况下并不会有这样的问题，因为如果丢一个硬币10000次，正面朝上7000次，反面朝上3000次，那么应该做的是好好查查这个硬币是不是真的是均匀的了）。
  最大后验概率估计(MAP) 在极大似然估计中我们寻找使得\(P(X|p)\)取到最大值的\(p\)，而在最大后验概率估计中，我们寻找的是使得\(P(X|p)P(p)\)取到最大值的\(p\)。
 根据贝叶斯公式有： \[ P(X|p)P(p) = P(p|X)P(X) \] 这里的\(P(X)\)是一个已知的值（7次正面，3次反面），所以我们要求解的实际是使得\(P(p|X)\)（即后验概率，故称为最大后验概率估计）取到最大值的\(p\)。</description>
-    </item>
-    
-    <item>
-      <title>梯度提升树（GBDT）原理</title>
-      <link>https://fanggong.pub/posts/20210507_gbdt/</link>
-      <pubDate>Fri, 07 May 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://fanggong.pub/posts/20210507_gbdt/</guid>
-      <description>GBDT算法原理 回归问题下的GDBT 二分类问题下的GBDT 多分类问题下的GBDT   GBDT算法原理 GBDT可以表示为决策树的加法模型，即： \[ \hat y_i = \sum_{k=1}^K f_k(x_i) \] 其中\(f\)表示决策树，\(K\)为决策树的数量。
-通过前向分步骤算法，第t步得到的决策树模型为\(f_t(x)\)，有： \[ \hat y_i^{(t)} = \hat y_i^{(t-1)} + f_t(x_i) \] 其目标函数为： \[ obj^{(t)} = \sum_{i=1}^N l\left(y_i, \hat y_i^{(t-1)} + f_t(x_i) \right) \] 将目标函数使用泰勒一阶展开，有： \[ obj^{(t)} = \sum_{i=1}^N \left[ l(y_i, \hat y_i^{(t-1)}) + g_i f_t(x_i) \right] \] 这里的\(g_i = \left[ {\partial\ l(y_i, \hat y_i) \over \partial \hat y_i} \right]_{\hat y_i = \hat y_i^{(t-1)}}\)，即损失函数关于\(\hat y_i\)求导后带入\(\hat y_i = \hat y_i^{(t-1)}\)。</description>
     </item>
     
     <item>
@@ -170,23 +148,6 @@ WOE(Weight of Evidence)和IV(Information Value) WOE为“当前分组下正样�
       
       <guid>https://fanggong.pub/posts/20210408_git/</guid>
       <description>  </description>
-    </item>
-    
-    <item>
-      <title>生存分析及R语言实现</title>
-      <link>https://fanggong.pub/posts/20210406_survival_analysis/</link>
-      <pubDate>Tue, 06 Apr 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://fanggong.pub/posts/20210406_survival_analysis/</guid>
-      <description>相关概念 Kaplan-Meier方法 Log-rank检验 Cox比例风险回归模型   相关包：survival，survminer
-相关概念 生存分析主要用于分析感兴趣的事件发生所需要的时间以及变量对事件发生的影响。
-有如下几个相关概念：
- 事件（Event）：比如在癌症相关研究中，病人的死亡
- 时间（Time）：当事件没有发生时，时间就是起始时间到当前时间的跨度，当事件发生时，时间为起始时间到事件发生的时间跨度
- 删失（Censoring）：个人认为这个概念没必要过度理解，截止到某时间点事件没有发生，即为删失（这个时间点可能是当前时间，也可能是失去调查对象数据的中间某个时间点）
- 生存函数（Survival Function）：一般写作\(S(t)\)，表示从起始时间到时间t没有发生事件的概率，即： \[ S(t) = P \left( T &amp;gt; t \right) \]
- 寿命分布函数（Lifetime distribution function）：一般写作\(F(t)\)，表示从起始时间到时间t发生了事件的概率，即： \[ F(t) = P \left( T \le t \right) = 1 - S(t) \]
- 危险函数（Harzard Function）：一般写作\(h(t)\)或\(\lambda(t)\)，表示在截止到时间t事件都没有发生的条件下，事件接下来发生的瞬时概率，即： \[ h(t) = \lim_{\Delta t \to 0} {P(t \le T \lt t + \Delta t\,|\, T &amp;gt; t) \over {\Delta t}} = {F&amp;#39;(t) \over S(t)} = - {S&amp;#39;(t) \over S(t)} \]</description>
     </item>
     
     <item>
@@ -304,32 +265,6 @@ str_length() 返回字符串长度
 str_length(c(&amp;quot;fang&amp;quot;, &amp;quot;方&amp;quot;, NA_character_)) ## [1] 4 1 NA base R中使用nchar()函数
 nchar(c(&amp;quot;fang&amp;quot;, &amp;quot;方&amp;quot;, NA_character_)) ## [1] 4 1 NA  str_sub() 返回和替换字符串子串
 string &amp;lt;- c(&amp;quot;fang yongchao&amp;quot;, &amp;quot;stringr&amp;quot;) str_sub(string, start = 1, end = 4) ## [1] &amp;quot;fang&amp;quot; &amp;quot;stri&amp;quot; str_sub(string, start = 1, end = 4) &amp;lt;- &amp;quot;?</description>
-    </item>
-    
-    <item>
-      <title>R的面向对象编程</title>
-      <link>https://fanggong.pub/posts/20210313_object_oriented/</link>
-      <pubDate>Fri, 12 Mar 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://fanggong.pub/posts/20210313_object_oriented/</guid>
-      <description>基础类型 S3  定义类和创建对象 定义新的泛型函数 定义新的方法  S4  定义类和创建对象 定义新的泛型函数 定义新的方法  RC  定义类和创建对象 定义类的方法 类的继承  R6  定义类、方法和创建对象 Active binding 类的继承    基础类型  最常见的基础类型就是向量和列表 同时基础类型还包括函数、环境和其他更独特的对象   S3  目前使用的大部分对象都是S3对象 在S3中，方法属于泛型函数，一个泛型函数会有多个方法，可以用methods()来查看泛型函数的方法 S3并不需要一个正式的类定义，需要的仅仅是一个构造函数  data.frame是一个S3对象
-df &amp;lt;- data.frame(x = 1:3, y = 4:6) pryr::otype(df) ## [1] &amp;quot;S3&amp;quot; mean()是一个泛型函数
-pryr::ftype(mean) ## [1] &amp;quot;s3&amp;quot; &amp;quot;generic&amp;quot; mean.Date()是一个方法
-pryr::ftype(mean.Date) ## [1] &amp;quot;s3&amp;quot; &amp;quot;method&amp;quot; 查看mean()的所有方法
-methods(mean) ## [1] mean.</description>
-    </item>
-    
-    <item>
-      <title>重复测量数据方差分析的R语言实现</title>
-      <link>https://fanggong.pub/posts/20210311_repeat_measure_anova/</link>
-      <pubDate>Thu, 11 Mar 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://fanggong.pub/posts/20210311_repeat_measure_anova/</guid>
-      <description>数据 正态性检验 方差齐性检验 方差分析 球形检验 p值校正   相关包：car
-在这里仅记录重复测量数据方差分析的R语言实现及结果解释，不涉及其原理说明。
-重复测量数据的方差分析的步骤大致如下图：
- Figure 1: 重复测量数据方差分析流程  数据 使用下面的代码造一份假数据，50个对象，分成5个处理分组（甲乙丙丁戊），对每个对象进行4次重复测量。
-set.seed(2414) dat &amp;lt;- data.frame( ID = gl(50, 1), group = gl(5, 10, labels = c(&amp;quot;甲&amp;quot;, &amp;quot;乙&amp;quot;, &amp;quot;丙&amp;quot;, &amp;quot;丁&amp;quot;, &amp;quot;戊&amp;quot;)), measure_1 = round(rnorm(50, 50), 2), measure_2 = round(rnorm(50, 30), 2), measure_3 = round(rnorm(50, 20), 2), measure_4 = round(rnorm(50, 40), 2) )   ID  group  measure_1  measure_2  measure_3  measure_4      1  甲  51.</description>
     </item>
     
     <item>
