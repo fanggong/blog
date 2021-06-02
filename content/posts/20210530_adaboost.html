@@ -24,12 +24,12 @@ draft: true
 <div id="adaboost算法原理" class="section level2">
 <h2>AdaBoost算法原理</h2>
 <hr />
-<p>AdaBoost可以表示为基分类器的加法模型：
+<p>AdaBoost的基本思想是通过不断修改训练样本的权重来训练新的基学习器，最后将所有基学习器进行加权求和从而得到一个集成模型。即，AdaBoost可以表示为基学习器的加法模型：
 <span class="math display">\[
 \hat y_i = \sum_{k=1}^K \alpha_k G_k(x_i)
 \]</span>
-其中<span class="math inline">\(G_k\)</span>为第<span class="math inline">\(k\)</span>个基分类器，<span class="math inline">\(\alpha_k\)</span>为其系数。</p>
-<p>AdaBoost一般适用于二分类模型，并且将目标变量以±1的形式表示。其损失函数定义为指数损失函数，即：
+其中<span class="math inline">\(G_k\)</span>为第<span class="math inline">\(k\)</span>个基学习器，<span class="math inline">\(\alpha_k\)</span>为其系数。</p>
+<p>以二分类模型为例，将目标变量以±1的形式表示，损失函数定义为指数损失函数，即：
 <span class="math display">\[
 l(y, \hat y) = e^{-y \hat y}
 \]</span></p>
@@ -72,8 +72,8 @@ e_t = {\sum_{y_i \ne G_t(x_i)} \omega^{(t)}_i \over \sum_{i=1}^N \omega_i^{(t)}}
 <div id="关于样本权重的求解" class="section level2">
 <h2>关于样本权重的求解</h2>
 <hr />
-<p>上面描述了AdaBoost算法的推导过程，可以发现在整个过程中最重要的就是<span class="math inline">\(\omega_i^{(t)}\)</span>（即样本权重）的求解。它可以理解为前t-1个基分类器的集成模型的预测结果带入损失函数得到的值。</p>
-<p>但是在实际的工程化过程中，并不需要每次生成新的基分类器时，都去计算前面所有的基分类器得到的集成模型的预测值（这个很明显计算量非常之大）。可以发现：
+<p>上面描述了二分类问题下的AdaBoost算法的推导过程，可以发现在整个过程中最重要的就是<span class="math inline">\(\omega_i^{(t)}\)</span>（即样本权重）的求解。它可以理解为前t-1个基分类器的集成模型的预测结果带入损失函数得到的值。</p>
+<p>但是在实际的工程化过程中，并不需要每次生成新的基分类器时都去计算前面所有的基分类器得到的集成模型的预测值（这个很明显计算量非常之大）。可以发现：
 <span class="math display">\[
 \begin{aligned}
 \omega_i^{(t)} &amp; = e^{-y_i \hat y^{(t-1)}_i} \\
@@ -87,4 +87,34 @@ e_t = {\sum_{y_i \ne G_t(x_i)} \omega^{(t)}_i \over \sum_{i=1}^N \omega_i^{(t)}}
 <div id="回归问题下的adaboost" class="section level2">
 <h2>回归问题下的AdaBoost</h2>
 <hr />
+<p>关于回归问题下的AdaBoost，找了很久也没有找到算法的推导过程的相关资料，只能通过<a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.31.314&amp;rep=rep1&amp;type=pdf">Improving Regressors using Boosting Techniques</a>这篇文章看到该算法最终的实现方式，总结在这里。</p>
+<p>由于回归问题和分类问题下的AdaBoost虽然基本思想是一致的，但是细节处理实在感觉已经不是一个东西了，所以这里延用论文中使用的数学符号，以免和上面描述的分类问题的AdaBoost混淆。</p>
+<p>对于<span class="math inline">\(N\)</span>个样本的训练集，初始化所有样本的权重为1，即对于任意<span class="math inline">\(i\)</span>，有样本权重<span class="math inline">\(\omega_i = 1\)</span>，之后循环下面的步骤直到平均损失<span class="math inline">\(\bar L\)</span>大于0.5（<strong>这个约束很重要</strong>）。</p>
+<ol style="list-style-type: decimal">
+<li><p>通过样本权重计算样本被抽样概率<span class="math inline">\(p_i = {\omega_i\ /\ {\sum_{i=1}^N \omega_i}}\)</span>。这其实就是一个将样本权重规范化的步骤，<span class="math inline">\(p_i\)</span>决定了在基学习器下样本的预测损失以什么样的比例计算到总的损失当中；</p></li>
+<li><p>构建基学习器<span class="math inline">\(h_t\)</span>，并得到在该学习器下的各样本的预测值<span class="math inline">\(y_t^{(p)}(x_i)\)</span>；</p></li>
+<li><p>对于每一个样本，计算其损失：
+<span class="math display">\[
+L_i = L\left[ |y_i -  y_t^{(p)}(x_i)| \right]
+\]</span>
+这里我们要计算的实际是相对损失，即令<span class="math inline">\(D\)</span>为所有样本中损失最大值：
+<span class="math display">\[
+D = \sup |y_i -  y_t^{(p)}(x_i)|,\quad i=1,2,...,N
+\]</span>
+那么<span class="math inline">\(L_i\)</span>可以有下面三种形式：
+<span class="math display">\[
+\begin{aligned}
+&amp; L_i = {|y_i - y_t^{(p)}(x_i)| \over D}  &amp;  (linear)\\
+&amp; L_i = {(y_i - y_t^{(p)}(x_i))^2 \over D^2} &amp; (square)\\
+&amp; L_i = 1 - \exp \left({- |y_i -  y_t^{(p)}(x_i)|} \over D \right) &amp; (exponential)
+\end{aligned}
+\]</span></p></li>
+<li><p>计算平均损失：
+<span class="math display">\[
+\bar L = \sum_{i=1}^N L_i p_i
+\]</span></p></li>
+<li><p>令<span class="math inline">\(\beta = {\bar L \over {1 - \bar L}}\)</span>。很显然，<span class="math inline">\(\bar L\)</span>越大，则<span class="math inline">\(\beta\)</span>越大，一个小的<span class="math inline">\(\beta\)</span>意味着较小的平均损失，也就是我们对该基学习器有着更强的信心。<strong>由于我们在一开始就有了平均损失<span class="math inline">\(\bar L\)</span>小于0.5的约束，所以这里的<span class="math inline">\(\beta\)</span>必然是一个位于0和1之间的数字。</strong></p></li>
+<li><p>对于每一个样本，更新<span class="math inline">\(\omega_i\)</span>为<span class="math inline">\(\omega_i\beta^{1-L_i}\)</span>。<strong>可以理解为，对于基学习器下相对损失<span class="math inline">\(L_i\)</span>小的样本，会通过<span class="math inline">\(\beta^{1-L_i}\)</span>对权重进行一个更大的缩放。</strong></p></li>
+</ol>
+<p>上面的循环在无法满足我们的约束或是达到我们设定的最大循环次数时停止，假设循环进行了<span class="math inline">\(T\)</span>次，那么我们得到了<span class="math inline">\(T\)</span>个基学习器。回归问题下，AdaBoost通过下述方法得到集成模型的预测值。</p>
 </div>

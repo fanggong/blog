@@ -8,6 +8,7 @@ output:
   blogdown::html_page:
     toc: yes
     toc_depth: 2
+draft: true
 ---
 
 ## GBDT算法原理

@@ -7,6 +7,7 @@ categories:
 output:
   blogdown::html_page:
     toc: yes
+draft: true
 ---
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
