@@ -8,7 +8,6 @@ output:
   blogdown::html_page:
     toc: yes
     toc_depth: 2
-draft: true
 ---
 
 ## GBDT算法原理
@@ -84,6 +83,6 @@ $$
 
 ---------------------------
 
-公式很多，烦死了
+有空再写
 
 
