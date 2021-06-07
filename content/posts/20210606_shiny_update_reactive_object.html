@@ -1,0 +1,43 @@
+---
+title: Shiny：对Reactive对象进行修改
+author: Fang Yongchao
+date: "2021-06-06"
+categories:
+  - "R语言"
+  - "Shiny"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+draft: true
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#问题背景">问题背景</a></li>
+<li><a href="#实现方式">实现方式</a></li>
+</ul>
+</div>
+
+<div id="问题背景" class="section level2">
+<h2>问题背景</h2>
+<hr />
+<p>需要将一个reactive对象与某输入进行绑定，同时，针对其它的输入（多个输入源的多次输入），对该reactive对象进行多次修改。</p>
+<p>即：</p>
+<ol style="list-style-type: decimal">
+<li>当用户修改输入A时，reactive对象会对应根据某个逻辑进行初始化</li>
+<li>当用户修改输入B、C、D…（一次或多次），reactive对象会根据相应逻辑进行变化</li>
+<li>当用户又一次修改输入A时，reactive对象会重新进行初始化</li>
+</ol>
+</div>
+<div id="实现方式" class="section level2">
+<h2>实现方式</h2>
+<hr />
+<p>第一反应是使用<code>reactive()</code>函数，但是试了很多种方法，发现通过<code>reactive()</code>生成的reactive对象是无法进行任何修改的，即上方的第2点无法实现。
+只有通过<code>reactiveValues()</code>实现该功能。</p>
+<p><i class="fab fa-lg fa-github fa-fw"></i><a href="https://github.com/fanggong/shiny_app/blob/master/update_reactive_object/app.R">View Code</a></p>
+<iframe height="500" width="100%" frameborder="no" src="https://shiny.fanggong.pub/update_reactive_object/">
+</iframe>
+</div>
