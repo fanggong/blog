@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Shiny on Connecting the dots</title>
+    <link>https://fanggong.pub/categories/shiny/</link>
+    <description>Recent content in Shiny on Connecting the dots</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ch</language>
+    <lastBuildDate>Sun, 06 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/categories/shiny/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Shiny：对Reactive对象进行修改</title>
+      <link>https://fanggong.pub/posts/20210606_shiny_update_reactive_object/</link>
+      <pubDate>Sun, 06 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://fanggong.pub/posts/20210606_shiny_update_reactive_object/</guid>
+      <description>   问题背景 实现方式   问题背景 需要根据初始输入生成一个对象，该对象以某种形式展示。同时，针对其它的输入（多个输入源的多次输入），对该对象进行多次修改，每次修改后，该对象的展示结果对应发生改变。当初始输入改变时，重新初始化该对象。
+ 实现方式 很显然应该使用reactive对象，但是试了很多种方法，发现通过reactive()生成的reactive对象是无法进行任何修改的，即上方的“针对其它的输入对对象进行多次修改”无法实现。最后发现莫阿斯只有通过reactiveValues()才能实现该功能。
+View Code
+  </description>
+    </item>
+    
+  </channel>
+</rss>
