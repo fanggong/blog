@@ -1,0 +1,37 @@
+---
+title: 线性回归的正则化
+author: Fang Yongchao
+date: "2021-06-11"
+categories:
+  - "机器学习"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+draft: true
+---
+
+## 回归的目标函数
+
+--------------------------
+
+**Lasso回归**使用L1范数进行正则化，即回归的目标函数为：
+$$
+{1 \over 2N }\left \| X\omega-y \right \|_2^2 + \alpha \left \| \omega \right \|_1
+$$
+
+**岭回归**使用L2范数进行正则化，即回归的目标函数为：
+$$
+\left \| X\omega-y \right \|_2^2 + \alpha \left \| \omega \right \|_2^2
+$$
+
+
+**Elasti-Net回归**的正则项结合了L1范数和L2范数，其目标函数为：
+$$
+{1 \over 2N }\left \| X\omega-y \right \|_2^2 + \alpha \rho \left \| \omega \right \|_1 + {\alpha (1-\rho) \over 2} \left \| \omega \right \|_2^2
+$$
+
+## 关于L2正则化的理解
+
+--------------------------
+

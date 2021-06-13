@@ -1,0 +1,42 @@
+---
+title: 线性回归的正则化
+author: Fang Yongchao
+date: "2021-06-11"
+categories:
+  - "机器学习"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+draft: true
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#回归的目标函数">回归的目标函数</a></li>
+<li><a href="#关于l2正则化的理解">关于L2正则化的理解</a></li>
+</ul>
+</div>
+
+<div id="回归的目标函数" class="section level2">
+<h2>回归的目标函数</h2>
+<hr />
+<p><strong>Lasso回归</strong>使用L1范数进行正则化，即回归的目标函数为：
+<span class="math display">\[
+{1 \over 2N }\left \| X\omega-y \right \|_2^2 + \alpha \left \| \omega \right \|_1
+\]</span></p>
+<p><strong>岭回归</strong>使用L2范数进行正则化，即回归的目标函数为：
+<span class="math display">\[
+\left \| X\omega-y \right \|_2^2 + \alpha \left \| \omega \right \|_2^2
+\]</span></p>
+<p><strong>Elasti-Net回归</strong>的正则项结合了L1范数和L2范数，其目标函数为：
+<span class="math display">\[
+{1 \over 2N }\left \| X\omega-y \right \|_2^2 + \alpha \rho \left \| \omega \right \|_1 + {\alpha (1-\rho) \over 2} \left \| \omega \right \|_2^2
+\]</span></p>
+</div>
+<div id="关于l2正则化的理解" class="section level2">
+<h2>关于L2正则化的理解</h2>
+<hr />
+</div>
