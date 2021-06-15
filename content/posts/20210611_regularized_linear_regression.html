@@ -16,18 +16,20 @@ draft: true
 <div id="TOC">
 <ul>
 <li><a href="#线性回归的目标函数">线性回归的目标函数</a></li>
-<li><a href="#关于l1和l2正则化的理解">关于L1和L2正则化的理解</a></li>
+<li><a href="#关于l2参数正则化的理论分析">关于L2参数正则化的理论分析</a></li>
+<li><a href="#关于l1参数正则化的理论分析">关于L1参数正则化的理论分析</a></li>
 </ul>
 </div>
 
+<p>以下内容主要参考自<a href="https://scikit-learn.org/stable/user_guide.html">sklearn文档</a>和<strong>Deep Learning</strong>一书。</p>
 <div id="线性回归的目标函数" class="section level2">
 <h2>线性回归的目标函数</h2>
 <hr />
-<p><strong>Lasso回归</strong>使用L1范数进行正则化，即回归的目标函数为：
+<p><strong>Lasso回归</strong>使用L1范数进行参数正则化，即回归的目标函数为：
 <span class="math display">\[
 {1 \over 2N }\left \| X\omega-y \right \|_2^2 + \alpha \left \| \omega \right \|_1
 \]</span></p>
-<p><strong>岭回归</strong>使用L2范数进行正则化，即回归的目标函数为：
+<p><strong>岭回归</strong>使用L2范数进行参数正则化，即回归的目标函数为：
 <span class="math display">\[
 \left \| X\omega-y \right \|_2^2 + \alpha \left \| \omega \right \|_2^2
 \]</span></p>
@@ -36,12 +38,9 @@ draft: true
 {1 \over 2N }\left \| X\omega-y \right \|_2^2 + \alpha \rho \left \| \omega \right \|_1 + {\alpha (1-\rho) \over 2} \left \| \omega \right \|_2^2
 \]</span></p>
 </div>
-<div id="关于l1和l2正则化的理解" class="section level2">
-<h2>关于L1和L2正则化的理解</h2>
+<div id="关于l2参数正则化的理论分析" class="section level2">
+<h2>关于L2参数正则化的理论分析</h2>
 <hr />
-<p>以下内容主要参考自<strong>Deep Learning</strong>一书。</p>
-<div id="l2参数正则化" class="section level3">
-<h3>L2参数正则化</h3>
 <p>L2正则化下的目标函数可以表示为：
 <span class="math display">\[
 \tilde J(\omega; X, y) = {\alpha \over 2}\omega^T\omega + J(\omega; X, y)
@@ -82,11 +81,20 @@ A = Q \Lambda Q^{-1} = Q \Lambda Q^T
 \end{aligned}
 \]</span>
 于是可以看到，<strong>权重衰减的效果是沿着由<span class="math inline">\(H\)</span>的特征向量所定义的轴缩放<span class="math inline">\(\omega^*\)</span>，具体来说，会根据<span class="math inline">\(\lambda_i \over {\lambda_i + \alpha}\)</span>因子缩放与<span class="math inline">\(H\)</span>第<span class="math inline">\(i\)</span>个特征向量对齐的<span class="math inline">\(\omega^*\)</span>的分量</strong>。</p>
-<p>这个结论是<strong>Deep Learning</strong>书中的原话，然后书中还配了图示加以说明，但是个人依然觉得实在是很**的抽象，无法与数学符号联系起来。直到有一天发现做一个下面的变换就理解了：
+<p>这个结论是<strong>Deep Learning</strong>书中的原话，但是个人依然觉得实在是很**的抽象，无法与前面的公式联系起来。直到发现做一个下面的变换就理解了：
 <span class="math display">\[
 Q^T \tilde \omega = (\Lambda + \alpha I)^{-1} \Lambda Q^T \omega^*
 \]</span></p>
 <p>即<strong>计算<span class="math inline">\(\omega^*\)</span>在<span class="math inline">\(H\)</span>的特征向量所定义的轴上的坐标（<span class="math inline">\(Q^T \omega^*\)</span>），然后使用因子<span class="math inline">\(\lambda_i \over {\lambda_i + \alpha}\)</span>（<span class="math inline">\((\Lambda + \alpha I)^{-1} \Lambda\)</span>）进行缩放。而<span class="math inline">\(\tilde \omega\)</span>在<span class="math inline">\(H\)</span>的特征向量定义的轴上的坐标（<span class="math inline">\(Q^T \tilde \omega\)</span>）应该等于上一步缩放后的结果</strong>。</p>
-<p>很显然，对于某固定的<span class="math inline">\(\alpha\)</span>，<span class="math inline">\(\lambda_i\)</span>越小，缩放因子越接近0。而特征值<span class="math inline">\(\lambda_i\)</span>越小，</p>
+<p>很显然，对于某确定的<span class="math inline">\(\alpha\)</span>，<span class="math inline">\(\lambda_i\)</span>越小，缩放因子越接近0，从而处于该特征值对应特征向量方向上的<span class="math inline">\(\omega^*\)</span>的分量就会被缩放到很小。</p>
+<p>换一个角度考虑，<span class="math inline">\(\lambda_i\)</span>越小，说明当<span class="math inline">\(\omega\)</span>在<span class="math inline">\(\lambda_i\)</span>对应特征向量方向上移动的时候，损失函数变化相对较小（Hessian矩阵的性质），故<span class="math inline">\(\omega^*\)</span>会在较小的特征值对应的特征向量方向上进行更大的移动（即缩放）。</p>
 </div>
+<div id="关于l1参数正则化的理论分析" class="section level2">
+<h2>关于L1参数正则化的理论分析</h2>
+<hr />
+<p>L1正则化下的目标函数可以表示为：
+<span class="math display">\[
+\tilde J(\omega; X, y) = \alpha \left \| \omega \right \| _1 + J(\omega; X, y)
+\]</span>
+同样的，设<span class="math inline">\(\omega^*\)</span>为损失函数取到最小值时的<span class="math inline">\(\omega\)</span></p>
 </div>

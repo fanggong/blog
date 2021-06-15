@@ -21,7 +21,7 @@ output:
 
 --------------------------
 
-很显然应该使用reactive对象，但是试了很多种方法，发现通过`reactive()`生成的reactive对象是无法进行任何修改的，即上方的“针对其它的输入对对象进行多次修改”无法实现。最后发现莫阿斯只有通过`reactiveValues()`才能实现该功能。
+很显然应该使用reactive对象，但是试了很多种方法，发现通过`reactive()`生成的reactive对象是无法进行任何修改的，即上方的“针对其它的输入对对象进行多次修改”无法实现。最后发现貌似只有通过`reactiveValues()`才能实现该功能。
 
 <i class="fab fa-lg fa-github fa-fw"></i><a href="https://github.com/fanggong/shiny_app/blob/master/update_reactive_object/app.R">View Code</a>
 
