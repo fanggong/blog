@@ -11,7 +11,7 @@ output:
 draft: true
 ---
 
-## 回归的目标函数
+## 线性回归的目标函数
 
 --------------------------
 
@@ -31,7 +31,70 @@ $$
 {1 \over 2N }\left \| X\omega-y \right \|_2^2 + \alpha \rho \left \| \omega \right \|_1 + {\alpha (1-\rho) \over 2} \left \| \omega \right \|_2^2
 $$
 
-## 关于L2正则化的理解
+## 关于L1和L2正则化的理解
 
 --------------------------
+
+以下内容主要参考自**Deep Learning**一书。
+
+### L2参数正则化
+
+L2正则化下的目标函数可以表示为：
+$$
+\tilde J(\omega; X, y) = {\alpha \over 2}\omega^T\omega + J(\omega; X, y)
+$$
+上式的右侧两项分别为正则项和损失函数。
+
+设$\omega^*$为使得损失函数$J(\omega; X, y)$取得最小值时的$\omega$，那么在$\omega^*$的附近对损失函数进行二次泰勒展开，则有：
+$$
+J(\omega) = J(\omega^*) + {1 \over 2}(\omega - \omega^*)^T H (\omega - \omega^*)
+$$
+其中$H$是$J$在$\omega^*$处的关于$\omega$的Hessian矩阵。
+
+**这里由于$\omega^*$为损失函数的最优解，损失函数在该点的一阶导为0，故上式的泰勒展开中不含一阶项。**
+
+显然，上面的泰勒展开在取到最小值时有：
+$$
+J'(\omega) = H(\omega - \omega^*) = 0
+$$
+
+设$\tilde \omega$为使得目标函数$\tilde J(\omega; X, y)$取得最小值时的$\omega$，那么$\tilde \omega$应该满足：
+$$
+\alpha \tilde \omega + H(\tilde \omega - \omega^*) = 0 \\
+(H + \alpha I)\tilde \omega - H\omega^* = 0 \\
+\tilde \omega = (H + \alpha I)^{-1} H \omega^*
+$$
+**到这一步其实已经可以看出来$\alpha$的作用是在对使得损失函数取得最小值的$\omega = \omega^*$进行一个缩放了，而且$\alpha$越大，这个缩放的程度也会越大。**
+
+但是为了理解正则项是如何对$\omega^*$进行缩放的话，需要对上式进行一个变换，这里要用到下述定理：
+
+- 任意的NxN实对称矩阵的特征值都是实数且都有N个线性无关的特征向量。并且这些特征向量都可以正交单位化而得到一组正交且模为1的向量。故实对称矩阵$A$可被分解成：  
+$$
+A = Q \Lambda Q^{-1} = Q \Lambda Q^T
+$$
+其中$Q$为正交矩阵，$\Lambda$为实对角矩阵。
+
+由于$H$是实对称矩阵，运用上面的定理，可以得到：
+$$
+\begin{aligned}
+\tilde \omega & =  (H + \alpha I)^{-1} H \omega^* \\
+ & = (Q \Lambda Q^T + \alpha I)^{-1} Q \Lambda Q^T \omega^* \\
+ & = [Q (\Lambda + \alpha I) Q^T]^{-1} Q \Lambda Q^T \omega^* \\
+ & = Q (\Lambda + \alpha I)^{-1} \Lambda Q^T \omega^*
+\end{aligned}
+$$
+于是可以看到，**权重衰减的效果是沿着由$H$的特征向量所定义的轴缩放$\omega^*$，具体来说，会根据$\lambda_i \over {\lambda_i + \alpha}$因子缩放与$H$第$i$个特征向量对齐的$\omega^*$的分量**。
+
+这个结论是**Deep Learning**书中的原话，然后书中还配了图示加以说明，但是个人依然觉得实在是很**的抽象，无法与数学符号联系起来。直到有一天发现做一个下面的变换就理解了：
+$$
+Q^T \tilde \omega = (\Lambda + \alpha I)^{-1} \Lambda Q^T \omega^*
+$$
+
+即**计算$\omega^*$在$H$的特征向量所定义的轴上的坐标（$Q^T \omega^*$），然后使用因子$\lambda_i \over {\lambda_i + \alpha}$（$(\Lambda + \alpha I)^{-1} \Lambda$）进行缩放。而$\tilde \omega$在$H$的特征向量定义的轴上的坐标（$Q^T \tilde \omega$）应该等于上一步缩放后的结果**。
+
+很显然，对于某固定的$\alpha$，$\lambda_i$越小，缩放因子越接近0。而特征值$\lambda_i$越小，
+
+
+
+
 

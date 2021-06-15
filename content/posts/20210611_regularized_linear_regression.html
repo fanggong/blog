@@ -15,13 +15,13 @@ draft: true
 
 <div id="TOC">
 <ul>
-<li><a href="#回归的目标函数">回归的目标函数</a></li>
-<li><a href="#关于l2正则化的理解">关于L2正则化的理解</a></li>
+<li><a href="#线性回归的目标函数">线性回归的目标函数</a></li>
+<li><a href="#关于l1和l2正则化的理解">关于L1和L2正则化的理解</a></li>
 </ul>
 </div>
 
-<div id="回归的目标函数" class="section level2">
-<h2>回归的目标函数</h2>
+<div id="线性回归的目标函数" class="section level2">
+<h2>线性回归的目标函数</h2>
 <hr />
 <p><strong>Lasso回归</strong>使用L1范数进行正则化，即回归的目标函数为：
 <span class="math display">\[
@@ -36,7 +36,57 @@ draft: true
 {1 \over 2N }\left \| X\omega-y \right \|_2^2 + \alpha \rho \left \| \omega \right \|_1 + {\alpha (1-\rho) \over 2} \left \| \omega \right \|_2^2
 \]</span></p>
 </div>
-<div id="关于l2正则化的理解" class="section level2">
-<h2>关于L2正则化的理解</h2>
+<div id="关于l1和l2正则化的理解" class="section level2">
+<h2>关于L1和L2正则化的理解</h2>
 <hr />
+<p>以下内容主要参考自<strong>Deep Learning</strong>一书。</p>
+<div id="l2参数正则化" class="section level3">
+<h3>L2参数正则化</h3>
+<p>L2正则化下的目标函数可以表示为：
+<span class="math display">\[
+\tilde J(\omega; X, y) = {\alpha \over 2}\omega^T\omega + J(\omega; X, y)
+\]</span>
+上式的右侧两项分别为正则项和损失函数。</p>
+<p>设<span class="math inline">\(\omega^*\)</span>为使得损失函数<span class="math inline">\(J(\omega; X, y)\)</span>取得最小值时的<span class="math inline">\(\omega\)</span>，那么在<span class="math inline">\(\omega^*\)</span>的附近对损失函数进行二次泰勒展开，则有：
+<span class="math display">\[
+J(\omega) = J(\omega^*) + {1 \over 2}(\omega - \omega^*)^T H (\omega - \omega^*)
+\]</span>
+其中<span class="math inline">\(H\)</span>是<span class="math inline">\(J\)</span>在<span class="math inline">\(\omega^*\)</span>处的关于<span class="math inline">\(\omega\)</span>的Hessian矩阵。</p>
+<p><strong>这里由于<span class="math inline">\(\omega^*\)</span>为损失函数的最优解，损失函数在该点的一阶导为0，故上式的泰勒展开中不含一阶项。</strong></p>
+<p>显然，上面的泰勒展开在取到最小值时有：
+<span class="math display">\[
+J&#39;(\omega) = H(\omega - \omega^*) = 0
+\]</span></p>
+<p>设<span class="math inline">\(\tilde \omega\)</span>为使得目标函数<span class="math inline">\(\tilde J(\omega; X, y)\)</span>取得最小值时的<span class="math inline">\(\omega\)</span>，那么<span class="math inline">\(\tilde \omega\)</span>应该满足：
+<span class="math display">\[
+\alpha \tilde \omega + H(\tilde \omega - \omega^*) = 0 \\
+(H + \alpha I)\tilde \omega - H\omega^* = 0 \\
+\tilde \omega = (H + \alpha I)^{-1} H \omega^*
+\]</span>
+<strong>到这一步其实已经可以看出来<span class="math inline">\(\alpha\)</span>的作用是在对使得损失函数取得最小值的<span class="math inline">\(\omega = \omega^*\)</span>进行一个缩放了，而且<span class="math inline">\(\alpha\)</span>越大，这个缩放的程度也会越大。</strong></p>
+<p>但是为了理解正则项是如何对<span class="math inline">\(\omega^*\)</span>进行缩放的话，需要对上式进行一个变换，这里要用到下述定理：</p>
+<ul>
+<li>任意的NxN实对称矩阵的特征值都是实数且都有N个线性无关的特征向量。并且这些特征向量都可以正交单位化而得到一组正交且模为1的向量。故实对称矩阵<span class="math inline">\(A\)</span>可被分解成：<br />
+<span class="math display">\[
+A = Q \Lambda Q^{-1} = Q \Lambda Q^T
+\]</span>
+其中<span class="math inline">\(Q\)</span>为正交矩阵，<span class="math inline">\(\Lambda\)</span>为实对角矩阵。</li>
+</ul>
+<p>由于<span class="math inline">\(H\)</span>是实对称矩阵，运用上面的定理，可以得到：
+<span class="math display">\[
+\begin{aligned}
+\tilde \omega &amp; =  (H + \alpha I)^{-1} H \omega^* \\
+ &amp; = (Q \Lambda Q^T + \alpha I)^{-1} Q \Lambda Q^T \omega^* \\
+ &amp; = [Q (\Lambda + \alpha I) Q^T]^{-1} Q \Lambda Q^T \omega^* \\
+ &amp; = Q (\Lambda + \alpha I)^{-1} \Lambda Q^T \omega^*
+\end{aligned}
+\]</span>
+于是可以看到，<strong>权重衰减的效果是沿着由<span class="math inline">\(H\)</span>的特征向量所定义的轴缩放<span class="math inline">\(\omega^*\)</span>，具体来说，会根据<span class="math inline">\(\lambda_i \over {\lambda_i + \alpha}\)</span>因子缩放与<span class="math inline">\(H\)</span>第<span class="math inline">\(i\)</span>个特征向量对齐的<span class="math inline">\(\omega^*\)</span>的分量</strong>。</p>
+<p>这个结论是<strong>Deep Learning</strong>书中的原话，然后书中还配了图示加以说明，但是个人依然觉得实在是很**的抽象，无法与数学符号联系起来。直到有一天发现做一个下面的变换就理解了：
+<span class="math display">\[
+Q^T \tilde \omega = (\Lambda + \alpha I)^{-1} \Lambda Q^T \omega^*
+\]</span></p>
+<p>即<strong>计算<span class="math inline">\(\omega^*\)</span>在<span class="math inline">\(H\)</span>的特征向量所定义的轴上的坐标（<span class="math inline">\(Q^T \omega^*\)</span>），然后使用因子<span class="math inline">\(\lambda_i \over {\lambda_i + \alpha}\)</span>（<span class="math inline">\((\Lambda + \alpha I)^{-1} \Lambda\)</span>）进行缩放。而<span class="math inline">\(\tilde \omega\)</span>在<span class="math inline">\(H\)</span>的特征向量定义的轴上的坐标（<span class="math inline">\(Q^T \tilde \omega\)</span>）应该等于上一步缩放后的结果</strong>。</p>
+<p>很显然，对于某固定的<span class="math inline">\(\alpha\)</span>，<span class="math inline">\(\lambda_i\)</span>越小，缩放因子越接近0。而特征值<span class="math inline">\(\lambda_i\)</span>越小，</p>
+</div>
 </div>
