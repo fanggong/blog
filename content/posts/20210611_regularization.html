@@ -1,5 +1,5 @@
 ---
-title: 参数正则化
+title: 线性回归的正则化
 author: Fang Yongchao
 date: "2021-06-11"
 categories:
@@ -15,18 +15,16 @@ draft: true
 
 <div id="TOC">
 <ul>
-<li><a href="#线性回归的正则化">线性回归的正则化</a></li>
+<li><a href="#线性回归的目标函数">线性回归的目标函数</a></li>
 <li><a href="#关于l2参数正则化的理论分析">关于L2参数正则化的理论分析</a></li>
 <li><a href="#关于l1参数正则化的理论分析">关于L1参数正则化的理论分析</a></li>
-<li><a href="#l2正则化和l1正则化的比较">L2正则化和L1正则化的比较</a></li>
 </ul>
 </div>
 
 <p>以下内容主要参考自<a href="https://scikit-learn.org/stable/user_guide.html">scikit-learn文档</a>和<strong>Deep Learning</strong>一书。</p>
-<div id="线性回归的正则化" class="section level2">
-<h2>线性回归的正则化</h2>
+<div id="线性回归的目标函数" class="section level2">
+<h2>线性回归的目标函数</h2>
 <hr />
-<p>对于参数正则化最早的接触来自于线性回归。</p>
 <p><strong>Lasso回归</strong>使用L1范数进行参数正则化，即回归的目标函数为：
 <span class="math display">\[
 {1 \over 2N }\left \| X\omega-y \right \|_2^2 + \alpha \left \| \omega \right \|_1
@@ -98,31 +96,5 @@ Q^T \tilde \omega = (\Lambda + \alpha I)^{-1} \Lambda Q^T \omega^*
 <span class="math display">\[
 \tilde J(\omega; X, y) = \alpha \left \| \omega \right \| _1 + J(\omega; X, y)
 \]</span>
-同样的，设<span class="math inline">\(\omega^*\)</span>为损失函数取到最小值时的<span class="math inline">\(\omega\)</span>，<span class="math inline">\(\tilde \omega\)</span>为目标函数取到最小值时的<span class="math inline">\(\omega\)</span>，那么<span class="math inline">\(\omega^*\)</span>和<span class="math inline">\(\tilde \omega\)</span>的关系可以由下式得出：
-<span class="math display">\[
-\tilde J&#39;(\tilde \omega; X, y) = \alpha sign(\tilde \omega) + H(\tilde \omega - \omega^*) = 0
-\]</span>
-然而，根据上式，我们无法得到一个用<span class="math inline">\(\omega^*\)</span>表示<span class="math inline">\(\tilde \omega\)</span>的直接清晰的代数表达式。因此这里做一个简化假设<span class="math inline">\(H\)</span>是对角矩阵，即<span class="math inline">\(H=diag([H_{1,1}, H_{2,2},...,H_{n,n}])\)</span>，其中每个<span class="math inline">\(H_{i,i}&gt;0\)</span>（该假设可以通过对输入特征进行预处理得到，如PCA）。</p>
-<p>那么，在该假设下，目标函数可以表示成如下形式：
-<span class="math display">\[
-\tilde J(\omega; X, y) = J(\omega^*; X, y) + \sum_i \left[ {1 \over 2} H_{i,i}(\omega_i - \omega_i^*)^2 + \alpha |\omega_i| \right]
-\]</span>
-为最小化目标函数，可以求得<span class="math inline">\(\omega_i\)</span>有下列形式的解析解（完全不知道这个解析解怎么求出来的，为什么写书的总喜欢在一些不显然的地方很显然…）：
-<span class="math display">\[
-\omega_i = sign (\omega^*)\max \left \{ |\omega_i^*| - {\alpha \over H_{i,i}},\ 0 \right \}
-\]</span>
-分析上面的解析解，可以发现：</p>
-<ul>
-<li><span class="math inline">\(0 &lt; |\omega_i^*| &lt; {\alpha \over H_{i,i}}\)</span>时，<span class="math inline">\(\omega_i\)</span>为0。即<span class="math inline">\(\omega_i\)</span>对损失函数的贡献被正则项抵消，<span class="math inline">\(\omega_i\)</span>被推为0</li>
-<li><span class="math inline">\(|\omega_i^*| &gt; {\alpha \over H_{i,i}}\)</span>时，<span class="math inline">\(\omega_i\)</span>会被从<span class="math inline">\(\omega_i^*\)</span>开始向0推动<span class="math inline">\(\alpha \over H_{i,i}\)</span>的距离</li>
-</ul>
-</div>
-<div id="l2正则化和l1正则化的比较" class="section level2">
-<h2>L2正则化和L1正则化的比较</h2>
-<hr />
-<p>通过前面的理论分析就可以得到对L2正则化和L1正则化的几个常识：</p>
-<ol style="list-style-type: decimal">
-<li>L2正则化中，参数只是在进行缩放，即最小化损失函数得到的参数不为0的话，最小化目标函数得到的参数也不会为0。因此L2正则化不会使参数变得稀疏；</li>
-<li>L1正则化中，参数是在被向0推动，当<span class="math inline">\(\alpha\)</span>足够大时，部分特征的参数会被推为0，因此L1正则化也常被用来作为特征选择的工具。</li>
-</ol>
+同样的，设<span class="math inline">\(\omega^*\)</span>为损失函数取到最小值时的<span class="math inline">\(\omega\)</span></p>
 </div>
