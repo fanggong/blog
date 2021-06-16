@@ -6,7 +6,20 @@
     <description>Recent content in 机器学习 on Connecting the dots</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Sun, 30 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 11 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>参数正则化</title>
+      <link>https://fanggong.pub/posts/20210611_regularized_linear_regression/</link>
+      <pubDate>Fri, 11 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://fanggong.pub/posts/20210611_regularized_linear_regression/</guid>
+      <description>线性回归的正则化 关于L2参数正则化的理论分析 关于L1参数正则化的理论分析 L2正则化和L1正则化的比较   以下内容主要参考自scikit-learn文档和Deep Learning一书。
+线性回归的正则化 对于参数正则化最早的接触来自于线性回归。
+Lasso回归使用L1范数进行参数正则化，即回归的目标函数为： \[ {1 \over 2N }\left \| X\omega-y \right \|_2^2 + \alpha \left \| \omega \right \|_1 \]
+岭回归使用L2范数进行参数正则化，即回归的目标函数为： \[ \left \| X\omega-y \right \|_2^2 + \alpha \left \| \omega \right \|_2^2 \]
+Elasti-Net回归的正则项结合了L1范数和L2范数，其目标函数为： \[ {1 \over 2N }\left \| X\omega-y \right \|_2^2 + \alpha \rho \left \| \omega \right \|_1 + {\alpha (1-\rho) \over 2} \left \| \omega \right \|_2^2 \]</description>
+    </item>
+    
     <item>
       <title>adaboost原理</title>
       <link>https://fanggong.pub/posts/20210530_adaboost/</link>

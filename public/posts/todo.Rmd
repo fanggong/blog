@@ -5,15 +5,7 @@ date: "`r Sys.Date()`"
 draft: true
 ---
 
-1. ridge reg, lass reg, elastic reg
-    - 为什么有的需要除以样本数有的不用
 1. 坐标下降，随机平均梯度下降，梯度下降法，随机梯度下降细节
 1. 支持向量机推导
 1. sklearn中的特征选择工具整理
 1. 感知机，前馈神经网络，MLP
-
-```{python}
-import pandas as pd
-df = pd.DataFrame({'a': [1,2,3], 'b': [2,3,4]})
-print(df)
-```
