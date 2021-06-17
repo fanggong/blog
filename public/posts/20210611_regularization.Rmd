@@ -1,5 +1,5 @@
 ---
-title: 线性回归的正则化
+title: 参数正则化
 author: Fang Yongchao
 date: "2021-06-11"
 categories:
@@ -8,14 +8,15 @@ output:
   blogdown::html_page:
     toc: yes
     toc_depth: 2
-draft: true
 ---
 
 以下内容主要参考自[scikit-learn文档](https://scikit-learn.org/stable/user_guide.html)和**Deep Learning**一书。
 
-## 线性回归的目标函数
+## 线性回归的正则化
 
 --------------------------
+
+对于参数正则化最早的接触来自于线性回归。
 
 **Lasso回归**使用L1范数进行参数正则化，即回归的目标函数为：
 $$
@@ -101,7 +102,32 @@ L1正则化下的目标函数可以表示为：
 $$
 \tilde J(\omega; X, y) = \alpha \left \| \omega \right \| _1 + J(\omega; X, y)
 $$
-同样的，设$\omega^*$为损失函数取到最小值时的$\omega$
+同样的，设$\omega^*$为损失函数取到最小值时的$\omega$，$\tilde \omega$为目标函数取到最小值时的$\omega$，那么$\omega^*$和$\tilde \omega$的关系可以由下式得出：
+$$
+\tilde J'(\tilde \omega; X, y) = \alpha sign(\tilde \omega) + H(\tilde \omega - \omega^*) = 0
+$$
+然而，根据上式，我们无法得到一个用$\omega^*$表示$\tilde \omega$的直接清晰的代数表达式。因此这里做一个简化假设$H$是对角矩阵，即$H=diag([H_{1,1}, H_{2,2},...,H_{n,n}])$，其中每个$H_{i,i}>0$（该假设可以通过对输入特征进行预处理得到，如PCA）。
+
+那么，在该假设下，目标函数可以表示成如下形式：
+$$
+\tilde J(\omega; X, y) = J(\omega^*; X, y) + \sum_i \left[ {1 \over 2} H_{i,i}(\omega_i - \omega_i^*)^2 + \alpha |\omega_i| \right]
+$$
+为最小化目标函数，可以求得$\omega_i$有下列形式的解析解（完全不知道这个解析解怎么求出来的，为什么写书的总喜欢在一些不显然的地方很显然...）：
+$$
+\omega_i = sign (\omega^*)\max \left \{ |\omega_i^*| - {\alpha \over H_{i,i}},\ 0 \right \}
+$$
+分析上面的解析解，可以发现：
+
+- $0 < |\omega_i^*| < {\alpha \over H_{i,i}}$时，$\omega_i$为0。即$\omega_i$对损失函数的贡献被正则项抵消，$\omega_i$被推为0
+- $|\omega_i^*| > {\alpha \over H_{i,i}}$时，$\omega_i$会被从$\omega_i^*$开始向0推动$\alpha \over H_{i,i}$的距离
 
 
+## L2正则化和L1正则化的比较
+
+--------------------------
+
+通过前面的理论分析就可以得到对L2正则化和L1正则化的几个常识：
+
+1. L2正则化中，参数只是在进行缩放，即最小化损失函数得到的参数不为0的话，最小化目标函数得到的参数也不会为0。因此L2正则化不会使参数变得稀疏；
+1. L1正则化中，参数是在被向0推动，当$\alpha$足够大时，部分特征的参数会被推为0，因此L1正则化也常被用来作为特征选择的工具。
 

@@ -1,0 +1,22 @@
+---
+title: Shiny：在表格中添加sparkline
+author: Fang Yongchao
+date: "2021-06-16"
+categories:
+  - "R语言"
+  - "Shiny"
+  - "数据可视化"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+draft: true
+---
+
+CRAN中大部分的htmlwidgets相关的文档都写的非常详细且有条理所以并不需要记录什么，只有[sparkline](https://cran.r-project.org/web/packages/sparkline/index.html)这个包的[文档](https://cran.r-project.org/web/packages/sparkline/vignettes/intro_sparkline.html)真的是一言难尽，只能花不少时间去看原库[JQuery Sparklines](https://omnipotent.net/jquery.sparkline/#s-about)的文档，把在R中的使用方法记录在这里。（Hugo只能静态网页也很烦，再小的demo都得专门写个app）
+
+<i class="fab fa-lg fa-github fa-fw"></i><a href="">&nbsp;View Code</a>
+</br>
+<i class="fas fa-lg fa-desktop fa-fw"></i><a href="">&nbsp;View App</a>
+
+<iframe height="500" width="100%" frameborder="no" src="https://shiny.fanggong.pub/sparkline_demo/"> </iframe>

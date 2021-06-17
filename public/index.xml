@@ -9,10 +9,10 @@
     <lastBuildDate>Fri, 11 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>参数正则化</title>
-      <link>https://fanggong.pub/posts/20210611_regularized_linear_regression/</link>
+      <link>https://fanggong.pub/posts/20210611_regularization/</link>
       <pubDate>Fri, 11 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://fanggong.pub/posts/20210611_regularized_linear_regression/</guid>
+      <guid>https://fanggong.pub/posts/20210611_regularization/</guid>
       <description>线性回归的正则化 关于L2参数正则化的理论分析 关于L1参数正则化的理论分析 L2正则化和L1正则化的比较   以下内容主要参考自scikit-learn文档和Deep Learning一书。
 线性回归的正则化 对于参数正则化最早的接触来自于线性回归。
 Lasso回归使用L1范数进行参数正则化，即回归的目标函数为： \[ {1 \over 2N }\left \| X\omega-y \right \|_2^2 + \alpha \left \| \omega \right \|_1 \]
@@ -347,15 +347,13 @@ par(mar = c(0, 0, 0, 0), family = &amp;quot;HannotateSC-W5&amp;quot;) openplotma
       <pubDate>Sat, 06 Mar 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/about/</guid>
-      <description>  Fang Yongchao，男，90后。
+      <description>Fang Yongchao，男，90后。
 2013年本科毕业于北京理工大学数学系。
 2019年研究生毕业于日本筑波大学系统情报工学系。
-在此之前主要从事数据分析和相关的项目咨询工作（DS方向）。
-目前在某初创公司从事数据挖掘工程师工作。爱好健身，剑道初段。
-为什么会有这个blog 回忆大学期间的学习，乱而杂。数学、编程、金融、物理，好像没有什么领域是应用数学这个专业不需要涉及的（狗头）。然后毫无疑问地在考完试后将两个星期一个学期的学习内容忘得一干二净。
-在研究生入学的准备过程中开始一一捡起曾经丢下的东西，在此期间接触到了RMarkdown，于是各种相关的笔记都以Rmd的形式记录并保存了下来。
-最近又接触到了blogdown，同时由于工作上需要了解一些服务器的相关知识，入手了一个云服务器。进一步的于是有了把各种笔记以独立博客的形式保存下来便于查看与分享的想法。
- </description>
+工作三年学三年，三年之后又三年。
+在此之前从事的是数据分析以及相关的项目咨询及管理工作（DS方向）。
+目前在从事数据挖掘工程师工作（兜兜转转还是当代码狗有意思）。
+爱好健身，剑道初段。</description>
     </item>
     
   </channel>

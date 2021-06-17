@@ -9,10 +9,10 @@
     <lastBuildDate>Fri, 11 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>参数正则化</title>
-      <link>https://fanggong.pub/posts/20210611_regularized_linear_regression/</link>
+      <link>https://fanggong.pub/posts/20210611_regularization/</link>
       <pubDate>Fri, 11 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://fanggong.pub/posts/20210611_regularized_linear_regression/</guid>
+      <guid>https://fanggong.pub/posts/20210611_regularization/</guid>
       <description>线性回归的正则化 关于L2参数正则化的理论分析 关于L1参数正则化的理论分析 L2正则化和L1正则化的比较   以下内容主要参考自scikit-learn文档和Deep Learning一书。
 线性回归的正则化 对于参数正则化最早的接触来自于线性回归。
 Lasso回归使用L1范数进行参数正则化，即回归的目标函数为： \[ {1 \over 2N }\left \| X\omega-y \right \|_2^2 + \alpha \left \| \omega \right \|_1 \]
