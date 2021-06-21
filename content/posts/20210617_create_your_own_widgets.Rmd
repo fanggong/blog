@@ -1,0 +1,41 @@
+---
+title: 创建HTML widgets for R
+author: Fang Yongchao
+date: "2021-06-17"
+categories:
+  - "R语言"
+  - "Shiny"
+  - "数据可视化"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+draft: true
+---
+
+## 搭建框架
+
+-------------------------
+
+- 创建包
+- 创建开发环境依赖
+- 创建widgets框架
+- 生成帮助文件
+- 安装包
+- 测试
+
+## 相关依赖的配置
+
+-------------------------
+
+## R与JS的绑定
+
+-------------------------
+
+## 对widgets的size进行调整
+
+-------------------------
+
+## 完善package的其它信息
+
+-------------------------
