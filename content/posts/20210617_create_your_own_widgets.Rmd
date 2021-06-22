@@ -1,10 +1,9 @@
 ---
-title: 创建HTML widgets for R
+title: htmlwidgets包的使用
 author: Fang Yongchao
 date: "2021-06-17"
 categories:
   - "R语言"
-  - "Shiny"
   - "数据可视化"
 output:
   blogdown::html_page:
@@ -13,29 +12,164 @@ output:
 draft: true
 ---
 
-## 搭建框架
+```{r library, echo=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, eval = FALSE)
+```
+
+[htmlwidgets](https://cran.r-project.org/web/packages/htmlwidgets/index.html)包为R提供了一个封装各种JS库的框架。生成的widgets可以直接使用在Rmarkdown和Shiny中。
+
+本文记录了一个简单的widgets的开发流程，封装了一个通过JS实现的倒计时时钟[flipdown](https://github.com/PButcher/flipdown)。
+
+## 项目结构搭建
 
 -------------------------
 
-- 创建包
-- 创建开发环境依赖
-- 创建widgets框架
-- 生成帮助文件
-- 安装包
-- 测试
+通过[htmlwidgets](https://cran.r-project.org/web/packages/htmlwidgets/index.html)创建的widgets会以一个包的形式存在，故项目结构与一般R包的项目结构大致一样。
+
+首先创建一个R package项目
+```{r}
+devtools::create("flipdownWidgets")
+```
+
+初始化开发环境并安装必要的包
+```{r}
+renv::init()
+renv::install("htmlwidgets")
+renv::install("devtools")
+```
+
+创建widgets的脚手架
+```{r}
+htmlwidgets::scaffoldWidget("flipdownWidgets")
+```
+
+生成函数说明文件
+```{r}
+devtools::document()
+```
+
+安装包
+```{r}
+devtools::install()
+```
+
+测试
+```{r}
+flipdownWidgets::flipdownWidgets("Hello World!")
+```
+
+上面的基础结构实现了一个简单的功能：向R函数`flipdownWidgets()`传递参数`Hello World!`，该参数会被传给对应的JS函数，JS函数的功能是将参数输出到网页上。
 
 ## 相关依赖的配置
 
 -------------------------
 
+接下来要进行对相关JS库的依赖配置。
+
+找到对应JS库的.js和.css文件，复制到包结构中的/inst/htmlwidgets路径下。在这里，我们需要复制的文件为[flipdown.js](https://github.com/PButcher/flipdown/blob/master/dist/flipdown.js)和[flipdown.css](https://github.com/PButcher/flipdown/blob/master/dist/flipdown.css)。之后修改/inst/htmlwidgets路径下的flipdownWidgets.yaml配置文件指定依赖。
+```{yaml}
+dependencies:
+ - name: flipdown
+   version: 0.3.2
+   src: "htmlwidgets/lib/flipdown"
+   script: flipdown.js
+   stylesheet: flipdown.css
+```
+
 ## R与JS的绑定
 
 -------------------------
+
+一个最简单的htmlwidgets应该至少包含了以下四个函数：
+
+- **widgets函数**：该函数是一个R函数，它接收数据和其它关于widgets的可选项，生成一个htmlwidgets对象。在这里，该函数的基本结构通过前面的`htmlwidgets::scaffoldWidget("flipdownWidgets")`自动生成在/R/flipdownWidgets.R文件中；
+- **factory函数**：该函数是一个JS函数，它接收将要容纳这个widgets的HTML元素以及HTML元素的宽度和高度，然后通过其中的`renderValue()`方法创建widgets。`renderValue()`除了**factory函数**的参数外，还会接收**widgets函数**中的参数（即数据和关于widgets的可选项）。**factory函数**的基本结构同样会通过`htmlwidgets::scaffoldWidget("flipdownWidgets")`自动生成在/inst/htmlwidgets/flipdownWidgets.js文件中；
+- **flipdownWidgetsOutput函数**：该函数供Shiny使用，自动生成，一般不需要做修改；
+- **renderFlipdownWidgets函数**：该函数同样供Shiny使用，自动生成，一般不做修改。
+
+这里我们需要做的其实就是以下两点：
+
+- 确定在R中使用**widget函数**对应的输入参数，将这些参数在**widget函数**中经过合适的转换之后打包为一个列表传入**widgets函数**内的` htmlwidgets::createWidget()`；  
+```{r}
+flipdownWidgets <- function(to,
+                            theme = c("dark", "light"),
+                            headings = c("Days", "Hours", "Minutes", "Seconds"),
+                            ...,
+                            width = NULL, height = NULL, elementId = NULL) {
+  to <- as.numeric(as.POSIXct(to, ...))
+  theme <- match.arg(theme)
+  stopifnot(
+    "headings must have length = 4" = length(headings) == 4,
+    "headings must be type character" = inherits(headings, "character")
+  )
+  parameters = list(
+    to = to,
+    theme = theme,
+    headings = headings
+  )
+  htmlwidgets::createWidget(
+    name = 'flipdownWidgets',
+    parameters,
+    width = width,
+    height = height,
+    package = 'flipdownWidgets',
+    elementId = elementId
+  )
+}
+```
+- 编写**factory函数**中的`renderValue()`方法，使用**widgets函数**的参数在HTML元素中生成一个widgets。  
+```{js}
+HTMLWidgets.widget({
+  name: 'flipdownWidgets',
+  type: 'output',
+  factory: function(el, width, height) {
+    return {
+      renderValue: function(parameters) {
+        new FlipDown(parameters.to, el.id, {
+          theme: parameters.theme,
+          headings: parameters.headings
+        })
+        .start()
+        .ifEnded(() => {
+          console.log("The countter has ended!")
+        })
+      },
+      resize: function(width, height) {
+        // TODO 这里还没搞太明白
+      }
+    };
+  }
+});
+```
+
 
 ## 对widgets的size进行调整
 
 -------------------------
 
+还没整明白，貌似因为[flipdown](https://github.com/PButcher/flipdown)这个库通过CSS文件写死了样式，所以无法通过`resize()`方法来调整widgets的size。
+
 ## 完善package的其它信息
 
 -------------------------
+
+如果只是自己使用的话，到上一步就已经完成了，只需要重新`devtools::install()`就可以使用该widgets了。
+
+如果想把该包分享给他人使用或者上传到CRAN，那么遵循R包的开发规则，我们需要完善相关函数的说明文件，DESCRIPTION文件以及选择合适的LICENSE。
+
+```{r eval=TRUE}
+library(flipdownWidgets)
+flipdownWidgets(Sys.time() + 60*60*24*100, height = 120)
+```
+
+## 写在最后
+
+-------------------------
+
+在上面的过程中踩了一个小坑，记录一下：
+
+通过**widgets函数**创建的widgets的class属性为该函数函数名（由于是通过`scaffoldWidget()`自动生成的，所以也是配置文件和JS文件的文件名）。在本文中，这个class属性是flipdownWidgets，这个和原始的JS库中是不一致的（原始的JS库中class属性为flipdown），这导致了CSS文件中的样式无法匹配。解决办法只能是去修改对应的flipdown.css文件或在`scaffoldWidget()`时将**name**参数设为flipdown。
+
+另外，这种封装JS库的小部件写起来很有意思，但是意义感觉不是很大，[htmlwidgets](https://cran.r-project.org/web/packages/htmlwidgets/index.html)包更大的意义个人觉得还是在于它让我们可以通过一些更为基础的JS来实现R语言的可视化，比如说D3。
+
+
