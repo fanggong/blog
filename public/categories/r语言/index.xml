@@ -6,7 +6,31 @@
     <description>Recent content in R语言 on Connecting the dots</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Sun, 06 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/categories/r%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 17 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/categories/r%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>htmlwidgets包的使用</title>
+      <link>https://fanggong.pub/posts/20210617_create_your_own_widgets/</link>
+      <pubDate>Thu, 17 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://fanggong.pub/posts/20210617_create_your_own_widgets/</guid>
+      <description>项目结构搭建 相关依赖的配置 R与JS的绑定 对htmlwidgets的size进行调整 完善package的其它信息 写在最后   htmlwidgets包为R提供了一个封装JS代码的框架。通过JS生成的htmlwidgets可以直接使用在Rmarkdown和Shiny中。
+本文记录了一个简单的htmlwidgets的开发流程，封装了一个JS库flipdown.js，可以在Rmarkdown或Shiny中创建一个倒计时时钟。
+项目结构搭建 封装的JS代码和R函数以一个包的形式存在，故项目结构与普通R包的项目结构大致一样。
+首先创建一个R package项目
+devtools::create(&amp;quot;flipdownWidgets&amp;quot;) 初始化开发环境并安装必要的包
+renv::init() renv::install(&amp;quot;htmlwidgets&amp;quot;) renv::install(&amp;quot;devtools&amp;quot;) 创建widget的脚手架
+htmlwidgets::scaffoldWidget(&amp;quot;flipdownWidgets&amp;quot;) 生成函数说明文件
+devtools::document() 安装包
+devtools::install() 测试
+flipdownWidgets::flipdownWidgets(&amp;quot;Hello World!&amp;quot;) 上面的基础结构实现了一个简单的htmlwidgets：向R函数flipdownWidgets()传递参数Hello World!，该参数会被传给对应的JS函数，JS函数的功能是将参数输出到网页上。
+ 相关依赖的配置 接下来要进行对相关JS库的依赖配置。
+找到对应JS库的.js和.css文件，复制到项目中的/inst/htmlwidgets路径下。在这里，我们需要复制的文件为flipdown.js和flipdown.css。之后修改配置文件/inst/htmlwidgets/flipdownWidgets.yaml指定依赖。
+dependencies: - name: flipdown version: 0.3.2 src: &amp;quot;htmlwidgets/lib/flipdown&amp;quot; script: flipdown.js stylesheet: flipdown.css  R与JS的绑定 一个最简单的htmlwidgets应该至少包含了以下四个函数：
+ R捆绑函数：该函数是一个R函数，它接收数据和其它关于htmlwidgets的可选项，生成一个htmlwidgets对象。在这里，该函数的基本结构通过前面的scaffoldWidget(&#34;flipdownWidgets&#34;)自动生成在/R/flipdownWidgets.R文件中； JS捆绑函数：该函数是一个JS函数，它接收将要容纳这个htmlwidgets的HTML元素以及HTML元素的宽度和高度，然后通过其中的renderValue()方法创建htmlwidgets。renderValue()除了JS捆绑函数的参数外，还会接收R捆绑函数中的参数（即数据和关于htmlwidgets的可选项）。JS捆绑函数的基本结构同样会通过scaffoldWidget(&#34;flipdownWidgets&#34;)自动生成在/inst/htmlwidgets/flipdownWidgets.js文件中； flipdownWidgetsOutput函数：该函数供Shiny使用，自动生成，一般不需要做修改； renderFlipdownWidgets函数：该函数同样供Shiny使用，自动生成，一般不做修改。  这里我们需要做的其实就是以下两点：
+ 确定R捆绑函数对应的输入参数，将这些参数在R捆绑函数中经过合适的转换之后打包为一个列表传入R捆绑函数内的htmlwidgets::createWidget()函数；
+ 编写JS捆绑函数中的renderValue()方法，使用R捆绑函数的参数在HTML元素中生成一个htmlwidgets。   对htmlwidgets的size进行调整 这一部分还没整明白，貌似因为flipdown.js这个库通过CSS文件写死了size，所以无法通过resize()方法来调整htmlwidgets的size。</description>
+    </item>
+    
     <item>
       <title>Shiny：对Reactive对象进行修改</title>
       <link>https://fanggong.pub/posts/20210606_shiny_update_reactive_object/</link>
