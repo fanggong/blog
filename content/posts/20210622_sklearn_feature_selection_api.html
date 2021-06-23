@@ -1,0 +1,77 @@
+---
+title: scikit-learn的特征选择相关接口整理
+author: Fang Yongchao
+date: "2021-06-22"
+categories:
+  - "机器学习"
+  - "Python"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+draft: true
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#sklearn.feature_selection.genericunivariateselect"><span><code>sklearn.feature_selection.GenericUnivariateSelect</code></span></a></li>
+<li><a href="#sklearn.feature_selection.selectfrommodel"><span><code>sklearn.feature_selection.SelectFromModel</code></span></a></li>
+<li><a href="#sklearn.feature_selection.sequentialfeatureselector"><code>sklearn.feature_selection.SequentialFeatureSelector</code></a></li>
+<li><a href="#sklearn.feature_selection.variancethreshold"><code>sklearn.feature_selection.VarianceThreshold</code></a></li>
+<li><a href="#sklearn.feature_selection.rfe"><code>sklearn.feature_selection.RFE</code></a></li>
+</ul>
+</div>
+
+<p><strong>不要重复造轮子。</strong></p>
+<div id="sklearn.feature_selection.genericunivariateselect" class="section level2">
+<h2><a href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.GenericUnivariateSelect.html#sklearn.feature_selection.GenericUnivariateSelect"><code>sklearn.feature_selection.GenericUnivariateSelect</code></a></h2>
+<hr />
+<p>对每个特征与目标变量求<strong>score_func</strong>的值，根据结果按照<strong>mode</strong>选择满足<strong>param</strong>条件的特征。</p>
+<p><strong>score_func</strong>应该满足接收n个特征变量和1个目标变量，返回一对长度为n的数组分别表示scores和pvalues。sklearn中提供了5个可能高频率使用的<strong>score_func</strong>：</p>
+<ul>
+<li><strong>chi2</strong>：卡方统计量，适用于多个二分类特征（或是one-hot编码后的多水平分类特征）和分类目标变量；</li>
+<li><strong>f_classif</strong>：方差分析的F统计量，适用于连续特征和分类目标变量；</li>
+<li><strong>f_regression</strong>：单变量线性回归的F统计量，适用于连续特征和连续目标变量；</li>
+<li><strong>mutual_info_classif</strong>：互信息，适用于分类目标变量；</li>
+<li><strong>mutual_info_regression</strong>：互信息，适用于连续目标变量。</li>
+</ul>
+<p>此外提供了5种选择<strong>mode</strong>：</p>
+<ul>
+<li><strong>percentile</strong>：根据scores选择得分最高的前一定比例的特征；</li>
+<li><strong>k_best</strong>：根据scores选择得分最高的前k个特征；</li>
+<li><strong>fpr</strong>：根据pvalues选择低于某值的特征；</li>
+<li><strong>fdr</strong>：<a href="https://en.wikipedia.org/wiki/False_discovery_rate">False discovery rate</a></li>
+<li><strong>fwe</strong>：<a href="https://en.wikipedia.org/wiki/Family-wise_error_rate">Family-wise error rate</a></li>
+</ul>
+<p>自定义<strong>score_func</strong>示例如下（并没有什么实际意义）：</p>
+<pre class="python"><code>def my_score_func(X, y):
+    return (X.sum(axis=0), X.mean(axis=0))</code></pre>
+<pre class="python"><code>from sklearn.datasets import load_breast_cancer
+from sklearn.feature_selection import GenericUnivariateSelect, chi2
+X, y = load_breast_cancer(return_X_y=True)
+print(X.shape)</code></pre>
+<pre><code>## (569, 30)</code></pre>
+<pre class="python"><code>transformer = GenericUnivariateSelect(my_score_func, mode=&#39;k_best&#39;, param=10)
+X_new = transformer.fit_transform(X, y)
+print(X_new.shape)</code></pre>
+<pre><code>## (569, 10)</code></pre>
+</div>
+<div id="sklearn.feature_selection.selectfrommodel" class="section level2">
+<h2><a href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectFromModel.html#sklearn.feature_selection.SelectFromModel"><code>sklearn.feature_selection.SelectFromModel</code></a></h2>
+<hr />
+<p>通过模型<strong>estimator</strong>对特征进行选择。<strong>estimator</strong>需要有feature_importances_或coef_属性</p>
+</div>
+<div id="sklearn.feature_selection.sequentialfeatureselector" class="section level2">
+<h2><code>sklearn.feature_selection.SequentialFeatureSelector</code></h2>
+<hr />
+</div>
+<div id="sklearn.feature_selection.variancethreshold" class="section level2">
+<h2><code>sklearn.feature_selection.VarianceThreshold</code></h2>
+<hr />
+</div>
+<div id="sklearn.feature_selection.rfe" class="section level2">
+<h2><code>sklearn.feature_selection.RFE</code></h2>
+<hr />
+</div>

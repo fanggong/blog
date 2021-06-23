@@ -1,0 +1,76 @@
+---
+title: scikit-learn的特征选择相关接口整理
+author: Fang Yongchao
+date: "2021-06-22"
+categories:
+  - "机器学习"
+  - "Python"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+draft: true
+---
+
+```{r library, echo=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+**不要重复造轮子。**
+
+## [`sklearn.feature_selection.GenericUnivariateSelect`](https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.GenericUnivariateSelect.html#sklearn.feature_selection.GenericUnivariateSelect)
+
+---------------------
+
+对每个特征与目标变量求**score_func**的值，根据结果按照**mode**选择满足**param**条件的特征。
+
+**score_func**应该满足接收n个特征变量和1个目标变量，返回一对长度为n的数组分别表示scores和pvalues。sklearn中提供了5个可能高频率使用的**score_func**：
+
+- **chi2**：卡方统计量，适用于多个二分类特征（或是one-hot编码后的多水平分类特征）和分类目标变量；
+- **f_classif**：方差分析的F统计量，适用于连续特征和分类目标变量；
+- **f_regression**：单变量线性回归的F统计量，适用于连续特征和连续目标变量；
+- **mutual_info_classif**：互信息，适用于分类目标变量；
+- **mutual_info_regression**：互信息，适用于连续目标变量。
+
+此外提供了5种选择**mode**：
+
+- **percentile**：根据scores选择得分最高的前一定比例的特征；
+- **k_best**：根据scores选择得分最高的前k个特征；
+- **fpr**：根据pvalues选择低于某值的特征；
+- **fdr**：[False discovery rate](https://en.wikipedia.org/wiki/False_discovery_rate)
+- **fwe**：[Family-wise error rate](https://en.wikipedia.org/wiki/Family-wise_error_rate)
+
+自定义**score_func**示例如下（并没有什么实际意义）：
+```{python}
+def my_score_func(X, y):
+    return (X.sum(axis=0), X.mean(axis=0))
+```
+
+```{python}
+from sklearn.datasets import load_breast_cancer
+from sklearn.feature_selection import GenericUnivariateSelect, chi2
+X, y = load_breast_cancer(return_X_y=True)
+print(X.shape)
+transformer = GenericUnivariateSelect(my_score_func, mode='k_best', param=10)
+X_new = transformer.fit_transform(X, y)
+print(X_new.shape)
+```
+
+## [`sklearn.feature_selection.SelectFromModel`](https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectFromModel.html#sklearn.feature_selection.SelectFromModel)
+
+---------------------
+
+通过模型**estimator**对特征进行选择。**estimator**需要有feature_importances_或coef_属性。
+
+## `sklearn.feature_selection.SequentialFeatureSelector`
+
+---------------------
+
+## `sklearn.feature_selection.VarianceThreshold`
+
+---------------------
+
+## `sklearn.feature_selection.RFE`
+
+---------------------
+
