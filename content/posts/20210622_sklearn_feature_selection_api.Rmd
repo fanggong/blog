@@ -60,17 +60,73 @@ print(X_new.shape)
 
 ---------------------
 
-通过模型**estimator**对特征进行选择。**estimator**需要有feature_importances_或coef_属性。
+通过模型**estimator**在fit之后的feature_importances_或coef_属性对特征进行选择。选择特征的数量通过**threshold**和**max_features**共同控制。
 
-## `sklearn.feature_selection.SequentialFeatureSelector`
+比如我们最常见的利用随机森林进行特征选择。
+
+```{python}
+from sklearn.datasets import load_iris
+from sklearn.feature_selection import SelectFromModel
+from sklearn.ensemble import RandomForestClassifier
+X, y = load_iris(return_X_y=True)
+print(X.shape)
+selector = SelectFromModel(estimator=RandomForestClassifier(), max_features=2)
+X_new = selector.fit_transform(X, y)
+print(X_new.shape)
+```
+
+## [`sklearn.feature_selection.SequentialFeatureSelector`](https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SequentialFeatureSelector.html#sklearn.feature_selection.SequentialFeatureSelector)
 
 ---------------------
 
-## `sklearn.feature_selection.VarianceThreshold`
+通过模型**estimator**按照**direction**进行前向或后向特征选择。其选择标准由**scoring**决定，最终的选择数量由**n_features_to_select**指定。
+
+```{python}
+from sklearn.datasets import load_breast_cancer
+from sklearn.feature_selection import SequentialFeatureSelector
+from sklearn.linear_model import LogisticRegression
+X, y = load_breast_cancer(return_X_y=True)
+print(X.shape)
+selector = SequentialFeatureSelector(
+  estimator=LogisticRegression(max_iter=200), 
+  n_features_to_select=5, 
+  direction='forward'
+)
+X_new = selector.fit_transform(X, y)
+print(X_new.shape)
+```
+
+
+## [`sklearn.feature_selection.VarianceThreshold`](https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.VarianceThreshold.html#sklearn.feature_selection.VarianceThreshold)
 
 ---------------------
+
+删除方差小于**threshold**的特征。该方法用`GenericUnivariateSelect`其实也可以很容易实现。
+
+```{python}
+from sklearn.datasets import load_breast_cancer
+from sklearn.feature_selection import VarianceThreshold
+X, _ = load_breast_cancer(return_X_y=True)
+print(X.shape)
+selector = VarianceThreshold(threshold=0.2)
+X_new = selector.fit_transform(X, y)
+print(X_new.shape)
+```
 
 ## `sklearn.feature_selection.RFE`
 
 ---------------------
+
+通过模型**estimator**在fit之后的feature_importances_或coef_属性迭代地对特征进行选择。每一步会移除**step**数量的特征，直到剩余特征的数量满足**n_features_to_select**。
+
+```{python}
+from sklearn.datasets import load_breast_cancer
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_selection import RFE
+X, y = load_breast_cancer(return_X_y=True)
+print(X.shape)
+selector = RFE(estimator=RandomForestClassifier(), step=3, n_features_to_select=10)
+X_new = selector.fit_transform(X, y)
+print(X_new.shape)
+```
 
