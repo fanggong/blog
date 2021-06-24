@@ -1,0 +1,76 @@
+---
+title: 支持向量机（SVM）原理
+author: Fang Yongchao
+date: "2021-06-23"
+categories:
+  - "机器学习"
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+draft: true
+---
+
+对于线性分类问题，若数据是线性可分的，支持向量机计算支持向量使得硬间隔最大化；当数据是线性不可分时，支持向量机引入松弛变量，计算支持向量使的软间隔最大化。
+
+对于非线性分类问题，支持向量机引入核函数后求解支持向量。
+
+## 硬间隔和软间隔
+
+---------------------
+
+```{r echo=FALSE, fig.align="center", fig.width=6, fig.height=4}
+par(mar = c(.5, .5, .5, .5))
+plot.new()
+shape::Arrows(0, 0, 0, 1.2, arr.type = "triangle", arr.length = 0.3, arr.width = 0.1)
+shape::Arrows(0, 0, 1, 0, arr.type = "triangle", arr.length = 0.3, arr.width = 0.1)
+
+set.seed(2414)
+
+w <- -0.8
+b <- 1
+margin <- 0.2
+l <- function(x, w, b, jitter = c("none", "up", "down")) {
+  switch (jitter,
+    "none" = w * x + b,
+    "up" = w * x + b + runif(length(x), 0, 1.2 - w * x - b),
+    "down" = w * x + b - runif(length(x), 0, w * x + b)
+  )
+}
+
+abline(b, w)
+abline(b + margin, w, lty = 2)
+abline(b - margin, w, lty = 2)
+
+x <- runif(8)
+# points(x, rep(0.5, length(x)), pch = 2)
+y <- l(x, w, b + margin, "up")
+points(x, y, pch = 2)
+
+x <- runif(2)
+y <- l(x, w, b + margin, "none")
+points(x, y, pch = 2)
+
+
+x <- runif(8)
+y <- l(x, w, b - margin, "down")
+points(x, y, pch = 3)
+
+x <- runif(2)
+y <- l(x, w, b - margin, "none")
+points(x, y, pch = 3)
+
+box(col = "#dcdcdc", which = "outer")
+
+```
+
+
+## 核函数
+
+---------------------
+
+## 算法原理
+
+---------------------
+
+
