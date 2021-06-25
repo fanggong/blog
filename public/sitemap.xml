@@ -3,15 +3,24 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://fanggong.pub/categories/</loc>
-    <lastmod>2021-06-17T00:00:00+00:00</lastmod>
+    <lastmod>2021-06-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://fanggong.pub/</loc>
-    <lastmod>2021-06-17T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://fanggong.pub/posts/20210617_create_your_own_widgets/</loc>
-    <lastmod>2021-06-17T00:00:00+00:00</lastmod>
+    <lastmod>2021-06-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://fanggong.pub/posts/</loc>
+    <lastmod>2021-06-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://fanggong.pub/categories/python/</loc>
+    <lastmod>2021-06-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://fanggong.pub/posts/20210622_sklearn_feature_selection_api/</loc>
+    <lastmod>2021-06-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://fanggong.pub/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2021-06-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://fanggong.pub/posts/20210617_create_your_own_widgets/</loc>
     <lastmod>2021-06-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://fanggong.pub/categories/r%E8%AF%AD%E8%A8%80/</loc>
@@ -21,9 +30,6 @@
     <lastmod>2021-06-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://fanggong.pub/posts/20210611_regularization/</loc>
-    <lastmod>2021-06-11T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://fanggong.pub/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2021-06-11T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://fanggong.pub/categories/shiny/</loc>

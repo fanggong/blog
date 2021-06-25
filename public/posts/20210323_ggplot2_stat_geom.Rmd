@@ -1,5 +1,5 @@
 ---
-title: ggplot2使用笔记（2）—— Stat和Geom
+title: ggplot2：Stat和Geom
 author: Fang Yongchao
 date: "2021-03-23"
 categories:

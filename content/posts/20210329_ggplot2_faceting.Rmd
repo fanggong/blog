@@ -1,5 +1,5 @@
 ---
-title: ggplot2使用笔记（7）—— Faceting
+title: ggplot2：Faceting
 author: Fang Yongchao
 date: "2021-03-29"
 categories:

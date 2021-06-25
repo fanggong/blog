@@ -1,5 +1,5 @@
 ---
-title: ggplot2使用笔记（3）—— Scales
+title: ggplot2：Scales
 author: Fang Yongchao
 date: "2021-03-24"
 categories:

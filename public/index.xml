@@ -6,7 +6,21 @@
     <description>Recent content on Connecting the dots</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Thu, 17 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 22 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>scikit-learn的特征选择相关接口整理</title>
+      <link>https://fanggong.pub/posts/20210622_sklearn_feature_selection_api/</link>
+      <pubDate>Tue, 22 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://fanggong.pub/posts/20210622_sklearn_feature_selection_api/</guid>
+      <description>sklearn.feature_selection.GenericUnivariateSelect sklearn.feature_selection.SelectFromModel sklearn.feature_selection.SequentialFeatureSelector sklearn.feature_selection.VarianceThreshold sklearn.feature_selection.RFE   不要重复造轮子。
+sklearn.feature_selection.GenericUnivariateSelect 对每个特征与目标变量求score_func的值，根据结果按照mode选择满足param条件的特征。
+score_func应该满足接收n个特征变量和1个目标变量，返回一对长度为n的数组分别表示scores和pvalues。sklearn中提供了5个可能高频率使用的score_func：
+ chi2：卡方统计量，适用于多个二分类特征（或是one-hot编码后的多水平分类特征）和分类目标变量； f_classif：方差分析的F统计量，适用于连续特征和分类目标变量； f_regression：单变量线性回归的F统计量，适用于连续特征和连续目标变量； mutual_info_classif：互信息，适用于分类目标变量； mutual_info_regression：互信息，适用于连续目标变量。  此外提供了5种选择mode：
+ percentile：根据scores选择得分最高的前一定比例的特征； k_best：根据scores选择得分最高的前k个特征； fpr：根据pvalues选择低于某值的特征； fdr：False discovery rate fwe：Family-wise error rate  自定义score_func示例如下（并没有什么实际意义）：
+def my_score_func(X, y): return (X.sum(axis=0), X.mean(axis=0)) from sklearn.datasets import load_breast_cancer from sklearn.feature_selection import GenericUnivariateSelect, chi2 X, y = load_breast_cancer(return_X_y=True) print(X.shape) ## (569, 30) transformer = GenericUnivariateSelect(my_score_func, mode=&amp;#39;k_best&amp;#39;, param=10) X_new = transformer.fit_transform(X, y) print(X_new.shape) ## (569, 10)  sklearn.</description>
+    </item>
+    
     <item>
       <title>htmlwidgets包的使用</title>
       <link>https://fanggong.pub/posts/20210617_create_your_own_widgets/</link>
@@ -235,7 +249,7 @@ WOE(Weight of Evidence)和IV(Information Value) WOE为“当前分组下正样�
     </item>
     
     <item>
-      <title>ggplot2使用笔记（8）—— Labels</title>
+      <title>ggplot2：Labels</title>
       <link>https://fanggong.pub/posts/20210330_ggplot2_labels/</link>
       <pubDate>Tue, 30 Mar 2021 00:00:00 +0000</pubDate>
       
@@ -244,7 +258,7 @@ WOE(Weight of Evidence)和IV(Information Value) WOE为“当前分组下正样�
     </item>
     
     <item>
-      <title>ggplot2使用笔记（7）—— Faceting</title>
+      <title>ggplot2：Faceting</title>
       <link>https://fanggong.pub/posts/20210329_ggplot2_faceting/</link>
       <pubDate>Mon, 29 Mar 2021 00:00:00 +0000</pubDate>
       
@@ -254,7 +268,7 @@ facet_grid() ggplot(mpg, aes(cty, hwy)) + geom_point() + facet_grid(rows = vars(
     </item>
     
     <item>
-      <title>ggplot2使用笔记（6）—— Themes</title>
+      <title>ggplot2：Themes</title>
       <link>https://fanggong.pub/posts/20210327_ggplot2_themes/</link>
       <pubDate>Sat, 27 Mar 2021 00:00:00 +0000</pubDate>
       
@@ -264,7 +278,7 @@ facet_grid() ggplot(mpg, aes(cty, hwy)) + geom_point() + facet_grid(rows = vars(
     </item>
     
     <item>
-      <title>ggplot2使用笔记（5）—— Position</title>
+      <title>ggplot2：Position</title>
       <link>https://fanggong.pub/posts/20210326_ggplot2_position/</link>
       <pubDate>Fri, 26 Mar 2021 00:00:00 +0000</pubDate>
       
@@ -274,7 +288,7 @@ position = &#34;dodge&#34;：并排摆放 ggplot(mpg, aes(fl, fill = drv)) + geo
     </item>
     
     <item>
-      <title>ggplot2使用笔记（4）—— Coordinate</title>
+      <title>ggplot2：Coordinate</title>
       <link>https://fanggong.pub/posts/20210325_ggplot2_coordinate/</link>
       <pubDate>Thu, 25 Mar 2021 00:00:00 +0000</pubDate>
       
@@ -284,7 +298,7 @@ coord_cartesian()：更改笛卡尔坐标系的显示范围  coord_cartesian()�
     </item>
     
     <item>
-      <title>ggplot2使用笔记（3）—— Scales</title>
+      <title>ggplot2：Scales</title>
       <link>https://fanggong.pub/posts/20210324_ggplot2_scales/</link>
       <pubDate>Wed, 24 Mar 2021 00:00:00 +0000</pubDate>
       
@@ -295,7 +309,7 @@ coord_cartesian()：更改笛卡尔坐标系的显示范围  coord_cartesian()�
     </item>
     
     <item>
-      <title>ggplot2使用笔记（2）—— Stat和Geom</title>
+      <title>ggplot2：Stat和Geom</title>
       <link>https://fanggong.pub/posts/20210323_ggplot2_stat_geom/</link>
       <pubDate>Tue, 23 Mar 2021 00:00:00 +0000</pubDate>
       
@@ -306,7 +320,7 @@ ggplot2中以geom开头的函数可以理解为作图函数，以stat开头的�
     </item>
     
     <item>
-      <title>ggplot2使用笔记（1）—— Basics</title>
+      <title>ggplot2：Basics</title>
       <link>https://fanggong.pub/posts/20210322_ggplot2_basics/</link>
       <pubDate>Mon, 22 Mar 2021 00:00:00 +0000</pubDate>
       
@@ -375,8 +389,8 @@ par(mar = c(0, 0, 0, 0), family = &amp;quot;HannotateSC-W5&amp;quot;) openplotma
 2013年本科毕业于北京理工大学数学系。
 2019年研究生毕业于日本筑波大学系统情报工学系。
 工作三年学三年，三年之后又三年。
-在此之前从事的是数据分析以及相关的项目咨询及管理工作（DS方向）。
-目前在从事数据挖掘工程师工作（兜兜转转还是当代码狗有意思）。
+在此之前从事数据分析以及相关的项目咨询及管理工作（DS方向）。
+目前从事数据挖掘工程师工作（兜兜转转还是写代码比较有意思吧）。
 爱好健身，剑道初段。</description>
     </item>
     

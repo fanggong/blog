@@ -1,5 +1,5 @@
 ---
-title: ggplot2使用笔记（5）—— Position
+title: ggplot2：Position
 author: Fang Yongchao
 date: "2021-03-26"
 categories:

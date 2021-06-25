@@ -32,7 +32,7 @@ dependencies: - name: flipdown version: 0.3.2 src: &amp;quot;htmlwidgets/lib/fli
     </item>
     
     <item>
-      <title>ggplot2使用笔记（8）—— Labels</title>
+      <title>ggplot2：Labels</title>
       <link>https://fanggong.pub/posts/20210330_ggplot2_labels/</link>
       <pubDate>Tue, 30 Mar 2021 00:00:00 +0000</pubDate>
       
@@ -41,7 +41,7 @@ dependencies: - name: flipdown version: 0.3.2 src: &amp;quot;htmlwidgets/lib/fli
     </item>
     
     <item>
-      <title>ggplot2使用笔记（7）—— Faceting</title>
+      <title>ggplot2：Faceting</title>
       <link>https://fanggong.pub/posts/20210329_ggplot2_faceting/</link>
       <pubDate>Mon, 29 Mar 2021 00:00:00 +0000</pubDate>
       
@@ -51,7 +51,7 @@ facet_grid() ggplot(mpg, aes(cty, hwy)) + geom_point() + facet_grid(rows = vars(
     </item>
     
     <item>
-      <title>ggplot2使用笔记（6）—— Themes</title>
+      <title>ggplot2：Themes</title>
       <link>https://fanggong.pub/posts/20210327_ggplot2_themes/</link>
       <pubDate>Sat, 27 Mar 2021 00:00:00 +0000</pubDate>
       
@@ -61,7 +61,7 @@ facet_grid() ggplot(mpg, aes(cty, hwy)) + geom_point() + facet_grid(rows = vars(
     </item>
     
     <item>
-      <title>ggplot2使用笔记（5）—— Position</title>
+      <title>ggplot2：Position</title>
       <link>https://fanggong.pub/posts/20210326_ggplot2_position/</link>
       <pubDate>Fri, 26 Mar 2021 00:00:00 +0000</pubDate>
       
@@ -71,7 +71,7 @@ position = &#34;dodge&#34;：并排摆放 ggplot(mpg, aes(fl, fill = drv)) + geo
     </item>
     
     <item>
-      <title>ggplot2使用笔记（4）—— Coordinate</title>
+      <title>ggplot2：Coordinate</title>
       <link>https://fanggong.pub/posts/20210325_ggplot2_coordinate/</link>
       <pubDate>Thu, 25 Mar 2021 00:00:00 +0000</pubDate>
       
@@ -81,7 +81,7 @@ coord_cartesian()：更改笛卡尔坐标系的显示范围  coord_cartesian()�
     </item>
     
     <item>
-      <title>ggplot2使用笔记（3）—— Scales</title>
+      <title>ggplot2：Scales</title>
       <link>https://fanggong.pub/posts/20210324_ggplot2_scales/</link>
       <pubDate>Wed, 24 Mar 2021 00:00:00 +0000</pubDate>
       
@@ -92,7 +92,7 @@ coord_cartesian()：更改笛卡尔坐标系的显示范围  coord_cartesian()�
     </item>
     
     <item>
-      <title>ggplot2使用笔记（2）—— Stat和Geom</title>
+      <title>ggplot2：Stat和Geom</title>
       <link>https://fanggong.pub/posts/20210323_ggplot2_stat_geom/</link>
       <pubDate>Tue, 23 Mar 2021 00:00:00 +0000</pubDate>
       
@@ -103,7 +103,7 @@ ggplot2中以geom开头的函数可以理解为作图函数，以stat开头的�
     </item>
     
     <item>
-      <title>ggplot2使用笔记（1）—— Basics</title>
+      <title>ggplot2：Basics</title>
       <link>https://fanggong.pub/posts/20210322_ggplot2_basics/</link>
       <pubDate>Mon, 22 Mar 2021 00:00:00 +0000</pubDate>
       

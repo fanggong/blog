@@ -6,7 +6,21 @@
     <description>Recent content in 机器学习 on Connecting the dots</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Fri, 11 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 22 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>scikit-learn的特征选择相关接口整理</title>
+      <link>https://fanggong.pub/posts/20210622_sklearn_feature_selection_api/</link>
+      <pubDate>Tue, 22 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://fanggong.pub/posts/20210622_sklearn_feature_selection_api/</guid>
+      <description>sklearn.feature_selection.GenericUnivariateSelect sklearn.feature_selection.SelectFromModel sklearn.feature_selection.SequentialFeatureSelector sklearn.feature_selection.VarianceThreshold sklearn.feature_selection.RFE   不要重复造轮子。
+sklearn.feature_selection.GenericUnivariateSelect 对每个特征与目标变量求score_func的值，根据结果按照mode选择满足param条件的特征。
+score_func应该满足接收n个特征变量和1个目标变量，返回一对长度为n的数组分别表示scores和pvalues。sklearn中提供了5个可能高频率使用的score_func：
+ chi2：卡方统计量，适用于多个二分类特征（或是one-hot编码后的多水平分类特征）和分类目标变量； f_classif：方差分析的F统计量，适用于连续特征和分类目标变量； f_regression：单变量线性回归的F统计量，适用于连续特征和连续目标变量； mutual_info_classif：互信息，适用于分类目标变量； mutual_info_regression：互信息，适用于连续目标变量。  此外提供了5种选择mode：
+ percentile：根据scores选择得分最高的前一定比例的特征； k_best：根据scores选择得分最高的前k个特征； fpr：根据pvalues选择低于某值的特征； fdr：False discovery rate fwe：Family-wise error rate  自定义score_func示例如下（并没有什么实际意义）：
+def my_score_func(X, y): return (X.sum(axis=0), X.mean(axis=0)) from sklearn.datasets import load_breast_cancer from sklearn.feature_selection import GenericUnivariateSelect, chi2 X, y = load_breast_cancer(return_X_y=True) print(X.shape) ## (569, 30) transformer = GenericUnivariateSelect(my_score_func, mode=&amp;#39;k_best&amp;#39;, param=10) X_new = transformer.fit_transform(X, y) print(X_new.shape) ## (569, 10)  sklearn.</description>
+    </item>
+    
     <item>
       <title>参数正则化</title>
       <link>https://fanggong.pub/posts/20210611_regularization/</link>
