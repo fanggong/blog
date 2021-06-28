@@ -26,7 +26,10 @@ draft: true
 <div id="硬间隔和软间隔" class="section level2">
 <h2>硬间隔和软间隔</h2>
 <hr />
-<p><img src="/posts/20210623_support_vector_machines_files/figure-html/unnamed-chunk-1-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>对于线性可分的训练集，支持向量机寻找一个超平面（图中的实线部分，可以表示为<span class="math inline">\(\omega^*x+b^*=0\)</span>），使得训练集距离该超平面距离的绝对值的最小值最大（表示为<span class="math inline">\(\gamma\)</span>），这意味着该超平面以尽可能大的确信度将数据分成了两个类别。</p>
+<p>距离超平面的距离为<span class="math inline">\(\gamma\)</span>的两个超平面（图中的虚线部分）上的样本（红色标记样本）被称为<strong>支持向量</strong>。</p>
+<p>显然，如果将样本的实际类别表示为±1，那么样本<span class="math inline">\(i\)</span>到超平面的距离的绝对值可以表示为<span class="math inline">\(\gamma_i = y_i(w^*x_i+b^*)\)</span></p>
+<p><img src="/posts/20210623_support_vector_machines_files/figure-html/unnamed-chunk-1-1.png" width="384" style="display: block; margin: auto;" /></p>
 </div>
 <div id="核函数" class="section level2">
 <h2>核函数</h2>

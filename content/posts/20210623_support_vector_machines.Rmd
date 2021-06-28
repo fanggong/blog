@@ -11,6 +11,21 @@ output:
 draft: true
 ---
 
+```{r echo=FALSE}
+# basic setting
+w <- -0.5 
+b <- 0.65
+margin <- 0.1
+l <- function(x, w, b, jitter = c("none", "up", "down")) {
+  jitter <- match.arg(jitter)
+  switch (jitter,
+    "none" = w * x + b,
+    "up" = w * x + b + runif(length(x), 0, 0.8 - w * x - b),
+    "down" = w * x + b - runif(length(x), 0, w * x + b)
+  )
+}
+```
+
 对于线性分类问题，若数据是线性可分的，支持向量机计算支持向量使得硬间隔最大化；当数据是线性不可分时，支持向量机引入松弛变量，计算支持向量使的软间隔最大化。
 
 对于非线性分类问题，支持向量机引入核函数后求解支持向量。
@@ -19,51 +34,114 @@ draft: true
 
 ---------------------
 
-```{r echo=FALSE, fig.align="center", fig.width=6, fig.height=4}
-par(mar = c(.5, .5, .5, .5))
-plot.new()
-shape::Arrows(0, 0, 0, 1.2, arr.type = "triangle", arr.length = 0.3, arr.width = 0.1)
-shape::Arrows(0, 0, 1, 0, arr.type = "triangle", arr.length = 0.3, arr.width = 0.1)
+对于线性可分的训练集，支持向量机寻找一个超平面（图中的实线部分，可以表示为$\omega^*x+b^*=0$），使得训练集距离该超平面距离的绝对值的最小值（表示为$\gamma$）最大，这意味着该超平面以尽可能大的确信度将数据分成了两个类别。
 
+距离超平面的距离为$\gamma$的两个超平面（图中的虚线部分）上的样本（红色标记样本）被称为**支持向量**。
+
+显然，如果将样本的实际类别表示为±1，那么样本$i$到超平面的距离的绝对值可以表示为$\gamma_i = y_i(w^*x_i+b^*)$，这里的$\gamma_i$即称之为**硬间隔**，线性可分支持向量机就是寻找参数$\omega^*$和$b^*$最大化目标函数$\gamma = \min \gamma_i$。
+
+```{r echo=FALSE, fig.align="center", fig.width=4, fig.asp=0.8}
 set.seed(2414)
-
-w <- -0.8
-b <- 1
-margin <- 0.2
-l <- function(x, w, b, jitter = c("none", "up", "down")) {
-  switch (jitter,
-    "none" = w * x + b,
-    "up" = w * x + b + runif(length(x), 0, 1.2 - w * x - b),
-    "down" = w * x + b - runif(length(x), 0, w * x + b)
-  )
-}
-
-abline(b, w)
-abline(b + margin, w, lty = 2)
-abline(b - margin, w, lty = 2)
-
+par(mar = c(.5, .5, .5, .5), cex = 0.8)
+# corrdinates
+plot(0, type = "n", xlim = c(0, 1), ylim = c(0, 0.8), axes = FALSE)
+shape::Arrows(0, 0, 0, 0.8, arr.type = "triangle", arr.length = 0.3, arr.width = 0.1)
+shape::Arrows(0, 0, 1, 0, arr.type = "triangle", arr.length = 0.3, arr.width = 0.1)
+# margins
+x <- c(0.01, 0.99)
+points(x, l(x, w, b), type = "l", lty = 1)
+points(x, l(x, w, b + margin), type = "l", lty = 2)
+points(x, l(x, w, b - margin), type = "l", lty = 2)
+# points
 x <- runif(8)
-# points(x, rep(0.5, length(x)), pch = 2)
 y <- l(x, w, b + margin, "up")
 points(x, y, pch = 2)
-
-x <- runif(2)
-y <- l(x, w, b + margin, "none")
-points(x, y, pch = 2)
-
-
 x <- runif(8)
 y <- l(x, w, b - margin, "down")
 points(x, y, pch = 3)
-
+# support vectors
+x <- runif(2)
+y <- l(x, w, b + margin, "none")
+points(x, y, pch = 2, col = "red")
 x <- runif(2)
 y <- l(x, w, b - margin, "none")
-points(x, y, pch = 3)
-
+points(x, y, pch = 3, col = "red")
+# add w
+start <- 0.5
+over <- 0.6
+b_w <- l(start, w, b) + (1/w)*start
+shape::Arrows(
+  start, l(start, w, b), over, l(over, -(1/w), b_w), arr.type = "triangle",
+  arr.length = 0.3, arr.width = 0.1
+)
+text(over + 0.03, l(over, -(1/w), b_w) - 0.03, labels = expression(bold("w")))
+# # add 2/||w||
+# start <- 0.7
+# b_w <- l(start, w, b) + (1/w)*start
+# over <- - (b + margin - b_w) / (w + 1/w)
+# shape::Arrows(
+#   start, l(start, w, b), over, l(over, w, b + margin), arr.type = "triangle",
+#   arr.length = 0.15, arr.width = 0.1
+# )
+# start <- 0.7
+# b_w <- l(start, w, b) + (1/w)*start
+# over <- - (b - margin - b_w) / (w + 1/w)
+# shape::Arrows(
+#   start, l(start, w, b), over, l(over, w, b - margin), arr.type = "triangle",
+#   arr.length = 0.15, arr.width = 0.1
+# )
+# text(start + 0.05, l(start, w, b), label = expression(over("2", bold("||w||"))))
+# add box
 box(col = "#dcdcdc", which = "outer")
-
 ```
 
+当数据线性不可分时，
+
+```{r echo=FALSE, fig.align="center", fig.width=4, fig.asp=0.8}
+set.seed(0203)
+par(mar = c(.5, .5, .5, .5), cex = 0.8)
+# corrdinates
+plot(0, type = "n", xlim = c(0, 1), ylim = c(0, 0.8), axes = FALSE)
+shape::Arrows(0, 0, 0, 0.8, arr.type = "triangle", arr.length = 0.3, arr.width = 0.1)
+shape::Arrows(0, 0, 1, 0, arr.type = "triangle", arr.length = 0.3, arr.width = 0.1)
+# margins
+x <- c(0.01, 0.99)
+points(x, l(x, w, b), type = "l", lty = 1)
+points(x, l(x, w, b + margin), type = "l", lty = 2)
+points(x, l(x, w, b - margin), type = "l", lty = 2)
+# points
+x <- runif(8)
+y <- l(x, w, b + margin, "up")
+points(x, y, pch = 2)
+x <- runif(8)
+y <- l(x, w, b - margin, "down")
+points(x, y, pch = 3)
+# support vectors
+x <- runif(2)
+y <- l(x, w, b + margin, "none")
+points(x, y, pch = 2, col = "red")
+x <- runif(2)
+y <- l(x, w, b - margin, "none")
+points(x, y, pch = 3, col = "red")
+# add w
+start <- 0.5
+over <- 0.6
+b_w <- l(start, w, b) + (1/w)*start
+shape::Arrows(
+  start, l(start, w, b), over, l(over, -(1/w), b_w), arr.type = "triangle",
+  arr.length = 0.3, arr.width = 0.1
+)
+text(over + 0.03, l(over, -(1/w), b_w) - 0.03, labels = expression(bold("w")))
+# add linearly indivisibility
+x <- runif(2)
+y <- l(x, w, b - runif(2, 0, margin))
+points(x, y, pch = 2, col = "blue")
+x <- runif(2)
+y <- l(x, w, b + runif(2, 0, margin))
+points(x, y, pch = 3, col = "blue")
+# add box
+box(col = "#dcdcdc", which = "outer")
+```
 
 ## 核函数
 
