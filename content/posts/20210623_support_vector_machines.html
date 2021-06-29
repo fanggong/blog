@@ -15,6 +15,7 @@ draft: true
 
 <div id="TOC">
 <ul>
+<li><a href="#函数间隔和几何间隔">函数间隔和几何间隔</a></li>
 <li><a href="#硬间隔和软间隔">硬间隔和软间隔</a></li>
 <li><a href="#核函数">核函数</a></li>
 <li><a href="#算法原理">算法原理</a></li>
@@ -23,13 +24,43 @@ draft: true
 
 <p>对于线性分类问题，若数据是线性可分的，支持向量机计算支持向量使得硬间隔最大化；当数据是线性不可分时，支持向量机引入松弛变量，计算支持向量使的软间隔最大化。</p>
 <p>对于非线性分类问题，支持向量机引入核函数后求解支持向量。</p>
+<div id="函数间隔和几何间隔" class="section level2">
+<h2>函数间隔和几何间隔</h2>
+<hr />
+<p>对于一个训练集中的样本点<span class="math inline">\((x_i, y_i)\)</span>和一个超平面<span class="math inline">\(\omega x + b = 0\)</span>，如果以<span class="math inline">\(y_i = ±1\)</span>来表示类别，我们定义样本点到超平面的<strong>函数间隔</strong>为：
+<span class="math display">\[
+\hat \gamma_i = y_i(\omega x_i + b)
+\]</span>
+那么，该训练集到超平面的<strong>函数间隔</strong>则定义为：
+<span class="math display">\[
+\hat \gamma = \min_{i = 1,2,...,N} \hat \gamma_i
+\]</span>
+很显然，当<span class="math inline">\(\omega\)</span>和<span class="math inline">\(b\)</span>成倍数改变时，超平面没有发生改变但是函数间隔变大了。因此引入<strong>几何间隔</strong>的概念，训练集到超平面的几何间隔为：
+<span class="math display">\[
+\begin{aligned}
+\gamma &amp; = \min_{i = 1,2,...,N} \gamma_i \\
+ &amp; = \min_{i = 1,2,...,N} y_i\left( {\omega \over \left \| \omega \right \|} x_i + {b \over \left \| \omega \right \|} \right)
+\end{aligned}
+\]</span></p>
+<p><strong>从函数间隔到几何间隔，个人感觉从数学意义上很好理解，但是从几何意义上就有点抽象。对我来说，从解析几何的点到平面的距离公式去理解几何间隔反而更形象一些。</strong></p>
+</div>
 <div id="硬间隔和软间隔" class="section level2">
 <h2>硬间隔和软间隔</h2>
 <hr />
-<p>对于线性可分的训练集，支持向量机寻找一个超平面（图中的实线部分，可以表示为<span class="math inline">\(\omega^*x+b^*=0\)</span>），使得训练集距离该超平面距离的绝对值的最小值最大（表示为<span class="math inline">\(\gamma\)</span>），这意味着该超平面以尽可能大的确信度将数据分成了两个类别。</p>
-<p>距离超平面的距离为<span class="math inline">\(\gamma\)</span>的两个超平面（图中的虚线部分）上的样本（红色标记样本）被称为<strong>支持向量</strong>。</p>
-<p>显然，如果将样本的实际类别表示为±1，那么样本<span class="math inline">\(i\)</span>到超平面的距离的绝对值可以表示为<span class="math inline">\(\gamma_i = y_i(w^*x_i+b^*)\)</span></p>
-<p><img src="/posts/20210623_support_vector_machines_files/figure-html/unnamed-chunk-1-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>对于线性可分的训练集，支持向量机寻找一个超平面（图中的实线部分），使得训练集距离该超平面的距离（<span class="math inline">\(\gamma\)</span>）最大，这意味着该超平面以尽可能大的确信度将数据分成了两个类别。该超平面被称作<strong>最大间隔分离超平面</strong>。</p>
+<p>所有距离超平面的距离为<span class="math inline">\(\gamma\)</span>的点组成了两个超平面（图中的虚线部分），这两个超平面上的样本（红色标记样本）被称为<strong>支持向量</strong>。</p>
+<p>这里的<span class="math inline">\(\gamma\)</span>被称为<strong>硬间隔</strong>，线性可分支持向量机就是寻找参数<span class="math inline">\(\omega\)</span>和<span class="math inline">\(b\)</span>使得硬间隔最大化。</p>
+<p><img src="/posts/20210623_support_vector_machines_files/figure-html/unnamed-chunk-2-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>当数据线性不可分时，对于每一个样本引入松弛变量<span class="math inline">\(\xi_i\)</span>（图中蓝色部分），此时训练集到最大间隔分离超平面的几何距离表示为：
+<span class="math display">\[
+\begin{aligned}
+\gamma &amp; = \min_{i = 1,2,...,N} (\gamma_i + \xi_i) \\
+ &amp; = \min_{i = 1,2,...,N} \left [ y_i\left( {\omega \over \left \| \omega \right \|} x_i + {b \over \left \| \omega \right \|} \right) + \xi_i \right]
+\end{aligned}
+\]</span>
+这里的<span class="math inline">\(\gamma\)</span>称为<strong>软间隔</strong>，在寻找使得软间隔最大化的<span class="math inline">\(\omega\)</span>和<span class="math inline">\(b\)</span>时，会将<span class="math inline">\(\xi_i\)</span>作为惩罚项加入目标函数中。</p>
+<p><strong>这里关于软间隔的数学形式并不准确，只是为了便于理解，准确的数学形式记录在了<a href="#算法原理">算法原理</a>部分。</strong></p>
+<p><img src="/posts/20210623_support_vector_machines_files/figure-html/unnamed-chunk-3-1.png" width="384" style="display: block; margin: auto;" /></p>
 </div>
 <div id="核函数" class="section level2">
 <h2>核函数</h2>
