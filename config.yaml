@@ -2,7 +2,7 @@ baseurl: https://fanggong.pub
 title: Fang Yongchao
 theme:  hugo-coder-portfolio
 DefaultContentLanguage: ch
-paginate: 20
+paginate: 25
 pygmentsstyle: b2
 pygmentscodefences: yes
 pygmentscodefencesguesssyntax: yes
@@ -56,9 +56,9 @@ languages:
         - name: Blog
           url: posts
           weight: 2
-        # - name: Tools
-        #   url: tools
-        #   weight: 3
+        - name: Tools
+          url: tools
+          weight: 3
         - name: Categories
           url: categories
           weight: 4

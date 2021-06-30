@@ -218,13 +218,14 @@ renv的global package cache路径为：
     </item>
     
     <item>
-      <title>Tools</title>
+      <title>Make Data Science easier</title>
       <link>https://fanggong.pub/tools/</link>
       <pubDate>Wed, 21 Apr 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/tools/</guid>
-      <description>  描述性分析和可视化Shiny App developing…
- </description>
+      <description>     flipdownWidgets flipdownWidgets，在Shiny或Rmarkdown中创建倒计时时钟。
+View Code
+ {&#34;x&#34;:{&#34;to&#34;:1656605899.60613,&#34;theme&#34;:&#34;dark&#34;,&#34;headings&#34;:[&#34;天&#34;,&#34;时&#34;,&#34;分&#34;,&#34;秒&#34;]},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}  </description>
     </item>
     
     <item>

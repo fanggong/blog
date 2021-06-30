@@ -1,12 +1,18 @@
 ---
-title: Tools
+title: Make Data Science easier
 author: Fang Yongchao
 date: "2021-04-21"
 ---
 
-## 描述性分析和可视化Shiny App
+## flipdownWidgets
 
 ---------------------------------------------
 
-developing...
+[flipdownWidgets]()，在Shiny或Rmarkdown中创建倒计时时钟。
 
+<i class="fab fa-lg fa-github fa-fw"></i><a href="https://github.com/fanggong/flipdownWidgets">View Code</a>
+
+```{r echo=FALSE}
+library(flipdownWidgets)
+flipdownWidgets(Sys.time() + 60*60*24*365, width = "80%", headings = c("天", "时", "分", "秒"))
+```
