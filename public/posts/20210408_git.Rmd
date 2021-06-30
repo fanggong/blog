@@ -3,7 +3,7 @@ title: git配置及操作
 author: Fang Yongchao
 date: "2021-04-08"
 categories:
-  - "模型工程化"
+  - "工程相关"
 output:
   blogdown::html_page:
     toc: yes

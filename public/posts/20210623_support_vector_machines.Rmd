@@ -11,63 +11,172 @@ output:
 draft: true
 ---
 
+```{r echo=FALSE}
+# basic setting
+W <- -0.5 
+B <- 0.65
+MARGIN <- 0.1
+X_MAX <- 1
+Y_MAX <- 0.8
+get_points <- function(w, b, bias = 0, x = NULL, n = NULL) {
+  if (!is.null(n)) {
+    x <- runif(n, min = 0, max = X_MAX)
+  }
+  y <- w * x + b
+  if (bias > 0) {
+    bias <- runif(n, min = 0, max = Y_MAX - y)
+  } else if (bias < 0) {
+    bias <- sign(bias) * runif(n, min = 0, max = y)
+  }
+  y <- y + bias
+  return(list(x = x, y = y))
+}
+get_intersection <- function(x, y, w, b) {
+  intersection_x <- (x + w*y - w*b) / (w^2 + 1)
+  intersection_y <- w * intersection_x + b
+  return(list(x = intersection_x, y = intersection_y))
+}
+```
+
 对于线性分类问题，若数据是线性可分的，支持向量机计算支持向量使得硬间隔最大化；当数据是线性不可分时，支持向量机引入松弛变量，计算支持向量使的软间隔最大化。
 
 对于非线性分类问题，支持向量机引入核函数后求解支持向量。
+
+## 函数间隔和几何间隔
+
+---------------------
+
+对于一个训练集中的样本点$(x_i, y_i)$和一个超平面$\omega x + b = 0$，如果以$y_i = ±1$来表示类别，我们定义样本点到超平面的**函数间隔**为：
+$$
+\hat \gamma_i = y_i(\omega x_i + b)
+$$
+那么，该训练集到超平面的**函数间隔**则定义为：
+$$
+\hat \gamma = \min_{i = 1,2,...,N} \hat \gamma_i
+$$
+很显然，当$\omega$和$b$成倍数改变时，超平面没有发生改变但是函数间隔变大了。因此引入**几何间隔**的概念，训练集到超平面的几何间隔为：
+$$
+\begin{aligned}
+\gamma & = \min_{i = 1,2,...,N} \gamma_i \\
+ & = \min_{i = 1,2,...,N} y_i\left( {\omega \over \left \| \omega \right \|} x_i + {b \over \left \| \omega \right \|} \right)
+\end{aligned}
+$$
+
+**从函数间隔到几何间隔，个人感觉从数学意义上很好理解，但是从几何意义上就有点抽象。对我来说，从解析几何的点到平面的距离公式去理解几何间隔反而更形象一些。**
 
 ## 硬间隔和软间隔
 
 ---------------------
 
-```{r echo=FALSE, fig.align="center", fig.width=6, fig.height=4}
-par(mar = c(.5, .5, .5, .5))
-plot.new()
-shape::Arrows(0, 0, 0, 1.2, arr.type = "triangle", arr.length = 0.3, arr.width = 0.1)
-shape::Arrows(0, 0, 1, 0, arr.type = "triangle", arr.length = 0.3, arr.width = 0.1)
+在线性分类问题中，对于线性可分的训练集，支持向量机寻找一个超平面（图中的实线部分），使得训练集距离该超平面的距离（$\gamma$）最大，这意味着该超平面以尽可能大的确信度将数据分成了两个类别。该超平面被称作**最大间隔分离超平面**。
 
+所有距离超平面的距离为$\gamma$的点组成了两个超平面（图中的虚线部分），这两个超平面上的样本（红色标记样本）被称为**支持向量**。
+
+这里的$\gamma$被称为**硬间隔**，线性可分支持向量机就是寻找参数$\omega$和$b$使得硬间隔最大化。
+
+```{r echo=FALSE, fig.align="center", fig.width=4, fig.asp=0.8}
 set.seed(2414)
-
-w <- -0.8
-b <- 1
-margin <- 0.2
-l <- function(x, w, b, jitter = c("none", "up", "down")) {
-  switch (jitter,
-    "none" = w * x + b,
-    "up" = w * x + b + runif(length(x), 0, 1.2 - w * x - b),
-    "down" = w * x + b - runif(length(x), 0, w * x + b)
-  )
-}
-
-abline(b, w)
-abline(b + margin, w, lty = 2)
-abline(b - margin, w, lty = 2)
-
-x <- runif(8)
-# points(x, rep(0.5, length(x)), pch = 2)
-y <- l(x, w, b + margin, "up")
-points(x, y, pch = 2)
-
-x <- runif(2)
-y <- l(x, w, b + margin, "none")
-points(x, y, pch = 2)
-
-
-x <- runif(8)
-y <- l(x, w, b - margin, "down")
-points(x, y, pch = 3)
-
-x <- runif(2)
-y <- l(x, w, b - margin, "none")
-points(x, y, pch = 3)
-
+par(mar = c(.5, .5, .5, .5), cex = 0.8)
+plot(0, type = "n", xlim = c(0, X_MAX), ylim = c(0, Y_MAX), axes = FALSE)
+shape::Arrows(0, 0, 0, Y_MAX, arr.type = "triangle", arr.length = 0.3, arr.width = 0.1)
+shape::Arrows(0, 0, X_MAX, 0, arr.type = "triangle", arr.length = 0.3, arr.width = 0.1)
+# margins
+x <- c(0.01, 0.99)
+p <- get_points(W, B, x = x)
+points(p$x, p$y, type = "l", lty = 1)
+p <- get_points(W, B + MARGIN, x = x)
+points(p$x, p$y, type = "l", lty = 2)
+p <- get_points(W, B - MARGIN, x = x)
+points(p$x, p$y, type = "l", lty = 2)
+# points
+p <- get_points(W, B + MARGIN, bias = 1, n = 8)
+points(p$x, p$y, pch = 2)
+p <- get_points(W, B - MARGIN, bias = -1, n = 8)
+points(p$x, p$y, pch = 3)
+# support vectors
+p <- get_points(W, B + MARGIN, bias = 0, n = 2)
+points(p$x, p$y, pch = 2, col = "red")
+p <- get_points(W, B - MARGIN, bias = 0, n = 2)
+points(p$x, p$y, pch = 3, col = "red")
+# add w
+over <- list(x = 0.6, y = 0.5)
+start <- get_intersection(over$x, over$y, W, B)
+shape::Arrows(
+  start$x, start$y, over$x, over$y, arr.type = "triangle",
+  arr.length = 0.3, arr.width = 0.1
+)
+text(over$x + 0.03, over$y - 0.03, labels = expression(bold("w")))
 box(col = "#dcdcdc", which = "outer")
-
 ```
 
+当数据线性不可分时，对于每一个样本引入松弛变量$\xi_i$（图中蓝色部分），此时训练集到最大间隔分离超平面的几何距离表示为：
+$$
+\begin{aligned}
+\gamma & = \min_{i = 1,2,...,N} (\gamma_i + \xi_i) \\
+ & = \min_{i = 1,2,...,N} \left [ y_i\left( {\omega \over \left \| \omega \right \|} x_i + {b \over \left \| \omega \right \|} \right) + \xi_i \right]
+\end{aligned}
+$$
+这里的$\gamma$称为**软间隔**，在寻找使得软间隔最大化的$\omega$和$b$时，会将$\xi_i$作为惩罚项加入目标函数中。
+
+**这里关于软间隔的数学形式并不准确，只是为了便于理解，准确的数学形式记录在了[算法原理](#算法原理)部分。**
+
+```{r echo=FALSE, fig.align="center", fig.width=4, fig.asp=0.8}
+set.seed(1)
+par(mar = c(.5, .5, .5, .5), cex = 0.8)
+plot(0, type = "n", xlim = c(0, X_MAX), ylim = c(0, Y_MAX), axes = FALSE)
+shape::Arrows(0, 0, 0, Y_MAX, arr.type = "triangle", arr.length = 0.3, arr.width = 0.1)
+shape::Arrows(0, 0, X_MAX, 0, arr.type = "triangle", arr.length = 0.3, arr.width = 0.1)
+# margins
+x <- c(0.01, 0.99)
+p <- get_points(W, B, x = x)
+points(p$x, p$y, type = "l", lty = 1)
+p <- get_points(W, B + MARGIN, x = x)
+points(p$x, p$y, type = "l", lty = 2)
+p <- get_points(W, B - MARGIN, x = x)
+points(p$x, p$y, type = "l", lty = 2)
+# points
+p <- get_points(W, B + MARGIN, bias = 1, n = 8)
+points(p$x, p$y, pch = 2)
+p <- get_points(W, B - MARGIN, bias = -1, n = 8)
+points(p$x, p$y, pch = 3)
+# support vectors
+p <- get_points(W, B + MARGIN, bias = 0, n = 2)
+points(p$x, p$y, pch = 2, col = "red")
+p <- get_points(W, B - MARGIN, bias = 0, n = 2)
+points(p$x, p$y, pch = 3, col = "red")
+# add w
+over <- list(x = 0.6, y = 0.5)
+start <- get_intersection(over$x, over$y, W, B)
+shape::Arrows(
+  start$x, start$y, over$x, over$y, arr.type = "triangle",
+  arr.length = 0.3, arr.width = 0.1
+)
+text(over$x + 0.03, over$y - 0.03, labels = expression(bold("w")))
+# add outliers
+p <- get_points(W, B + MARGIN, bias = -1, n = 3)
+points(p$x, p$y, pch = 2, col = "blue")
+over <- list(x = p$x, y = p$y)
+start <- get_intersection(over$x, over$y, W, B + MARGIN)
+shape::Arrows(
+  start$x, start$y, over$x + 0.01, over$y + 0.01, arr.type = "triangle",
+  arr.length = 0.15, arr.width = 0.1, col = "blue"
+)
+p <- get_points(W, B - MARGIN, bias = 1, n = 2)
+points(p$x, p$y, pch = 3, col = "blue")
+over <- list(x = p$x, y = p$y)
+start <- get_intersection(over$x, over$y, W, B - MARGIN)
+shape::Arrows(
+  start$x, start$y, over$x - 0.01, over$y - 0.01, arr.type = "triangle",
+  arr.length = 0.15, arr.width = 0.1, col = "blue"
+)
+box(col = "#dcdcdc", which = "outer")
+```
 
 ## 核函数
 
 ---------------------
+
+
 
 ## 算法原理
 

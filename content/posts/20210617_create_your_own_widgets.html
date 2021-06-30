@@ -30,10 +30,14 @@ output:
 
 <p><a href="https://cran.r-project.org/web/packages/htmlwidgets/index.html">htmlwidgets</a>包为R提供了一个封装JS代码的框架。通过JS生成的htmlwidgets可以直接使用在Rmarkdown和Shiny中。</p>
 <p>本文记录了一个简单的htmlwidgets的开发流程，封装了一个JS库<a href="https://github.com/PButcher/flipdown">flipdown.js</a>，可以在Rmarkdown或Shiny中创建一个倒计时时钟。</p>
+<p>封装的JS代码和R函数以一个包的形式存在，该包已经上传到CRAN，可以通过以下代码安装：</p>
+<pre class="r"><code>install.packages(&quot;flipdownWidgets&quot;)</code></pre>
+<p>或是通过<a href="https://github.com/fanggong/flipdownWidgets">Github</a>安装：</p>
+<pre class="r"><code># install.packages(&quot;devtools&quot;)
+devtools::install_github(&quot;fanggong/flipdownWidgets&quot;)</code></pre>
 <div id="项目结构搭建" class="section level2">
 <h2>项目结构搭建</h2>
 <hr />
-<p>封装的JS代码和R函数以一个包的形式存在，故项目结构与普通R包的项目结构大致一样。</p>
 <p>首先创建一个R package项目</p>
 <pre class="r"><code>devtools::create(&quot;flipdownWidgets&quot;)</code></pre>
 <p>初始化开发环境并安装必要的包</p>
@@ -68,7 +72,7 @@ renv::install(&quot;devtools&quot;)</code></pre>
 <p>一个最简单的htmlwidgets应该至少包含了以下四个函数：</p>
 <ul>
 <li><strong>R捆绑函数</strong>：该函数是一个R函数，它接收数据和其它关于htmlwidgets的可选项，生成一个htmlwidgets对象。在这里，该函数的基本结构通过前面的<code>scaffoldWidget("flipdownWidgets")</code>自动生成在/R/flipdownWidgets.R文件中；</li>
-<li><strong>JS捆绑函数</strong>：该函数是一个JS函数，它接收将要容纳这个htmlwidgets的HTML元素以及HTML元素的宽度和高度，然后通过其中的<code>renderValue()</code>方法创建htmlwidgets。<code>renderValue()</code>除了<strong>JS捆绑函数</strong>的参数外，还会接收<strong>R捆绑函数</strong>中的参数（即数据和关于htmlwidgets的可选项）。<strong>JS捆绑函数</strong>的基本结构同样会通过<code>scaffoldWidget("flipdownWidgets")</code>自动生成在/inst/htmlwidgets/flipdownWidgets.js文件中；</li>
+<li><strong>JS捆绑函数</strong>：该函数是一个JS工厂函数，它接收将要容纳这个htmlwidgets的HTML元素以及HTML元素的宽度和高度，然后通过其中的<code>renderValue()</code>方法创建htmlwidgets。<code>renderValue()</code>除了<strong>JS捆绑函数</strong>的参数外，还会接收<strong>R捆绑函数</strong>中的参数（即数据和关于htmlwidgets的可选项）。<strong>JS捆绑函数</strong>的基本结构同样会通过<code>scaffoldWidget("flipdownWidgets")</code>自动生成在/inst/htmlwidgets/flipdownWidgets.js文件中；</li>
 <li><strong>flipdownWidgetsOutput函数</strong>：该函数供Shiny使用，自动生成，一般不需要做修改；</li>
 <li><strong>renderFlipdownWidgets函数</strong>：该函数同样供Shiny使用，自动生成，一般不做修改。</li>
 </ul>
@@ -82,17 +86,20 @@ renv::install(&quot;devtools&quot;)</code></pre>
 <div id="对htmlwidgets的size进行调整" class="section level2">
 <h2>对htmlwidgets的size进行调整</h2>
 <hr />
-<p>这一部分还没整明白，貌似因为<a href="https://github.com/PButcher/flipdown">flipdown.js</a>这个库通过CSS文件写死了size，所以无法通过<code>resize()</code>方法来调整htmlwidgets的size。</p>
+<p>在<strong>JS捆绑函数</strong>中除了<code>renderValue()</code>方法外，还提供了一个<code>resize()</code>方法。通过<code>resize()</code>方法即可实现根据显示位置的大小调整htmlwidgets的size。</p>
+<p>在这里，因为<a href="https://github.com/PButcher/flipdown">flipdown.js</a>库通过CSS文件写死了size，所以无法直接通过<code>resize()</code>方法来调整htmlwidgets的size。</p>
+<p>我使用的解决方案是在<a href="https://github.com/fanggong/flipdownWidgets/blob/master/inst/htmlwidgets/lib/flipdown/flipdown.css">flipdown.css</a>中增加一个变量<strong>--base-unit</strong>，与size有关的CSS样式都修改为通过该变量来计算。然后在<code>resize()</code>方法中根据显示位置的大小修改<strong>--base-unit</strong>的值即可。</p>
+<p>不知道有没有更好的办法，毕竟我的前端知识也很匮乏。</p>
 </div>
 <div id="完善package的其它信息" class="section level2">
 <h2>完善package的其它信息</h2>
 <hr />
 <p>如果只是自己使用的话，到上一步就已经完成了，只需要重新<code>devtools::install()</code>就可以使用该htmlwidgets了。</p>
-<p>如果想把该包分享给他人使用或者上传到CRAN，那么遵循R包的开发原则，我们需要完善相关函数的说明文件，DESCRIPTION文件以及选择合适的LICENSE。</p>
+<p>如果想把该包分享给他人使用或者上传到CRAN，那么遵循R包的开发原则，我们需要完善相关函数的说明文件，DESCRIPTION文件以及选择合适的LICENSE。这个不是本文主要的内容，可以参考<a href="https://r-pkgs.org/release.html">Releasing a package</a>。</p>
 <pre class="r"><code>library(flipdownWidgets)
-flipdownWidgets(Sys.time() + 60*60*24*100, height = 120)</code></pre>
-<div id="htmlwidget-1" style="width:672px;height:120px;" class="flipdownWidgets html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1">{"x":{"to":1633011926.63543,"theme":"dark","headings":["Days","Hours","Minutes","Seconds"]},"evals":[],"jsHooks":[]}</script>
+flipdownWidgets(Sys.time() + 60*60*24*100, width = &quot;100%&quot;)</code></pre>
+<div id="htmlwidget-1" style="width:100%;height:480px;" class="flipdownWidgets html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"to":1633705118.16881,"theme":"dark","headings":["Days","Hours","Minutes","Seconds"]},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="写在最后" class="section level2">
 <h2>写在最后</h2>

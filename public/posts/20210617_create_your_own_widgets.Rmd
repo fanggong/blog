@@ -19,11 +19,19 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE, eval = FALSE)
 
 本文记录了一个简单的htmlwidgets的开发流程，封装了一个JS库[flipdown.js](https://github.com/PButcher/flipdown)，可以在Rmarkdown或Shiny中创建一个倒计时时钟。
 
+封装的JS代码和R函数以一个包的形式存在，该包已经上传到CRAN，可以通过以下代码安装：
+```{r eval=FALSE}
+install.packages("flipdownWidgets")
+```
+或是通过[Github](https://github.com/fanggong/flipdownWidgets)安装：
+```{r eval=FALSE}
+# install.packages("devtools")
+devtools::install_github("fanggong/flipdownWidgets")
+```
+
 ## 项目结构搭建
 
 -------------------------
-
-封装的JS代码和R函数以一个包的形式存在，故项目结构与普通R包的项目结构大致一样。
 
 首先创建一个R package项目
 ```{r}
@@ -82,7 +90,7 @@ dependencies:
 一个最简单的htmlwidgets应该至少包含了以下四个函数：
 
 - **R捆绑函数**：该函数是一个R函数，它接收数据和其它关于htmlwidgets的可选项，生成一个htmlwidgets对象。在这里，该函数的基本结构通过前面的`scaffoldWidget("flipdownWidgets")`自动生成在/R/flipdownWidgets.R文件中；
-- **JS捆绑函数**：该函数是一个JS函数，它接收将要容纳这个htmlwidgets的HTML元素以及HTML元素的宽度和高度，然后通过其中的`renderValue()`方法创建htmlwidgets。`renderValue()`除了**JS捆绑函数**的参数外，还会接收**R捆绑函数**中的参数（即数据和关于htmlwidgets的可选项）。**JS捆绑函数**的基本结构同样会通过`scaffoldWidget("flipdownWidgets")`自动生成在/inst/htmlwidgets/flipdownWidgets.js文件中；
+- **JS捆绑函数**：该函数是一个JS工厂函数，它接收将要容纳这个htmlwidgets的HTML元素以及HTML元素的宽度和高度，然后通过其中的`renderValue()`方法创建htmlwidgets。`renderValue()`除了**JS捆绑函数**的参数外，还会接收**R捆绑函数**中的参数（即数据和关于htmlwidgets的可选项）。**JS捆绑函数**的基本结构同样会通过`scaffoldWidget("flipdownWidgets")`自动生成在/inst/htmlwidgets/flipdownWidgets.js文件中；
 - **flipdownWidgetsOutput函数**：该函数供Shiny使用，自动生成，一般不需要做修改；
 - **renderFlipdownWidgets函数**：该函数同样供Shiny使用，自动生成，一般不做修改。
 
@@ -95,7 +103,13 @@ dependencies:
 
 -------------------------
 
-这一部分还没整明白，貌似因为[flipdown.js](https://github.com/PButcher/flipdown)这个库通过CSS文件写死了size，所以无法通过`resize()`方法来调整htmlwidgets的size。
+在**JS捆绑函数**中除了`renderValue()`方法外，还提供了一个`resize()`方法。通过`resize()`方法即可实现根据显示位置的大小调整htmlwidgets的size。
+
+在这里，因为[flipdown.js](https://github.com/PButcher/flipdown)库通过CSS文件写死了size，所以无法直接通过`resize()`方法来调整htmlwidgets的size。
+
+我使用的解决方案是在[flipdown.css](https://github.com/fanggong/flipdownWidgets/blob/master/inst/htmlwidgets/lib/flipdown/flipdown.css)中增加一个变量**\-\-base-unit**，与size有关的CSS样式都修改为通过该变量来计算。然后在`resize()`方法中根据显示位置的大小修改**\-\-base-unit**的值即可。
+
+不知道有没有更好的办法，毕竟我的前端知识也很匮乏。
 
 ## 完善package的其它信息
 
@@ -103,11 +117,11 @@ dependencies:
 
 如果只是自己使用的话，到上一步就已经完成了，只需要重新`devtools::install()`就可以使用该htmlwidgets了。
 
-如果想把该包分享给他人使用或者上传到CRAN，那么遵循R包的开发原则，我们需要完善相关函数的说明文件，DESCRIPTION文件以及选择合适的LICENSE。
+如果想把该包分享给他人使用或者上传到CRAN，那么遵循R包的开发原则，我们需要完善相关函数的说明文件，DESCRIPTION文件以及选择合适的LICENSE。这个不是本文主要的内容，可以参考[Releasing a package](https://r-pkgs.org/release.html)。
 
 ```{r eval=TRUE}
 library(flipdownWidgets)
-flipdownWidgets(Sys.time() + 60*60*24*100, height = 120)
+flipdownWidgets(Sys.time() + 60*60*24*100, width = "100%")
 ```
 
 ## 写在最后

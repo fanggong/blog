@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>模型工程化 on Connecting the dots</title>
-    <link>https://fanggong.pub/categories/%E6%A8%A1%E5%9E%8B%E5%B7%A5%E7%A8%8B%E5%8C%96/</link>
-    <description>Recent content in 模型工程化 on Connecting the dots</description>
+    <title>工程相关 on Connecting the dots</title>
+    <link>https://fanggong.pub/categories/%E5%B7%A5%E7%A8%8B%E7%9B%B8%E5%85%B3/</link>
+    <description>Recent content in 工程相关 on Connecting the dots</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Fri, 21 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/categories/%E6%A8%A1%E5%9E%8B%E5%B7%A5%E7%A8%8B%E5%8C%96/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 21 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/categories/%E5%B7%A5%E7%A8%8B%E7%9B%B8%E5%85%B3/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>R语言项目环境管理</title>
       <link>https://fanggong.pub/posts/20210521_renv/</link>

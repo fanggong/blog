@@ -389,15 +389,15 @@
     },
     "flipdownWidgets": {
       "Package": "flipdownWidgets",
-      "Version": "0.0.0.9000",
+      "Version": "0.1.0",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "flipdownWidgets",
       "RemoteUsername": "fanggong",
       "RemoteRef": "HEAD",
-      "RemoteSha": "ba205828753994d6e7f2e97901847a829fe1c5c4",
-      "Hash": "ad67704afef09d98808a14c17171b41b"
+      "RemoteSha": "10243a94c4902ade298034903a69d5b87a3d5340",
+      "Hash": "d3fd997481dd53dcfebc6563e6f9de6b"
     },
     "forcats": {
       "Package": "forcats",
@@ -709,10 +709,10 @@
     },
     "mgcv": {
       "Package": "mgcv",
-      "Version": "1.8-35",
+      "Version": "1.8-36",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "89fd8b2ad4a6cb4979b78cf2a77ab503"
+      "Hash": "93cc747b0e1ad882a4570463c3575c23"
     },
     "mime": {
       "Package": "mime",
