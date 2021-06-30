@@ -47,7 +47,7 @@ draft: true
 <div id="硬间隔和软间隔" class="section level2">
 <h2>硬间隔和软间隔</h2>
 <hr />
-<p>对于线性可分的训练集，支持向量机寻找一个超平面（图中的实线部分），使得训练集距离该超平面的距离（<span class="math inline">\(\gamma\)</span>）最大，这意味着该超平面以尽可能大的确信度将数据分成了两个类别。该超平面被称作<strong>最大间隔分离超平面</strong>。</p>
+<p>在线性分类问题中，对于线性可分的训练集，支持向量机寻找一个超平面（图中的实线部分），使得训练集距离该超平面的距离（<span class="math inline">\(\gamma\)</span>）最大，这意味着该超平面以尽可能大的确信度将数据分成了两个类别。该超平面被称作<strong>最大间隔分离超平面</strong>。</p>
 <p>所有距离超平面的距离为<span class="math inline">\(\gamma\)</span>的点组成了两个超平面（图中的虚线部分），这两个超平面上的样本（红色标记样本）被称为<strong>支持向量</strong>。</p>
 <p>这里的<span class="math inline">\(\gamma\)</span>被称为<strong>硬间隔</strong>，线性可分支持向量机就是寻找参数<span class="math inline">\(\omega\)</span>和<span class="math inline">\(b\)</span>使得硬间隔最大化。</p>
 <p><img src="/posts/20210623_support_vector_machines_files/figure-html/unnamed-chunk-2-1.png" width="384" style="display: block; margin: auto;" /></p>
