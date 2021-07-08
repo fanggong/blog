@@ -8,11 +8,11 @@ date: "2021-04-21"
 
 ---------------------------------------------
 
-[flipdownWidgets]()，在Shiny或Rmarkdown中创建倒计时时钟。
+[flipdownWidgets](https://CRAN.R-project.org/package=flipdownWidgets)，已上传至CRAN，通过该包我们可以在Shiny或Rmarkdown中创建一个倒计时时钟。
 
 <i class="fab fa-lg fa-github fa-fw"></i><a href="https://github.com/fanggong/flipdownWidgets">View Code</a>
 
 ```{r echo=FALSE}
 library(flipdownWidgets)
-flipdownWidgets(Sys.time() + 60*60*24*365, width = "80%", headings = c("天", "时", "分", "秒"))
+flipdownWidgets("2026-06-11", width = "80%", headings = c("天", "时", "分", "秒"))
 ```

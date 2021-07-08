@@ -223,9 +223,9 @@ renv的global package cache路径为：
       <pubDate>Wed, 21 Apr 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/tools/</guid>
-      <description>     flipdownWidgets flipdownWidgets，在Shiny或Rmarkdown中创建倒计时时钟。
+      <description>     flipdownWidgets flipdownWidgets，已上传至CRAN，通过该包我们可以在Shiny或Rmarkdown中创建一个倒计时时钟。
 View Code
- {&#34;x&#34;:{&#34;to&#34;:1656605899.60613,&#34;theme&#34;:&#34;dark&#34;,&#34;headings&#34;:[&#34;天&#34;,&#34;时&#34;,&#34;分&#34;,&#34;秒&#34;]},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}  </description>
+ {&#34;x&#34;:{&#34;to&#34;:1781107200,&#34;theme&#34;:&#34;dark&#34;,&#34;headings&#34;:[&#34;天&#34;,&#34;时&#34;,&#34;分&#34;,&#34;秒&#34;]},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}  </description>
     </item>
     
     <item>
@@ -392,7 +392,8 @@ par(mar = c(0, 0, 0, 0), family = &amp;quot;HannotateSC-W5&amp;quot;) openplotma
 2019年研究生毕业于日本筑波大学系统情报工学系。
 工作三年学三年，三年之后又三年。
 在此之前从事数据分析以及相关的项目咨询及管理工作（DS方向）。
-目前从事数据挖掘工程师工作（兜兜转转还是写代码比较有意思吧）。
+目前从事数据分析工程师工作（相对于管理别人做，还是自己做比较有意思吧）。
+现阶段对数据可视化非常有兴趣。
 爱好健身，剑道初段。</description>
     </item>
     
