@@ -2,6 +2,7 @@
 title: 对本主题的样式的测试
 author: Fang Yongchao
 date: "`r Sys.Date()`"
+draft: true
 ---
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
@@ -102,4 +103,4 @@ kbl(mtcars) %>%
 
 ### iframe
 
-<iframe height="500" width="100%" frameborder="no" src="https://shiny.fanggong.pub/iframe_test/"> </iframe>
+<iframe height="500" width="100%" frameborder="no" src="https://github.com/fanggong"> </iframe>

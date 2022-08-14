@@ -13,12 +13,12 @@
       <pubDate>Tue, 22 Jun 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210622_sklearn_feature_selection_api/</guid>
-      <description>sklearn.feature_selection.GenericUnivariateSelect sklearn.feature_selection.SelectFromModel sklearn.feature_selection.SequentialFeatureSelector sklearn.feature_selection.VarianceThreshold sklearn.feature_selection.RFE   不要重复造轮子。
-sklearn.feature_selection.GenericUnivariateSelect 对每个特征与目标变量求score_func的值，根据结果按照mode选择满足param条件的特征。
+      <description>sklearn.feature_selection.GenericUnivariateSelectsklearn.feature_selection.SelectFromModelsklearn.feature_selection.SequentialFeatureSelectorsklearn.feature_selection.VarianceThresholdsklearn.feature_selection.RFE不要重复造轮子。
+sklearn.feature_selection.GenericUnivariateSelect对每个特征与目标变量求score_func的值，根据结果按照mode选择满足param条件的特征。
 score_func应该满足接收n个特征变量和1个目标变量，返回一对长度为n的数组分别表示scores和pvalues。sklearn中提供了5个可能高频率使用的score_func：
- chi2：卡方统计量，适用于多个二分类特征（或是one-hot编码后的多水平分类特征）和分类目标变量； f_classif：方差分析的F统计量，适用于连续特征和分类目标变量； f_regression：单变量线性回归的F统计量，适用于连续特征和连续目标变量； mutual_info_classif：互信息，适用于分类目标变量； mutual_info_regression：互信息，适用于连续目标变量。  此外提供了5种选择mode：
- percentile：根据scores选择得分最高的前一定比例的特征； k_best：根据scores选择得分最高的前k个特征； fpr：根据pvalues选择低于某值的特征； fdr：False discovery rate fwe：Family-wise error rate  自定义score_func示例如下（并没有什么实际意义）：
-def my_score_func(X, y): return (X.sum(axis=0), X.mean(axis=0)) from sklearn.datasets import load_breast_cancer from sklearn.feature_selection import GenericUnivariateSelect, chi2 X, y = load_breast_cancer(return_X_y=True) print(X.shape) ## (569, 30) transformer = GenericUnivariateSelect(my_score_func, mode=&amp;#39;k_best&amp;#39;, param=10) X_new = transformer.fit_transform(X, y) print(X_new.shape) ## (569, 10)  sklearn.</description>
+chi2：卡方统计量，适用于多个二分类特征（或是one-hot编码后的多水平分类特征）和分类目标变量；f_classif：方差分析的F统计量，适用于连续特征和分类目标变量；f_regression：单变量线性回归的F统计量，适用于连续特征和连续目标变量；mutual_info_classif：互信息，适用于分类目标变量；mutual_info_regression：互信息，适用于连续目标变量。此外提供了5种选择mode：
+percentile：根据scores选择得分最高的前一定比例的特征；k_best：根据scores选择得分最高的前k个特征；fpr：根据pvalues选择低于某值的特征；fdr：False discovery ratefwe：Family-wise error rate自定义score_func示例如下（并没有什么实际意义）：
+def my_score_func(X, y):return (X.sum(axis=0), X.mean(axis=0))from sklearn.datasets import load_breast_cancerfrom sklearn.feature_selection import GenericUnivariateSelect, chi2X, y = load_breast_cancer(return_X_y=True)print(X.shape)## (569, 30)transformer = GenericUnivariateSelect(my_score_func, mode=&amp;#39;k_best&amp;#39;, param=10)X_new = transformer.fit_transform(X, y)print(X_new.shape)## (569, 10)sklearn.</description>
     </item>
     
     <item>
@@ -27,11 +27,11 @@ def my_score_func(X, y): return (X.sum(axis=0), X.mean(axis=0)) from sklearn.dat
       <pubDate>Fri, 11 Jun 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210611_regularization/</guid>
-      <description>线性回归的正则化 关于L2参数正则化的理论分析 关于L1参数正则化的理论分析 L2正则化和L1正则化的比较   以下内容主要参考自scikit-learn文档和Deep Learning一书。
-线性回归的正则化 对于参数正则化最早的接触来自于线性回归。
-Lasso回归使用L1范数进行参数正则化，即回归的目标函数为： \[ {1 \over 2N }\left \| X\omega-y \right \|_2^2 + \alpha \left \| \omega \right \|_1 \]
-岭回归使用L2范数进行参数正则化，即回归的目标函数为： \[ \left \| X\omega-y \right \|_2^2 + \alpha \left \| \omega \right \|_2^2 \]
-Elasti-Net回归的正则项结合了L1范数和L2范数，其目标函数为： \[ {1 \over 2N }\left \| X\omega-y \right \|_2^2 + \alpha \rho \left \| \omega \right \|_1 + {\alpha (1-\rho) \over 2} \left \| \omega \right \|_2^2 \]</description>
+      <description>线性回归的正则化关于L2参数正则化的理论分析关于L1参数正则化的理论分析L2正则化和L1正则化的比较以下内容主要参考自scikit-learn文档和Deep Learning一书。
+线性回归的正则化对于参数正则化最早的接触来自于线性回归。
+Lasso回归使用L1范数进行参数正则化，即回归的目标函数为：\[{1 \over 2N }\left \| X\omega-y \right \|_2^2 + \alpha \left \| \omega \right \|_1\]
+岭回归使用L2范数进行参数正则化，即回归的目标函数为：\[\left \| X\omega-y \right \|_2^2 + \alpha \left \| \omega \right \|_2^2\]
+Elasti-Net回归的正则项结合了L1范数和L2范数，其目标函数为：\[{1 \over 2N }\left \| X\omega-y \right \|_2^2 + \alpha \rho \left \| \omega \right \|_1 + {\alpha (1-\rho) \over 2} \left \| \omega \right \|_2^2\]</description>
     </item>
     
     <item>
@@ -40,10 +40,10 @@ Elasti-Net回归的正则项结合了L1范数和L2范数，其目标函数为：
       <pubDate>Sun, 30 May 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210530_adaboost/</guid>
-      <description>AdaBoost算法原理 关于样本权重的求解 回归问题下的AdaBoost AdaBoost的正则化 关于AdaBoost的几点思考   AdaBoost算法原理 AdaBoost的基本思想是通过不断修改训练样本的权重来训练新的基学习器，最后将所有基学习器进行加权求和从而得到一个集成模型。即，AdaBoost可以表示为基学习器的加法模型： \[ \hat y_i = \sum_{k=1}^K \alpha_k G_k(x_i) \] 其中\(G_k\)为第\(k\)个基学习器，\(\alpha_k\)为其系数。
-以二分类模型为例，将目标变量以±1的形式表示，损失函数定义为指数损失函数，即： \[ l(y, \hat y) = e^{-y \hat y} \]
-设第t个基分类器为\(G_t(x)\)，那么有： \[ \hat y^{(t)}_i = \hat y^{(t-1)}_i + \alpha_t G_t(x_i) \]
-其目标函数可以表示为： \[ \begin{aligned} obj^{(t)} &amp;amp; = \sum_{i=1}^N e^{-y_i \hat y^{(t-1)}_i -y_i\alpha_tG_t(x_i)} \\ &amp;amp; = \sum_{i=1}^N \omega_i^{(t)} e^{-y_i \alpha_tG_t(x_i)} \end{aligned} \] 其中\(\omega_i^{(t)} = e^{-y_i \hat y^{(t-1)}_i}\)是一个常数可以理解为前t-1个基分类器的预测值带入损失函数得到的值。
+      <description>AdaBoost算法原理关于样本权重的求解回归问题下的AdaBoostAdaBoost的正则化关于AdaBoost的几点思考AdaBoost算法原理AdaBoost的基本思想是通过不断修改训练样本的权重来训练新的基学习器，最后将所有基学习器进行加权求和从而得到一个集成模型。即，AdaBoost可以表示为基学习器的加法模型：\[\hat y_i = \sum_{k=1}^K \alpha_k G_k(x_i)\]其中\(G_k\)为第\(k\)个基学习器，\(\alpha_k\)为其系数。
+以二分类模型为例，将目标变量以±1的形式表示，损失函数定义为指数损失函数，即：\[l(y, \hat y) = e^{-y \hat y}\]
+设第t个基分类器为\(G_t(x)\)，那么有：\[\hat y^{(t)}_i = \hat y^{(t-1)}_i + \alpha_t G_t(x_i)\]
+其目标函数可以表示为：\[\begin{aligned}obj^{(t)} &amp;amp; = \sum_{i=1}^N e^{-y_i \hat y^{(t-1)}_i -y_i\alpha_tG_t(x_i)} \\&amp;amp; = \sum_{i=1}^N \omega_i^{(t)} e^{-y_i \alpha_tG_t(x_i)} \end{aligned}\]其中\(\omega_i^{(t)} = e^{-y_i \hat y^{(t-1)}_i}\)是一个常数可以理解为前t-1个基分类器的预测值带入损失函数得到的值。
 观察上面的目标函数可以发现，对于任意的大于0的\(\alpha_t\)，当\(y_i = G_t(x_i)\)时，\(\omega_i^{(t)}\)会被乘上一个小于1的值（即\(e^{-\alpha_t}\)），当\(y_i \ne G_t(x_i)\)时，\(\omega_i^{(t)}\)会被乘上一个大于1的值（即\(e^{\alpha_t}\)）。</description>
     </item>
     
@@ -53,10 +53,10 @@ Elasti-Net回归的正则项结合了L1范数和L2范数，其目标函数为：
       <pubDate>Mon, 17 May 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210517_xgboost/</guid>
-      <description>目标函数：损失函数 + 正则项 决策树集成 xgboost的损失函数 xgboost的正则项 xgboost的目标函数 寻找最优结构的树 几个比较纠结的问题   参考文章：
- Introduction to Boosted Trees XGBoost: A Scalable Tree Boosting System  以下内容主要是对上面文章内容的整理以及一些个人理解。
-目标函数：损失函数 + 正则项 在机器学习模型中，目标函数一般由损失函数和正则项组成： \[ obj(\theta) = L(\theta) + \Omega(\theta) \]
-其中\(L(\theta)\)为损失函数，在回归模型中，我们常常定义为MSE，即： \[ L(\theta) = \sum_i(y_i - \hat y_i)^2 \] 或是在逻辑回归模型中，我们定义为： \[ L(\theta) = \sum_i \left[ y_i\ln(1 + e^{-\hat y_i}) + (1 - y_i)\ln(1 + e^{\hat y_i}) \right] \] （逻辑回归的损失函数非常直观：当\(y_i\)为1时，\(\hat y_i\)越大则\(L(\theta)\)越小；而当\(y_i\)为0时，\(\hat y_i\)越小则\(L(\theta)\)越小）</description>
+      <description>目标函数：损失函数 + 正则项决策树集成xgboost的损失函数xgboost的正则项xgboost的目标函数寻找最优结构的树几个比较纠结的问题参考文章：
+Introduction to Boosted TreesXGBoost: A Scalable Tree Boosting System以下内容主要是对上面文章内容的整理以及一些个人理解。
+目标函数：损失函数 + 正则项在机器学习模型中，目标函数一般由损失函数和正则项组成：\[obj(\theta) = L(\theta) + \Omega(\theta)\]
+其中\(L(\theta)\)为损失函数，在回归模型中，我们常常定义为MSE，即：\[L(\theta) = \sum_i(y_i - \hat y_i)^2\]或是在逻辑回归模型中，我们定义为：\[L(\theta) = \sum_i \left[ y_i\ln(1 + e^{-\hat y_i}) + (1 - y_i)\ln(1 + e^{\hat y_i}) \right]\]（逻辑回归的损失函数非常直观：当\(y_i\)为1时，\(\hat y_i\)越大则\(L(\theta)\)越小；而当\(y_i\)为0时，\(\hat y_i\)越小则\(L(\theta)\)越小）</description>
     </item>
     
     <item>
@@ -65,8 +65,8 @@ Elasti-Net回归的正则项结合了L1范数和L2范数，其目标函数为：
       <pubDate>Fri, 07 May 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210507_gbdt/</guid>
-      <description>GBDT算法原理 回归问题下的GDBT 二分类问题下的GBDT 多分类问题下的GBDT   GBDT算法原理 GBDT可以表示为决策树的加法模型，即： \[ \hat y_i = \sum_{k=1}^K f_k(x_i) \] 其中\(f\)表示决策树，\(K\)为决策树的数量。
-通过前向分步骤算法，第t步得到的决策树模型为\(f_t(x)\)，有： \[ \hat y_i^{(t)} = \hat y_i^{(t-1)} + f_t(x_i) \] 其目标函数为： \[ obj^{(t)} = \sum_{i=1}^N l\left(y_i, \hat y_i^{(t-1)} + f_t(x_i) \right) \] 将目标函数使用泰勒一阶展开，有： \[ obj^{(t)} = \sum_{i=1}^N \left[ l(y_i, \hat y_i^{(t-1)}) + g_i f_t(x_i) \right] \] 这里的\(g_i = \left[ {\partial\ l(y_i, \hat y_i) \over \partial \hat y_i} \right]_{\hat y_i = \hat y_i^{(t-1)}}\)，即损失函数关于\(\hat y_i\)求导后带入\(\hat y_i = \hat y_i^{(t-1)}\)。</description>
+      <description>GBDT算法原理回归问题下的GDBT二分类问题下的GBDT多分类问题下的GBDTGBDT算法原理GBDT可以表示为决策树的加法模型，即：\[\hat y_i = \sum_{k=1}^K f_k(x_i)\]其中\(f\)表示决策树，\(K\)为决策树的数量。
+通过前向分步骤算法，第t步得到的决策树模型为\(f_t(x)\)，有：\[\hat y_i^{(t)} = \hat y_i^{(t-1)} + f_t(x_i)\]其目标函数为：\[obj^{(t)} = \sum_{i=1}^N l\left(y_i, \hat y_i^{(t-1)} + f_t(x_i) \right)\]将目标函数使用泰勒一阶展开，有：\[obj^{(t)} = \sum_{i=1}^N \left[ l(y_i, \hat y_i^{(t-1)}) + g_i f_t(x_i) \right]\]这里的\(g_i = \left[ {\partial\ l(y_i, \hat y_i) \over \partial \hat y_i} \right]_{\hat y_i = \hat y_i^{(t-1)}}\)，即损失函数关于\(\hat y_i\)求导后带入\(\hat y_i = \hat y_i^{(t-1)}\)。</description>
     </item>
     
     <item>
@@ -75,11 +75,11 @@ Elasti-Net回归的正则项结合了L1范数和L2范数，其目标函数为：
       <pubDate>Wed, 28 Apr 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210428_concepts_about_decision_tree/</guid>
-      <description>信息熵(Entropy) 条件熵(Conditional Entropy) 信息增益(Information Gain, IG) 信息增益比(Information Gain Ratio) 基尼指数(Gini Index)   信息熵(Entropy) 设\(Y\)是取有限个值的离散随机变量，其概率分布为： \[ P(Y = y_i) = p_i,\quad i = 1, 2, 3, ..., n \]
-则随机变量\(Y\)的熵的定义为： \[ H(Y) = -\sum_{i=1}^n p_i\log_bp_i \] 根据对数的底\(b\)的不同，熵的单位不同。当\(b\)为2时，单位为比特(bit)，当\(b\)为e时，单位为纳特(nat)。
+      <description>信息熵(Entropy)条件熵(Conditional Entropy)信息增益(Information Gain, IG)信息增益比(Information Gain Ratio)基尼指数(Gini Index)信息熵(Entropy)设\(Y\)是取有限个值的离散随机变量，其概率分布为：\[P(Y = y_i) = p_i,\quad i = 1, 2, 3, ..., n\]
+则随机变量\(Y\)的熵的定义为：\[H(Y) = -\sum_{i=1}^n p_i\log_bp_i\]根据对数的底\(b\)的不同，熵的单位不同。当\(b\)为2时，单位为比特(bit)，当\(b\)为e时，单位为纳特(nat)。
 熵被认为是不确定性的度量。很显然当系统内只有一个事件且该事件必定发生时，熵取最小值为0。当系统内各事件发生概率相同时，熵取最大值\(\log_bn\)，此时系统内的不确定性最高。特别的，当\(p_i\)为0时，\(p_i \log_bp_i\)为0。
- 条件熵(Conditional Entropy) 条件熵表示基于某条件下的信息熵。定义为： \[ H(Y|X) = \sum_{i=1}^np_iH(Y|X = x_i) \] 这里的\(p_i=P(X = x_i),\quad i = 1,2,3,...,n\)。\(H(Y|X = x_i)\)为\(X\)取\(x_i\)时，\(Y\)的信息熵。
- 信息增益(Information Gain, IG) 信息增益等于信息熵减去条件熵。即： \[ IG(Y, X) = H(Y) - H(Y|X) \] 可以理解为在知道变量\(X\)后，\(Y\)的不确定性减少了多少。</description>
+条件熵(Conditional Entropy)条件熵表示基于某条件下的信息熵。定义为：\[H(Y|X) = \sum_{i=1}^np_iH(Y|X = x_i)\]这里的\(p_i=P(X = x_i),\quad i = 1,2,3,...,n\)。\(H(Y|X = x_i)\)为\(X\)取\(x_i\)时，\(Y\)的信息熵。
+信息增益(Information Gain, IG)信息增益等于信息熵减去条件熵。即：\[IG(Y, X) = H(Y) - H(Y|X)\]可以理解为在知道变量\(X\)后，\(Y\)的不确定性减少了多少。</description>
     </item>
     
     <item>
@@ -88,11 +88,11 @@ Elasti-Net回归的正则项结合了L1范数和L2范数，其目标函数为：
       <pubDate>Sun, 18 Apr 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210418_concepts_about_feature_selection/</guid>
-      <description>WOE(Weight of Evidence)和IV(Information Value) 群体稳定性指标(Population Stability Index, PSI)   这三个概念对我来说并不经常用到，但是每次用到的时候具体细节总是记串了，所以特别记下来。
-WOE(Weight of Evidence)和IV(Information Value) WOE为“当前分组下正样本占所有正样本比例”与“当前分组下负样本占所有负样本比例”的对数差，即对包含\(\{ x_1, x_2, ..., x_n \}\)\(n\)个类别的变量\(X\)，有： \[ p_{i1} = {N(Y = 1|X = x_i) \over N(Y = 1)}; \quad p_{i0} = {N(Y = 0|X = x_i) \over N(Y = 0)} \] \[ WOE(x_i) = \ln { p_{i1} \over p_{i0} } \]
+      <description>WOE(Weight of Evidence)和IV(Information Value)群体稳定性指标(Population Stability Index, PSI)这三个概念对我来说并不经常用到，但是每次用到的时候具体细节总是记串了，所以特别记下来。
+WOE(Weight of Evidence)和IV(Information Value)WOE为“当前分组下正样本占所有正样本比例”与“当前分组下负样本占所有负样本比例”的对数差，即对包含\(\{ x_1, x_2, ..., x_n \}\)\(n\)个类别的变量\(X\)，有：\[p_{i1} = {N(Y = 1|X = x_i) \over N(Y = 1)}; \quad p_{i0} = {N(Y = 0|X = x_i) \over N(Y = 0)}\]\[WOE(x_i) = \ln { p_{i1} \over p_{i0} } \]
 可以看出：
- 当前分组下正负样本比例与总的正负样本比例相同时，WOE的值为0 当前分组下正样本比例高于总的正样本比例时，WOE值为正 当前分组下正样本比例低于总的正样本比例时，WOE值为负  IV为WOE的加权和，其计算方式为：
-\[ IV = \sum_i(p_{i1} - p_{i0})*WOE(x_i) \]</description>
+当前分组下正负样本比例与总的正负样本比例相同时，WOE的值为0当前分组下正样本比例高于总的正样本比例时，WOE值为正当前分组下正样本比例低于总的正样本比例时，WOE值为负IV为WOE的加权和，其计算方式为：
+\[IV = \sum_i(p_{i1} - p_{i0})*WOE(x_i)\]</description>
     </item>
     
   </channel>

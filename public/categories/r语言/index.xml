@@ -13,23 +13,23 @@
       <pubDate>Thu, 17 Jun 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210617_create_your_own_widgets/</guid>
-      <description>项目结构搭建 相关依赖的配置 R与JS的绑定 对htmlwidgets的size进行调整 完善package的其它信息 写在最后   htmlwidgets包为R提供了一个封装JS代码的框架。通过JS生成的htmlwidgets可以直接使用在Rmarkdown和Shiny中。
+      <description>项目结构搭建相关依赖的配置R与JS的绑定对htmlwidgets的size进行调整完善package的其它信息写在最后htmlwidgets包为R提供了一个封装JS代码的框架。通过JS生成的htmlwidgets可以直接使用在Rmarkdown和Shiny中。
 本文记录了一个简单的htmlwidgets的开发流程，封装了一个JS库flipdown.js，可以在Rmarkdown或Shiny中创建一个倒计时时钟。
 封装的JS代码和R函数以一个包的形式存在，该包已经上传到CRAN，可以通过以下代码安装：
-install.packages(&amp;quot;flipdownWidgets&amp;quot;) 或是通过Github安装：
-# install.packages(&amp;quot;devtools&amp;quot;) devtools::install_github(&amp;quot;fanggong/flipdownWidgets&amp;quot;) 项目结构搭建 首先创建一个R package项目
-devtools::create(&amp;quot;flipdownWidgets&amp;quot;) 初始化开发环境并安装必要的包
-renv::init() renv::install(&amp;quot;htmlwidgets&amp;quot;) renv::install(&amp;quot;devtools&amp;quot;) 创建widget的脚手架
-htmlwidgets::scaffoldWidget(&amp;quot;flipdownWidgets&amp;quot;) 生成函数说明文件
-devtools::document() 安装包
-devtools::install() 测试
-flipdownWidgets::flipdownWidgets(&amp;quot;Hello World!&amp;quot;) 上面的基础结构实现了一个简单的htmlwidgets：向R函数flipdownWidgets()传递参数Hello World!，该参数会被传给对应的JS函数，JS函数的功能是将参数输出到网页上。
- 相关依赖的配置 接下来要进行对相关JS库的依赖配置。
+install.packages(&amp;quot;flipdownWidgets&amp;quot;)或是通过Github安装：
+# install.packages(&amp;quot;devtools&amp;quot;)devtools::install_github(&amp;quot;fanggong/flipdownWidgets&amp;quot;)项目结构搭建首先创建一个R package项目
+devtools::create(&amp;quot;flipdownWidgets&amp;quot;)初始化开发环境并安装必要的包
+renv::init()renv::install(&amp;quot;htmlwidgets&amp;quot;)renv::install(&amp;quot;devtools&amp;quot;)创建widget的脚手架
+htmlwidgets::scaffoldWidget(&amp;quot;flipdownWidgets&amp;quot;)生成函数说明文件
+devtools::document()安装包
+devtools::install()测试
+flipdownWidgets::flipdownWidgets(&amp;quot;Hello World!&amp;quot;)上面的基础结构实现了一个简单的htmlwidgets：向R函数flipdownWidgets()传递参数Hello World!，该参数会被传给对应的JS函数，JS函数的功能是将参数输出到网页上。
+相关依赖的配置接下来要进行对相关JS库的依赖配置。
 找到对应JS库的.js和.css文件，复制到项目中的/inst/htmlwidgets路径下。在这里，我们需要复制的文件为flipdown.js和flipdown.css。之后修改配置文件/inst/htmlwidgets/flipdownWidgets.yaml指定依赖。
-dependencies: - name: flipdown version: 0.3.2 src: &amp;quot;htmlwidgets/lib/flipdown&amp;quot; script: flipdown.js stylesheet: flipdown.css  R与JS的绑定 一个最简单的htmlwidgets应该至少包含了以下四个函数：
- R捆绑函数：该函数是一个R函数，它接收数据和其它关于htmlwidgets的可选项，生成一个htmlwidgets对象。在这里，该函数的基本结构通过前面的scaffoldWidget(&#34;flipdownWidgets&#34;)自动生成在/R/flipdownWidgets.R文件中； JS捆绑函数：该函数是一个JS工厂函数，它接收将要容纳这个htmlwidgets的HTML元素以及HTML元素的宽度和高度，然后通过其中的renderValue()方法创建htmlwidgets。renderValue()除了JS捆绑函数的参数外，还会接收R捆绑函数中的参数（即数据和关于htmlwidgets的可选项）。JS捆绑函数的基本结构同样会通过scaffoldWidget(&#34;flipdownWidgets&#34;)自动生成在/inst/htmlwidgets/flipdownWidgets.js文件中； flipdownWidgetsOutput函数：该函数供Shiny使用，自动生成，一般不需要做修改； renderFlipdownWidgets函数：该函数同样供Shiny使用，自动生成，一般不做修改。  这里我们需要做的其实就是以下两点：
- 确定R捆绑函数对应的输入参数，将这些参数在R捆绑函数中经过合适的转换之后打包为一个列表传入R捆绑函数内的htmlwidgets::createWidget()函数；
- 编写JS捆绑函数中的renderValue()方法，使用R捆绑函数的参数在HTML元素中生成一个htmlwidgets。   对htmlwidgets的size进行调整 在JS捆绑函数中除了renderValue()方法外，还提供了一个resize()方法。通过resize()方法即可实现根据显示位置的大小调整htmlwidgets的size。</description>
+dependencies:- name: flipdownversion: 0.3.2src: &amp;quot;htmlwidgets/lib/flipdown&amp;quot;script: flipdown.jsstylesheet: flipdown.cssR与JS的绑定一个最简单的htmlwidgets应该至少包含了以下四个函数：
+R捆绑函数：该函数是一个R函数，它接收数据和其它关于htmlwidgets的可选项，生成一个htmlwidgets对象。在这里，该函数的基本结构通过前面的scaffoldWidget(&#34;flipdownWidgets&#34;)自动生成在/R/flipdownWidgets.R文件中；JS捆绑函数：该函数是一个JS工厂函数，它接收将要容纳这个htmlwidgets的HTML元素以及HTML元素的宽度和高度，然后通过其中的renderValue()方法创建htmlwidgets。renderValue()除了JS捆绑函数的参数外，还会接收R捆绑函数中的参数（即数据和关于htmlwidgets的可选项）。JS捆绑函数的基本结构同样会通过scaffoldWidget(&#34;flipdownWidgets&#34;)自动生成在/inst/htmlwidgets/flipdownWidgets.js文件中；flipdownWidgetsOutput函数：该函数供Shiny使用，自动生成，一般不需要做修改；renderFlipdownWidgets函数：该函数同样供Shiny使用，自动生成，一般不做修改。这里我们需要做的其实就是以下两点：
+确定R捆绑函数对应的输入参数，将这些参数在R捆绑函数中经过合适的转换之后打包为一个列表传入R捆绑函数内的htmlwidgets::createWidget()函数；
+编写JS捆绑函数中的renderValue()方法，使用R捆绑函数的参数在HTML元素中生成一个htmlwidgets。对htmlwidgets的size进行调整在JS捆绑函数中除了renderValue()方法外，还提供了一个resize()方法。通过resize()方法即可实现根据显示位置的大小调整htmlwidgets的size。</description>
     </item>
     
     <item>
@@ -38,10 +38,10 @@ dependencies: - name: flipdown version: 0.3.2 src: &amp;quot;htmlwidgets/lib/fli
       <pubDate>Sun, 06 Jun 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210606_shiny_update_reactive_object/</guid>
-      <description>   问题背景 实现方式   问题背景 需要根据初始输入生成一个对象，该对象以某种形式展示。同时，针对其它的输入（多个输入源的多次输入），对该对象进行多次修改，每次修改后，该对象的展示结果对应发生改变。当初始输入改变时，重新初始化该对象。
- 实现方式 很显然应该使用reactive对象，但是试了很多种方法，发现通过reactive()生成的reactive对象是无法进行任何修改的，即上方的“针对其它的输入对对象进行多次修改”无法实现。最后发现貌似只有通过reactiveValues()才能实现该功能。
+      <description>问题背景实现方式问题背景需要根据初始输入生成一个对象，该对象以某种形式展示。同时，针对其它的输入（多个输入源的多次输入），对该对象进行多次修改，每次修改后，该对象的展示结果对应发生改变。当初始输入改变时，重新初始化该对象。
+实现方式很显然应该使用reactive对象，但是试了很多种方法，发现通过reactive()生成的reactive对象是无法进行任何修改的，即上方的“针对其它的输入对对象进行多次修改”无法实现。最后发现貌似只有通过reactiveValues()才能实现该功能。
 View Code
-  </description>
+</description>
     </item>
     
     <item>
@@ -50,19 +50,19 @@ View Code
       <pubDate>Fri, 21 May 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210521_renv/</guid>
-      <description>   环境初始化 对环境管理 renv的全局缓存 移除环境   相关包：renv
+      <description>环境初始化对环境管理renv的全局缓存移除环境相关包：renv
 第一次知道这个包是在很早的时候，但是并没有什么使用的动力，毕竟我的电脑很久才会换一次，而公司的服务器，已经很久没有换过了…所有并没有频繁在新环境中运行代码的需求。直到有一天，当我想把docker和R一起使用以解决R的无法并行的问题时，终于体会到了renv的真香。
-环境初始化 在一个新的项目中使用renv::init()对环境进行初始化，该操作会生成一个名为renv的文件夹和名为renv.lock的文件。
+环境初始化在一个新的项目中使用renv::init()对环境进行初始化，该操作会生成一个名为renv的文件夹和名为renv.lock的文件。
 renv下保存了在环境中已安装的包的文件（准确的说是已安装包的符号链接文件），而renv.lock指定了该项目对renv下的包的相关依赖。
- 对环境管理 使用renv::restore()和renv::snapshot()对环境进行管理。
+对环境管理使用renv::restore()和renv::snapshot()对环境进行管理。
 renv::restore()根据renv.lock文件安装环境中缺少的包到renv文件夹下（这个描述不是很准确，包的安装位置实际是global package cache中，renv文件夹下存在的是对应包的符号链接文件）。
 renv::snapshot()根据当前环境下的项目情况将依赖写入renv.lock文件中。
 这里的逻辑有点绕但是很合理：如果某个包已经安装在了renv中但是在实际项目中没有被使用，那么renv::snapshot()是不会将该包写入renv.lock文件中的。这也就是说，我们可以没有什么心理压力地安装各种包了，它只会污染你的开发环境而不会污染生产环境。
- renv的全局缓存 在使用了renv的项目中安装新的包时，包并不会被安装在我们安装R时指定的包存储路径，而是安装在了renv的全局包缓存中（global package cache）。两者之间最大的区别我认为在于后者中可以存在同一个包的不同版本。
+renv的全局缓存在使用了renv的项目中安装新的包时，包并不会被安装在我们安装R时指定的包存储路径，而是安装在了renv的全局包缓存中（global package cache）。两者之间最大的区别我认为在于后者中可以存在同一个包的不同版本。
 当使用renv::restore()时，如果该包存在于global package cache中，那么在renv文件夹下会形成该包的符号链接；如果global package cache中不存在该包，那么会先将该包安装到global package cache中，然后形成符号链接。同时可以使用renv::isolate()将cache中的包复制到renv文件夹中从而切断对cache的依赖。
 renv的global package cache路径为：
- Mac：~/Library/Application Support/renv Linux：~/.local/share/renv Windows：%LOCALAPPDATA%/renv   移除环境 使用renv::deactivate()使renv无效，即项目回到使用全局环境的状态。该命令只会删除.Rprofile文件使得renv相关文件无效，而不会删除renv相关文件以防止需要重新启用renv。但对于我这种轻度强迫症来说，没有用的文件是一定不能留在项目里的，所以我选择手动删除项目中的所有renv相关文件。
- </description>
+Mac：~/Library/Application Support/renvLinux：~/.local/share/renvWindows：%LOCALAPPDATA%/renv移除环境使用renv::deactivate()使renv无效，即项目回到使用全局环境的状态。该命令只会删除.Rprofile文件使得renv相关文件无效，而不会删除renv相关文件以防止需要重新启用renv。但对于我这种轻度强迫症来说，没有用的文件是一定不能留在项目里的，所以我选择手动删除项目中的所有renv相关文件。
+</description>
     </item>
     
     <item>
@@ -71,17 +71,17 @@ renv的global package cache路径为：
       <pubDate>Thu, 13 May 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210513_difference_analysis/</guid>
-      <description>单样本的差异显著性分析 两样本的差异显著性分析 多样本的差异显著性分析 各检验方法的R语言实现   下面记述的各种情况及适用的差异显著性检验的相关方法都是以样本之间相互独立为前提的。对于样本之间不相互独立的情况，应该针对具体情况使用特定的方法。
-单样本的差异显著性分析 连续变量的单样本 对于连续变量的单样本，一般需要检验的是该样本是否取自于均值为\(\mu_0\)的总体，其采用的检验方法一般为t检验或z检验。根据Wikipedia，当样本量较小且样本来自于标准差未知的正态总体时，适用t检验；当样本量较大或总体方差已知时，由于中心极限定理，可以使用z检验。
+      <description>单样本的差异显著性分析两样本的差异显著性分析多样本的差异显著性分析各检验方法的R语言实现下面记述的各种情况及适用的差异显著性检验的相关方法都是以样本之间相互独立为前提的。对于样本之间不相互独立的情况，应该针对具体情况使用特定的方法。
+单样本的差异显著性分析连续变量的单样本对于连续变量的单样本，一般需要检验的是该样本是否取自于均值为\(\mu_0\)的总体，其采用的检验方法一般为t检验或z检验。根据Wikipedia，当样本量较小且样本来自于标准差未知的正态总体时，适用t检验；当样本量较大或总体方差已知时，由于中心极限定理，可以使用z检验。
 （这个描述从第一次接触统计学开始就困扰着我，总体方差怎么会已知，都已知总体方差了总体均值为什么会未知）
- 无序离散变量的单样本 对于无序离散变量的单样本，一般检验的是样本所在总体中某类别占比（即率）是否等于\(p_0\)。在大样本下，样本率是服从正态分布的，故可以直接使用z检验；在小样本下，可以看作对伯努利试验（属于该类别和不属于该类别）的成功率\(p\)是否等于\(p_0\)的检验，故可以使用精确二项检验(Exact Binomial Test)。
- 有序离散变量的单样本 对于有序离散变量的单样本，个人认为需要根据实际目的选择检验方法。如果关注的是变量的整体的形态，可以根据变量服从的分布选择如精确泊松检验等，或是将有序离散变量当作连续变量，在近似服从正态分布的前提下使用t检验或z检验。如果关注的变量中类别的比例，那么可以直接将有序离散变量当作无序离散变量做对应的显著性检验。
-  两样本的差异显著性分析 连续变量的两样本 对于连续变量的两样本的差异显著性检验，可以分成下面三种情况：
- 样本均取自服从正态分布的总体且满足方差齐性，使用t检验 样本均取自服从正态分布的总体但是不满足方差齐性，使用近似t检验 样本并非均取自服从正态分布的总体，使用Wilcoxon秩和检验   无序离散变量的两样本 对于无序离散变量的两样本的差异显著性检验，需要将数据变换成列联表后进行显著性检验，检验方法可以分成以下两类：
- 变量的水平（类别数）等于2  列联表中频数总和大于等于40且每个格子的期望频数均大于等于5时，使用Pearson卡方检验 列联表中频数总和大于等于40且存在某个格子的期望频数大于等于1而小于5时，使用连续性校正卡方检验 列联表中频数综合小于40或存在某个格子的期望频数小于1时，使用Fisher精确检验  变量的水平大于2  80%以上的格子期望频数大于等于5且所有格子的期望频数均大于等于1时，使用Pearson卡方检验 20%以上的格子期望频数小于5或存在某个格子的期望频数小于1时，使用Fisher精确检验    有序离散变量的两样本 对于有序离散变量的两样本的差异显著性检验，同样需要将数据变换成列联表后进行显著性检验，检验方法可以分成以下两类：
- 两组样本的样本量均大于50，使用Ridit分析 存在某组样本的样本量小于等于50，使用Wilcoxon秩和检验    多样本的差异显著性分析 连续变量的多样本 对于连续变量的两样本的差异显著性检验，可以分成下面两种情况：
- 样本均取自服从正态分布的总体且满足方差齐性，使用方差分析 样本并非取自服从正态分布的总体或不满足方差齐性，使用K-W秩和检验   无序离散变量的多样本 对于无序离散变量的多样本的差异显著性检验，将数据变换成列联表后进行显著性检验，检验方法可以分成以下两类：
- 80%以上的格子期望频数大于等于5且所有格子的期望频数均大于等于1时，使用Pearson卡方检验 20%以上的格子期望频数小于5或存在某个格子的期望频数小于1时，使用Fisher精确检验   有序离散变量的多样本 对于有序离散变量的多样本的差异显著性检验，将数据变换成列联表后进行显著性检验，检验方法可以分成以下两类：</description>
+无序离散变量的单样本对于无序离散变量的单样本，一般检验的是样本所在总体中某类别占比（即率）是否等于\(p_0\)。在大样本下，样本率是服从正态分布的，故可以直接使用z检验；在小样本下，可以看作对伯努利试验（属于该类别和不属于该类别）的成功率\(p\)是否等于\(p_0\)的检验，故可以使用精确二项检验(Exact Binomial Test)。
+有序离散变量的单样本对于有序离散变量的单样本，个人认为需要根据实际目的选择检验方法。如果关注的是变量的整体的形态，可以根据变量服从的分布选择如精确泊松检验等，或是将有序离散变量当作连续变量，在近似服从正态分布的前提下使用t检验或z检验。如果关注的变量中类别的比例，那么可以直接将有序离散变量当作无序离散变量做对应的显著性检验。
+两样本的差异显著性分析连续变量的两样本对于连续变量的两样本的差异显著性检验，可以分成下面三种情况：
+样本均取自服从正态分布的总体且满足方差齐性，使用t检验样本均取自服从正态分布的总体但是不满足方差齐性，使用近似t检验样本并非均取自服从正态分布的总体，使用Wilcoxon秩和检验无序离散变量的两样本对于无序离散变量的两样本的差异显著性检验，需要将数据变换成列联表后进行显著性检验，检验方法可以分成以下两类：
+变量的水平（类别数）等于2列联表中频数总和大于等于40且每个格子的期望频数均大于等于5时，使用Pearson卡方检验列联表中频数总和大于等于40且存在某个格子的期望频数大于等于1而小于5时，使用连续性校正卡方检验列联表中频数综合小于40或存在某个格子的期望频数小于1时，使用Fisher精确检验变量的水平大于280%以上的格子期望频数大于等于5且所有格子的期望频数均大于等于1时，使用Pearson卡方检验20%以上的格子期望频数小于5或存在某个格子的期望频数小于1时，使用Fisher精确检验有序离散变量的两样本对于有序离散变量的两样本的差异显著性检验，同样需要将数据变换成列联表后进行显著性检验，检验方法可以分成以下两类：
+两组样本的样本量均大于50，使用Ridit分析存在某组样本的样本量小于等于50，使用Wilcoxon秩和检验多样本的差异显著性分析连续变量的多样本对于连续变量的两样本的差异显著性检验，可以分成下面两种情况：
+样本均取自服从正态分布的总体且满足方差齐性，使用方差分析样本并非取自服从正态分布的总体或不满足方差齐性，使用K-W秩和检验无序离散变量的多样本对于无序离散变量的多样本的差异显著性检验，将数据变换成列联表后进行显著性检验，检验方法可以分成以下两类：
+80%以上的格子期望频数大于等于5且所有格子的期望频数均大于等于1时，使用Pearson卡方检验20%以上的格子期望频数小于5或存在某个格子的期望频数小于1时，使用Fisher精确检验有序离散变量的多样本对于有序离散变量的多样本的差异显著性检验，将数据变换成列联表后进行显著性检验，检验方法可以分成以下两类：</description>
     </item>
     
     <item>
@@ -90,7 +90,7 @@ renv的global package cache路径为：
       <pubDate>Tue, 30 Mar 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210330_ggplot2_labels/</guid>
-      <description>   labs()：添加各种主副标题 annotate()：添加注释   labs()：添加各种主副标题 ggplot(tibble(long = rnorm(100), lat = rnorm(100))) + geom_point(aes(x = long, y = lat)) + labs( x = &amp;quot;This is x-axis label&amp;quot;, y = &amp;quot;This is y-axis label&amp;quot;, title = &amp;quot;This is the title&amp;quot;, subtitle = &amp;quot;This is the subtitle&amp;quot;, caption = &amp;quot;This is the caption&amp;quot;, tag = &amp;quot;This is tag&amp;quot; )  annotate()：添加注释 ggplot(tibble(long = rnorm(100), lat = rnorm(100))) + geom_point(aes(x = long, y = lat)) + annotate(geom = &amp;quot;text&amp;quot;, x = 0, y = 0, label = &amp;quot;This is the annotation&amp;quot;, color = &amp;quot;blue&amp;quot;)  </description>
+      <description>labs()：添加各种主副标题annotate()：添加注释labs()：添加各种主副标题ggplot(tibble(long = rnorm(100), lat = rnorm(100))) + geom_point(aes(x = long, y = lat)) +labs(x = &amp;quot;This is x-axis label&amp;quot;, y = &amp;quot;This is y-axis label&amp;quot;,title = &amp;quot;This is the title&amp;quot;,subtitle = &amp;quot;This is the subtitle&amp;quot;,caption = &amp;quot;This is the caption&amp;quot;,tag = &amp;quot;This is tag&amp;quot;)annotate()：添加注释ggplot(tibble(long = rnorm(100), lat = rnorm(100))) + geom_point(aes(x = long, y = lat)) +annotate(geom = &amp;quot;text&amp;quot;, x = 0, y = 0, label = &amp;quot;This is the annotation&amp;quot;, color = &amp;quot;blue&amp;quot;)</description>
     </item>
     
     <item>
@@ -99,8 +99,8 @@ renv的global package cache路径为：
       <pubDate>Mon, 29 Mar 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210329_ggplot2_faceting/</guid>
-      <description>   facet_grid() facet_wrap()   分面函数&amp;lt;FACET_FUNCTION&amp;gt;提供了两种分面方式，第一种是网格式的分面facet_grid()，另一种facet_wrap()可以理解为将多个图按从左至右从上至下的顺序放入设计好的网格中。
-facet_grid() ggplot(mpg, aes(cty, hwy)) + geom_point() + facet_grid(rows = vars(year), cols = vars(fl))  facet_wrap() ggplot(mpg, aes(cty, hwy)) + facet_wrap(vars(fl), nrow = 3)  </description>
+      <description>facet_grid()facet_wrap()分面函数&amp;lt;FACET_FUNCTION&amp;gt;提供了两种分面方式，第一种是网格式的分面facet_grid()，另一种facet_wrap()可以理解为将多个图按从左至右从上至下的顺序放入设计好的网格中。
+facet_grid()ggplot(mpg, aes(cty, hwy)) + geom_point() + facet_grid(rows = vars(year), cols = vars(fl))facet_wrap()ggplot(mpg, aes(cty, hwy)) + facet_wrap(vars(fl), nrow = 3)</description>
     </item>
     
     <item>
@@ -109,8 +109,8 @@ facet_grid() ggplot(mpg, aes(cty, hwy)) + geom_point() + facet_grid(rows = vars(
       <pubDate>Sat, 27 Mar 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210327_ggplot2_themes/</guid>
-      <description>   完整主题 直接修改当前主题   主题函数&amp;lt;THEME_FUNCTION&amp;gt;包括ggplot2中自带的一些完整主题，以及对当前主题进行直接修改的函数。
-完整主题 theme_bw() ggplot(mpg) + geom_point(aes(x = class, y = hwy, color = trans)) + theme_bw()  theme_gray() ggplot(mpg) + geom_point(aes(x = class, y = hwy, color = trans)) + theme_gray()  theme_dark() ggplot(mpg) + geom_point(aes(x = class, y = hwy, color = trans)) + theme_dark()  theme_classic() ggplot(mpg) + geom_point(aes(x = class, y = hwy, color = trans)) + theme_classic()  theme_light() ggplot(mpg) + geom_point(aes(x = class, y = hwy, color = trans)) + theme_light()  theme_linedraw() ggplot(mpg) + geom_point(aes(x = class, y = hwy, color = trans)) + theme_linedraw()  theme_minimal() ggplot(mpg) + geom_point(aes(x = class, y = hwy, color = trans)) + theme_minimal()  theme_void() ggplot(mpg) + geom_point(aes(x = class, y = hwy, color = trans)) + theme_void()   直接修改当前主题  </description>
+      <description>完整主题直接修改当前主题主题函数&amp;lt;THEME_FUNCTION&amp;gt;包括ggplot2中自带的一些完整主题，以及对当前主题进行直接修改的函数。
+完整主题theme_bw()ggplot(mpg) + geom_point(aes(x = class, y = hwy, color = trans)) +theme_bw()theme_gray()ggplot(mpg) + geom_point(aes(x = class, y = hwy, color = trans)) +theme_gray()theme_dark()ggplot(mpg) + geom_point(aes(x = class, y = hwy, color = trans)) +theme_dark()theme_classic()ggplot(mpg) + geom_point(aes(x = class, y = hwy, color = trans)) +theme_classic()theme_light()ggplot(mpg) + geom_point(aes(x = class, y = hwy, color = trans)) +theme_light()theme_linedraw()ggplot(mpg) + geom_point(aes(x = class, y = hwy, color = trans)) +theme_linedraw()theme_minimal()ggplot(mpg) + geom_point(aes(x = class, y = hwy, color = trans)) +theme_minimal()theme_void()ggplot(mpg) + geom_point(aes(x = class, y = hwy, color = trans)) +theme_void()直接修改当前主题</description>
     </item>
     
     <item>
@@ -119,8 +119,8 @@ facet_grid() ggplot(mpg, aes(cty, hwy)) + geom_point() + facet_grid(rows = vars(
       <pubDate>Fri, 26 Mar 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210326_ggplot2_position/</guid>
-      <description>position = &#34;dodge&#34;：并排摆放 position = &#34;fill&#34;：填充摆放 position = &#34;jitter&#34;：抖动点 position = &#34;stack&#34;：堆栈摆放 position = &#34;jitterdodge&#34;：不是很明白实际意义   &amp;lt;POSITION_FUNCTION&amp;gt;函数作为&amp;lt;STAT_FUNCTION&amp;gt;和&amp;lt;GEOM_FUNCTION&amp;gt;函数的参数使用。
-position = &#34;dodge&#34;：并排摆放 ggplot(mpg, aes(fl, fill = drv)) + geom_bar(position = position_dodge()) + scale_fill_brewer(palette = 1)  position = &#34;fill&#34;：填充摆放 ggplot(mpg, aes(fl, fill = drv)) + geom_bar(position = position_fill()) + scale_fill_brewer(palette = 1)  position = &#34;jitter&#34;：抖动点 ggplot(mpg, aes(cty, hwy)) + geom_point(position = position_jitter(), size = 1, alpha = 0.</description>
+      <description>position = &#34;dodge&#34;：并排摆放position = &#34;fill&#34;：填充摆放position = &#34;jitter&#34;：抖动点position = &#34;stack&#34;：堆栈摆放position = &#34;jitterdodge&#34;：不是很明白实际意义&amp;lt;POSITION_FUNCTION&amp;gt;函数作为&amp;lt;STAT_FUNCTION&amp;gt;和&amp;lt;GEOM_FUNCTION&amp;gt;函数的参数使用。
+position = &#34;dodge&#34;：并排摆放ggplot(mpg, aes(fl, fill = drv)) + geom_bar(position = position_dodge()) + scale_fill_brewer(palette = 1)position = &#34;fill&#34;：填充摆放ggplot(mpg, aes(fl, fill = drv)) + geom_bar(position = position_fill()) + scale_fill_brewer(palette = 1)position = &#34;jitter&#34;：抖动点ggplot(mpg, aes(cty, hwy)) + geom_point(position = position_jitter(), size = 1, alpha = 0.</description>
     </item>
     
     <item>
@@ -129,8 +129,8 @@ position = &#34;dodge&#34;：并排摆放 ggplot(mpg, aes(fl, fill = drv)) + geo
       <pubDate>Thu, 25 Mar 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210325_ggplot2_coordinate/</guid>
-      <description>coord_cartesian()：更改笛卡尔坐标系的显示范围 coord_fixed()：更改x轴和y轴的坐标比例 coord_flip()：翻转坐标轴 coord_polar()：将笛卡尔坐标转换成极坐标 coord_trans()：进行坐标变换   坐标轴函数&amp;lt;COORDINATE_FUNCTION&amp;gt;很少，个人觉得使用思路也相当清晰。
-coord_cartesian()：更改笛卡尔坐标系的显示范围  coord_cartesian()的作用是显示图的某一部分，并不会减少使用的数据 xlim，ylim：控制x轴和y轴的范围  ggplot(tibble(lat = rnorm(100), long = rnorm(100))) + geom_point(aes(x = lat, y = long)) + coord_cartesian(xlim = c(0, 5))  coord_fixed()：更改x轴和y轴的坐标比例  ratio：同样的数值在坐标轴上的长度y轴是x轴的ratio倍 xlim，ylim：控制x轴和y轴的范围  ggplot(tibble(long = 1:10, lat = 1:10*2)) + geom_point(aes(x = long, y = lat)) + coord_fixed(ratio = 1/2)  coord_flip()：翻转坐标轴  xlim，ylim：控制x轴和y轴的范围  ggplot(tibble(letter = sample(LETTERS[1:10], 200, replace = TRUE))) + geom_bar(aes(x = letter)) + coord_flip()  coord_polar()：将笛卡尔坐标转换成极坐标  theta：选择哪个轴变为极坐标的theta start：弧度，一圆周为\(2\pi\)弧度 direction：1为顺时针，-1为逆时针 可以通过这个函数完成很多骚操作  ggplot(tibble(letter = sample(LETTERS[1:10], 200, replace = TRUE))) + geom_bar(aes(x = letter)) + coord_polar(theta = &amp;quot;x&amp;quot;, start = pi, direction = -1)  coord_trans()：进行坐标变换  xlim，ylim：控制x轴和y轴的范围 文档中说coord_trans()函数不同于标度变换，但是用起来感觉就是一个东西  ggplot(data.</description>
+      <description>coord_cartesian()：更改笛卡尔坐标系的显示范围coord_fixed()：更改x轴和y轴的坐标比例coord_flip()：翻转坐标轴coord_polar()：将笛卡尔坐标转换成极坐标coord_trans()：进行坐标变换坐标轴函数&amp;lt;COORDINATE_FUNCTION&amp;gt;很少，个人觉得使用思路也相当清晰。
+coord_cartesian()：更改笛卡尔坐标系的显示范围coord_cartesian()的作用是显示图的某一部分，并不会减少使用的数据xlim，ylim：控制x轴和y轴的范围ggplot(tibble(lat = rnorm(100), long = rnorm(100))) + geom_point(aes(x = lat, y = long)) +coord_cartesian(xlim = c(0, 5))coord_fixed()：更改x轴和y轴的坐标比例ratio：同样的数值在坐标轴上的长度y轴是x轴的ratio倍xlim，ylim：控制x轴和y轴的范围ggplot(tibble(long = 1:10, lat = 1:10*2)) +geom_point(aes(x = long, y = lat)) +coord_fixed(ratio = 1/2)coord_flip()：翻转坐标轴xlim，ylim：控制x轴和y轴的范围ggplot(tibble(letter = sample(LETTERS[1:10], 200, replace = TRUE))) +geom_bar(aes(x = letter)) +coord_flip()coord_polar()：将笛卡尔坐标转换成极坐标theta：选择哪个轴变为极坐标的thetastart：弧度，一圆周为\(2\pi\)弧度direction：1为顺时针，-1为逆时针可以通过这个函数完成很多骚操作ggplot(tibble(letter = sample(LETTERS[1:10], 200, replace = TRUE))) +geom_bar(aes(x = letter)) +coord_polar(theta = &amp;quot;x&amp;quot;, start = pi, direction = -1)coord_trans()：进行坐标变换xlim，ylim：控制x轴和y轴的范围文档中说coord_trans()函数不同于标度变换，但是用起来感觉就是一个东西ggplot(data.</description>
     </item>
     
     <item>
@@ -139,9 +139,9 @@ coord_cartesian()：更改笛卡尔坐标系的显示范围  coord_cartesian()�
       <pubDate>Wed, 24 Mar 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210324_ggplot2_scales/</guid>
-      <description>对连续型数据的坐标轴进行修改 对离散型数据的坐标轴进行修改 对时间序列数据的坐标轴进行修改 TODO   标度函数&amp;lt;SCALE_FUNCTION&amp;gt;应该是最麻烦的部分了，可以放进aes()函数中的元素都可以通过标度函数进行调整修改，只是所有的调整和修改改变的都是图形展示出来的样子，其背后的数据并没有做出任何改变。
-对连续型数据的坐标轴进行修改 相关函数包括scale_x_continuous()和scale_y_continuous()
- name：坐标轴名称 breaks：坐标轴主要刻度线，可以为一个向量，也可以是一个函数，函数将limits作为输入，输出一个向量作为breaks，需要注意如果使用函数输出结果貌似会受到expand参数的影响，具体影响不明 minor_breaks：坐标轴次要刻度线，具体同breaks labels：坐标轴各个break点的labels，可以为一个向量，也可以是一个函数，函数将breaks作为输入，输出一个向量作为labels limits：坐标轴范围，可以是一个长度为2的向量，也可以是一个函数，当前默认的的limits作为输入，输出新的limits expand：对当前的坐标轴进行一定程度扩充，用expansion()对其进行赋值  mult：上下（左右）各增加当前limits的mult倍 add：上下（左右）各增加add长度的坐标轴  trans：直接对坐标轴进行变换，有“asn”, “atanh”, “boxcox”, “date”, “exp”, “hms”, “identity”, “log”, “log10”, “log1p”, “log2”, “logit”, “modulus”, “probability”, “probit”, “pseudo_log”, “reciprocal”, “reverse”, “sqrt” 和 “time” position：坐标轴位置，“left”，“right”，“bottom”或“right” sec.axis：增加副坐标轴，用sec.axis()对其进行赋值  trans：一个对主坐标进行变换的公式 name：名称 breaks：主要刻度线 labels：标签  scale_*_log10()，scale_*_reverse()，scale_x_sqrt()提供了三种常见变换的简写 通过调整数据和sec.axis可以实现双坐标轴  dat &amp;lt;- tibble( Month = c(1:12), Sales = sample(1:12), CumSales = cumsum(Sales) ) ggplot(dat, aes(Month, Sales)) + geom_col(fill = &amp;quot;blue&amp;quot;, alpha = 0.</description>
+      <description>对连续型数据的坐标轴进行修改对离散型数据的坐标轴进行修改对时间序列数据的坐标轴进行修改TODO标度函数&amp;lt;SCALE_FUNCTION&amp;gt;应该是最麻烦的部分了，可以放进aes()函数中的元素都可以通过标度函数进行调整修改，只是所有的调整和修改改变的都是图形展示出来的样子，其背后的数据并没有做出任何改变。
+对连续型数据的坐标轴进行修改相关函数包括scale_x_continuous()和scale_y_continuous()
+name：坐标轴名称breaks：坐标轴主要刻度线，可以为一个向量，也可以是一个函数，函数将limits作为输入，输出一个向量作为breaks，需要注意如果使用函数输出结果貌似会受到expand参数的影响，具体影响不明minor_breaks：坐标轴次要刻度线，具体同breakslabels：坐标轴各个break点的labels，可以为一个向量，也可以是一个函数，函数将breaks作为输入，输出一个向量作为labelslimits：坐标轴范围，可以是一个长度为2的向量，也可以是一个函数，当前默认的的limits作为输入，输出新的limitsexpand：对当前的坐标轴进行一定程度扩充，用expansion()对其进行赋值mult：上下（左右）各增加当前limits的mult倍add：上下（左右）各增加add长度的坐标轴trans：直接对坐标轴进行变换，有“asn”, “atanh”, “boxcox”, “date”, “exp”, “hms”, “identity”, “log”, “log10”, “log1p”, “log2”, “logit”, “modulus”, “probability”, “probit”, “pseudo_log”, “reciprocal”, “reverse”, “sqrt” 和 “time”position：坐标轴位置，“left”，“right”，“bottom”或“right”sec.axis：增加副坐标轴，用sec.axis()对其进行赋值trans：一个对主坐标进行变换的公式name：名称breaks：主要刻度线labels：标签scale_*_log10()，scale_*_reverse()，scale_x_sqrt()提供了三种常见变换的简写通过调整数据和sec.axis可以实现双坐标轴dat &amp;lt;- tibble(Month = c(1:12), Sales = sample(1:12),CumSales = cumsum(Sales))ggplot(dat, aes(Month, Sales)) +geom_col(fill = &amp;quot;blue&amp;quot;, alpha = 0.</description>
     </item>
     
     <item>
@@ -150,9 +150,9 @@ coord_cartesian()：更改笛卡尔坐标系的显示范围  coord_cartesian()�
       <pubDate>Tue, 23 Mar 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210323_ggplot2_stat_geom/</guid>
-      <description>对连续变量x的各区间的样本数量进行统计作图 对离散变量x的各类别数量进行统计作图 计算连续变量x的密度曲线并作图 对区域中点的数量进行统计作图 对x，y作分位数回归并作图 计算并绘制x，y的拟合曲线 在离散变量x的各类别上对连续变量y进行统计作图 计算连续变量y的密度曲线并作图 对每个点上点的数量进行统计作图 计算并绘制等高线 在x上对y进行summary并作图 在x和y上对z进行summary并作图 通过x和函数fun()计算y=fun(x)并绘制曲线 计算并绘制x的经验累计分布函数 计算并绘制Q-Q图 二维核密度估计并作图 绘制空的坐标系 绘制带箭头曲线/直线 绘制折线 绘制多边形 绘制长方形 绘制区域 绘制直线 添加标签/文本 绘制偏离原位置的点 绘制散点图 在图的四周绘制点的一维投影 绘制区间 绘制地图 绘制点阵图 不明白作用的函数   以下是一些个人看法。
+      <description>对连续变量x的各区间的样本数量进行统计作图对离散变量x的各类别数量进行统计作图计算连续变量x的密度曲线并作图对区域中点的数量进行统计作图对x，y作分位数回归并作图计算并绘制x，y的拟合曲线在离散变量x的各类别上对连续变量y进行统计作图计算连续变量y的密度曲线并作图对每个点上点的数量进行统计作图计算并绘制等高线在x上对y进行summary并作图在x和y上对z进行summary并作图通过x和函数fun()计算y=fun(x)并绘制曲线计算并绘制x的经验累计分布函数计算并绘制Q-Q图二维核密度估计并作图绘制空的坐标系绘制带箭头曲线/直线绘制折线绘制多边形绘制长方形绘制区域绘制直线添加标签/文本绘制偏离原位置的点绘制散点图在图的四周绘制点的一维投影绘制区间绘制地图绘制点阵图不明白作用的函数以下是一些个人看法。
 ggplot2中以geom开头的函数可以理解为作图函数，以stat开头的函数可以理解为统计变换函数。在大部分的情况下，作图函数和统计变换函数都是成对出现的，也就是说在geom函数中会有一个stat参数，而stat函数中也会有一个geom参数，从而可以通过geom或stat函数一次性达到对数据进行统计变换并作图的目的。这也是我在最初很迷这个包的原因，因为在一些很奇葩的搭配下可能会出现一些很有趣的图形，虽然图形并不一定有意义，但是思考这个图形背后形成的过程是一件很有意思的事情。
-对连续变量x的各区间的样本数量进行统计作图  aes()必须参数：x，y(count, density, ncount, ndensity) binwidth：每一个柱的宽度 bins：柱的数量 center、boundary：若center设为“t”，则有一根柱以“t”为中线；若boundary设为“t”，则有一根柱以“t”为边线 breaks：直接设定每一根柱的边线位置，该参数会覆盖以上所有参数 closed：若为“right”，处于交界处的值属于右边的柱子；若为“left”，处于交界处的值属于左边的柱子 pad：是否在图的左右两侧加空白，若为TRUE，最后呈现的图从高度为0的柱开始到高度为0的柱结束 x应该是连续的，离散的x使用stat_count()  stat_bin() ggplot(mpg, aes(hwy)) + stat_bin(aes(y = ..density..), binwidth = 1, boundary = 0, pad = TRUE)  geom_freqpoly() ggplot(mpg, aes(hwy)) + geom_freqpoly(binwidth = 1)  geom_histogram() ggplot(mpg, aes(hwy)) + geom_histogram(binwidth = 1, boundary = 0.</description>
+对连续变量x的各区间的样本数量进行统计作图aes()必须参数：x，y(count, density, ncount, ndensity)binwidth：每一个柱的宽度bins：柱的数量center、boundary：若center设为“t”，则有一根柱以“t”为中线；若boundary设为“t”，则有一根柱以“t”为边线breaks：直接设定每一根柱的边线位置，该参数会覆盖以上所有参数closed：若为“right”，处于交界处的值属于右边的柱子；若为“left”，处于交界处的值属于左边的柱子pad：是否在图的左右两侧加空白，若为TRUE，最后呈现的图从高度为0的柱开始到高度为0的柱结束x应该是连续的，离散的x使用stat_count()stat_bin()ggplot(mpg, aes(hwy)) + stat_bin(aes(y = ..density..), binwidth = 1, boundary = 0, pad = TRUE)geom_freqpoly()ggplot(mpg, aes(hwy)) + geom_freqpoly(binwidth = 1)geom_histogram()ggplot(mpg, aes(hwy)) + geom_histogram(binwidth = 1, boundary = 0.</description>
     </item>
     
     <item>
@@ -161,12 +161,12 @@ ggplot2中以geom开头的函数可以理解为作图函数，以stat开头的�
       <pubDate>Mon, 22 Mar 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210322_ggplot2_basics/</guid>
-      <description>  这份笔记实际作于好几年前，那时候刚开始接触R语言作图，觉得base R的作图系统实在过于繁琐而且感觉缺少语法上的一致性。接触ggplot2后完全沉迷于它的简单与一致性，因为ggplot2没有对应的中文文档，于是学习过程中笔记记得极其详尽，有些地方甚至到了参数的细节。
+      <description>这份笔记实际作于好几年前，那时候刚开始接触R语言作图，觉得base R的作图系统实在过于繁琐而且感觉缺少语法上的一致性。接触ggplot2后完全沉迷于它的简单与一致性，因为ggplot2没有对应的中文文档，于是学习过程中笔记记得极其详尽，有些地方甚至到了参数的细节。
 但是现在再回头看，最近两年已经很少用这个包了，主要还是由于在做研究生毕业设计的时候需要对图进行一些细微处的调整，而ggplot2由于已经自成一个世界，这种微调操作就变得相当难搞（最近在学习d3，感觉base R作图系统和ggplot2的区别有点类似于d3和echarts）。还有另一个放弃ggplot2的原因就是，它的主题已经越来越不在我的审美上了…
 一张图包括最基础的ggplot()，统计变换和作图函数&amp;lt;GEOM_FUNCTION&amp;gt;，坐标轴函数&amp;lt;COORDINATE_FUNCTION&amp;gt;，分面函数&amp;lt;FACET_FUNCTION&amp;gt;，标度函数&amp;lt;SCALE_FUNCTION&amp;gt;以及主题函数&amp;lt;THEME_FUNCTION&amp;gt;
-# NOT RUN ggplot(data = &amp;lt;DATA&amp;gt;) + &amp;lt;GEOM_FUNCTION&amp;gt;(mapping = aes(&amp;lt;MAPPING&amp;gt;), stat = &amp;lt;STAT&amp;gt;, position = &amp;lt;POSITION&amp;gt;) + &amp;lt;COORDINATE_FUNCTION&amp;gt; + &amp;lt;FACET_FUNCTION&amp;gt; + &amp;lt;SCALE_FUNCTION&amp;gt; + &amp;lt;THEME_FUNCTION&amp;gt; last_plot()返回最后一张图
-# NOT RUN last_plot() ggsave()保存图像
-# NOT RUN ggsave(&amp;quot;plot.png&amp;quot;, width = 5, height = 5) </description>
+# NOT RUNggplot(data = &amp;lt;DATA&amp;gt;) +&amp;lt;GEOM_FUNCTION&amp;gt;(mapping = aes(&amp;lt;MAPPING&amp;gt;), stat = &amp;lt;STAT&amp;gt;,position = &amp;lt;POSITION&amp;gt;) +&amp;lt;COORDINATE_FUNCTION&amp;gt; +&amp;lt;FACET_FUNCTION&amp;gt; +&amp;lt;SCALE_FUNCTION&amp;gt; +&amp;lt;THEME_FUNCTION&amp;gt;last_plot()返回最后一张图
+# NOT RUNlast_plot()ggsave()保存图像
+# NOT RUNggsave(&amp;quot;plot.png&amp;quot;, width = 5, height = 5)</description>
     </item>
     
     <item>
@@ -175,14 +175,14 @@ ggplot2中以geom开头的函数可以理解为作图函数，以stat开头的�
       <pubDate>Fri, 19 Mar 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210319_stringr/</guid>
-      <description>对单个字符串进行操作 对空格进行操作 locale sensitive pattern匹配 base R与stringr的性能比较   相关包：stringr
+      <description>对单个字符串进行操作对空格进行操作locale sensitivepattern匹配base R与stringr的性能比较相关包：stringr
 根据Introduction to stringr，该包主要包含四种类型的函数：
- 对字符串进行操作 对空格的增加、删除或其他操作 locale sensitive：可以理解为针对不同语言输出会不一样的函数 pattern匹配函数：支持四种不同的匹配模式，最常用的还是正则表达式  对应地，base R中也有相对应的函数达到同样的效果。在各种环境下测试，发现base R中字符串操作函数的性能在数据较大情况下普遍不如stringr。
-对单个字符串进行操作 此类函数对字符串进行操作，由于每个函数都已被向量化，故可以直接以字符串向量为参数
-str_length() 返回字符串长度
-str_length(c(&amp;quot;fang&amp;quot;, &amp;quot;方&amp;quot;, NA_character_)) ## [1] 4 1 NA base R中使用nchar()函数
-nchar(c(&amp;quot;fang&amp;quot;, &amp;quot;方&amp;quot;, NA_character_)) ## [1] 4 1 NA  str_sub() 返回和替换字符串子串
-string &amp;lt;- c(&amp;quot;fang yongchao&amp;quot;, &amp;quot;stringr&amp;quot;) str_sub(string, start = 1, end = 4) ## [1] &amp;quot;fang&amp;quot; &amp;quot;stri&amp;quot; str_sub(string, start = 1, end = 4) &amp;lt;- &amp;quot;?</description>
+对字符串进行操作对空格的增加、删除或其他操作locale sensitive：可以理解为针对不同语言输出会不一样的函数pattern匹配函数：支持四种不同的匹配模式，最常用的还是正则表达式对应地，base R中也有相对应的函数达到同样的效果。在各种环境下测试，发现base R中字符串操作函数的性能在数据较大情况下普遍不如stringr。
+对单个字符串进行操作此类函数对字符串进行操作，由于每个函数都已被向量化，故可以直接以字符串向量为参数
+str_length()返回字符串长度
+str_length(c(&amp;quot;fang&amp;quot;, &amp;quot;方&amp;quot;, NA_character_))## [1] 4 1 NAbase R中使用nchar()函数
+nchar(c(&amp;quot;fang&amp;quot;, &amp;quot;方&amp;quot;, NA_character_))## [1] 4 1 NAstr_sub()返回和替换字符串子串
+string &amp;lt;- c(&amp;quot;fang yongchao&amp;quot;, &amp;quot;stringr&amp;quot;)str_sub(string, start = 1, end = 4)## [1] &amp;quot;fang&amp;quot; &amp;quot;stri&amp;quot;str_sub(string, start = 1, end = 4) &amp;lt;- &amp;quot;?</description>
     </item>
     
     <item>
@@ -191,12 +191,12 @@ string &amp;lt;- c(&amp;quot;fang yongchao&amp;quot;, &amp;quot;stringr&amp;quot
       <pubDate>Wed, 10 Mar 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210310_diagram/</guid>
-      <description>创建空画板 规划坐标 插入BOX 插入ARROW   相关包：diagram
+      <description>创建空画板规划坐标插入BOX插入ARROW相关包：diagram
 原理相当简单，创建一个空的画板，规划坐标，然后在上面插入BOX和ARROW即可。由于是在base R的体系中进行作图，所以有很高的自由度。
-创建空画板 该函数中有一个asp参数。个人习惯，至少在绘制流程图的时候，将它设为1，这样可以保证在设定BOX的长宽时得到的是一个稳定的图形。
-openplotmat(asp = 1)  规划坐标 elpos &amp;lt;- coordinates(pos = c(1, 2, 3, 4), hor = FALSE) 上面的代码将画板划分成了如下形式
- 插入BOX diagram包共提供了九种BOX
-par(mar = c(0, 0, 0, 0), family = &amp;quot;HannotateSC-W5&amp;quot;) openplotmat(asp = 1) box(col = &amp;quot;#dcdcdc&amp;quot;) elpos &amp;lt;- coordinates(pos = rep(3, 6), hor = FALSE) textdiamond(elpos[3, ], radx = 0.1, rady = 0.1, lab = &amp;quot;临&amp;quot;, cex = 2) text(elpos[6, 1], elpos[6, 2], labels = &amp;quot;textdiamond&amp;quot;) textellipse(elpos[9, ], radx = 0.</description>
+创建空画板该函数中有一个asp参数。个人习惯，至少在绘制流程图的时候，将它设为1，这样可以保证在设定BOX的长宽时得到的是一个稳定的图形。
+openplotmat(asp = 1)规划坐标elpos &amp;lt;- coordinates(pos = c(1, 2, 3, 4), hor = FALSE)上面的代码将画板划分成了如下形式
+插入BOXdiagram包共提供了九种BOX
+par(mar = c(0, 0, 0, 0), family = &amp;quot;HannotateSC-W5&amp;quot;)openplotmat(asp = 1)box(col = &amp;quot;#dcdcdc&amp;quot;)elpos &amp;lt;- coordinates(pos = rep(3, 6), hor = FALSE)textdiamond(elpos[3, ], radx = 0.1, rady = 0.1, lab = &amp;quot;临&amp;quot;, cex = 2)text(elpos[6, 1], elpos[6, 2], labels = &amp;quot;textdiamond&amp;quot;)textellipse(elpos[9, ], radx = 0.</description>
     </item>
     
   </channel>

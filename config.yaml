@@ -1,6 +1,6 @@
 baseurl: https://fanggong.pub
 title: Fang Yongchao
-theme:  hugo-coder-portfolio
+theme: hugo-coder-portfolio
 DefaultContentLanguage: ch
 paginate: 25
 pygmentsstyle: b2
