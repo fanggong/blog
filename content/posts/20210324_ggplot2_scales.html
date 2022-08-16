@@ -9,16 +9,16 @@ output:
   blogdown::html_page:
     toc: yes
     toc_depth: 2
+draft: true
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 <div id="TOC">
 <ul>
-<li><a href="#对连续型数据的坐标轴进行修改">对连续型数据的坐标轴进行修改</a></li>
-<li><a href="#对离散型数据的坐标轴进行修改">对离散型数据的坐标轴进行修改</a></li>
-<li><a href="#对时间序列数据的坐标轴进行修改">对时间序列数据的坐标轴进行修改</a></li>
-<li><a href="#todo">TODO</a></li>
+<li><a href="#对连续型数据的坐标轴进行修改" id="toc-对连续型数据的坐标轴进行修改">对连续型数据的坐标轴进行修改</a></li>
+<li><a href="#对离散型数据的坐标轴进行修改" id="toc-对离散型数据的坐标轴进行修改">对离散型数据的坐标轴进行修改</a></li>
+<li><a href="#对时间序列数据的坐标轴进行修改" id="toc-对时间序列数据的坐标轴进行修改">对时间序列数据的坐标轴进行修改</a></li>
+<li><a href="#todo" id="toc-todo">TODO</a></li>
 </ul>
 </div>
 
@@ -38,8 +38,8 @@ output:
 <li><strong>mult</strong>：上下（左右）各增加当前<strong>limits</strong>的<strong>mult</strong>倍</li>
 <li><strong>add</strong>：上下（左右）各增加<strong>add</strong>长度的坐标轴</li>
 </ul></li>
-<li><strong>trans</strong>：直接对坐标轴进行变换，有“asn”, “atanh”, “boxcox”, “date”, “exp”, “hms”, “identity”, “log”, “log10”, “log1p”, “log2”, “logit”, “modulus”, “probability”, “probit”, “pseudo_log”, “reciprocal”, “reverse”, “sqrt” 和 “time”</li>
-<li><strong>position</strong>：坐标轴位置，“left”，“right”，“bottom”或“right”</li>
+<li><strong>trans</strong>：直接对坐标轴进行变换，有”asn”, “atanh”, “boxcox”, “date”, “exp”, “hms”, “identity”, “log”, “log10”, “log1p”, “log2”, “logit”, “modulus”, “probability”, “probit”, “pseudo_log”, “reciprocal”, “reverse”, “sqrt” 和 “time”</li>
+<li><strong>position</strong>：坐标轴位置，“left”，“right”，“bottom”或”right”</li>
 <li><strong>sec.axis</strong>：增加副坐标轴，用<code>sec.axis()</code>对其进行赋值
 <ul>
 <li><strong>trans</strong>：一个对主坐标进行变换的公式</li>
@@ -115,7 +115,7 @@ ggplot(dat, aes(Season, Sales, fill = Season)) +
 <div id="对时间序列数据的坐标轴进行修改" class="section level2">
 <h2>对时间序列数据的坐标轴进行修改</h2>
 <hr />
-<p>相关函数包括<code>scale_x_date()</code>、<code>scale_x_datetime()</code>、<code>scale_x_time()</code>、<code>scale_y_date()</code>、<code>scale_y_datetime()</code>、<code>scale_y_time()</code>。使用方法与<a href="#对连续型数据的坐标轴进行修改">连续型数据的坐标轴的修改</a>类似，区别在于多了一些以<strong>date_</strong>起始的参数可以通过如“%Y-%m-%d”的字符串改变样式</p>
+<p>相关函数包括<code>scale_x_date()</code>、<code>scale_x_datetime()</code>、<code>scale_x_time()</code>、<code>scale_y_date()</code>、<code>scale_y_datetime()</code>、<code>scale_y_time()</code>。使用方法与<a href="#对连续型数据的坐标轴进行修改">连续型数据的坐标轴的修改</a>类似，区别在于多了一些以<strong>date_</strong>起始的参数可以通过如”%Y-%m-%d”的字符串改变样式</p>
 <pre class="r"><code>dat &lt;- tibble(
   Date = Sys.Date() + 1:10,
   Sales = sample(20, 10)

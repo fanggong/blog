@@ -11,12 +11,12 @@ output:
     toc_depth: 2
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 <div id="TOC">
 <ul>
-<li><a href="#问题背景">问题背景</a></li>
-<li><a href="#实现方式">实现方式</a></li>
+<li><a href="#问题背景" id="toc-问题背景">问题背景</a></li>
+<li><a href="#实现方式" id="toc-实现方式">实现方式</a></li>
+<li><a href="#示例app" id="toc-示例app">示例App</a></li>
 </ul>
 </div>
 
@@ -29,7 +29,74 @@ output:
 <h2>实现方式</h2>
 <hr />
 <p>很显然应该使用reactive对象，但是试了很多种方法，发现通过<code>reactive()</code>生成的reactive对象是无法进行任何修改的，即上方的“针对其它的输入对对象进行多次修改”无法实现。最后发现貌似只有通过<code>reactiveValues()</code>才能实现该功能。</p>
-<p><i class="fab fa-lg fa-github fa-fw"></i><a href="https://github.com/fanggong/shiny_app/blob/master/update_reactive_object/app.R">View Code</a></p>
-<iframe height="500" width="100%" frameborder="no" src="https://shiny.fanggong.pub/update_reactive_object/">
-</iframe>
+</div>
+<div id="示例app" class="section level2">
+<h2>示例App</h2>
+<hr />
+<pre class="r"><code>library(shiny)
+library(ggplot2)
+
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      width = 5,
+      fluidRow(
+        column(6, numericInput(&quot;mean&quot;, &quot;均值&quot;, value = 10)),
+        column(6, numericInput(&quot;sd&quot;, &quot;方差&quot;, value = 10))
+      ), hr(),
+      actionButton(&quot;generate&quot;, &quot;生成随机数&quot;, width = &quot;100%&quot;), hr(),
+      actionButton(&quot;normalize&quot;, &quot;归一化&quot;, width = &quot;100%&quot;), hr(),
+      actionButton(&quot;standardize&quot;, &quot;标准化&quot;, width = &quot;100%&quot;), hr(),
+      actionButton(&quot;square&quot;, &quot;平方&quot;, width = &quot;100%&quot;)
+    ),
+    mainPanel(
+      width = 7,
+      verbatimTextOutput(&quot;numbers&quot;, placeholder = TRUE),
+      plotOutput(&quot;plot&quot;)
+    )
+    
+  )
+)
+
+server &lt;- function(input, output, session) {
+  dat &lt;- reactiveValues(numbers = NULL)
+
+  observeEvent(input$generate, {
+    req(input$mean, input$sd)
+    dat$numbers &lt;- reactive({
+      rnorm(100, mean = isolate(input$mean), sd = isolate(input$sd))
+    })
+  })
+  
+  output$numbers &lt;- renderPrint({
+    req(dat$numbers)
+    summary(dat$numbers())
+  })
+  
+  output$plot &lt;- renderPlot({
+    req(dat$numbers)
+    ggplot(data.frame(random_number = dat$numbers())) + 
+      geom_histogram(aes(x = random_number), bins = 50, fill = &quot;#4994C4&quot;)
+  })
+  
+  observeEvent(input$normalize, {
+    req(dat$numbers)
+    temp &lt;- (dat$numbers() - min(dat$numbers())) / (max(dat$numbers()) - min(dat$numbers()))
+    dat$numbers &lt;- reactive({temp})
+  })
+  
+  observeEvent(input$standardize, {
+    req(dat$numbers)
+    temp &lt;- (dat$numbers() - mean(dat$numbers())) / sd(dat$numbers())
+    dat$numbers &lt;- reactive({temp})
+  })
+  
+  observeEvent(input$square, {
+    req(dat$numbers)
+    temp &lt;- dat$numbers()^2
+    dat$numbers &lt;- reactive({temp})
+  })
+}
+
+shinyApp(ui, server)</code></pre>
 </div>

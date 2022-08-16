@@ -2,23 +2,24 @@
 title: 随机森林模型优化
 author: Fang Yongchao
 date: "2021-04-26"
+categories:
+  - "机器学习"
 output:
   blogdown::html_page:
     toc: yes
     toc_depth: 2
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 <div id="TOC">
 <ul>
-<li><a href="#森林中决策树的数量">森林中决策树的数量</a></li>
-<li><a href="#在节点进行分割的判断标准">在节点进行分割的判断标准</a></li>
-<li><a href="#每棵树的最大深度">每棵树的最大深度</a></li>
-<li><a href="#在节点进行分割所需要的最小样本数">在节点进行分割所需要的最小样本数</a></li>
-<li><a href="#叶子节点的最大数量">叶子节点的最大数量</a></li>
-<li><a href="#寻找最佳分割时使用的特征数量">寻找最佳分割时使用的特征数量</a></li>
-<li><a href="#使用bootstrap时的抽样数量">使用bootstrap时的抽样数量</a></li>
+<li><a href="#森林中决策树的数量" id="toc-森林中决策树的数量">森林中决策树的数量</a></li>
+<li><a href="#在节点进行分割的判断标准" id="toc-在节点进行分割的判断标准">在节点进行分割的判断标准</a></li>
+<li><a href="#每棵树的最大深度" id="toc-每棵树的最大深度">每棵树的最大深度</a></li>
+<li><a href="#在节点进行分割所需要的最小样本数" id="toc-在节点进行分割所需要的最小样本数">在节点进行分割所需要的最小样本数</a></li>
+<li><a href="#叶子节点的最大数量" id="toc-叶子节点的最大数量">叶子节点的最大数量</a></li>
+<li><a href="#寻找最佳分割时使用的特征数量" id="toc-寻找最佳分割时使用的特征数量">寻找最佳分割时使用的特征数量</a></li>
+<li><a href="#使用bootstrap时的抽样数量" id="toc-使用bootstrap时的抽样数量">使用bootstrap时的抽样数量</a></li>
 </ul>
 </div>
 

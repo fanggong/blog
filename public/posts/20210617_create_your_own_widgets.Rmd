@@ -109,7 +109,7 @@ dependencies:
 
 我使用的解决方案是在[flipdown.css](https://github.com/fanggong/flipdownWidgets/blob/master/inst/htmlwidgets/lib/flipdown/flipdown.css)中增加一个变量**\-\-base-unit**，与size有关的CSS样式都修改为通过该变量来计算。然后在`resize()`方法中根据显示位置的大小修改**\-\-base-unit**的值即可。
 
-不知道有没有更好的办法，毕竟我的前端知识也很匮乏。
+不知道有没有更好的办法，毕竟前端知识也很匮乏。
 
 ## 完善package的其它信息
 

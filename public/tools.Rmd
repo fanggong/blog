@@ -8,7 +8,7 @@ date: "2021-04-21"
 
 ---------------------------------------------
 
-[flipdownWidgets](https://CRAN.R-project.org/package=flipdownWidgets)，已上传至CRAN，通过该包我们可以在Shiny或Rmarkdown中创建一个倒计时时钟。
+[flipdownWidgets](https://CRAN.R-project.org/package=flipdownWidgets)，在Shiny或Rmarkdown中创建一个倒计时时钟。
 
 <i class="fab fa-lg fa-github fa-fw"></i><a href="https://github.com/fanggong/flipdownWidgets">View Code</a>
 

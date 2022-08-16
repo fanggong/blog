@@ -10,25 +10,24 @@ output:
 draft: true
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 <script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
 <link href="/rmarkdown-libs/lightable/lightable.css" rel="stylesheet" />
 
 <div id="TOC">
 <ul>
-<li><a href="#数据">数据</a></li>
-<li><a href="#正态性检验">正态性检验</a></li>
-<li><a href="#方差齐性检验">方差齐性检验</a></li>
-<li><a href="#方差分析">方差分析</a></li>
-<li><a href="#球形检验">球形检验</a></li>
-<li><a href="#p值校正">p值校正</a></li>
+<li><a href="#数据" id="toc-数据">数据</a></li>
+<li><a href="#正态性检验" id="toc-正态性检验">正态性检验</a></li>
+<li><a href="#方差齐性检验" id="toc-方差齐性检验">方差齐性检验</a></li>
+<li><a href="#方差分析" id="toc-方差分析">方差分析</a></li>
+<li><a href="#球形检验" id="toc-球形检验">球形检验</a></li>
+<li><a href="#p值校正" id="toc-p值校正">p值校正</a></li>
 </ul>
 </div>
 
 <p>相关包：<a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/car/index.html">car</a></p>
 <p>在这里仅记录重复测量数据方差分析的R语言实现及结果解释，不涉及其原理说明。</p>
 <p>重复测量数据的方差分析的步骤大致如下图：</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-2"></span>
 <img src="/posts/20210311_repeat_measure_anova_files/figure-html/unnamed-chunk-2-1.png" alt="重复测量数据方差分析流程" width="576" />
 <p class="caption">
 Figure 1: 重复测量数据方差分析流程
@@ -1079,7 +1078,7 @@ measure_4
 <div id="正态性检验" class="section level2">
 <h2>正态性检验</h2>
 <hr />
-<p>由于存在5个处理分组，每个分组进行了4次重复测量，故共有20组数据需要做正态性检验。考虑将数据转换成长数据方便使用<code>lapply</code>函数一次性完成所有分组的正态性检验。</p>
+<p>由于存在5个处理分组，每个分组进行了4次重复测量，故共有20组数据需要做正态性检验。将数据转换成长数据方便使用<code>lapply</code>函数一次性完成所有分组的正态性检验。</p>
 <pre class="r"><code>data.table::setDT(dat)
 long_dat &lt;- data.table::melt(
   dat, id.vars = c(&quot;ID&quot;, &quot;group&quot;), measure.vars = paste0(&quot;measure_&quot;, 1:4),
@@ -3907,7 +3906,7 @@ measure_4
 </tbody>
 </table>
 </div>
-<p>使用Shapiro-Wilk检验进行正态性检验。该检验零假设为样本来自于正态分布总体，故p值小于0.05时考虑拒绝原假设，即样本来自于非正态总体。</p>
+<p>使用Shapiro-Wilk检验进行正态性检验。该检验零假设为样本来自于正态分布总体，故p值小于0.05时拒绝原假设，即样本来自于非正态总体。</p>
 <pre class="r"><code>to_test &lt;- split(long_dat$response, list(long_dat$group, long_dat$time))
 norm_result &lt;- lapply(to_test, function(v) data.frame(
   p_value = shapiro.test(v)$p.value
@@ -3939,7 +3938,7 @@ norm_result</code></pre>
 <div id="方差齐性检验" class="section level2">
 <h2>方差齐性检验</h2>
 <hr />
-<p>使用Levene检验进行方差齐性检验。该检验零假设为样本所在总体方差相等，故p值小于0.05时考虑拒绝原假设，即样本所在总体方差不等。</p>
+<p>使用Levene检验进行方差齐性检验。该检验零假设为样本所在总体方差相等，故p值小于0.05时拒绝原假设，即样本所在总体方差不等。</p>
 <pre class="r"><code>homo_result &lt;- car::leveneTest(response ~ group*time, data = long_dat)
 homo_result</code></pre>
 <pre><code>## Levene&#39;s Test for Homogeneity of Variance (center = median)

@@ -2,6 +2,8 @@
 title: 随机森林模型优化
 author: Fang Yongchao
 date: "2021-04-26"
+categories:
+  - "机器学习"
 output:
   blogdown::html_page:
     toc: yes

@@ -10,14 +10,12 @@ output:
     toc_depth: 2
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 <div id="TOC">
 <ul>
-<li><a href="#gbdt算法原理">GBDT算法原理</a></li>
-<li><a href="#回归问题下的gdbt">回归问题下的GDBT</a></li>
-<li><a href="#二分类问题下的gbdt">二分类问题下的GBDT</a></li>
-<li><a href="#多分类问题下的gbdt">多分类问题下的GBDT</a></li>
+<li><a href="#gbdt算法原理" id="toc-gbdt算法原理">GBDT算法原理</a></li>
+<li><a href="#回归问题下的gdbt" id="toc-回归问题下的gdbt">回归问题下的GDBT</a></li>
+<li><a href="#二分类问题下的gbdt" id="toc-二分类问题下的gbdt">二分类问题下的GBDT</a></li>
 </ul>
 </div>
 
@@ -77,14 +75,9 @@ l(y, \hat y) =  y\ln(1 + e^{-\hat y}) + (1-y)\ln(1 + e^{\hat y})
 <span class="math display">\[
 \begin{aligned}
 r_i &amp; = \gamma\ ({y_i \over {1+e^{-\hat y_i^{(t-1)}}}}e^{- \hat y_i^{(t-1)} } - {{1-y_i} \over {1+e^{\hat y_i^{(t-1)}}}} e^{\hat y_i^{(t-1)}}) \\
- &amp; = \gamma\ (y_i - {1 \over {1 + e^{-\hat y_i^{(t-1)}}}}) \\
- &amp; = \gamma\ (y - p_i^{(t-1)})
+&amp; = \gamma\ (y_i - {1 \over {1 + e^{-\hat y_i^{(t-1)}}}}) \\
+&amp; = \gamma\ (y - p_i^{(t-1)})
 \end{aligned}
 \]</span>
 也就是说，当步长（学习率）为1时，拟合的是前t-1棵决策树模型预测的概率之和与真实标签之差。</p>
-</div>
-<div id="多分类问题下的gbdt" class="section level2">
-<h2>多分类问题下的GBDT</h2>
-<hr />
-<p>有空再写</p>
 </div>

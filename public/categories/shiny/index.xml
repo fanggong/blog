@@ -13,10 +13,9 @@
       <pubDate>Sun, 06 Jun 2021 00:00:00 +0000</pubDate>
       
       <guid>https://fanggong.pub/posts/20210606_shiny_update_reactive_object/</guid>
-      <description>问题背景实现方式问题背景需要根据初始输入生成一个对象，该对象以某种形式展示。同时，针对其它的输入（多个输入源的多次输入），对该对象进行多次修改，每次修改后，该对象的展示结果对应发生改变。当初始输入改变时，重新初始化该对象。
-实现方式很显然应该使用reactive对象，但是试了很多种方法，发现通过reactive()生成的reactive对象是无法进行任何修改的，即上方的“针对其它的输入对对象进行多次修改”无法实现。最后发现貌似只有通过reactiveValues()才能实现该功能。
-View Code
-</description>
+      <description>问题背景 实现方式 示例App 问题背景 需要根据初始输入生成一个对象，该对象以某种形式展示。同时，针对其它的输入（多个输入源的多次输入），对该对象进行多次修改，每次修改后，该对象的展示结果对应发生改变。当初始输入改变时，重新初始化该对象。
+实现方式 很显然应该使用reactive对象，但是试了很多种方法，发现通过reactive()生成的reactive对象是无法进行任何修改的，即上方的“针对其它的输入对对象进行多次修改”无法实现。最后发现貌似只有通过reactiveValues()才能实现该功能。
+示例App library(shiny) library(ggplot2) ui &amp;lt;- fluidPage( sidebarLayout( sidebarPanel( width = 5, fluidRow( column(6, numericInput(&amp;quot;mean&amp;quot;, &amp;quot;均值&amp;quot;, value = 10)), column(6, numericInput(&amp;quot;sd&amp;quot;, &amp;quot;方差&amp;quot;, value = 10)) ), hr(), actionButton(&amp;quot;generate&amp;quot;, &amp;quot;生成随机数&amp;quot;, width = &amp;quot;100%&amp;quot;), hr(), actionButton(&amp;quot;normalize&amp;quot;, &amp;quot;归一化&amp;quot;, width = &amp;quot;100%&amp;quot;), hr(), actionButton(&amp;quot;standardize&amp;quot;, &amp;quot;标准化&amp;quot;, width = &amp;quot;100%&amp;quot;), hr(), actionButton(&amp;quot;square&amp;quot;, &amp;quot;平方&amp;quot;, width = &amp;quot;100%&amp;quot;) ), mainPanel( width = 7, verbatimTextOutput(&amp;quot;numbers&amp;quot;, placeholder = TRUE), plotOutput(&amp;quot;plot&amp;quot;) ) ) ) server &amp;lt;- function(input, output, session) { dat &amp;lt;- reactiveValues(numbers = NULL) observeEvent(input$generate, { req(input$mean, input$sd) dat$numbers &amp;lt;- reactive({ rnorm(100, mean = isolate(input$mean), sd = isolate(input$sd)) }) }) output$numbers &amp;lt;- renderPrint({ req(dat$numbers) summary(dat$numbers()) }) output$plot &amp;lt;- renderPlot({ req(dat$numbers) ggplot(data.</description>
     </item>
     
   </channel>

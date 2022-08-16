@@ -21,9 +21,9 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 
 ## 创建空画板
 
-------------------------------
+------------------------------------------------------------------------
 
-该函数中有一个**asp**参数。个人习惯，至少在绘制流程图的时候，将它设为1，这样可以保证在设定BOX的长宽时得到的是一个稳定的图形。
+该函数中有一个**asp**参数，将它设为1，这样可以保证在设定BOX的长宽时得到的是一个稳定的图形。
 
 ```{r eval=FALSE}
 openplotmat(asp = 1)
@@ -31,7 +31,7 @@ openplotmat(asp = 1)
 
 ## 规划坐标
 
-------------------------------
+------------------------------------------------------------------------
 
 ```{r eval=FALSE}
 elpos <- coordinates(pos = c(1, 2, 3, 4), hor = FALSE)
@@ -58,7 +58,7 @@ text(elpos[10, 1], elpos[10, 2], "十", cex = 3)
 
 ## 插入BOX
 
-------------------------------
+------------------------------------------------------------------------
 
 [diagram](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/diagram/index.html)包共提供了九种BOX
 
@@ -96,10 +96,9 @@ textround(elpos[13, ], radx = 0.05, rady = 0.1, rx = 0.1, lab = "前", cex = 2)
 text(elpos[16, 1], elpos[16, 2], labels = "textround")
 ```
 
-
 ## 插入ARROW
 
-------------------------------
+------------------------------------------------------------------------
 
 [diagram](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/diagram/index.html)包共提供了七种ARROW
 
@@ -133,8 +132,3 @@ text(pos[11, 1] - 0.05, pos[11, 2], labels = "splitarrow\n(segment = c(0.1, 0.9)
 treearrow(pos[4, ], pos[25, ], path = "H")
 text(pos[15, 1], pos[15, 2] + 0.05, labels = "treearrow\n(path = \"H\")")
 ```
-
-
-
-
-

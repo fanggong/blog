@@ -9,7 +9,6 @@ output:
   blogdown::html_page:
     toc: yes
     toc_depth: 2
-draft: true
 ---
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}

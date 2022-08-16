@@ -13,8 +13,6 @@ output:
 
 相关包：[renv](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/renv/index.html)
 
-第一次知道这个包是在很早的时候，但是并没有什么使用的动力，毕竟我的电脑很久才会换一次，而公司的服务器，已经很久没有换过了...所有并没有频繁在新环境中运行代码的需求。直到有一天，当我想把docker和R一起使用以解决R的无法并行的问题时，终于体会到了[renv](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/renv/index.html)的真香。
-
 ## 环境初始化
 
 -----------------------
