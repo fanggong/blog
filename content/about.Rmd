@@ -10,7 +10,7 @@ Fang Yongchao，男，90后，数据分析师，现居成都。
 
 2019年研究生毕业于日本[筑波大学](https://www.tsukuba.ac.jp/)系统情报工学系。
 
-剑道二段。
+剑道二段。 
 
 ```{r echo=FALSE, fig.height=3, out.width="33%"}
 # paths <- c(
