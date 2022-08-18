@@ -129,7 +129,7 @@ None：使用全部的特征 sqrt：使用全部特征的数量开根号，即�
       
       <guid>/posts/20210418_concepts_about_feature_selection/</guid>
       <description>WOE(Weight of Evidence)和IV(Information Value) 群体稳定性指标(Population Stability Index, PSI) 这三个概念对我来说并不经常用到，但是每次用到的时候具体细节总是记串了，所以特别记下来。
-WOE(Weight of Evidence)和IV(Information Value) WOE为“当前分组下正样本占所有正样本比例”与“当前分组下负样本占所有负样本比例”的对数差，即对包含\(\{ x_1, x_2, ..., x_n \}\)\(n\)个类别的变量\(X\)，有： \[ p_{i1} = {N(Y = 1|X = x_i) \over N(Y = 1)}; \quad p_{i0} = {N(Y = 0|X = x_i) \over N(Y = 0)} \] \[ WOE(x_i) = \ln { p_{i1} \over p_{i0} } \]
+WOE(Weight of Evidence)和IV(Information Value) WOE为”当前分组下正样本占所有正样本比例”与”当前分组下负样本占所有负样本比例”的对数差，即对包含\(\{ x_1, x_2, ..., x_n \}\)\(n\)个类别的变量\(X\)，有： \[ p_{i1} = {N(Y = 1|X = x_i) \over N(Y = 1)}; \quad p_{i0} = {N(Y = 0|X = x_i) \over N(Y = 0)} \] \[ WOE(x_i) = \ln { p_{i1} \over p_{i0} } \]
 可以看出：
 当前分组下正负样本比例与总的正负样本比例相同时，WOE的值为0 当前分组下正样本比例高于总的正样本比例时，WOE值为正 当前分组下正样本比例低于总的正样本比例时，WOE值为负 IV为WOE的加权和，其计算方式为：
 \[ IV = \sum_i(p_{i1} - p_{i0})*WOE(x_i) \]

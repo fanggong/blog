@@ -10,15 +10,14 @@ output:
     toc_depth: 2
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 <div id="TOC">
 <ul>
-<li><a href="#adaboost算法原理">AdaBoost算法原理</a></li>
-<li><a href="#关于样本权重的求解">关于样本权重的求解</a></li>
-<li><a href="#回归问题下的adaboost">回归问题下的AdaBoost</a></li>
-<li><a href="#adaboost的正则化">AdaBoost的正则化</a></li>
-<li><a href="#关于adaboost的几点思考">关于AdaBoost的几点思考</a></li>
+<li><a href="#adaboost算法原理" id="toc-adaboost算法原理">AdaBoost算法原理</a></li>
+<li><a href="#关于样本权重的求解" id="toc-关于样本权重的求解">关于样本权重的求解</a></li>
+<li><a href="#回归问题下的adaboost" id="toc-回归问题下的adaboost">回归问题下的AdaBoost</a></li>
+<li><a href="#adaboost的正则化" id="toc-adaboost的正则化">AdaBoost的正则化</a></li>
+<li><a href="#关于adaboost的几点思考" id="toc-关于adaboost的几点思考">关于AdaBoost的几点思考</a></li>
 </ul>
 </div>
 
@@ -42,7 +41,7 @@ l(y, \hat y) = e^{-y \hat y}
 <span class="math display">\[
 \begin{aligned}
 obj^{(t)} &amp; = \sum_{i=1}^N e^{-y_i \hat y^{(t-1)}_i -y_i\alpha_tG_t(x_i)} \\
- &amp; = \sum_{i=1}^N \omega_i^{(t)} e^{-y_i \alpha_tG_t(x_i)}  
+&amp; = \sum_{i=1}^N \omega_i^{(t)} e^{-y_i \alpha_tG_t(x_i)}  
 \end{aligned}
 \]</span>
 其中<span class="math inline">\(\omega_i^{(t)} = e^{-y_i \hat y^{(t-1)}_i}\)</span>是一个常数可以理解为前t-1个基分类器的预测值带入损失函数得到的值。</p>
@@ -54,7 +53,7 @@ obj^{(t)} = \sum_{y_i \ne G_t(x_i)}\omega_i^{(t)}
 这个形式通俗的描述出来就是，<strong>对于前t-1个基分类器都预测错误的样本（<span class="math inline">\(\omega_i^{(t)}\)</span>较大），在第t个基分类器中就不要再预测错了（不要再让该样本进入<span class="math inline">\(y_i \ne G_t(x_i)\)</span>这个集合了）</strong>。</p>
 <p>接下来需要对<span class="math inline">\(G_t\)</span>的系数<span class="math inline">\(\alpha_t\)</span>进行求解。对<span class="math inline">\(obj^{(t)} = \sum_{i=1}^N \omega_i^{(t)} e^{-y_i \alpha_tG_t(x_i)}\)</span>关于<span class="math inline">\(\alpha_t\)</span>求导并令其导数等于0，有：
 <span class="math display">\[
-\sum_{y_i \ne G_t(x_i)} \omega^{(t)}_i e^{\alpha_t} + \sum_{y_i = G_t(x_i)} \omega^{(t)}_i e^{-\alpha_t} = 0 
+\sum_{y_i \ne G_t(x_i)} \omega^{(t)}_i e^{\alpha_t} + \sum_{y_i = G_t(x_i)} \omega^{(t)}_i e^{-\alpha_t} = 0
 \]</span>
 于是可以得到：
 <span class="math display">\[
@@ -78,8 +77,8 @@ e_t = {\sum_{y_i \ne G_t(x_i)} \omega^{(t)}_i \over \sum_{i=1}^N \omega_i^{(t)}}
 <span class="math display">\[
 \begin{aligned}
 \omega_i^{(t)} &amp; = e^{-y_i \hat y^{(t-1)}_i} \\
- &amp; = e^{-y_i (\hat y_i^{(t-2)} + \alpha_{t-1}G_{t-1}(x_i))} \\
- &amp; = \omega_i^{(t-1)} e^{-y_i\alpha_{t-1}G_{t-1}(x_i)}
+&amp; = e^{-y_i (\hat y_i^{(t-2)} + \alpha_{t-1}G_{t-1}(x_i))} \\
+&amp; = \omega_i^{(t-1)} e^{-y_i\alpha_{t-1}G_{t-1}(x_i)}
 \end{aligned}
 \]</span>
 即在生成第t个基分类器时使用的样本权重与前t-2个基分类器并无关系，需要做的只是根据第t-1个基分类器的预测值更新第t-1个基分类器中使用的样本权重即可。</p>

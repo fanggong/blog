@@ -11,14 +11,13 @@ output:
 draft: true
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 <div id="TOC">
 <ul>
-<li><a href="#函数间隔和几何间隔">函数间隔和几何间隔</a></li>
-<li><a href="#硬间隔和软间隔">硬间隔和软间隔</a></li>
-<li><a href="#核函数">核函数</a></li>
-<li><a href="#算法原理">算法原理</a></li>
+<li><a href="#函数间隔和几何间隔" id="toc-函数间隔和几何间隔">函数间隔和几何间隔</a></li>
+<li><a href="#硬间隔和软间隔" id="toc-硬间隔和软间隔">硬间隔和软间隔</a></li>
+<li><a href="#核函数" id="toc-核函数">核函数</a></li>
+<li><a href="#算法原理" id="toc-算法原理">算法原理</a></li>
 </ul>
 </div>
 
@@ -39,7 +38,7 @@ draft: true
 <span class="math display">\[
 \begin{aligned}
 \gamma &amp; = \min_{i = 1,2,...,N} \gamma_i \\
- &amp; = \min_{i = 1,2,...,N} y_i\left( {\omega \over \left \| \omega \right \|} x_i + {b \over \left \| \omega \right \|} \right)
+&amp; = \min_{i = 1,2,...,N} y_i\left( {\omega \over \left \| \omega \right \|} x_i + {b \over \left \| \omega \right \|} \right)
 \end{aligned}
 \]</span></p>
 <p><strong>从函数间隔到几何间隔，个人感觉从数学意义上很好理解，但是从几何意义上就有点抽象。对我来说，从解析几何的点到平面的距离公式去理解几何间隔反而更形象一些。</strong></p>
@@ -55,7 +54,7 @@ draft: true
 <span class="math display">\[
 \begin{aligned}
 \gamma &amp; = \min_{i = 1,2,...,N} (\gamma_i + \xi_i) \\
- &amp; = \min_{i = 1,2,...,N} \left [ y_i\left( {\omega \over \left \| \omega \right \|} x_i + {b \over \left \| \omega \right \|} \right) + \xi_i \right]
+&amp; = \min_{i = 1,2,...,N} \left [ y_i\left( {\omega \over \left \| \omega \right \|} x_i + {b \over \left \| \omega \right \|} \right) + \xi_i \right]
 \end{aligned}
 \]</span>
 这里的<span class="math inline">\(\gamma\)</span>称为<strong>软间隔</strong>，在寻找使得软间隔最大化的<span class="math inline">\(\omega\)</span>和<span class="math inline">\(b\)</span>时，会将<span class="math inline">\(\xi_i\)</span>作为惩罚项加入目标函数中。</p>

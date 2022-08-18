@@ -240,7 +240,7 @@ View Code</description>
       
       <guid>/posts/20210418_concepts_about_feature_selection/</guid>
       <description>WOE(Weight of Evidence)和IV(Information Value) 群体稳定性指标(Population Stability Index, PSI) 这三个概念对我来说并不经常用到，但是每次用到的时候具体细节总是记串了，所以特别记下来。
-WOE(Weight of Evidence)和IV(Information Value) WOE为“当前分组下正样本占所有正样本比例”与“当前分组下负样本占所有负样本比例”的对数差，即对包含\(\{ x_1, x_2, ..., x_n \}\)\(n\)个类别的变量\(X\)，有： \[ p_{i1} = {N(Y = 1|X = x_i) \over N(Y = 1)}; \quad p_{i0} = {N(Y = 0|X = x_i) \over N(Y = 0)} \] \[ WOE(x_i) = \ln { p_{i1} \over p_{i0} } \]
+WOE(Weight of Evidence)和IV(Information Value) WOE为”当前分组下正样本占所有正样本比例”与”当前分组下负样本占所有负样本比例”的对数差，即对包含\(\{ x_1, x_2, ..., x_n \}\)\(n\)个类别的变量\(X\)，有： \[ p_{i1} = {N(Y = 1|X = x_i) \over N(Y = 1)}; \quad p_{i0} = {N(Y = 0|X = x_i) \over N(Y = 0)} \] \[ WOE(x_i) = \ln { p_{i1} \over p_{i0} } \]
 可以看出：
 当前分组下正负样本比例与总的正负样本比例相同时，WOE的值为0 当前分组下正样本比例高于总的正样本比例时，WOE值为正 当前分组下正样本比例低于总的正样本比例时，WOE值为负 IV为WOE的加权和，其计算方式为：
 \[ IV = \sum_i(p_{i1} - p_{i0})*WOE(x_i) \]
@@ -271,26 +271,6 @@ WOE(Weight of Evidence)和IV(Information Value) WOE为“当前分组下正样�
 生存函数（Survival Function）：一般写作\(S(t)\)，表示从起始时间到时间t没有发生事件的概率，即： \[ S(t) = P \left( T &amp;gt; t \right) \]
 寿命分布函数（Lifetime distribution function）：一般写作\(F(t)\)，表示从起始时间到时间t发生了事件的概率，即： \[ F(t) = P \left( T \le t \right) = 1 - S(t) \]
 危险函数（Harzard Function）：一般写作\(h(t)\)或\(\lambda(t)\)，表示在截止到时间t事件都没有发生的条件下，事件接下来发生的瞬时概率，即： \[ h(t) = \lim_{\Delta t \to 0} {P(t \le T \lt t + \Delta t\,|\, T &amp;gt; t) \over {\Delta t}} = {F&amp;#39;(t) \over S(t)} = - {S&amp;#39;(t) \over S(t)} \]</description>
-    </item>
-    
-    <item>
-      <title>ggplot2：Labels</title>
-      <link>/posts/20210330_ggplot2_labels/</link>
-      <pubDate>Tue, 30 Mar 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/20210330_ggplot2_labels/</guid>
-      <description> labs()：添加各种主副标题 annotate()：添加注释 labs()：添加各种主副标题 ggplot(tibble(long = rnorm(100), lat = rnorm(100))) + geom_point(aes(x = long, y = lat)) + labs( x = &amp;quot;This is x-axis label&amp;quot;, y = &amp;quot;This is y-axis label&amp;quot;, title = &amp;quot;This is the title&amp;quot;, subtitle = &amp;quot;This is the subtitle&amp;quot;, caption = &amp;quot;This is the caption&amp;quot;, tag = &amp;quot;This is tag&amp;quot; ) annotate()：添加注释 ggplot(tibble(long = rnorm(100), lat = rnorm(100))) + geom_point(aes(x = long, y = lat)) + annotate(geom = &amp;quot;text&amp;quot;, x = 0, y = 0, label = &amp;quot;This is the annotation&amp;quot;, color = &amp;quot;blue&amp;quot;) </description>
-    </item>
-    
-    <item>
-      <title>ggplot2：Stat和Geom</title>
-      <link>/posts/20210323_ggplot2_stat_geom/</link>
-      <pubDate>Tue, 23 Mar 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/20210323_ggplot2_stat_geom/</guid>
-      <description>对连续变量x的各区间的样本数量进行统计作图 对离散变量x的各类别数量进行统计作图 计算连续变量x的密度曲线并作图 对区域中点的数量进行统计作图 对x，y作分位数回归并作图 计算并绘制x，y的拟合曲线 在离散变量x的各类别上对连续变量y进行统计作图 计算连续变量y的密度曲线并作图 对每个点上点的数量进行统计作图 计算并绘制等高线 在x上对y进行summary并作图 在x和y上对z进行summary并作图 通过x和函数fun()计算y=fun(x)并绘制曲线 计算并绘制x的经验累计分布函数 计算并绘制Q-Q图 二维核密度估计并作图 绘制空的坐标系 绘制带箭头曲线/直线 绘制折线 绘制多边形 绘制长方形 绘制区域 绘制直线 添加标签/文本 绘制偏离原位置的点 绘制散点图 在图的四周绘制点的一维投影 绘制区间 绘制地图 绘制点阵图 不明白作用的函数 以下是一些个人看法。
-ggplot2中以geom开头的函数可以理解为作图函数，以stat开头的函数可以理解为统计变换函数。在大部分的情况下，作图函数和统计变换函数都是成对出现的，也就是说在geom函数中会有一个stat参数，而stat函数中也会有一个geom参数，从而可以通过geom或stat函数一次性达到对数据进行统计变换并作图的目的。这也是我在最初很迷这个包的原因，因为在一些很奇葩的搭配下可能会出现一些很有趣的图形，虽然图形并不一定有意义，但是思考这个图形背后形成的过程是一件很有意思的事情。
-对连续变量x的各区间的样本数量进行统计作图 aes()必须参数：x，y(count, density, ncount, ndensity) binwidth：每一个柱的宽度 bins：柱的数量 center、boundary：若center设为“t”，则有一根柱以“t”为中线；若boundary设为“t”，则有一根柱以“t”为边线 breaks：直接设定每一根柱的边线位置，该参数会覆盖以上所有参数 closed：若为“right”，处于交界处的值属于右边的柱子；若为“left”，处于交界处的值属于左边的柱子 pad：是否在图的左右两侧加空白，若为TRUE，最后呈现的图从高度为0的柱开始到高度为0的柱结束 x应该是连续的，离散的x使用stat_count() stat_bin() ggplot(mpg, aes(hwy)) + stat_bin(aes(y = ..density..), binwidth = 1, boundary = 0, pad = TRUE) geom_freqpoly() ggplot(mpg, aes(hwy)) + geom_freqpoly(binwidth = 1) geom_histogram() ggplot(mpg, aes(hwy)) + geom_histogram(binwidth = 1, boundary = 0.</description>
     </item>
     
     <item>

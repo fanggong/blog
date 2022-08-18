@@ -9,43 +9,43 @@ output:
   blogdown::html_page:
     toc: yes
     toc_depth: 2
+draft: true
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 <div id="TOC">
 <ul>
-<li><a href="#对连续变量x的各区间的样本数量进行统计作图">对连续变量x的各区间的样本数量进行统计作图</a></li>
-<li><a href="#对离散变量x的各类别数量进行统计作图">对离散变量x的各类别数量进行统计作图</a></li>
-<li><a href="#计算连续变量x的密度曲线并作图">计算连续变量x的密度曲线并作图</a></li>
-<li><a href="#对区域中点的数量进行统计作图">对区域中点的数量进行统计作图</a></li>
-<li><a href="#对xy作分位数回归并作图">对x，y作分位数回归并作图</a></li>
-<li><a href="#计算并绘制xy的拟合曲线">计算并绘制x，y的拟合曲线</a></li>
-<li><a href="#在离散变量x的各类别上对连续变量y进行统计作图">在离散变量x的各类别上对连续变量y进行统计作图</a></li>
-<li><a href="#计算连续变量y的密度曲线并作图">计算连续变量y的密度曲线并作图</a></li>
-<li><a href="#对每个点上点的数量进行统计作图">对每个点上点的数量进行统计作图</a></li>
-<li><a href="#计算并绘制等高线">计算并绘制等高线</a></li>
-<li><a href="#在x上对y进行summary并作图">在x上对y进行summary并作图</a></li>
-<li><a href="#在x和y上对z进行summary并作图">在x和y上对z进行summary并作图</a></li>
-<li><a href="#通过x和函数fun计算yfunx并绘制曲线">通过x和函数fun()计算y=fun(x)并绘制曲线</a></li>
-<li><a href="#计算并绘制x的经验累计分布函数">计算并绘制x的经验累计分布函数</a></li>
-<li><a href="#计算并绘制q-q图">计算并绘制Q-Q图</a></li>
-<li><a href="#二维核密度估计并作图">二维核密度估计并作图</a></li>
-<li><a href="#绘制空的坐标系">绘制空的坐标系</a></li>
-<li><a href="#绘制带箭头曲线直线">绘制带箭头曲线/直线</a></li>
-<li><a href="#绘制折线">绘制折线</a></li>
-<li><a href="#绘制多边形">绘制多边形</a></li>
-<li><a href="#绘制长方形">绘制长方形</a></li>
-<li><a href="#绘制区域">绘制区域</a></li>
-<li><a href="#绘制直线">绘制直线</a></li>
-<li><a href="#添加标签文本">添加标签/文本</a></li>
-<li><a href="#绘制偏离原位置的点">绘制偏离原位置的点</a></li>
-<li><a href="#绘制散点图">绘制散点图</a></li>
-<li><a href="#在图的四周绘制点的一维投影">在图的四周绘制点的一维投影</a></li>
-<li><a href="#绘制区间">绘制区间</a></li>
-<li><a href="#绘制地图">绘制地图</a></li>
-<li><a href="#绘制点阵图">绘制点阵图</a></li>
-<li><a href="#不明白作用的函数">不明白作用的函数</a></li>
+<li><a href="#对连续变量x的各区间的样本数量进行统计作图" id="toc-对连续变量x的各区间的样本数量进行统计作图">对连续变量x的各区间的样本数量进行统计作图</a></li>
+<li><a href="#对离散变量x的各类别数量进行统计作图" id="toc-对离散变量x的各类别数量进行统计作图">对离散变量x的各类别数量进行统计作图</a></li>
+<li><a href="#计算连续变量x的密度曲线并作图" id="toc-计算连续变量x的密度曲线并作图">计算连续变量x的密度曲线并作图</a></li>
+<li><a href="#对区域中点的数量进行统计作图" id="toc-对区域中点的数量进行统计作图">对区域中点的数量进行统计作图</a></li>
+<li><a href="#对xy作分位数回归并作图" id="toc-对xy作分位数回归并作图">对x，y作分位数回归并作图</a></li>
+<li><a href="#计算并绘制xy的拟合曲线" id="toc-计算并绘制xy的拟合曲线">计算并绘制x，y的拟合曲线</a></li>
+<li><a href="#在离散变量x的各类别上对连续变量y进行统计作图" id="toc-在离散变量x的各类别上对连续变量y进行统计作图">在离散变量x的各类别上对连续变量y进行统计作图</a></li>
+<li><a href="#计算连续变量y的密度曲线并作图" id="toc-计算连续变量y的密度曲线并作图">计算连续变量y的密度曲线并作图</a></li>
+<li><a href="#对每个点上点的数量进行统计作图" id="toc-对每个点上点的数量进行统计作图">对每个点上点的数量进行统计作图</a></li>
+<li><a href="#计算并绘制等高线" id="toc-计算并绘制等高线">计算并绘制等高线</a></li>
+<li><a href="#在x上对y进行summary并作图" id="toc-在x上对y进行summary并作图">在x上对y进行summary并作图</a></li>
+<li><a href="#在x和y上对z进行summary并作图" id="toc-在x和y上对z进行summary并作图">在x和y上对z进行summary并作图</a></li>
+<li><a href="#通过x和函数fun计算yfunx并绘制曲线" id="toc-通过x和函数fun计算yfunx并绘制曲线">通过x和函数fun()计算y=fun(x)并绘制曲线</a></li>
+<li><a href="#计算并绘制x的经验累计分布函数" id="toc-计算并绘制x的经验累计分布函数">计算并绘制x的经验累计分布函数</a></li>
+<li><a href="#计算并绘制q-q图" id="toc-计算并绘制q-q图">计算并绘制Q-Q图</a></li>
+<li><a href="#二维核密度估计并作图" id="toc-二维核密度估计并作图">二维核密度估计并作图</a></li>
+<li><a href="#绘制空的坐标系" id="toc-绘制空的坐标系">绘制空的坐标系</a></li>
+<li><a href="#绘制带箭头曲线直线" id="toc-绘制带箭头曲线直线">绘制带箭头曲线/直线</a></li>
+<li><a href="#绘制折线" id="toc-绘制折线">绘制折线</a></li>
+<li><a href="#绘制多边形" id="toc-绘制多边形">绘制多边形</a></li>
+<li><a href="#绘制长方形" id="toc-绘制长方形">绘制长方形</a></li>
+<li><a href="#绘制区域" id="toc-绘制区域">绘制区域</a></li>
+<li><a href="#绘制直线" id="toc-绘制直线">绘制直线</a></li>
+<li><a href="#添加标签文本" id="toc-添加标签文本">添加标签/文本</a></li>
+<li><a href="#绘制偏离原位置的点" id="toc-绘制偏离原位置的点">绘制偏离原位置的点</a></li>
+<li><a href="#绘制散点图" id="toc-绘制散点图">绘制散点图</a></li>
+<li><a href="#在图的四周绘制点的一维投影" id="toc-在图的四周绘制点的一维投影">在图的四周绘制点的一维投影</a></li>
+<li><a href="#绘制区间" id="toc-绘制区间">绘制区间</a></li>
+<li><a href="#绘制地图" id="toc-绘制地图">绘制地图</a></li>
+<li><a href="#绘制点阵图" id="toc-绘制点阵图">绘制点阵图</a></li>
+<li><a href="#不明白作用的函数" id="toc-不明白作用的函数">不明白作用的函数</a></li>
 </ul>
 </div>
 
@@ -58,9 +58,9 @@ output:
 <li><code>aes()</code>必须参数：<strong>x</strong>，<strong>y(count, density, ncount, ndensity)</strong></li>
 <li><strong>binwidth</strong>：每一个柱的宽度</li>
 <li><strong>bins</strong>：柱的数量</li>
-<li><strong>center</strong>、<strong>boundary</strong>：若<strong>center</strong>设为“t”，则有一根柱以“t”为中线；若<strong>boundary</strong>设为“t”，则有一根柱以“t”为边线</li>
+<li><strong>center</strong>、<strong>boundary</strong>：若<strong>center</strong>设为”t”，则有一根柱以”t”为中线；若<strong>boundary</strong>设为”t”，则有一根柱以”t”为边线</li>
 <li><strong>breaks</strong>：直接设定每一根柱的边线位置，该参数会覆盖以上所有参数</li>
-<li><strong>closed</strong>：若为“right”，处于交界处的值属于右边的柱子；若为“left”，处于交界处的值属于左边的柱子</li>
+<li><strong>closed</strong>：若为”right”，处于交界处的值属于右边的柱子；若为”left”，处于交界处的值属于左边的柱子</li>
 <li><strong>pad</strong>：是否在图的左右两侧加空白，若为TRUE，最后呈现的图从高度为0的柱开始到高度为0的柱结束</li>
 <li><strong>x</strong>应该是连续的，离散的<strong>x</strong>使用<code>stat_count()</code></li>
 </ul>
@@ -89,7 +89,7 @@ output:
 <ul>
 <li><code>aes()</code>必须参数：<strong>x</strong>，<strong>y(count,prop)</strong></li>
 <li><strong>width</strong>：柱子的宽度，默认两个柱中线距离的90%</li>
-<li>当<strong>y</strong>取“prop”时需要配合<strong>group</strong>使用，具体意义 ##TODO</li>
+<li>当<strong>y</strong>取”prop”时需要配合<strong>group</strong>使用，具体意义 ##TODO</li>
 <li><strong>x</strong>应该是离散的，当然，任何连续的都可以看成是离散的</li>
 </ul>
 <div id="stat_count" class="section level3">
@@ -185,8 +185,8 @@ ggplot(dat, aes(long, lat)) + geom_col()</code></pre>
 <li><strong>formula</strong>：拟合的公式</li>
 <li><strong>method</strong>：分位数回归的方法</li>
 <li><strong>method.args</strong>：方法的参数</li>
-<li><strong>lineend</strong>：线的终点的样式，可选“round”，“butt”, “square”</li>
-<li><strong>linejoin</strong>：线的转折或者说连接处的样式，可选“round”，“mitre”，“bevel”</li>
+<li><strong>lineend</strong>：线的终点的样式，可选”round”，“butt”, “square”</li>
+<li><strong>linejoin</strong>：线的转折或者说连接处的样式，可选”round”，“mitre”，“bevel”</li>
 <li><strong>linemitre</strong>：线的转折/连接处的宽度，这三个参数在正常size的线下几乎没有什么作用</li>
 <li><code>stat_quantile()</code>和<code>geom_quantile()</code>并没什么区别</li>
 </ul>
@@ -269,7 +269,7 @@ ggplot(dat, aes(long, lat)) + geom_col()</code></pre>
 <li><strong>bw</strong>：可以为数字，意义类似于<strong>binwidth</strong>；可以为字符串，表示方法</li>
 <li><strong>adjust</strong>：对<strong>bw</strong>进行调整</li>
 <li><strong>kernel</strong>：“gaussian”, “epanechnikov”, “rectangular”, “triangular”, “biweight”, “cosine”, “optcosine”</li>
-<li><strong>scale</strong>：若选择“area”，各个图的面积会一致；若选择“count”，面积会由点的个数决定；若为“width”，会在“count”的基础上强行把宽度一致</li>
+<li><strong>scale</strong>：若选择”area”，各个图的面积会一致；若选择”count”，面积会由点的个数决定；若为”width”，会在”count”的基础上强行把宽度一致</li>
 <li><strong>trim</strong>：对于提琴的尾部是否进行拉伸处理</li>
 <li><code>geom_violin()</code>是<strong>y</strong>的<code>geom_density()</code>和<strong>x</strong>的<code>geom_boxplot()</code>的合体</li>
 </ul>
@@ -312,8 +312,8 @@ ggplot(dat, aes(long, lat)) + geom_col()</code></pre>
 <ul>
 <li><code>aes()</code>必须参数：<strong>x</strong>，<strong>y</strong>，<strong>z</strong></li>
 <li><strong>binwidth</strong>、<strong>bins</strong>、<strong>breaks</strong>：类似于<a href="#对连续变量**x**的各区间的样本数量进行统计作图"><code>stat_bin()</code></a>中对应的参数</li>
-<li><strong>lineend</strong>：线的终点的样式，可选“round”，“butt”, “square”</li>
-<li><strong>linejoin</strong>：线的转折或者说连接处的样式，可选“round”，“mitre”，“bevel”</li>
+<li><strong>lineend</strong>：线的终点的样式，可选”round”，“butt”, “square”</li>
+<li><strong>linejoin</strong>：线的转折或者说连接处的样式，可选”round”，“mitre”，“bevel”</li>
 <li><strong>linemitre</strong>：线的转折/连接处的宽度，这三个参数在正常size的线下几乎没有什么作用</li>
 <li>主要作用在于在二维平面上展示第三维的数据</li>
 </ul>
@@ -428,7 +428,7 @@ ggplot(mpg, aes(cty, hwy)) +
 <ul>
 <li><code>aes()</code>必须参数：<strong>x</strong></li>
 <li><strong>n</strong>：插值的数量，大于样本呢数就没什么意义了</li>
-<li><code>stat_ecdf()</code>的<strong>geom</strong>参数默认值是“step”</li>
+<li><code>stat_ecdf()</code>的<strong>geom</strong>参数默认值是”step”</li>
 </ul>
 <div id="stat_ecdf" class="section level3">
 <h3><code>stat_ecdf()</code></h3>
@@ -510,19 +510,19 @@ ggplot(dat) +
 <ul>
 <li><code>aes()</code> 必须参数：<strong>x</strong>、<strong>y</strong>、<strong>xend</strong>、<strong>yend</strong></li>
 <li><strong>curvature</strong>：曲线的曲率，正数向右，负数向左，曲率越大曲线弯曲程度越大，必须为一个数字，我也不知道为什么</li>
-<li><strong>angle</strong>：偏度，取值“0”到“180”，越小曲线越偏向起始点，可以为向量</li>
+<li><strong>angle</strong>：偏度，取值”0”到”180”，越小曲线越偏向起始点，可以为向量</li>
 <li><strong>ncp</strong>：用来画曲线使用的点的个数，越多曲线越平滑</li>
 <li><strong>arrow</strong>：通过<code>arrow()</code>创建一个arrow对象进行赋值
 <ul>
 <li><strong>angle</strong>：为箭头与曲线的夹角</li>
 <li><strong>length</strong>：一个unit对象，通过<code>unit()</code>生成</li>
-<li><strong>ends</strong>为箭头位置，可以为“first”、“last”或“both”</li>
-<li><strong>type</strong>为箭头类型，可以为“open”、“closed”</li>
+<li><strong>ends</strong>为箭头位置，可以为”first”、“last”或”both”</li>
+<li><strong>type</strong>为箭头类型，可以为”open”、“closed”</li>
 </ul></li>
-<li><strong>arrow.fill</strong>：当<strong>arrow</strong>的<strong>type</strong>是“closed”时可选择填充颜色</li>
-<li><strong>lineend</strong>：线的终点的样式，可选“round”，“butt”, “square”</li>
-<li><strong>linejoin</strong>：线的转折或者说连接处的样式，可选“round”，“mitre”，“bevel”</li>
-<li><code>geom_segment()</code>其实就是<strong>curvature</strong>为“0”、<strong>angle</strong>为“90”的<code>geom_curve()</code></li>
+<li><strong>arrow.fill</strong>：当<strong>arrow</strong>的<strong>type</strong>是”closed”时可选择填充颜色</li>
+<li><strong>lineend</strong>：线的终点的样式，可选”round”，“butt”, “square”</li>
+<li><strong>linejoin</strong>：线的转折或者说连接处的样式，可选”round”，“mitre”，“bevel”</li>
+<li><code>geom_segment()</code>其实就是<strong>curvature</strong>为”0”、<strong>angle</strong>为”90”的<code>geom_curve()</code></li>
 </ul>
 <div id="geom_curve" class="section level3">
 <h3><code>geom_curve()</code></h3>
@@ -561,8 +561,8 @@ ggplot(dat, aes(long, lat)) +
 <li><code>aes()</code>必须参数：<strong>x</strong>、<strong>y</strong></li>
 <li><strong>direction</strong>：阶梯的方向，“hv”为先水平后竖直，“vh”为先竖直后水平</li>
 <li><strong>arrow</strong>：通过<code>arrow()</code>创建一个arrow对象进行赋值</li>
-<li><strong>lineend</strong>：线的终点的样式，可选“round”，“butt”, “square”</li>
-<li><strong>linejoin</strong>：线的转折或者说连接处的样式，可选“round”，“mitre”，“bevel”</li>
+<li><strong>lineend</strong>：线的终点的样式，可选”round”，“butt”, “square”</li>
+<li><strong>linejoin</strong>：线的转折或者说连接处的样式，可选”round”，“mitre”，“bevel”</li>
 <li><strong>linemitre</strong>：线的转折/连接处的宽度，这三个参数在正常size的线下几乎没有什么作用</li>
 <li><code>geom_path()</code>按照数据顺序连接各点；<code>geom_line()</code>按照从左到右连接各点；<code>geom_step()</code>用阶梯连接各点</li>
 <li>对于NA的处理方式：
@@ -593,7 +593,7 @@ ggplot(dat, aes(long, lat)) + geom_path()</code></pre>
 <hr />
 <ul>
 <li><code>aes()</code>必须参数：<strong>x</strong>、<strong>y</strong></li>
-<li><strong>rule</strong>：“evenodd”或“winding”，具体意义 ##TODO</li>
+<li><strong>rule</strong>：“evenodd”或”winding”，具体意义 ##TODO</li>
 <li><code>geom_polygon()</code>是在<code>geom_path()</code>的基础上，连接第一个点与最后一个点，然后用颜色填充中间围起来的部分，点的数据够多的话能画任意图像</li>
 </ul>
 <div id="geom_polygon" class="section level3">
@@ -647,7 +647,7 @@ ggplot(datapoly, aes(x = x, y = y)) +
 </ul></li>
 <li><strong>hjust</strong>和<strong>vjust</strong>：在<code>geom_raster()</code>中确定长方形位置，“(0, 0)”为左下角，“(1, 1)”为右上角</li>
 <li><strong>width</strong>和<strong>height</strong>：在<code>geom_tile()</code>中确定长方形的宽(x轴长度)和高(y轴长度)</li>
-<li><strong>linejoin</strong>：线的转折或者说连接处的样式，可选“round”，“mitre”，“bevel”</li>
+<li><strong>linejoin</strong>：线的转折或者说连接处的样式，可选”round”，“mitre”，“bevel”</li>
 <li><strong>interpolate</strong>：原理不明，为TRUE的话方格之间的衔接显得更加平滑</li>
 <li><code>geom_rect()</code>的可操作性最强；<code>geom_raster()</code>适合点距相同的图；<code>geom_tile()</code>的长方形大小一样，且点都在长方形正中间</li>
 <li><code>geom_raster()</code>和<code>geom_tile()</code>可通过<code>aes(fill)</code>在二维平面上描述三维数据</li>
@@ -791,7 +791,7 @@ ggplot(dat, aes(long, lat)) +
 <ul>
 <li><code>aes()</code>必须参数：<strong>x</strong>，<strong>y</strong></li>
 <li><strong>outside</strong>：是否投射在坐标轴外部</li>
-<li><strong>sides</strong>：投射方向，用“trbl”来代表“top”，“right”，“bottom”，“left”</li>
+<li><strong>sides</strong>：投射方向，用”trbl”来代表”top”，“right”，“bottom”，“left”</li>
 <li><strong>length</strong>：描述投射位置的小短线的长度</li>
 </ul>
 <div id="geom_rug" class="section level3">

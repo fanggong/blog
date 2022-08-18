@@ -9,14 +9,13 @@ output:
     toc: yes
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 <div id="TOC">
 <ul>
-<li><a href="#指数分布族">指数分布族</a></li>
-<li><a href="#伯努利分布的指数族形式">伯努利分布的指数族形式</a></li>
-<li><a href="#正态分布的指数族形式">正态分布的指数族形式</a></li>
-<li><a href="#分类分布的指数族形式">分类分布的指数族形式</a></li>
+<li><a href="#指数分布族" id="toc-指数分布族">指数分布族</a></li>
+<li><a href="#伯努利分布的指数族形式" id="toc-伯努利分布的指数族形式">伯努利分布的指数族形式</a></li>
+<li><a href="#正态分布的指数族形式" id="toc-正态分布的指数族形式">正态分布的指数族形式</a></li>
+<li><a href="#分类分布的指数族形式" id="toc-分类分布的指数族形式">分类分布的指数族形式</a></li>
 </ul>
 </div>
 
@@ -44,7 +43,7 @@ p(x|\mu) = \mu^x (1-\mu)^{1-x}
 这里为了与指数族的参数进行对应写成了这个形式，平常我们在书本中看到的最多的形式是：</p>
 <p><span class="math display">\[
 f(x) =
-\begin{cases} 
+\begin{cases}
 p,  &amp; if &amp; x = 1 \\
 1-p, &amp; if &amp; x = 0
 \end{cases}
@@ -57,14 +56,14 @@ p(x|\mu) &amp; = \exp \left\{ \ln {\mu^x (1-\mu)^{1-x}} \right\} \\
 &amp; = \exp \left\{ x \ln\mu + (1-x) \ln{(1-\mu)}\right\} \\
 &amp; = \exp \left\{ x \ln\mu - x \ln{(1-\mu)} + \ln{(1-\mu)}\right\} \\
 &amp; = \exp \left\{ x \ln{\mu \over {1-\mu}} + \ln{(1-\mu)} \right\} \\
-&amp; = (1-\mu) \exp \left\{ x \ln{\mu \over {1-\mu}} \right\} 
+&amp; = (1-\mu) \exp \left\{ x \ln{\mu \over {1-\mu}} \right\}
 \end{aligned}
 \]</span>
 于是有</p>
 <p><span class="math display">\[
 \boldsymbol {\eta = \ln{\mu \over {1-\mu}}, \quad
-\mu = {1 \over {1 + e^{-\eta}}}, \quad 
-u(x) = x, \quad 
+\mu = {1 \over {1 + e^{-\eta}}}, \quad
+u(x) = x, \quad
 h(x) = 1, \quad g(\eta) = 1-\mu}
 \]</span></p>
 </div>
@@ -73,21 +72,21 @@ h(x) = 1, \quad g(\eta) = 1-\mu}
 <hr />
 <p>正态分布的一般形式可以写为：</p>
 <p><span class="math display">\[
-p(x|\mu, \sigma) = {1 \over \sqrt{2\pi}\sigma} 
+p(x|\mu, \sigma) = {1 \over \sqrt{2\pi}\sigma}
 \exp \left\{ -{(x - \mu)^2 \over {2\sigma^2}} \right\}
 \]</span>
 将正态分布转换成指数族的标准形式：</p>
 <p><span class="math display">\[
-p(x|\mu, \sigma) =  {1 \over \sqrt{2\pi}\sigma} 
-\exp \left\{ -{x^2 \over 2\sigma^2} \right\} 
-\exp \left\{ - {\mu^2 \over 2\sigma^2} \right\} 
+p(x|\mu, \sigma) =  {1 \over \sqrt{2\pi}\sigma}
+\exp \left\{ -{x^2 \over 2\sigma^2} \right\}
+\exp \left\{ - {\mu^2 \over 2\sigma^2} \right\}
 \exp \left\{ {x\mu \over \sigma^2} \right\}
 \]</span>
 于是有</p>
 <p><span class="math display">\[
-\boldsymbol {\eta = \mu, \quad 
-u(x) = {x \over \sigma^2}, \quad 
-h(x) = {1 \over \sqrt{2\pi}\sigma} \exp \left\{ -{x^2 \over 2\sigma^2} \right\}, \quad 
+\boldsymbol {\eta = \mu, \quad
+u(x) = {x \over \sigma^2}, \quad
+h(x) = {1 \over \sqrt{2\pi}\sigma} \exp \left\{ -{x^2 \over 2\sigma^2} \right\}, \quad
 g(\eta) = \exp \left\{ - {\mu^2 \over 2\sigma^2} \right\} }
 \]</span></p>
 </div>

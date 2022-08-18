@@ -113,17 +113,16 @@
     </header>
 
     
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 <div id="TOC">
 <ul>
-<li><a href="#目标函数损失函数-正则项">目标函数：损失函数 + 正则项</a></li>
-<li><a href="#决策树集成">决策树集成</a></li>
-<li><a href="#xgboost的损失函数">xgboost的损失函数</a></li>
-<li><a href="#xgboost的正则项">xgboost的正则项</a></li>
-<li><a href="#xgboost的目标函数">xgboost的目标函数</a></li>
-<li><a href="#寻找最优结构的树">寻找最优结构的树</a></li>
-<li><a href="#几个比较纠结的问题">几个比较纠结的问题</a></li>
+<li><a href="#目标函数损失函数-正则项" id="toc-目标函数损失函数-正则项">目标函数：损失函数 + 正则项</a></li>
+<li><a href="#决策树集成" id="toc-决策树集成">决策树集成</a></li>
+<li><a href="#xgboost的损失函数" id="toc-xgboost的损失函数">xgboost的损失函数</a></li>
+<li><a href="#xgboost的正则项" id="toc-xgboost的正则项">xgboost的正则项</a></li>
+<li><a href="#xgboost的目标函数" id="toc-xgboost的目标函数">xgboost的目标函数</a></li>
+<li><a href="#寻找最优结构的树" id="toc-寻找最优结构的树">寻找最优结构的树</a></li>
+<li><a href="#几个比较纠结的问题" id="toc-几个比较纠结的问题">几个比较纠结的问题</a></li>
 </ul>
 </div>
 
@@ -170,7 +169,7 @@ L(\theta) = \sum_i \left[ y_i\ln(1 + e^{-\hat y_i}) + (1 - y_i)\ln(1 + e^{\hat y
 <span class="math display">\[
 \begin{aligned}
 obj^{(t)} &amp; = \sum_{i=1}^nl(y_i,\ \hat y_i^{(t)}) + \sum_{i=1}^t \Omega(f_i) \\
- &amp; = \sum_{i=1}^nl(y_i,\ \hat y_i^{(t-1)} + f_t(x_i)) + \Omega(f_t) + constant
+&amp; = \sum_{i=1}^nl(y_i,\ \hat y_i^{(t-1)} + f_t(x_i)) + \Omega(f_t) + constant
 \end{aligned}
 \]</span>
 即在前t-1棵树的基础上，寻找使得目标函数最小的第t棵树。这里的<span class="math inline">\(constant\)</span>表示的是前t-1棵树对应的正则项。</p>
@@ -178,9 +177,9 @@ obj^{(t)} &amp; = \sum_{i=1}^nl(y_i,\ \hat y_i^{(t)}) + \sum_{i=1}^t \Omega(f_i)
 <span class="math display">\[
 \begin{aligned}
 obj^{(t)} &amp; = \sum_{i=1}^nl(y_i,\ \hat y_i^{(t)}) + \sum_{i=1}^t \Omega(f_i) \\
- &amp; = \sum_{i=1}^n \left[ y_i - (\hat y_i^{(t-1)} + f_t(x_i))\right]^2 + \sum_{i=1}^t \Omega(f_i) \\
- &amp; = \sum_{i=1}^n \left[ y_i^2 - 2y_i \hat y_i^{(t-1)} - 2y_if_t(x_i) + (\hat y_i^{(t-1)})^2 + 2\hat y_i^{(t-1)}f_t(x_i) + f^2_t(x_i)\right] + \sum_{i=1}^t \Omega(f_i) \quad (1)\\
- &amp; = \sum_{i=1}^n \left[ 2(\hat y_i^{(t-1)} - y_i)f_t(x_i) + f_t^2(x_i)\right] + \Omega(f_t) + constant
+&amp; = \sum_{i=1}^n \left[ y_i - (\hat y_i^{(t-1)} + f_t(x_i))\right]^2 + \sum_{i=1}^t \Omega(f_i) \\
+&amp; = \sum_{i=1}^n \left[ y_i^2 - 2y_i \hat y_i^{(t-1)} - 2y_if_t(x_i) + (\hat y_i^{(t-1)})^2 + 2\hat y_i^{(t-1)}f_t(x_i) + f^2_t(x_i)\right] + \sum_{i=1}^t \Omega(f_i) \quad (1)\\
+&amp; = \sum_{i=1}^n \left[ 2(\hat y_i^{(t-1)} - y_i)f_t(x_i) + f_t^2(x_i)\right] + \Omega(f_t) + constant
 \end{aligned}
 \]</span></p>
 <p>这里的<span class="math inline">\(constant\)</span>包括了前t-1棵树对应的正则项以及(1)式第一项中的常数部分。</p>
@@ -197,7 +196,7 @@ f(x) = f(a) + {f&#39;(a) \over 1!}(x-a) + {f^{(2)}(a) \over 2!}(x-a)^2 +\ ...\ +
 <span class="math display">\[
 \begin{aligned}
 obj^{(t)} &amp; = \sum_{i=1}^n l\left( y_i,\ \hat y_i^{(t-1)} + f_t(x_i)\right) + \sum_{i=1}^t \Omega(f_i) \\
- &amp; = \sum_{i=1}^n \left[ l(y_i, \hat y_i^{(t-1)}) + g_if_t(x_i) + {1 \over 2} h_i f_t^2(x_i)\right] + \sum_{i=1}^t \Omega(f_i)
+&amp; = \sum_{i=1}^n \left[ l(y_i, \hat y_i^{(t-1)}) + g_if_t(x_i) + {1 \over 2} h_i f_t^2(x_i)\right] + \sum_{i=1}^t \Omega(f_i)
 \end{aligned}
 \]</span>
 <strong>对应到上方的泰勒展开式，<span class="math inline">\(f\)</span>就是关于预测值<span class="math inline">\(\hat y\)</span>的损失函数<span class="math inline">\(l\)</span>，这里令泰勒展开式中左侧的<span class="math inline">\(x = \hat y_i^{(t-1)} + f_t(x_i)\)</span>，右侧的<span class="math inline">\(a = \hat y_i^{(t-1)}\)</span>。那么<span class="math inline">\(g_i\)</span>就是对损失函数<span class="math inline">\(l\)</span>求一阶导数后将<span class="math inline">\(\hat y_i^{(t-1)}\)</span>带入得到的值，同理，<span class="math inline">\(h_i\)</span>为对损失函数<span class="math inline">\(l\)</span>求二阶导数后将<span class="math inline">\(\hat y_i^{(t-1)}\)</span>带入得到的值。</strong></p>
@@ -228,7 +227,7 @@ f_t(x) = \omega_{q(x)}
 <span class="math display">\[
 \begin{aligned}
 obj^{(t)} &amp; = \sum_{i=1}^n \left[ g_i\omega_{q(x_i)} + {1 \over 2} h_i \omega_{q(x_i)}^2\right] + \gamma T + {1 \over 2}\lambda \sum_{j=1}^T \omega_j^2 \\
- &amp; = \sum_{j=1}^T \left[ (\sum_{i \in I_j}g_i)\omega_j + {1 \over 2}(\sum_{i \in I_j}h_i +\lambda)\omega_j^2 \right] + \gamma T
+&amp; = \sum_{j=1}^T \left[ (\sum_{i \in I_j}g_i)\omega_j + {1 \over 2}(\sum_{i \in I_j}h_i +\lambda)\omega_j^2 \right] + \gamma T
 \end{aligned}
 \]</span>
 <strong>写成这种形式很好理解，因为在同一个叶子节点上的样本的预测值是一样的，所以<span class="math inline">\(n\)</span>个样本的损失函数之和可以分<span class="math inline">\(T\)</span>个叶子节点进行计算。</strong></p>

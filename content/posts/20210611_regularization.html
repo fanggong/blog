@@ -10,14 +10,13 @@ output:
     toc_depth: 2
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 <div id="TOC">
 <ul>
-<li><a href="#线性回归的正则化">线性回归的正则化</a></li>
-<li><a href="#关于l2参数正则化的理论分析">关于L2参数正则化的理论分析</a></li>
-<li><a href="#关于l1参数正则化的理论分析">关于L1参数正则化的理论分析</a></li>
-<li><a href="#l2正则化和l1正则化的比较">L2正则化和L1正则化的比较</a></li>
+<li><a href="#线性回归的正则化" id="toc-线性回归的正则化">线性回归的正则化</a></li>
+<li><a href="#关于l2参数正则化的理论分析" id="toc-关于l2参数正则化的理论分析">关于L2参数正则化的理论分析</a></li>
+<li><a href="#关于l1参数正则化的理论分析" id="toc-关于l1参数正则化的理论分析">关于L1参数正则化的理论分析</a></li>
+<li><a href="#l2正则化和l1正则化的比较" id="toc-l2正则化和l1正则化的比较">L2正则化和L1正则化的比较</a></li>
 </ul>
 </div>
 
@@ -76,9 +75,9 @@ A = Q \Lambda Q^{-1} = Q \Lambda Q^T
 <span class="math display">\[
 \begin{aligned}
 \tilde \omega &amp; =  (H + \alpha I)^{-1} H \omega^* \\
- &amp; = (Q \Lambda Q^T + \alpha I)^{-1} Q \Lambda Q^T \omega^* \\
- &amp; = [Q (\Lambda + \alpha I) Q^T]^{-1} Q \Lambda Q^T \omega^* \\
- &amp; = Q (\Lambda + \alpha I)^{-1} \Lambda Q^T \omega^*
+&amp; = (Q \Lambda Q^T + \alpha I)^{-1} Q \Lambda Q^T \omega^* \\
+&amp; = [Q (\Lambda + \alpha I) Q^T]^{-1} Q \Lambda Q^T \omega^* \\
+&amp; = Q (\Lambda + \alpha I)^{-1} \Lambda Q^T \omega^*
 \end{aligned}
 \]</span>
 于是可以看到，<strong>权重衰减的效果是沿着由<span class="math inline">\(H\)</span>的特征向量所定义的轴缩放<span class="math inline">\(\omega^*\)</span>，具体来说，会根据<span class="math inline">\(\lambda_i \over {\lambda_i + \alpha}\)</span>因子缩放与<span class="math inline">\(H\)</span>第<span class="math inline">\(i\)</span>个特征向量对齐的<span class="math inline">\(\omega^*\)</span>的分量</strong>。</p>
