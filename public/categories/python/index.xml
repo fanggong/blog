@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Python on Connecting the dots</title>
-    <link>https://fanggong.pub/categories/python/</link>
+    <link>121.4.52.73/categories/python/</link>
     <description>Recent content in Python on Connecting the dots</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Tue, 22 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://fanggong.pub/categories/python/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 22 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="121.4.52.73/categories/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>scikit-learn的特征选择相关接口整理</title>
-      <link>https://fanggong.pub/posts/20210622_sklearn_feature_selection_api/</link>
+      <link>121.4.52.73/posts/20210622_sklearn_feature_selection_api/</link>
       <pubDate>Tue, 22 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://fanggong.pub/posts/20210622_sklearn_feature_selection_api/</guid>
+      <guid>121.4.52.73/posts/20210622_sklearn_feature_selection_api/</guid>
       <description>sklearn.feature_selection.GenericUnivariateSelect sklearn.feature_selection.SelectFromModel sklearn.feature_selection.SequentialFeatureSelector sklearn.feature_selection.VarianceThreshold sklearn.feature_selection.RFE 不要重复造轮子。
 sklearn.feature_selection.GenericUnivariateSelect 对每个特征与目标变量求score_func的值，根据结果按照mode选择满足param条件的特征。
 score_func应该满足接收n个特征变量和1个目标变量，返回一对长度为n的数组分别表示scores和pvalues。sklearn中提供了5个可能高频率使用的score_func：
