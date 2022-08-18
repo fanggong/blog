@@ -1,4 +1,4 @@
-baseurl: 121.4.52.73
+# baseurl: https://fanggong.pub
 title: Fang Yongchao
 theme: hugo-coder-portfolio
 DefaultContentLanguage: ch

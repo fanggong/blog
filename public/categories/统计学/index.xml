@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>统计学 on Connecting the dots</title>
-    <link>121.4.52.73/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6/</link>
+    <link>/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6/</link>
     <description>Recent content in 统计学 on Connecting the dots</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Thu, 13 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="121.4.52.73/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 13 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>差异显著性检验</title>
-      <link>121.4.52.73/posts/20210513_difference_analysis/</link>
+      <link>/posts/20210513_difference_analysis/</link>
       <pubDate>Thu, 13 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>121.4.52.73/posts/20210513_difference_analysis/</guid>
+      <guid>/posts/20210513_difference_analysis/</guid>
       <description> 单样本的差异显著性分析 两样本的差异显著性分析 多样本的差异显著性分析 各检验方法的R语言实现 下面记述的各种情况及适用的差异显著性检验的相关方法都是以样本之间相互独立为前提的。对于样本之间不相互独立的情况，应该针对具体情况使用特定的方法。
 单样本的差异显著性分析 连续变量的单样本 对于连续变量的单样本，一般需要检验的是该样本是否取自于均值为\(\mu_0\)的总体，其采用的检验方法一般为t检验或z检验。根据Wikipedia，当样本量较小且样本来自于标准差未知的正态总体时，适用t检验；当样本量较大或总体方差已知时，由于中心极限定理，可以使用z检验。
 （这个描述从第一次接触统计学开始就困扰着我，总体方差怎么会已知，都已知总体方差了总体均值为什么会未知）
@@ -29,10 +29,10 @@
     
     <item>
       <title>极大似然估计(MLE)和最大后验概率估计(MAP)</title>
-      <link>121.4.52.73/posts/20210510_mle_and_map/</link>
+      <link>/posts/20210510_mle_and_map/</link>
       <pubDate>Mon, 10 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>121.4.52.73/posts/20210510_mle_and_map/</guid>
+      <guid>/posts/20210510_mle_and_map/</guid>
       <description>频率学派与贝叶斯学派 极大似然估计(MLE) 最大后验概率估计(MAP) 频率学派与贝叶斯学派 关于频率学派与贝叶斯学派的标准解释网上有很多，下面是个人的一些理解。
 频率学派 频率学派认为世界是确定的，也即某个事件发生的概率是确定的。在一次试验中无论该事件发生还是不发生都只是其发生概率\(p\)的一次体现而已。所以当进行多次重复试验时，事件发生的次数占总试验次数的比例就会逐渐接近这个事件的发生概率\(p\)。
 在上述的前提下，如果想要知道这个\(p\)，那么只需要进行多次试验，然后解出\(p\)的最可能的取值即可。这就是从最初开始学习统计学时就接触到的极大似然估计(MLE)。很显然，在频率学派的方法下，当进行足够多的试验后即积累足够的数据量时我们可以得到一个很接近\(p\)的估计。
@@ -49,10 +49,10 @@
     
     <item>
       <title>生存分析及R语言实现</title>
-      <link>121.4.52.73/posts/20210406_survival_analysis/</link>
+      <link>/posts/20210406_survival_analysis/</link>
       <pubDate>Tue, 06 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>121.4.52.73/posts/20210406_survival_analysis/</guid>
+      <guid>/posts/20210406_survival_analysis/</guid>
       <description>相关概念 Kaplan-Meier方法 Log-rank检验 Cox比例风险回归模型 相关包：survival，survminer
 相关概念 生存分析主要用于分析感兴趣的事件发生所需要的时间以及变量对事件发生的影响。
 有如下几个相关概念：
@@ -66,10 +66,10 @@
     
     <item>
       <title>关于指数族的定义</title>
-      <link>121.4.52.73/posts/20210322_exponential_family/</link>
+      <link>/posts/20210322_exponential_family/</link>
       <pubDate>Mon, 22 Mar 2021 00:00:00 +0000</pubDate>
       
-      <guid>121.4.52.73/posts/20210322_exponential_family/</guid>
+      <guid>/posts/20210322_exponential_family/</guid>
       <description>指数分布族 伯努利分布的指数族形式 正态分布的指数族形式 分类分布的指数族形式 指数分布族的概念主要应用于广义线性模型（GLM）。
 指数分布族 指数分布族（exponential family）的分布可以写成如下形式：
 \[ p(x|\eta) = h(x) g(\eta) \exp \left\{\eta^Tu(x)\right\} \]

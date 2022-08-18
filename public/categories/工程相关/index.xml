@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>工程相关 on Connecting the dots</title>
-    <link>121.4.52.73/categories/%E5%B7%A5%E7%A8%8B%E7%9B%B8%E5%85%B3/</link>
+    <link>/categories/%E5%B7%A5%E7%A8%8B%E7%9B%B8%E5%85%B3/</link>
     <description>Recent content in 工程相关 on Connecting the dots</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Fri, 21 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="121.4.52.73/categories/%E5%B7%A5%E7%A8%8B%E7%9B%B8%E5%85%B3/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 21 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="/categories/%E5%B7%A5%E7%A8%8B%E7%9B%B8%E5%85%B3/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>R语言项目环境管理</title>
-      <link>121.4.52.73/posts/20210521_renv/</link>
+      <link>/posts/20210521_renv/</link>
       <pubDate>Fri, 21 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>121.4.52.73/posts/20210521_renv/</guid>
+      <guid>/posts/20210521_renv/</guid>
       <description>环境初始化 对环境管理 renv的全局缓存 移除环境 相关包：renv
 环境初始化 在一个新的项目中使用renv::init()对环境进行初始化，该操作会生成一个名为renv的文件夹和名为renv.lock的文件。
 renv下保存了在环境中已安装的包的文件（准确的说是已安装包的符号链接文件），而renv.lock指定了该项目对renv下的包的相关依赖。
