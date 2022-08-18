@@ -2,7 +2,7 @@
 title: Fang Yongchao
 theme: hugo-coder-portfolio
 DefaultContentLanguage: ch
-paginate: 25
+paginate: 20
 pygmentsstyle: b2
 pygmentscodefences: yes
 pygmentscodefencesguesssyntax: yes
