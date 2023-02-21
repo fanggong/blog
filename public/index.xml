@@ -331,5 +331,14 @@ par(mar = c(0, 0, 0, 0), family = &amp;quot;HannotateSC-W5&amp;quot;) openplotma
 剑道二段。</description>
     </item>
     
+    <item>
+      <title>半夜关于Crypto的一些心得（2023年2月22日凌晨）</title>
+      <link>/posts/20230222_record/</link>
+      <pubDate>Mon, 22 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/20230222_record/</guid>
+      <description> 风险控制是最重要的：100%胜率的5%收益率和50%胜率翻倍否则亏损90%，两者都是盈利5%的期望，那么一定选择前者 复利是非常强大的：每天5%收益率，那么一个月本金可以翻4倍 低杠杆滚仓：价格上涨20%，2倍杠杆盈利40%，如果在上涨10%的时候进行一次滚仓，那么盈利可以达到60%，同时可以灵活选择滚仓的时机，在一个比较明确的价格回调的时间点进行滚仓还能进一步扩大收益 控制仓位就是控制心态：永远不要做赌狗，再明确的趋势也要控制好仓位 </description>
+    </item>
+    
   </channel>
 </rss>
