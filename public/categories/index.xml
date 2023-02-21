@@ -6,7 +6,16 @@
     <description>Recent content in Categories on Connecting the dots</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Tue, 22 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 21 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Crypto</title>
+      <link>/categories/crypto/</link>
+      <pubDate>Tue, 21 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/crypto/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Python</title>
       <link>/categories/python/</link>
@@ -76,15 +85,6 @@
       <pubDate>Wed, 10 Mar 2021 00:00:00 +0000</pubDate>
       
       <guid>/categories/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%8A%A5%E5%91%8A/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Crypto</title>
-      <link>/categories/crypto/</link>
-      <pubDate>Mon, 22 Feb 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/crypto/</guid>
       <description></description>
     </item>
     
