@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Connecting the dots</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Tue, 21 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 03 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>我的交易规则（v0.1)</title>
+      <link>/posts/20230303_trade_rule/</link>
+      <pubDate>Fri, 03 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/20230303_trade_rule/</guid>
+      <description>杠杆倍数x2 单个仓位开仓保证金不超过N，同一标的同一方向加仓或增加保证金后保证金不超过2N N的初始金额为初始本金的1/8，每当总本金盈利25%或亏损20%时对N进行同比例调整 除清仓操作外不进行市价委托 2023年2月20日 至 2023年3月2日 11天，收益率16.26%</description>
+    </item>
+    
     <item>
       <title>半夜关于Crypto的一些心得（2023年2月21日深夜）</title>
       <link>/posts/20230221_record/</link>
