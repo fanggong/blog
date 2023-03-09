@@ -1,4 +1,4 @@
-# baseurl: 
+baseurl: http://kendo.sc.cn
 title: Fang Yongchao
 theme: hugo-coder-portfolio
 DefaultContentLanguage: ch

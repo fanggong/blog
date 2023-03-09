@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Crypto on Connecting the dots</title>
-    <link>/categories/crypto/</link>
+    <link>http://kendo.sc.cn/categories/crypto/</link>
     <description>Recent content in Crypto on Connecting the dots</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Fri, 03 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="/categories/crypto/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 03 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://kendo.sc.cn/categories/crypto/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>我的交易规则（v0.1)</title>
-      <link>/posts/20230303_trade_rule/</link>
+      <link>http://kendo.sc.cn/posts/20230303_trade_rule/</link>
       <pubDate>Fri, 03 Mar 2023 00:00:00 +0000</pubDate>
       
-      <guid>/posts/20230303_trade_rule/</guid>
+      <guid>http://kendo.sc.cn/posts/20230303_trade_rule/</guid>
       <description>杠杆倍数x2 单个仓位开仓保证金不超过N，同一标的同一方向加仓或增加保证金后保证金不超过2N N的初始金额为初始本金的1/8，每当总本金盈利25%或亏损20%时对N进行同比例调整 除清仓操作外不进行市价委托 2023年2月20日 至 2023年3月2日 11天，收益率16.26%</description>
     </item>
     
     <item>
       <title>半夜关于Crypto的一些心得（2023年2月21日深夜）</title>
-      <link>/posts/20230221_record/</link>
+      <link>http://kendo.sc.cn/posts/20230221_record/</link>
       <pubDate>Tue, 21 Feb 2023 00:00:00 +0000</pubDate>
       
-      <guid>/posts/20230221_record/</guid>
+      <guid>http://kendo.sc.cn/posts/20230221_record/</guid>
       <description> 风险控制是最重要的：100%胜率的5%收益率和50%胜率翻倍否则亏损90%，两者都是盈利5%的期望，那么一定选择前者 复利是非常强大的：每天5%收益率，那么一个月本金可以翻4倍 低杠杆滚仓：价格上涨20%，2倍杠杆盈利40%，如果在上涨10%的时候进行一次滚仓，那么盈利可以达到60%，同时可以灵活选择滚仓的时机，在一个比较明确的价格回调的时间点进行滚仓还能进一步扩大收益 控制仓位就是控制心态：永远不要做赌狗，再明确的趋势也要控制好仓位 </description>
     </item>
     
