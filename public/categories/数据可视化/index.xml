@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>数据可视化 on Connecting the dots</title>
-    <link>http://kendo.sc.cn/categories/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/</link>
+    <link>/categories/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/</link>
     <description>Recent content in 数据可视化 on Connecting the dots</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Thu, 17 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://kendo.sc.cn/categories/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 17 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="/categories/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>htmlwidgets包的使用</title>
-      <link>http://kendo.sc.cn/posts/20210617_create_your_own_widgets/</link>
+      <link>/posts/20210617_create_your_own_widgets/</link>
       <pubDate>Thu, 17 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://kendo.sc.cn/posts/20210617_create_your_own_widgets/</guid>
+      <guid>/posts/20210617_create_your_own_widgets/</guid>
       <description>项目结构搭建 相关依赖的配置 R与JS的绑定 对htmlwidgets的size进行调整 完善package的其它信息 写在最后 htmlwidgets包为R提供了一个封装JS代码的框架。通过JS生成的htmlwidgets可以直接使用在Rmarkdown和Shiny中。
 本文记录了一个简单的htmlwidgets的开发流程，封装了一个JS库flipdown.js，可以在Rmarkdown或Shiny中创建一个倒计时时钟。
 封装的JS代码和R函数以一个包的形式存在，该包已经上传到CRAN，可以通过以下代码安装：

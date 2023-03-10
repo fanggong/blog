@@ -7,13 +7,13 @@ categories:
 output:
   blogdown::html_page:
     toc: yes
-draft: true
 ---
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 ```
 
+在R语言编程中个人主要还是使用函数式编程，但还是记录一下以便将来查询。
 
 ## 基础类型
 

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>自动化报告 on Connecting the dots</title>
-    <link>http://kendo.sc.cn/categories/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%8A%A5%E5%91%8A/</link>
+    <link>/categories/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%8A%A5%E5%91%8A/</link>
     <description>Recent content in 自动化报告 on Connecting the dots</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Wed, 10 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://kendo.sc.cn/categories/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%8A%A5%E5%91%8A/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 10 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%8A%A5%E5%91%8A/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>用R绘制流程图</title>
-      <link>http://kendo.sc.cn/posts/20210310_diagram/</link>
+      <link>/posts/20210310_diagram/</link>
       <pubDate>Wed, 10 Mar 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://kendo.sc.cn/posts/20210310_diagram/</guid>
+      <guid>/posts/20210310_diagram/</guid>
       <description>创建空画板 规划坐标 插入BOX 插入ARROW 相关包：diagram
 原理相当简单，创建一个空的画板，规划坐标，然后在上面插入BOX和ARROW即可。由于是在base R的体系中进行作图，所以有很高的自由度。
 创建空画板 该函数中有一个asp参数，将它设为1，这样可以保证在设定BOX的长宽时得到的是一个稳定的图形。

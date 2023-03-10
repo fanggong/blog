@@ -1,5 +1,5 @@
 ---
-title: 我的交易规则（v0.1)
+title: 交易规则（v0.1)
 author: Fang Yongchao
 date: "2023-03-03"
 categories:

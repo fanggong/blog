@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>R语言 on Connecting the dots</title>
-    <link>http://kendo.sc.cn/categories/r%E8%AF%AD%E8%A8%80/</link>
+    <link>/categories/r%E8%AF%AD%E8%A8%80/</link>
     <description>Recent content in R语言 on Connecting the dots</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Thu, 17 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://kendo.sc.cn/categories/r%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 17 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="/categories/r%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>htmlwidgets包的使用</title>
-      <link>http://kendo.sc.cn/posts/20210617_create_your_own_widgets/</link>
+      <link>/posts/20210617_create_your_own_widgets/</link>
       <pubDate>Thu, 17 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://kendo.sc.cn/posts/20210617_create_your_own_widgets/</guid>
+      <guid>/posts/20210617_create_your_own_widgets/</guid>
       <description>项目结构搭建 相关依赖的配置 R与JS的绑定 对htmlwidgets的size进行调整 完善package的其它信息 写在最后 htmlwidgets包为R提供了一个封装JS代码的框架。通过JS生成的htmlwidgets可以直接使用在Rmarkdown和Shiny中。
 本文记录了一个简单的htmlwidgets的开发流程，封装了一个JS库flipdown.js，可以在Rmarkdown或Shiny中创建一个倒计时时钟。
 封装的JS代码和R函数以一个包的形式存在，该包已经上传到CRAN，可以通过以下代码安装：
@@ -40,10 +40,10 @@ library(flipdownWidgets) flipdownWidgets(Sys.time() + 60*60*24*100, width = &amp
     
     <item>
       <title>Shiny：对Reactive对象进行修改</title>
-      <link>http://kendo.sc.cn/posts/20210606_shiny_update_reactive_object/</link>
+      <link>/posts/20210606_shiny_update_reactive_object/</link>
       <pubDate>Sun, 06 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://kendo.sc.cn/posts/20210606_shiny_update_reactive_object/</guid>
+      <guid>/posts/20210606_shiny_update_reactive_object/</guid>
       <description>问题背景 实现方式 示例App 问题背景 需要根据初始输入生成一个对象，该对象以某种形式展示。同时，针对其它的输入（多个输入源的多次输入），对该对象进行多次修改，每次修改后，该对象的展示结果对应发生改变。当初始输入改变时，重新初始化该对象。
 实现方式 很显然应该使用reactive对象，但是试了很多种方法，发现通过reactive()生成的reactive对象是无法进行任何修改的，即上方的“针对其它的输入对对象进行多次修改”无法实现。最后发现貌似只有通过reactiveValues()才能实现该功能。
 示例App library(shiny) library(ggplot2) ui &amp;lt;- fluidPage( sidebarLayout( sidebarPanel( width = 5, fluidRow( column(6, numericInput(&amp;quot;mean&amp;quot;, &amp;quot;均值&amp;quot;, value = 10)), column(6, numericInput(&amp;quot;sd&amp;quot;, &amp;quot;方差&amp;quot;, value = 10)) ), hr(), actionButton(&amp;quot;generate&amp;quot;, &amp;quot;生成随机数&amp;quot;, width = &amp;quot;100%&amp;quot;), hr(), actionButton(&amp;quot;normalize&amp;quot;, &amp;quot;归一化&amp;quot;, width = &amp;quot;100%&amp;quot;), hr(), actionButton(&amp;quot;standardize&amp;quot;, &amp;quot;标准化&amp;quot;, width = &amp;quot;100%&amp;quot;), hr(), actionButton(&amp;quot;square&amp;quot;, &amp;quot;平方&amp;quot;, width = &amp;quot;100%&amp;quot;) ), mainPanel( width = 7, verbatimTextOutput(&amp;quot;numbers&amp;quot;, placeholder = TRUE), plotOutput(&amp;quot;plot&amp;quot;) ) ) ) server &amp;lt;- function(input, output, session) { dat &amp;lt;- reactiveValues(numbers = NULL) observeEvent(input$generate, { req(input$mean, input$sd) dat$numbers &amp;lt;- reactive({ rnorm(100, mean = isolate(input$mean), sd = isolate(input$sd)) }) }) output$numbers &amp;lt;- renderPrint({ req(dat$numbers) summary(dat$numbers()) }) output$plot &amp;lt;- renderPlot({ req(dat$numbers) ggplot(data.</description>
@@ -51,10 +51,10 @@ library(flipdownWidgets) flipdownWidgets(Sys.time() + 60*60*24*100, width = &amp
     
     <item>
       <title>R语言项目环境管理</title>
-      <link>http://kendo.sc.cn/posts/20210521_renv/</link>
+      <link>/posts/20210521_renv/</link>
       <pubDate>Fri, 21 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://kendo.sc.cn/posts/20210521_renv/</guid>
+      <guid>/posts/20210521_renv/</guid>
       <description>环境初始化 对环境管理 renv的全局缓存 移除环境 相关包：renv
 环境初始化 在一个新的项目中使用renv::init()对环境进行初始化，该操作会生成一个名为renv的文件夹和名为renv.lock的文件。
 renv下保存了在环境中已安装的包的文件（准确的说是已安装包的符号链接文件），而renv.lock指定了该项目对renv下的包的相关依赖。
@@ -70,10 +70,10 @@ Mac：~/Library/Application Support/renv Linux：~/.local/share/renv Windows：%
     
     <item>
       <title>差异显著性检验</title>
-      <link>http://kendo.sc.cn/posts/20210513_difference_analysis/</link>
+      <link>/posts/20210513_difference_analysis/</link>
       <pubDate>Thu, 13 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://kendo.sc.cn/posts/20210513_difference_analysis/</guid>
+      <guid>/posts/20210513_difference_analysis/</guid>
       <description> 单样本的差异显著性分析 两样本的差异显著性分析 多样本的差异显著性分析 各检验方法的R语言实现 下面记述的各种情况及适用的差异显著性检验的相关方法都是以样本之间相互独立为前提的。对于样本之间不相互独立的情况，应该针对具体情况使用特定的方法。
 单样本的差异显著性分析 连续变量的单样本 对于连续变量的单样本，一般需要检验的是该样本是否取自于均值为\(\mu_0\)的总体，其采用的检验方法一般为t检验或z检验。根据Wikipedia，当样本量较小且样本来自于标准差未知的正态总体时，适用t检验；当样本量较大或总体方差已知时，由于中心极限定理，可以使用z检验。
 （这个描述从第一次接触统计学开始就困扰着我，总体方差怎么会已知，都已知总体方差了总体均值为什么会未知）
@@ -90,10 +90,10 @@ Mac：~/Library/Application Support/renv Linux：~/.local/share/renv Windows：%
     
     <item>
       <title>生存分析及R语言实现</title>
-      <link>http://kendo.sc.cn/posts/20210406_survival_analysis/</link>
+      <link>/posts/20210406_survival_analysis/</link>
       <pubDate>Tue, 06 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://kendo.sc.cn/posts/20210406_survival_analysis/</guid>
+      <guid>/posts/20210406_survival_analysis/</guid>
       <description>相关概念 Kaplan-Meier方法 Log-rank检验 Cox比例风险回归模型 相关包：survival，survminer
 相关概念 生存分析主要用于分析感兴趣的事件发生所需要的时间以及变量对事件发生的影响。
 有如下几个相关概念：
@@ -107,10 +107,10 @@ Mac：~/Library/Application Support/renv Linux：~/.local/share/renv Windows：%
     
     <item>
       <title>R语言的字符串处理</title>
-      <link>http://kendo.sc.cn/posts/20210319_stringr/</link>
+      <link>/posts/20210319_stringr/</link>
       <pubDate>Fri, 19 Mar 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://kendo.sc.cn/posts/20210319_stringr/</guid>
+      <guid>/posts/20210319_stringr/</guid>
       <description>对单个字符串进行操作 对空格进行操作 locale sensitive pattern匹配 base R与stringr的性能比较 相关包：stringr
 根据Introduction to stringr，该包主要包含四种类型的函数：
 对字符串进行操作 对空格的增加、删除或其他操作 locale sensitive：可以理解为针对不同语言输出会不一样的函数 pattern匹配函数：支持四种不同的匹配模式，最常用的还是正则表达式 对应地，base R中也有相对应的函数达到同样的效果。在各种环境下测试，发现base R中字符串操作函数的性能在数据较大情况下普遍不如stringr。
@@ -122,11 +122,38 @@ string &amp;lt;- c(&amp;quot;fang yongchao&amp;quot;, &amp;quot;stringr&amp;quot
     </item>
     
     <item>
+      <title>R的面向对象编程</title>
+      <link>/posts/20210313_object_oriented/</link>
+      <pubDate>Fri, 12 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/20210313_object_oriented/</guid>
+      <description>基础类型 S3 定义类和创建对象 定义新的泛型函数 定义新的方法 S4 定义类和创建对象 定义新的泛型函数 定义新的方法 RC 定义类和创建对象 定义类的方法 类的继承 R6 定义类、方法和创建对象 Active binding 类的继承 在R语言编程中个人主要还是使用函数式编程，但还是记录一下以便将来查询。
+基础类型 最常见的基础类型就是向量和列表 同时基础类型还包括函数、环境和其他更独特的对象 S3 目前使用的大部分对象都是S3对象 在S3中，方法属于泛型函数，一个泛型函数会有多个方法，可以用methods()来查看泛型函数的方法 S3并不需要一个正式的类定义，需要的仅仅是一个构造函数 data.frame是一个S3对象
+df &amp;lt;- data.frame(x = 1:3, y = 4:6) pryr::otype(df) ## [1] &amp;quot;S3&amp;quot; mean()是一个泛型函数
+pryr::ftype(mean) ## [1] &amp;quot;s3&amp;quot; &amp;quot;generic&amp;quot; mean.Date()是一个方法
+pryr::ftype(mean.Date) ## [1] &amp;quot;s3&amp;quot; &amp;quot;method&amp;quot; 查看mean()的所有方法
+methods(mean) ## [1] mean.Date mean.default mean.difftime mean.POSIXct mean.POSIXlt ## [6] mean.quosure* ## see &amp;#39;?methods&amp;#39; for accessing help and source code 定义类和创建对象 S3通过定义构造函数来定义类</description>
+    </item>
+    
+    <item>
+      <title>重复测量数据方差分析的R语言实现</title>
+      <link>/posts/20210311_repeat_measure_anova/</link>
+      <pubDate>Thu, 11 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/20210311_repeat_measure_anova/</guid>
+      <description>数据 正态性检验 方差齐性检验 方差分析 球形检验 p值校正 相关包：car
+在这里仅记录重复测量数据方差分析的R语言实现及结果解释，不涉及其原理说明。
+重复测量数据的方差分析的步骤大致如下图：
+Figure 1: 重复测量数据方差分析流程 数据 使用下面的代码造一份假数据，50个对象，分成5个处理分组（甲乙丙丁戊），对每个对象进行4次重复测量。
+set.seed(2414) dat &amp;lt;- data.frame( ID = gl(50, 1), group = gl(5, 10, labels = c(&amp;quot;甲&amp;quot;, &amp;quot;乙&amp;quot;, &amp;quot;丙&amp;quot;, &amp;quot;丁&amp;quot;, &amp;quot;戊&amp;quot;)), measure_1 = round(rnorm(50, 50), 2), measure_2 = round(rnorm(50, 30), 2), measure_3 = round(rnorm(50, 20), 2), measure_4 = round(rnorm(50, 40), 2) ) ID group measure_1 measure_2 measure_3 measure_4 1 甲 51.10 29.29 19.50 39.58 2 甲 49.96 28.</description>
+    </item>
+    
+    <item>
       <title>用R绘制流程图</title>
-      <link>http://kendo.sc.cn/posts/20210310_diagram/</link>
+      <link>/posts/20210310_diagram/</link>
       <pubDate>Wed, 10 Mar 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://kendo.sc.cn/posts/20210310_diagram/</guid>
+      <guid>/posts/20210310_diagram/</guid>
       <description>创建空画板 规划坐标 插入BOX 插入ARROW 相关包：diagram
 原理相当简单，创建一个空的画板，规划坐标，然后在上面插入BOX和ARROW即可。由于是在base R的体系中进行作图，所以有很高的自由度。
 创建空画板 该函数中有一个asp参数，将它设为1，这样可以保证在设定BOX的长宽时得到的是一个稳定的图形。
