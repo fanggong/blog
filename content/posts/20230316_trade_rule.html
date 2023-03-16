@@ -1,0 +1,107 @@
+---
+title: 交易规则（v0.2)
+author: Fang Yongchao
+date: "2023-03-16"
+categories:
+  - "Crypto"
+output:
+  blogdown::html_page:
+    toc: yes
+---
+
+<script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
+<link href="/rmarkdown-libs/lightable/lightable.css" rel="stylesheet" />
+
+
+<ol style="list-style-type: decimal">
+<li>杠杆倍数不超过x3</li>
+<li>单个仓位开仓保证金不超过N，同一标的同一方向加仓或增加保证金后保证金不超过2N，N的初始金额为初始本金的1/8，每当总本金盈利25%或亏损20%时对N进行同比例调整</li>
+<li>开仓时下止损委托，动态调整，最大-36%止损（严守）</li>
+<li>除清仓操作外不进行市价委托</li>
+</ol>
+<p>2023年3月3日 至 2023年3月15日 13天，收益率-11.77%</p>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table class=" lightable-paper" style="font-family: Fira Mono; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+开仓时间
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+平仓时间
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+合约
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+仓位类型
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+开仓均价
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+平仓均价
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+收益率
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+2023/03/13 14:03:57
+</td>
+<td style="text-align:left;">
+2023/03/14 22:29:41
+</td>
+<td style="text-align:left;">
+CFXUSDT 永续
+</td>
+<td style="text-align:left;">
+逐仓(2.0x)
+</td>
+<td style="text-align:left;">
+0.22185
+</td>
+<td style="text-align:left;">
+0.33336
+</td>
+<td style="text-align:left;">
+-100.53%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+2023/02/28 14:30:50
+</td>
+<td style="text-align:left;">
+2023/03/13 11:21:53
+</td>
+<td style="text-align:left;">
+AGLDUSDT 永续
+</td>
+<td style="text-align:left;">
+逐仓(2.0x)
+</td>
+<td style="text-align:left;">
+0.5396
+</td>
+<td style="text-align:left;">
+0.3791
+</td>
+<td style="text-align:left;">
+-59.51%
+</td>
+</tr>
+</tbody>
+</table>
+</div>
