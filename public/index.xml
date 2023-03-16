@@ -6,7 +6,17 @@
     <description>Recent content on Connecting the dots</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Fri, 03 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 16 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>交易规则（v0.2)</title>
+      <link>/posts/20230316_trade_rule/</link>
+      <pubDate>Thu, 16 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/20230316_trade_rule/</guid>
+      <description> 杠杆倍数不超过x3 单个仓位开仓保证金不超过N，同一标的同一方向加仓或增加保证金后保证金不超过2N，N的初始金额为初始本金的1/8，每当总本金盈利25%或亏损20%时对N进行同比例调整 开仓时下止损委托，动态调整，最大-36%止损（严守） 除清仓操作外不进行市价委托 2023年3月3日 至 2023年3月15日 13天，收益率-11.77%
+开仓时间 平仓时间 合约 仓位类型 开仓均价 平仓均价 收益率 1 2023/03/13 14:03:57 2023/03/14 22:29:41 CFXUSDT 永续 逐仓(2.0x) 0.22185 0.33336 -100.53% 2 2023/02/28 14:30:50 2023/03/13 11:21:53 AGLDUSDT 永续 逐仓(2.0x) 0.5396 0.3791 -59.51% </description>
+    </item>
+    
     <item>
       <title>交易规则（v0.1)</title>
       <link>/posts/20230303_trade_rule/</link>
@@ -14,15 +24,6 @@
       
       <guid>/posts/20230303_trade_rule/</guid>
       <description>杠杆倍数x2 单个仓位开仓保证金不超过N，同一标的同一方向加仓或增加保证金后保证金不超过2N N的初始金额为初始本金的1/8，每当总本金盈利25%或亏损20%时对N进行同比例调整 除清仓操作外不进行市价委托 2023年2月20日 至 2023年3月2日 11天，收益率16.26%</description>
-    </item>
-    
-    <item>
-      <title>半夜关于Crypto的一些想法（2023年2月21日深夜）</title>
-      <link>/posts/20230221_record/</link>
-      <pubDate>Tue, 21 Feb 2023 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/20230221_record/</guid>
-      <description> 风险控制是最重要的：100%胜率的5%收益率和50%胜率翻倍否则亏损90%，两者都是盈利5%的期望，那么一定选择前者 复利是非常强大的：每天5%收益率，那么一个月本金可以翻4倍 低杠杆滚仓：价格上涨20%，2倍杠杆盈利40%，如果在上涨10%的时候进行一次滚仓，那么盈利可以达到60%，同时可以灵活选择滚仓的时机，在一个比较明确的价格回调的时间点进行滚仓还能进一步扩大收益 控制仓位就是控制心态：永远不要做赌狗，再明确的趋势也要控制好仓位 </description>
     </item>
     
     <item>
