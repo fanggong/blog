@@ -1,4 +1,4 @@
-# baseurl: http://kendo.sc.cn
+baseurl: http://kendo.sc.cn
 title: Fang Yongchao
 theme: hugo-coder-portfolio
 DefaultContentLanguage: ch
@@ -20,7 +20,7 @@ params:
   enableTwitterShare: no
   fixedbarContent: no
   fixedbarContentAfter: no 
-  footercontent: 赣ICP备 2020014401号-1
+  footercontent: 蜀ICP备2023005640号
   hideCopyright: no
   hideCredits: no
   info: 不要害怕未知的事物
