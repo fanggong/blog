@@ -6,7 +6,17 @@
     <description>Recent content in Crypto on Connecting the dots</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Thu, 16 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="/categories/crypto/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 27 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="/categories/crypto/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>交易规则（v0.3)</title>
+      <link>/posts/20230327_trade_rule/</link>
+      <pubDate>Mon, 27 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/20230327_trade_rule/</guid>
+      <description> 每次开仓止损最大不超过本金的1/25（严守） 除清仓操作外不进行市价委托 2023年3月16日 至 2023年3月26日 11天，收益率1.76%
+开仓时间 平仓时间 合约 仓位类型 开仓均价 平仓均价 收益率 1 2023/03/13 14:03:57 2023/03/14 22:29:41 CFXUSDT 永续 逐仓(2.0x) 0.22185 0.33336 -100.53% 2 2023/02/28 14:30:50 2023/03/13 11:21:53 AGLDUSDT 永续 逐仓(2.0x) 0.5396 0.3791 -59.51% </description>
+    </item>
+    
     <item>
       <title>交易规则（v0.2)</title>
       <link>/posts/20230316_trade_rule/</link>
