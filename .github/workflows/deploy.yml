@@ -23,16 +23,11 @@ jobs:
           USERNAME: ${{ secrets.SSH_USERNAME }} 
           SERVER_DESTINATION: /srv/blog/
           
-      - name: Docker Blog
+      - name: Restart Nginx
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
-            cd /srv/blog
-            docker stop nginx_blog_fang
-            docker rm nginx_blog_fang
-            docker rmi nginx_blog
-            docker build -t nginx_blog .
-            docker run --name nginx_blog_fang -d -p 80:80 nginx_blog
+            systemctl restart nginx.service
