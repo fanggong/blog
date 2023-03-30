@@ -23,7 +23,7 @@ jobs:
           USERNAME: ${{ secrets.SSH_USERNAME }} 
           SERVER_DESTINATION: /srv/blog/
           
-      - name: Restart Nginx
+      - name: Restart Ngin
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
