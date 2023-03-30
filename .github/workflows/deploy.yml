@@ -30,4 +30,9 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
-            systemctl restart nginx.service
+            cd /srv/blog
+            docker stop nginx_blog_fang
+            docker rm nginx_blog_fang
+            docker rmi nginx_blog
+            docker build -t nginx_blog .
+            docker run --name nginx_blog_fang -d -p 80:80 nginx_blog
