@@ -26,6 +26,8 @@ output:
 ## 示例App
 
 --------------------------
+<br>
+<iframe height="500" width="100%" frameborder="no" src="http://shiny.kendo.sc.cn/update_reactive_object"> </iframe>
 
 ```{r eval=FALSE}
 library(shiny)
