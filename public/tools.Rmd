@@ -12,9 +12,15 @@ date: "2021-04-21"
 
 <i class="fab fa-lg fa-github fa-fw"></i><a href="https://github.com/fanggong/flipdownWidgets">View Code</a>
 
-```{r echo=FALSE}
-library(flipdownWidgets)
-flipdownWidgets("2026-06-11", width = "80%", headings = c("天", "时", "分", "秒"))
-```
-
 <iframe height="500" width="100%" frameborder="no" src="http://shiny.kendo.sc.cn/flipdownWidgets_stat"> </iframe>
+
+
+## okxAPI
+
+---------------------------------------------
+
+[okxAPI](https://CRAN.R-project.org/package=okxAPI)，[okx](https://www.okx.com/docs-v5/en/)接口的R语言实现，包括REST API和WebSocket API。
+
+<i class="fab fa-lg fa-github fa-fw"></i><a href="https://github.com/fanggong/okxAPI">View Code</a>
+
+<iframe height="500" width="100%" frameborder="no" src="http://shiny.kendo.sc.cn/okxAPI_stat"> </iframe>

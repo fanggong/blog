@@ -12,6 +12,11 @@ Fang Yongchao，男，90后，数据分析师，现居成都。
 
 剑道二段。
 
+```{r echo=FALSE}
+library(flipdownWidgets)
+flipdownWidgets("2026-06-11", width = "100%", headings = c("天", "时", "分", "秒"))
+```
+
 ```{r echo=FALSE, fig.height=3, out.width="33%"}
 # paths <- c(
 #   "/about_files/kendo1.jpg",

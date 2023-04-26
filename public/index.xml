@@ -259,6 +259,8 @@ None：使用全部的特征 sqrt：使用全部特征的数量开根号，即�
       
       <guid>http://kendo.sc.cn/tools/</guid>
       <description>flipdownWidgets flipdownWidgets，在Shiny或Rmarkdown中创建一个倒计时时钟。
+View Code
+okxAPI okxAPI，okx接口的R语言实现，包括REST API和WebSocket API。
 View Code</description>
     </item>
     
