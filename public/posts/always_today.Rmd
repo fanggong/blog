@@ -1,8 +1,7 @@
 ---
 title: 对本主题的样式的测试
 author: Fang Yongchao
-date: "`r Sys.Date()`"
-draft: true
+date: "2021-03-01"
 ---
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
@@ -20,7 +19,7 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 ### 页内跳转
 
 - [点这里跳到样式——表格](#表格)
-- [点着里跳到样式——iframe](#iframe)
+- [点这里跳到样式——iframe](#iframe)
 
 ### 无序列表
 
@@ -103,4 +102,4 @@ kbl(mtcars) %>%
 
 ### iframe
 
-<iframe height="500" width="100%" frameborder="no" src="https://github.com/fanggong"> </iframe>
+<iframe height="500" width="100%" frameborder="no" src="http://shiny.kendo.sc.cn/iframe_test"> </iframe>
