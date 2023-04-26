@@ -21,7 +21,7 @@ jobs:
           path: ./public/
           remote_host: ${{ secrets.SSH_HOST }} 
           remote_user: ${{ secrets.SSH_USERNAME }} 
-          path: /srv/blog/
+          remote_path: /srv/blog/
           
       - name: Restart Nginx
         uses: appleboy/ssh-action@master
