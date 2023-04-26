@@ -17,4 +17,4 @@ library(flipdownWidgets)
 flipdownWidgets("2026-06-11", width = "80%", headings = c("天", "时", "分", "秒"))
 ```
 
-<iframe height="500" width="100%" frameborder="no" src="http://shiny.kendo.sc.cn/flipdownWidgets_stats"> </iframe>
+<iframe height="500" width="100%" frameborder="no" src="http://shiny.kendo.sc.cn/flipdownWidgets_stat"> </iframe>
