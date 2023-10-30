@@ -6,14 +6,14 @@
     <description>Recent content in Crypto on Connecting the dots</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Mon, 27 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://kendo.sc.cn/categories/crypto/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 30 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://kendo.sc.cn/categories/crypto/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>交易规则</title>
+      <title>Trading Rules</title>
       <link>http://kendo.sc.cn/posts/20230327_trade_rule/</link>
-      <pubDate>Mon, 27 Mar 2023 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 30 Oct 2023 00:00:00 +0000</pubDate>
       
       <guid>http://kendo.sc.cn/posts/20230327_trade_rule/</guid>
-      <description> 确保有仓位就一定有止损订单，防止黑天鹅事件。 除清仓操作外不进行市价委托。 做多不开高杠杆。 </description>
+      <description> 仓位与止损订单必须同时存在，止损线为该仓位能承受的最大损失（不因行情走势变化，开仓即确定） 同一交易对做多杠杆倍数应当显著低于做空杠杆倍数 </description>
     </item>
     
   </channel>
