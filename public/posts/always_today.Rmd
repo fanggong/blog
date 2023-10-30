@@ -8,8 +8,6 @@ date: "2021-03-01"
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 ```
 
-任何做个人博客的人应该都过不了对样式无穷无尽的修改这个坎吧...
-
 # 这是一级标题
 
 ## 这是二级标题

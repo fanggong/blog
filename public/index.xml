@@ -6,16 +6,7 @@
     <description>Recent content on Connecting the dots</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ch</language>
-    <lastBuildDate>Mon, 27 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://kendo.sc.cn/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>交易规则</title>
-      <link>http://kendo.sc.cn/posts/20230327_trade_rule/</link>
-      <pubDate>Mon, 27 Mar 2023 00:00:00 +0000</pubDate>
-      
-      <guid>http://kendo.sc.cn/posts/20230327_trade_rule/</guid>
-      <description> 确保有仓位就一定有止损订单，防止黑天鹅事件。 除清仓操作外不进行市价委托。 做多不开高杠杆。 </description>
-    </item>
-    
+    <lastBuildDate>Tue, 22 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://kendo.sc.cn/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>scikit-learn的特征选择相关接口整理</title>
       <link>http://kendo.sc.cn/posts/20210622_sklearn_feature_selection_api/</link>
@@ -375,8 +366,7 @@ par(mar = c(0, 0, 0, 0), family = &amp;quot;HannotateSC-W5&amp;quot;) openplotma
       <pubDate>Mon, 01 Mar 2021 00:00:00 +0000</pubDate>
       
       <guid>http://kendo.sc.cn/posts/always_today/</guid>
-      <description>任何做个人博客的人应该都过不了对样式无穷无尽的修改这个坎吧…
-这是一级标题 这是二级标题 这是三级标题 页内跳转 点这里跳到样式——表格 点这里跳到样式——iframe 无序列表 御田的决心！白胡子的试炼! 白胡子的弟弟！御田的大冒险 兵刃相接！罗杰与白胡子！ 有序列表 新的同盟！？凯多军大集结 决战迫近！草帽一伙进入战斗状态 大新闻！七武海袭击事件 嵌套列表 元气森林 0糖 0脂肪 0卡路里 代码块 height &amp;lt;- rnorm(100, 170, 8) weight &amp;lt;- rnorm(100, 70, 12) t.test(height, weight) ## ## Welch Two Sample t-test ## ## data: height and weight ## t = 71.029, df = 169.05, p-value &amp;lt; 2.2e-16 ## alternative hypothesis: true difference in means is not equal to 0 ## 95 percent confidence interval: ## 99.</description>
+      <description>这是一级标题 这是二级标题 这是三级标题 页内跳转 点这里跳到样式——表格 点这里跳到样式——iframe 无序列表 御田的决心！白胡子的试炼! 白胡子的弟弟！御田的大冒险 兵刃相接！罗杰与白胡子！ 有序列表 新的同盟！？凯多军大集结 决战迫近！草帽一伙进入战斗状态 大新闻！七武海袭击事件 嵌套列表 元气森林 0糖 0脂肪 0卡路里 代码块 height &amp;lt;- rnorm(100, 170, 8) weight &amp;lt;- rnorm(100, 70, 12) t.test(height, weight) ## ## Welch Two Sample t-test ## ## data: height and weight ## t = 73.909, df = 178.21, p-value &amp;lt; 2.2e-16 ## alternative hypothesis: true difference in means is not equal to 0 ## 95 percent confidence interval: ## 98.</description>
     </item>
     
   </channel>

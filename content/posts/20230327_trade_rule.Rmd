@@ -1,5 +1,5 @@
 ---
-title: 交易规则
+title: Trading Rules
 author: Fang Yongchao
 date: "2023-03-27"
 categories:
@@ -7,12 +7,12 @@ categories:
 output:
   blogdown::html_page:
     toc: yes
+draft: true
 ---
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 ```
 
-1. 确保有仓位就一定有止损订单，防止黑天鹅事件。
-1. 除清仓操作外不进行市价委托。
-1. 做多不开高杠杆。
+1. 仓位与止损订单必须同时存在，止损线的选择应当比开仓更为谨慎
+1. 同一交易对做多杠杆倍数应当显著低于做空杠杆倍数
